@@ -1,5 +1,7 @@
+import string
 from typing import *
 import datetime
+import  random
 
 def checkTypeReturn(input, expectedType):
     if isinstance(input, expectedType):
@@ -44,9 +46,19 @@ class Order:
         return "(%s, %s)" % (self.orderName, self.timeToFinish)
 
 
+def GenerateOrders (amount : int):
+    #Generates and returns a list of Orders, with random identifiers and processing times.
+    orders = []
+
+    for x in range(0, amount):
+        orders.append(Order(random.choice(string.ascii_letters.upper()), random.randint(10, 1000)))
+    return orders
 
 
+orders = GenerateOrders(100)
 
+for x in range(0, len(orders)):
+    print(orders[x])
 
 myOrder = Order("hej2", 321)
 print(myOrder.__str__())
