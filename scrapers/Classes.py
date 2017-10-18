@@ -1,5 +1,8 @@
+import string
 from typing import *
 import datetime
+import  random
+import time
 
 def checkTypeReturn(input, expectedType):
     if isinstance(input, expectedType):
@@ -52,6 +55,15 @@ class OrderBox:
         return "(%s, %s)" % (self.order, self.timeRemaining)
 
 
+def GenerateOrders (amount : int):
+    #Generates and returns a list of Orders, with random identifiers and processing times.
+    orders = []
+
+    for x in range(0, amount):
+        orders.append(Order(random.choice(string.ascii_letters.upper()), random.randint(10, 100)))
+    return orders
+
+
 class System:
     def __init__(self, orderList, maxConcurrentItems : int):
         self.orderList = orderList
@@ -60,9 +72,6 @@ class System:
         self.orderBoxList = [OrderBox]
 
     def initializeOrderBoxes(self):
-        # Lav en orderboxlist
-        self.orderBoxList = [OrderBox]
-
         # for hver ordre i orderlist:
         for order in self.orderList:
             # opret ny orderbox med order og tid fra ordren
@@ -71,21 +80,40 @@ class System:
             # tilføj den nye orderbox til orderboxlist
             self.orderBoxList.append(newOrderBox)
 
+    def updateTime(self):
+        for i in range(len(self.orderBoxList)):
+            if i == 0:
+                continue
+            orderBox = self.orderBoxList[i]
+            orderBox.timeRemaining -= 1
+            if orderBox.timeRemaining == 0:
+                finishedOrder = (self.orderBoxList.pop(i)).order
+                self.finishedOrders.append(finishedOrder)
+
     def __str__(self):
-        myStr = ("My Order Boxes:\n")
+        #return "Order Boxes: %s, Orders Finished: %s\n" % (len(self.orderBoxList), len(self.finishedOrders))
+        myStr = "Order Boxes:"
+
         for order in self.orderBoxList:
             myStr += str(order) + "\n"
         return myStr
 
 
-myOrders = [Order("A", 1), Order("B", 21), Order("C", 12), Order("D", 41)]
+myOrders = GenerateOrders(100)
 
 system = System(myOrders, 3)
 system.initializeOrderBoxes()
 
+
+print("START STATE")
 print(system)
+print("START STATE")
 
+time.sleep(2)
 
+for i in range(100):
+    system.updateTime()
+    print(system)
 
 
 
