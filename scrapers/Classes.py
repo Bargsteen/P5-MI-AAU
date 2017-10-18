@@ -65,8 +65,11 @@ def GenerateOrders (amount : int):
     return orders
 
 
+def getNext():
+    return GenerateOrders(1)
+
 class System:
-    def __init__(self, orderList, maxConcurrentItems : int):
+    def __init__(self, maxConcurrentItems : int):
         self.orderList = orderList
         self.finishedOrders = [Order]
         self.maxConcurrentItems = maxConcurrentItems
@@ -78,55 +81,33 @@ class System:
             # opret ny orderbox med order og tid fra ordren og tilføj den nye orderbox til orderboxlist
             self.orderBoxList.append(OrderBox(order))
 
-    def updateTime(self):
-        for i in range(len(self.orderBoxList)):
-            if i == 0:
-                continue
-            orderBox = self.orderBoxList[i]
-            orderBox.timeRemaining -= 1
-            if orderBox.timeRemaining == 0:
-                finishedOrder = (self.orderBoxList.pop(i)).order
-                self.finishedOrders.append(finishedOrder)
-
     def __str__(self):
-        #return "Order Boxes: %s, Orders Finished: %s\n" % (len(self.orderBoxList), len(self.finishedOrders))
+        return "Order Boxes: %s, Orders Finished: %s\n" % (len(self.orderBoxList), len(self.finishedOrders))
+        """
         myStr = "Order Boxes: \n"
 
         for order in self.orderBoxList:
             myStr += str(order) + "\n"
         return myStr
+        """
 
+    def Update(self):
+        if(len(self.orderBoxList) < self.maxConcurrentItems):
+            self.orderBoxList.append(getNext())
+            for orderBox in self.orderBoxList:
+                orderBox.timeRemaining -= 1
+                if(orderBox.timeRemaining == 0):
+                    self.finishedOrders.append(orderBox.order)
+                    self.orderBoxList.remove(orderBox)
 
-myOrders = GenerateOrders(100)
-
-
-"""
-system.initializeOrderBoxes()
 
 
 print("START STATE")
-print(system)
-print("START STATE")
 
-time.sleep(2)
+system = System(3)
 
 for i in range(100):
-    system.updateTime()
+    system.Update()
+    time.sleep(2)
     print(system)
-"""
-
-myList = [Order("A", 1), Order("B", 2)]
-
-system = System(myList, 3)
-
-system.orderBoxList.append(2)
-
-system.initializeOrderBoxes()
-#system.orderBoxList = [OrderBox(myList[0]), OrderBox(myList[1])]
-
-print(system)
-
-
-
-
 
