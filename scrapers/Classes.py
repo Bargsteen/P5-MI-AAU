@@ -16,6 +16,7 @@ class ArticleNumber:
         self.articleNumber = checkTypeReturn(articleNum, int)
         if 10000000 > self.articleNumber or self.articleNumber > 9999999999:
             raise ValueError("Invalid article number entered.")
+
     def __str__(self) -> str:
         return str(self.articleNumber)
 
@@ -69,16 +70,13 @@ class System:
         self.orderList = orderList
         self.finishedOrders = [Order]
         self.maxConcurrentItems = maxConcurrentItems
-        self.orderBoxList = [OrderBox]
+        self.orderBoxList: list(Order) = []
 
     def initializeOrderBoxes(self):
         # for hver ordre i orderlist:
         for order in self.orderList:
-            # opret ny orderbox med order og tid fra ordren
-            newOrderBox = OrderBox(order)
-
-            # tilføj den nye orderbox til orderboxlist
-            self.orderBoxList.append(newOrderBox)
+            # opret ny orderbox med order og tid fra ordren og tilføj den nye orderbox til orderboxlist
+            self.orderBoxList.append(OrderBox(order))
 
     def updateTime(self):
         for i in range(len(self.orderBoxList)):
@@ -92,7 +90,7 @@ class System:
 
     def __str__(self):
         #return "Order Boxes: %s, Orders Finished: %s\n" % (len(self.orderBoxList), len(self.finishedOrders))
-        myStr = "Order Boxes:"
+        myStr = "Order Boxes: \n"
 
         for order in self.orderBoxList:
             myStr += str(order) + "\n"
@@ -101,7 +99,8 @@ class System:
 
 myOrders = GenerateOrders(100)
 
-system = System(myOrders, 3)
+
+"""
 system.initializeOrderBoxes()
 
 
@@ -114,6 +113,19 @@ time.sleep(2)
 for i in range(100):
     system.updateTime()
     print(system)
+"""
+
+myList = [Order("A", 1), Order("B", 2)]
+
+system = System(myList, 3)
+
+system.orderBoxList.append(2)
+
+system.initializeOrderBoxes()
+#system.orderBoxList = [OrderBox(myList[0]), OrderBox(myList[1])]
+
+print(system)
+
 
 
 
