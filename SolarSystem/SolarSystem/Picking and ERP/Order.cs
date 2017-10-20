@@ -14,8 +14,8 @@ namespace SolarSystem.Picking_and_ERP
             LineList.Add(line);
         }
 
-        List<Line> LineList = new List<Line>();
-        int _ordernumber;
+        public List<Line> LineList = new List<Line>();
+        public int _ordernumber;
 
         public override string ToString()
         {
