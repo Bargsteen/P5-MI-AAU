@@ -3,10 +3,15 @@ using System.Collections.Generic;
 
 namespace SolarSystem
 {
-    internal class Program
+    public static class Program
     {
         public static void Main(string[] args)
         {
+        }
+
+        public static int SolarAdd(int x, int y)
+        {
+            return x + y;
         }
     }
 }
