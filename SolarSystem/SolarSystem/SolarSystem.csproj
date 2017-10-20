@@ -91,8 +91,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Simulation\ISim.cs" />
     <Compile Include="Simulation\Sim.cs" />
-    <Compile Include="OrderBoxPicker.cs" />
-    </ItemGroup>
+    <Compile Include="Classes\OrderBoxPicker.cs" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

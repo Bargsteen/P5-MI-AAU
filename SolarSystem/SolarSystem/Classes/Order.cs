@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SolarSystem.Classes
 {
-    class Order
+    public class Order
     {
         public string OrderName { get; }
         public int TimeToFinish { get; }
