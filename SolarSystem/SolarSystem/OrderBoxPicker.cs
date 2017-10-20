@@ -15,9 +15,7 @@ namespace SolarSystem
             ActiveArticlesFirst
         };
 
-
-        public static 
-
+        
 
     }
 }
