@@ -41,6 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\ArticleNumber.cs" />
+    <Compile Include="Classes\ItemType.cs" />
+    <Compile Include="Classes\Line.cs" />
+    <Compile Include="Classes\Order.cs" />
+    <Compile Include="Classes\OrderBox.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Simulation\ISim.cs" />
