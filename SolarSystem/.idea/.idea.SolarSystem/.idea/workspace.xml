@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="86a3ff6d-b005-4b76-88ca-1b79769f3b57" name="Default" comment="" />
+    <list default="true" id="86a3ff6d-b005-4b76-88ca-1b79769f3b57" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SolarSystem/Classes/ArticleNumber.cs" afterPath="$PROJECT_DIR$/SolarSystem/Classes/ArticleNumber.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SolarSystem/Classes/ItemType.cs" afterPath="$PROJECT_DIR$/SolarSystem/Classes/ItemType.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SolarSystem/Classes/Line.cs" afterPath="$PROJECT_DIR$/SolarSystem/Classes/Line.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SolarSystem/Classes/Order.cs" afterPath="$PROJECT_DIR$/SolarSystem/Classes/Order.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SolarSystem/Classes/OrderBox.cs" afterPath="$PROJECT_DIR$/SolarSystem/Classes/OrderBox.cs" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -10,55 +16,118 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="Program.cs" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/SolarSystem/Program.cs">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="Sim.cs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/SolarSystem/Simulation/Sim.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="6" lean-forward="false" selection-start-line="0" selection-start-column="6" selection-end-line="0" selection-end-column="6" />
+            <state relative-caret-position="210">
+              <caret line="16" column="9" lean-forward="false" selection-start-line="16" selection-start-column="9" selection-end-line="16" selection-end-column="9" />
               <folding>
-                <marker date="1508482834429" expanded="true" signature="6:47" ph="..." />
-                <marker date="1508482834429" expanded="true" signature="70:281" ph="{...}" />
-                <marker date="1508482834429" expanded="true" signature="104:279" ph="{...}" />
-                <marker date="1508482834429" expanded="true" signature="157:177" ph="{...}" />
-                <marker date="1508482834429" expanded="true" signature="227:273" ph="{...}" />
+                <marker date="1508488229552" expanded="false" signature="6:67" ph="..." />
+                <marker date="1508488229552" expanded="true" signature="101:483" ph="{...}" />
+                <marker date="1508488229552" expanded="true" signature="131:481" ph="{...}" />
+                <marker date="1508488229552" expanded="true" signature="225:347" ph="{...}" />
+                <marker date="1508488229552" expanded="true" signature="283:337" ph="{...}" />
+                <marker date="1508488229552" expanded="true" signature="378:475" ph="{...}" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Tests.cs" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/SolarSystem.Test/Tests.cs">
+      <file leaf-file-name="ItemType.cs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/SolarSystem/Classes/ItemType.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="351">
-              <caret line="36" column="12" lean-forward="false" selection-start-line="36" selection-start-column="12" selection-end-line="36" selection-end-column="12" />
+            <state relative-caret-position="90">
+              <caret line="10" column="24" lean-forward="false" selection-start-line="10" selection-start-column="24" selection-end-line="10" selection-end-column="24" />
               <folding>
-                <marker date="1508483267893" expanded="true" signature="6:45" ph="..." />
-                <marker date="1508483267893" expanded="true" signature="73:994" ph="{...}" />
-                <marker date="1508483267893" expanded="true" signature="98:992" ph="{...}" />
-                <marker date="1508483267893" expanded="true" signature="147:198" ph="{...}" />
-                <marker date="1508483267893" expanded="true" signature="268:522" ph="{...}" />
-                <marker date="1508483267893" expanded="true" signature="741:968" ph="{...}" />
-                <marker date="1508483267893" expanded="true" signature="764:830" ph="/* Arrange ... */" />
+                <marker date="1508488852895" expanded="false" signature="6:115" ph="..." />
+                <marker date="1508488852895" expanded="true" signature="146:359" ph="{...}" />
+                <marker date="1508488852895" expanded="true" signature="167:357" ph="{...}" />
+                <marker date="1508488852895" expanded="true" signature="287:350" ph="{...}" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SolarSystem.Test.csproj" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/SolarSystem.Test/SolarSystem.Test.csproj">
+      <file leaf-file-name="Line.cs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/SolarSystem/Classes/Line.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
+            <state relative-caret-position="255">
+              <caret line="21" column="41" lean-forward="true" selection-start-line="21" selection-start-column="41" selection-end-line="21" selection-end-column="41" />
+              <folding>
+                <marker date="1508489052472" expanded="false" signature="6:115" ph="..." />
+                <marker date="1508489052472" expanded="true" signature="146:512" ph="{...}" />
+                <marker date="1508489052472" expanded="true" signature="163:510" ph="{...}" />
+                <marker date="1508489052472" expanded="true" signature="305:385" ph="{...}" />
+                <marker date="1508489052472" expanded="true" signature="437:504" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Order.cs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/SolarSystem/Classes/Order.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="225">
+              <caret line="19" column="8" lean-forward="false" selection-start-line="19" selection-start-column="8" selection-end-line="19" selection-end-column="8" />
+              <folding>
+                <marker date="1508489035243" expanded="false" signature="6:115" ph="..." />
+                <marker date="1508489035243" expanded="true" signature="146:547" ph="{...}" />
+                <marker date="1508489035243" expanded="true" signature="164:545" ph="{...}" />
+                <marker date="1508489035243" expanded="true" signature="318:414" ph="{...}" />
+                <marker date="1508489035243" expanded="true" signature="466:539" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="OrderBox.cs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/SolarSystem/Classes/OrderBox.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="255">
+              <caret line="21" column="20" lean-forward="false" selection-start-line="21" selection-start-column="20" selection-end-line="21" selection-end-column="20" />
+              <folding>
+                <marker date="1508489041843" expanded="false" signature="6:115" ph="..." />
+                <marker date="1508489041843" expanded="true" signature="146:505" ph="{...}" />
+                <marker date="1508489041843" expanded="true" signature="167:503" ph="{...}" />
+                <marker date="1508489041843" expanded="true" signature="289:384" ph="{...}" />
+                <marker date="1508489041843" expanded="true" signature="427:497" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ArticleNumber.cs" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/SolarSystem/Classes/ArticleNumber.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="300">
+              <caret line="24" column="0" lean-forward="true" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
+              <folding>
+                <marker date="1508488927111" expanded="false" signature="6:115" ph="..." />
+                <marker date="1508488927111" expanded="true" signature="146:442" ph="{...}" />
+                <marker date="1508488927111" expanded="true" signature="172:439" ph="{...}" />
+                <marker date="1508488927111" expanded="true" signature="271:328" ph="{...}" />
+                <marker date="1508488927111" expanded="true" signature="371:433" ph="{...}" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
     </leaf>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/SolarSystem/Classes/OrderBox.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/SolarSystem/Classes/ArticleNumber.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/SolarSystem/Classes/Line.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/SolarSystem/Simulation/Sim.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/SolarSystem/Classes/Order.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/SolarSystem/Classes/ItemType.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/SolarSystem/Program.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/SolarSystem/Simulation/ISim.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/SolarSystem.Test/Simulation/SimulationTests.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/SolarSystem.Test/Tests.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
@@ -66,6 +135,18 @@
       <list>
         <option value="$PROJECT_DIR$/SolarSystem/Program.cs" />
         <option value="$PROJECT_DIR$/SolarSystem.Test/Tests.cs" />
+        <option value="$PROJECT_DIR$/SolarSystem/Simulation/ISimulation.cs" />
+        <option value="$PROJECT_DIR$/SolarSystem/Sim/ISimulation.cs" />
+        <option value="$PROJECT_DIR$/SolarSystem/Sim/ISim.cs" />
+        <option value="$PROJECT_DIR$/SolarSystem/Sim/Sim.cs" />
+        <option value="$PROJECT_DIR$/SolarSystem.Test/Simulation/SimulationTests.cs" />
+        <option value="$PROJECT_DIR$/SolarSystem/Simulation/ISim.cs" />
+        <option value="$PROJECT_DIR$/SolarSystem/Simulation/Sim.cs" />
+        <option value="$PROJECT_DIR$/SolarSystem/Classes/ItemType.cs" />
+        <option value="$PROJECT_DIR$/SolarSystem/Classes/ArticleNumber.cs" />
+        <option value="$PROJECT_DIR$/SolarSystem/Classes/Order.cs" />
+        <option value="$PROJECT_DIR$/SolarSystem/Classes/OrderBox.cs" />
+        <option value="$PROJECT_DIR$/SolarSystem/Classes/Line.cs" />
       </list>
     </option>
   </component>
@@ -79,6 +160,7 @@
     <option name="width" value="1440" />
     <option name="height" value="900" />
   </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
     <navigator currentView="SolutionExplorer" proportions="" version="1">
       <flattenPackages />
@@ -106,6 +188,12 @@
               <item name="" type="13324e5d:SolutionExplorerViewPane$ProjectViewPaneTreeStructure$createRoot$1" />
               <item name="SolarSystem (2 projects)" type="977d5f41:SolutionExplorerNodeRider" />
               <item name="SolarSystem" type="977d5f41:SolutionExplorerNodeRider" />
+            </path>
+            <path>
+              <item name="" type="13324e5d:SolutionExplorerViewPane$ProjectViewPaneTreeStructure$createRoot$1" />
+              <item name="SolarSystem (2 projects)" type="977d5f41:SolutionExplorerNodeRider" />
+              <item name="SolarSystem" type="977d5f41:SolutionExplorerNodeRider" />
+              <item name="Classes" type="977d5f41:SolutionExplorerNodeRider" />
             </path>
             <path>
               <item name="" type="13324e5d:SolutionExplorerViewPane$ProjectViewPaneTreeStructure$createRoot$1" />
@@ -147,9 +235,6 @@
       <option name="USE_EXTERNAL_CONSOLE" value="0" />
       <envs />
     </configuration>
-    <list size="1">
-      <item index="0" class="java.lang.String" itemvalue=".NET Project.Default" />
-    </list>
   </component>
   <component name="ShelveChangesManager" show_recycled="false">
     <option name="remove_strategy" value="false" />
@@ -161,12 +246,15 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1508482376079</updated>
-      <workItem from="1508482377221" duration="817000" />
+      <workItem from="1508482377221" duration="2823000" />
+      <workItem from="1508485306505" duration="851000" />
+      <workItem from="1508487114687" duration="1316000" />
+      <workItem from="1508488572062" duration="549000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="817000" />
+    <option name="totallyTimeSpent" value="5539000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -179,27 +267,28 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Errors In Solution" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Unit Tests" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32941177" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="NuGet" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32941177" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Build" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Errors In Solution" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Unit Tests" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32941177" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32941177" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="NuGet" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32941177" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17430556" sideWeight="0.49298245" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.17430556" sideWeight="0.50701755" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Build" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -214,11 +303,18 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/SolarSystem.Test/SolarSystem.Test.csproj">
+    <entry file="file://$PROJECT_DIR$/SolarSystem/Simulation/Sim.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+        <state relative-caret-position="210">
+          <caret line="14" column="25" lean-forward="true" selection-start-line="14" selection-start-column="25" selection-end-line="14" selection-end-column="25" />
+          <folding>
+            <marker date="1508488229552" expanded="false" signature="6:67" ph="..." />
+            <marker date="1508488229552" expanded="true" signature="101:483" ph="{...}" />
+            <marker date="1508488229552" expanded="true" signature="131:481" ph="{...}" />
+            <marker date="1508488229552" expanded="true" signature="225:347" ph="{...}" />
+            <marker date="1508488229552" expanded="true" signature="283:337" ph="{...}" />
+            <marker date="1508488229552" expanded="true" signature="378:475" ph="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -226,28 +322,189 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="6" lean-forward="false" selection-start-line="0" selection-start-column="6" selection-end-line="0" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SolarSystem/Simulation/ISim.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" column="5" lean-forward="false" selection-start-line="5" selection-start-column="5" selection-end-line="5" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SolarSystem/Simulation/Sim.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="1" lean-forward="false" selection-start-line="11" selection-start-column="1" selection-end-line="11" selection-end-column="1" />
           <folding>
-            <marker date="1508482834429" expanded="true" signature="6:47" ph="..." />
-            <marker date="1508482834429" expanded="true" signature="70:281" ph="{...}" />
-            <marker date="1508482834429" expanded="true" signature="104:279" ph="{...}" />
-            <marker date="1508482834429" expanded="true" signature="157:177" ph="{...}" />
-            <marker date="1508482834429" expanded="true" signature="227:273" ph="{...}" />
+            <marker date="1508488229552" expanded="false" signature="6:67" ph="..." />
+            <marker date="1508488229552" expanded="true" signature="101:483" ph="{...}" />
+            <marker date="1508488229552" expanded="true" signature="131:481" ph="{...}" />
+            <marker date="1508488229552" expanded="true" signature="225:347" ph="{...}" />
+            <marker date="1508488229552" expanded="true" signature="283:337" ph="{...}" />
+            <marker date="1508488229552" expanded="true" signature="378:475" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SolarSystem.Test/Simulation/SimulationTests.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="15" column="1" lean-forward="true" selection-start-line="15" selection-start-column="1" selection-end-line="15" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SolarSystem/Program.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="6" lean-forward="false" selection-start-line="0" selection-start-column="6" selection-end-line="0" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SolarSystem/Simulation/ISim.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" column="5" lean-forward="false" selection-start-line="5" selection-start-column="5" selection-end-line="5" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SolarSystem.Test/Simulation/SimulationTests.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="13" column="9" lean-forward="true" selection-start-line="13" selection-start-column="9" selection-end-line="13" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SolarSystem/Simulation/Sim.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" column="5" lean-forward="true" selection-start-line="5" selection-start-column="5" selection-end-line="5" selection-end-column="5" />
+          <folding>
+            <marker date="1508488229552" expanded="false" signature="6:67" ph="..." />
+            <marker date="1508488229552" expanded="true" signature="101:483" ph="{...}" />
+            <marker date="1508488229552" expanded="true" signature="131:481" ph="{...}" />
+            <marker date="1508488229552" expanded="true" signature="225:347" ph="{...}" />
+            <marker date="1508488229552" expanded="true" signature="283:337" ph="{...}" />
+            <marker date="1508488229552" expanded="true" signature="378:475" ph="{...}" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/SolarSystem.Test/Tests.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="351">
-          <caret line="36" column="12" lean-forward="false" selection-start-line="36" selection-start-column="12" selection-end-line="36" selection-end-column="12" />
+        <state relative-caret-position="-115">
+          <caret line="8" column="14" lean-forward="false" selection-start-line="8" selection-start-column="14" selection-end-line="8" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SolarSystem.Test/SolarSystem.Test.csproj">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SolarSystem/Program.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="6" lean-forward="false" selection-start-line="0" selection-start-column="6" selection-end-line="0" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SolarSystem.Test/Simulation/SimulationTests.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="18" column="42" lean-forward="false" selection-start-line="18" selection-start-column="42" selection-end-line="18" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SolarSystem/Simulation/ISim.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" column="0" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SolarSystem/Simulation/Sim.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="16" column="9" lean-forward="false" selection-start-line="16" selection-start-column="9" selection-end-line="16" selection-end-column="9" />
           <folding>
-            <marker date="1508483267893" expanded="true" signature="6:45" ph="..." />
-            <marker date="1508483267893" expanded="true" signature="73:994" ph="{...}" />
-            <marker date="1508483267893" expanded="true" signature="98:992" ph="{...}" />
-            <marker date="1508483267893" expanded="true" signature="147:198" ph="{...}" />
-            <marker date="1508483267893" expanded="true" signature="268:522" ph="{...}" />
-            <marker date="1508483267893" expanded="true" signature="741:968" ph="{...}" />
-            <marker date="1508483267893" expanded="true" signature="764:830" ph="/* Arrange ... */" />
+            <marker date="1508488229552" expanded="false" signature="6:67" ph="..." />
+            <marker date="1508488229552" expanded="true" signature="101:483" ph="{...}" />
+            <marker date="1508488229552" expanded="true" signature="131:481" ph="{...}" />
+            <marker date="1508488229552" expanded="true" signature="225:347" ph="{...}" />
+            <marker date="1508488229552" expanded="true" signature="283:337" ph="{...}" />
+            <marker date="1508488229552" expanded="true" signature="378:475" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SolarSystem/Classes/Line.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="21" column="41" lean-forward="true" selection-start-line="21" selection-start-column="41" selection-end-line="21" selection-end-column="41" />
+          <folding>
+            <marker date="1508489052472" expanded="false" signature="6:115" ph="..." />
+            <marker date="1508489052472" expanded="true" signature="146:512" ph="{...}" />
+            <marker date="1508489052472" expanded="true" signature="163:510" ph="{...}" />
+            <marker date="1508489052472" expanded="true" signature="305:385" ph="{...}" />
+            <marker date="1508489052472" expanded="true" signature="437:504" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SolarSystem/Classes/Order.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="19" column="8" lean-forward="false" selection-start-line="19" selection-start-column="8" selection-end-line="19" selection-end-column="8" />
+          <folding>
+            <marker date="1508489035243" expanded="false" signature="6:115" ph="..." />
+            <marker date="1508489035243" expanded="true" signature="146:547" ph="{...}" />
+            <marker date="1508489035243" expanded="true" signature="164:545" ph="{...}" />
+            <marker date="1508489035243" expanded="true" signature="318:414" ph="{...}" />
+            <marker date="1508489035243" expanded="true" signature="466:539" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SolarSystem/Classes/OrderBox.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="21" column="20" lean-forward="false" selection-start-line="21" selection-start-column="20" selection-end-line="21" selection-end-column="20" />
+          <folding>
+            <marker date="1508489041843" expanded="false" signature="6:115" ph="..." />
+            <marker date="1508489041843" expanded="true" signature="146:505" ph="{...}" />
+            <marker date="1508489041843" expanded="true" signature="167:503" ph="{...}" />
+            <marker date="1508489041843" expanded="true" signature="289:384" ph="{...}" />
+            <marker date="1508489041843" expanded="true" signature="427:497" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SolarSystem/Classes/ItemType.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="10" column="24" lean-forward="false" selection-start-line="10" selection-start-column="24" selection-end-line="10" selection-end-column="24" />
+          <folding>
+            <marker date="1508488852895" expanded="false" signature="6:115" ph="..." />
+            <marker date="1508488852895" expanded="true" signature="146:359" ph="{...}" />
+            <marker date="1508488852895" expanded="true" signature="167:357" ph="{...}" />
+            <marker date="1508488852895" expanded="true" signature="287:350" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SolarSystem/Classes/ArticleNumber.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="24" column="0" lean-forward="true" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
+          <folding>
+            <marker date="1508488927111" expanded="false" signature="6:115" ph="..." />
+            <marker date="1508488927111" expanded="true" signature="146:442" ph="{...}" />
+            <marker date="1508488927111" expanded="true" signature="172:439" ph="{...}" />
+            <marker date="1508488927111" expanded="true" signature="271:328" ph="{...}" />
+            <marker date="1508488927111" expanded="true" signature="371:433" ph="{...}" />
           </folding>
         </state>
       </provider>
