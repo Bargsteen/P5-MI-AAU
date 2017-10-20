@@ -8,18 +8,16 @@ namespace SolarSystem.Classes
 {
     class ArticleNumber
     {
-        int _articleNum;
-
+        public int ArticleNum { get; }
+        
         public ArticleNumber(int articleNum)
         {
-            _articleNum = articleNum;
+            ArticleNum = articleNum;
         }
-
-        public int ArticleNum { get { return _articleNum; } }
 
         public override string ToString()
         {
-            return _articleNum.ToString();
+            return ArticleNum.ToString();
         }
     }
 

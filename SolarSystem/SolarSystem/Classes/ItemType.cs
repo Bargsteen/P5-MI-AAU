@@ -8,14 +8,12 @@ namespace SolarSystem.Classes
 {
     class ItemType
     {
-        ArticleNumber _articleNumber;
-
+        public ArticleNumber ArticleNumber { get; }
+        
         public ItemType(ArticleNumber articleNumber)
         {
-            _articleNumber = articleNumber;
+            ArticleNumber = articleNumber;
         }
-
-        public ArticleNumber ArticleNumber { get { return _articleNumber; } }
 
     }
 }

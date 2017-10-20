@@ -8,21 +8,18 @@ namespace SolarSystem.Classes
 {
     class OrderBox
     {
-        Order _order;
-        int _timeRemaining;
+        public Order Order { get; }
+        public int TimeRemaining { get; }
 
         public OrderBox(Order order)
         {
-            _order = order;
-            _timeRemaining = order.TimeToFinish;
+            Order = order;
+            TimeRemaining = order.TimeToFinish;
         }
-
-        public Order Order { get { return _order; } }
-        public int TimeRemaining { get { return _timeRemaining; } }
 
         public override string ToString()
         {
-            return String.Format(@"({0}, {1}", Order, TimeRemaining );
+            return $@"({Order}, {TimeRemaining}";
         }
     }
 }

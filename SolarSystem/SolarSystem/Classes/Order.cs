@@ -8,21 +8,19 @@ namespace SolarSystem.Classes
 {
     class Order
     {
-        string _orderName;
-        int _timeToFinish;
-
+        public string OrderName { get; }
+        public int TimeToFinish { get; }
+        
         public Order(string orderName, int timeToFinish)
         {
-            _orderName = orderName;
-            _timeToFinish = timeToFinish;
+            OrderName = orderName;
+            TimeToFinish = timeToFinish;
         }
 
-        public string OrderName { get { return _orderName; } }
-        public int TimeToFinish { get { return _timeToFinish; } }
-
+        
         public override string ToString()
         {
-            return String.Format(@"({0}, {1})", _orderName, _timeToFinish);
+            return $"({OrderName}, {TimeToFinish})";
         }
     }
 }

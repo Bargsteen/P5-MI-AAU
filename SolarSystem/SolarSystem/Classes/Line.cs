@@ -8,21 +8,20 @@ namespace SolarSystem.Classes
 {
     class Line
     {
-        ItemType _itemType;
-        int _count;
+        public ItemType ItemType { get; }
+        public int Count { get; }
 
+        
         public Line(ItemType itemtype, int count)
         {
-            _itemType = itemtype;
-            _count = count;
+            ItemType = itemtype;
+            Count = count;
         }
 
-        public ItemType ItemType { get { return _itemType; } }
-        public int Count { get { return _count; } }
-
+        
         public override string ToString()
         {
-            return (String.Format(@"({0}, {1}", _itemType, _count.ToString()));
+            return ($@"({ItemType}, {Count}");
         }
     }
 }
