@@ -20,6 +20,7 @@ namespace SolarSystem
 
             while (run)
             {
+                Console.WriteLine("How To Sort? \"FIFO\" or \"LIFO\"?");
                 string input = Console.ReadLine();
 
 
@@ -51,7 +52,7 @@ namespace SolarSystem
                         {
                             Console.WriteLine(o.ToString());
                         }
-                        Console.WriteLine("FIFO ORDER IS:");
+                        Console.WriteLine("LIFO ORDER IS:");
                         Console.WriteLine(Classes.OrderBoxPicker.GetNext(Classes.OrderBoxPicker.PickingOrder.LastInFirstOut, orders));
 
                         break;
