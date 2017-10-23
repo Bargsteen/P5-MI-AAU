@@ -19,7 +19,7 @@ namespace SolarSystem.Picking_and_ERP
 
         public override string ToString()
         {
-            return "ArticleNumber: " + _articlenumber + "\nStartArea: " + _startarea + "\n";
+            return "ArticleNumber: " + _articlenumber + "\n\tStartArea: " + _startarea + "\n";
         }
     }
 }

@@ -21,7 +21,12 @@ namespace SolarSystem.Picking_and_ERP
 
         public override string ToString()
         {
-            return "OrderNumber: " + orderNumber + "\n";
+            string returnString = "";
+            foreach (var line in lineList)
+            {
+                returnString += line;
+            }
+            return "OrderNumber: " + orderNumber + returnString;
         }
     }
 }

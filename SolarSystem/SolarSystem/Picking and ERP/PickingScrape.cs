@@ -31,13 +31,13 @@ namespace SolarSystem.Picking_and_ERP
 
             foreach (string line in list)
             {
-                if (index > 0 && line[0] == _pickingOrderList.Last()._ordernumber)
+                if (index > 0 && line[0] == _pickingOrderList.Last().orderNumber)
                 {
-                    _pickingOrderList.Last().LineList.Add(new Line(new Article(line[1], line[10]), line[15], DateTime.Parse(line[8].ToString())));
+                    _pickingOrderList.Last().lineList.Add(new Line(new Article(line[1], line[10]), line[15], DateTime.Parse(line[8].ToString())));
                 }
                 else
                 {
-                    _pickingOrderList.Add(new Order(line[0], new Line(new Article(line[1], line[10]), line[15], DateTime.Parse(line[8].ToString()))));
+                    //_pickingOrderList.Add(new Order(line[0], new Line(new Article(line[1], line[10]), line[15], DateTime.Parse(line[8].ToString()))));
                 }
             }
         }
