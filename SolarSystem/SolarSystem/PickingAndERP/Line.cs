@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SolarSystem.Picking_and_ERP
 {
-    public class Line
+    class Line
     {
         public Line(Article article, int Quantity, DateTime TimeStamp)
         {

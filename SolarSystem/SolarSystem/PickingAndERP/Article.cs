@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SolarSystem.Picking_and_ERP
 {
-    public class Article
+    class Article
     {
         public Article(int ArticleNumber, int StartArea)
         {

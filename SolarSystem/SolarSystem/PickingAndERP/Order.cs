@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SolarSystem.Picking_and_ERP
 {
-    public class Order
+    class Order
     {
         public Order(int OrderNumber, Line line)
         {
