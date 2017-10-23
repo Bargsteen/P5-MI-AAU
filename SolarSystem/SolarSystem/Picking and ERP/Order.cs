@@ -8,18 +8,20 @@ namespace SolarSystem.Picking_and_ERP
 {
     public class Order
     {
-        public Order(int OrderNumber, Line line)
+        public List<Line> lineList { get; private set; }
+        public int orderNumber { get; private set; }
+        
+        public Order(int orderNumber, List<Line> lineList)
         {
-            _ordernumber = OrderNumber;
-            LineList.Add(line);
+            this.orderNumber = orderNumber;
+            this.lineList = lineList;
         }
 
-        public List<Line> LineList = new List<Line>();
-        public int _ordernumber;
+        
 
         public override string ToString()
         {
-            return "OrderNumber: " + _ordernumber + "\n";
+            return "OrderNumber: " + orderNumber + "\n";
         }
     }
 }
