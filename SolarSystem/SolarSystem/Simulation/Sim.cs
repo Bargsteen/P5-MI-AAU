@@ -9,10 +9,10 @@ namespace SolarSystem.Simulation
 {
     public class Sim : ISim
     {
-        private uint TimeSpentRunning { get; set; }
-        private List<Order> FinishedOrders { get; set; }
-        private List<OrderBox> BoxesInSystem { get; set; }
-        private uint MaxConcurrentBoxes { get; }
+        public uint TimeSpentRunning { get; set; }
+        public List<Order> FinishedOrders { get; set; }
+        public List<OrderBox> BoxesInSystem { get; set; }
+        public uint MaxConcurrentBoxes { get; private set; }
         private static readonly Random Rand = new Random();
         
         
@@ -24,25 +24,24 @@ namespace SolarSystem.Simulation
             MaxConcurrentBoxes = maxConcurrentBoxes;
         }
 
-       
         
         public void Run(uint timeUnits)
         {
             Console.WriteLine($"----START SIMULATION----\nMax Concurrent Boxes: {MaxConcurrentBoxes}");
             for (int i = 0; i < timeUnits; i++)
             {
-                Update();
-                Console.WriteLine(GetSimulationState());
+                _Update(_GetNextOrder);
+                Console.WriteLine(_GetSimulationState());
             }
         }
-
-        private void Update()
+        
+        public void _Update(Func<Order> getNextOrder)
         {
             Thread.Sleep(1);
             TimeSpentRunning += 1;
             if (BoxesInSystem.Count < MaxConcurrentBoxes)
             {
-                BoxesInSystem.Add(new OrderBox(GetNextOrder()));
+                BoxesInSystem.Add(new OrderBox(getNextOrder.Invoke()));
             }
             
             List<OrderBox> boxesToBeDeleted = new List<OrderBox>();
@@ -61,7 +60,7 @@ namespace SolarSystem.Simulation
             boxesToBeDeleted.ForEach(b => BoxesInSystem.Remove(b));
         }
 
-        private Order GetNextOrder()
+        public Order _GetNextOrder()
         {
 
             string name = ((char) ('A' + Rand.Next(0, 26))).ToString();
@@ -70,7 +69,9 @@ namespace SolarSystem.Simulation
             return new Order(name, timeToFinish);
         }
 
-        private string GetSimulationState()
+        
+
+        public string _GetSimulationState()
         {
             string boxesInSystem = BoxesInSystem.Aggregate("", (current, orderBox) => current + orderBox.ToString());
             string finishedOrders = FinishedOrders.Aggregate("", (current, order) => current + order.ToString());
