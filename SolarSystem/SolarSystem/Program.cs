@@ -61,6 +61,9 @@ namespace SolarSystem
                         Console.WriteLine(Classes.OrderBoxPicker.GetNext(Classes.OrderBoxPicker.PickingOrder.LastInFirstOut, orders));
 
                         break;
+                        
+                     default:
+                         throw new ArgumentOutOfRangeException();
                 }
 
             }

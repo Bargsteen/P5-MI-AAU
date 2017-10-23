@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SolarSystem.Classes
 {
@@ -28,12 +25,7 @@ namespace SolarSystem.Classes
                             desireredOrder = orders.FindIndex(x => x.OrderName == o.OrderName);
                         } 
                     }
-                break;
-            }
-
-
-            switch (pOrder)
-            {
+                    break;
                 case PickingOrder.LastInFirstOut:
                     foreach (Order o in orders)
                     {
@@ -42,7 +34,10 @@ namespace SolarSystem.Classes
                             desireredOrder = orders.FindIndex(x => x.OrderName == o.OrderName);
                         }
                     }
-                break;
+                    break;
+                    
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(pOrder), pOrder, null);
             }
 
             return orders[desireredOrder];

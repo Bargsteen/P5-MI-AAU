@@ -1,6 +1,4 @@
-﻿using System;
-using Xunit;
-using SolarSystem;
+﻿using Xunit;
 
 namespace SolarSystem.Test
 {

@@ -1,8 +1,6 @@
 ﻿using BetterPrivateObject;
 using SolarSystem.Simulation;
 using Xunit;
-using Moq;
-using SolarSystem.Classes;
 
 namespace SolarSystem.Test.Simulation
 {
