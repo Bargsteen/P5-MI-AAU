@@ -10,47 +10,132 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="Program.cs" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/SolarSystem/Program.cs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="6" lean-forward="false" selection-start-line="0" selection-start-column="6" selection-end-line="0" selection-end-column="6" />
-              <folding>
-                <marker date="1508482834429" expanded="true" signature="6:47" ph="..." />
-                <marker date="1508482834429" expanded="true" signature="70:281" ph="{...}" />
-                <marker date="1508482834429" expanded="true" signature="104:279" ph="{...}" />
-                <marker date="1508482834429" expanded="true" signature="157:177" ph="{...}" />
-                <marker date="1508482834429" expanded="true" signature="227:273" ph="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file leaf-file-name="Tests.cs" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/SolarSystem.Test/Tests.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="351">
-              <caret line="36" column="12" lean-forward="false" selection-start-line="36" selection-start-column="12" selection-end-line="36" selection-end-column="12" />
+            <state relative-caret-position="525">
+              <caret line="35" column="19" lean-forward="true" selection-start-line="35" selection-start-column="19" selection-end-line="35" selection-end-column="19" />
               <folding>
-                <marker date="1508483267893" expanded="true" signature="6:45" ph="..." />
-                <marker date="1508483267893" expanded="true" signature="73:994" ph="{...}" />
-                <marker date="1508483267893" expanded="true" signature="98:992" ph="{...}" />
-                <marker date="1508483267893" expanded="true" signature="147:198" ph="{...}" />
-                <marker date="1508483267893" expanded="true" signature="268:522" ph="{...}" />
-                <marker date="1508483267893" expanded="true" signature="741:968" ph="{...}" />
-                <marker date="1508483267893" expanded="true" signature="764:830" ph="/* Arrange ... */" />
+                <marker date="1508750266811" expanded="true" signature="6:45" ph="..." />
+                <marker date="1508750266811" expanded="true" signature="73:994" ph="{...}" />
+                <marker date="1508750266811" expanded="true" signature="98:992" ph="{...}" />
+                <marker date="1508750266811" expanded="true" signature="147:198" ph="{...}" />
+                <marker date="1508750266811" expanded="true" signature="268:518" ph="{...}" />
+                <marker date="1508750266811" expanded="true" signature="379:508" ph="/* Act ... */" />
+                <marker date="1508750266811" expanded="true" signature="737:968" ph="{...}" />
+                <marker date="1508750266811" expanded="true" signature="760:958" ph="/* Arrange ... */" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SolarSystem.Test.csproj" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/SolarSystem.Test/SolarSystem.Test.csproj">
+      <file leaf-file-name="ErpScrape.cs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/SolarSystem/Picking and ERP/ErpScrape.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="60">
+              <caret line="8" column="19" lean-forward="false" selection-start-line="8" selection-start-column="19" selection-end-line="8" selection-end-column="19" />
+              <folding>
+                <marker date="1508749680750" expanded="false" signature="6:115" ph="..." />
+                <marker date="1508749680750" expanded="true" signature="154:190" ph="{...}" />
+                <marker date="1508749680750" expanded="true" signature="176:188" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PickingTest.cs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/SolarSystem.Test/Picking and ERP/PickingTest.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="255">
+              <caret line="23" column="0" lean-forward="false" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
+              <folding>
+                <marker date="1508749702396" expanded="false" signature="6:147" ph="..." />
+                <marker date="1508749702396" expanded="true" signature="191:478" ph="{...}" />
+                <marker date="1508749702396" expanded="true" signature="215:476" ph="{...}" />
+                <marker date="1508749702396" expanded="true" signature="436:469" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Article.cs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/SolarSystem/Picking and ERP/Article.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="60">
+              <caret line="8" column="4" lean-forward="false" selection-start-line="8" selection-start-column="4" selection-end-line="8" selection-end-column="4" />
+              <folding>
+                <marker date="1508749680749" expanded="false" signature="6:115" ph="..." />
+                <marker date="1508749680749" expanded="true" signature="154:554" ph="{...}" />
+                <marker date="1508749680749" expanded="true" signature="174:552" ph="{...}" />
+                <marker date="1508749680749" expanded="true" signature="237:337" ph="{...}" />
+                <marker date="1508749680749" expanded="true" signature="433:546" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Order.cs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/SolarSystem/Picking and ERP/Order.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="60">
+              <caret line="8" column="11" lean-forward="false" selection-start-line="8" selection-start-column="11" selection-end-line="8" selection-end-column="11" />
+              <folding>
+                <marker date="1508749680753" expanded="false" signature="6:115" ph="..." />
+                <marker date="1508749680753" expanded="true" signature="154:537" ph="{...}" />
+                <marker date="1508749680753" expanded="true" signature="172:535" ph="{...}" />
+                <marker date="1508749680753" expanded="true" signature="227:319" ph="{...}" />
+                <marker date="1508749680753" expanded="true" signature="451:529" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PickingScrape.cs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/SolarSystem/Picking and ERP/PickingScrape.cs">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="0">
               <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
+              <folding>
+                <marker date="1508749680758" expanded="true" signature="6:132" ph="..." />
+                <marker date="1508749680758" expanded="true" signature="171:1198" ph="{...}" />
+                <marker date="1508749680758" expanded="true" signature="197:1196" ph="{...}" />
+                <marker date="1508749680758" expanded="true" signature="245:291" ph="{...}" />
+                <marker date="1508749680758" expanded="true" signature="405:1190" ph="{...}" />
+                <marker date="1508749680758" expanded="true" signature="678:1180" ph="{...}" />
+                <marker date="1508749680758" expanded="true" signature="775:958" ph="{...}" />
+                <marker date="1508749680758" expanded="true" signature="979:1166" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Line.cs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/SolarSystem/Picking and ERP/Line.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="60">
+              <caret line="8" column="4" lean-forward="false" selection-start-line="8" selection-start-column="4" selection-end-line="8" selection-end-column="4" />
+              <folding>
+                <marker date="1508749680752" expanded="false" signature="6:115" ph="..." />
+                <marker date="1508749680752" expanded="true" signature="154:611" ph="{...}" />
+                <marker date="1508749680752" expanded="true" signature="171:605" ph="{...}" />
+                <marker date="1508749680752" expanded="true" signature="248:370" ph="{...}" />
+                <marker date="1508749680752" expanded="true" signature="492:599" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ErpTest.cs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/SolarSystem.Test/Picking and ERP/ErpTest.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="75">
+              <caret line="9" column="5" lean-forward="false" selection-start-line="9" selection-start-column="5" selection-end-line="9" selection-end-column="5" />
+              <folding>
+                <marker date="1508749702309" expanded="false" signature="6:115" ph="..." />
+                <marker date="1508749702309" expanded="true" signature="159:193" ph="{...}" />
+                <marker date="1508749702309" expanded="true" signature="179:191" ph="{...}" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -58,8 +143,14 @@
     </leaf>
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/SolarSystem/Program.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/SolarSystem/Picking and ERP/PickingScrape.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/SolarSystem/Picking and ERP/Article.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/SolarSystem.Test/Picking and ERP/ErpTest.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/SolarSystem.Test/Picking and ERP/PickingTest.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/SolarSystem.Test/Tests.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/SolarSystem/Picking and ERP/ErpScrape.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/SolarSystem/Picking and ERP/Line.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/SolarSystem/Picking and ERP/Order.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -94,7 +185,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="SolutionExplorer">
         <subPane>
           <expand>
@@ -112,12 +202,18 @@
               <item name="SolarSystem (2 projects)" type="977d5f41:SolutionExplorerNodeRider" />
               <item name="SolarSystem.Test" type="977d5f41:SolutionExplorerNodeRider" />
             </path>
+            <path>
+              <item name="" type="13324e5d:SolutionExplorerViewPane$ProjectViewPaneTreeStructure$createRoot$1" />
+              <item name="SolarSystem (2 projects)" type="977d5f41:SolutionExplorerNodeRider" />
+              <item name="SolarSystem.Test" type="977d5f41:SolutionExplorerNodeRider" />
+              <item name="Picking and ERP" type="6f407253:SolutionExplorerNodeFileSystem" />
+            </path>
           </expand>
           <select />
         </subPane>
-        <option name="show-file-system" value="false" />
         <option name="show-all-items" value="false" />
       </pane>
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -147,9 +243,6 @@
       <option name="USE_EXTERNAL_CONSOLE" value="0" />
       <envs />
     </configuration>
-    <list size="1">
-      <item index="0" class="java.lang.String" itemvalue=".NET Project.Default" />
-    </list>
   </component>
   <component name="ShelveChangesManager" show_recycled="false">
     <option name="remove_strategy" value="false" />
@@ -166,7 +259,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="817000" />
+    <option name="totallyTimeSpent" value="953000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -178,29 +271,43 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1440" height="900" extended-state="0" />
+    <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Errors In Solution" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Unit Tests" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32941177" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Errors In Solution" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Unit Tests" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.169" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="NuGet" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32941177" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Build" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="NuGet" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32941177" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16547619" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Errors In Solution" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="true" content_ui="tabs" />
+      <window_info id="Unit Tests" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32941177" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="NuGet" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32941177" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Build" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -214,6 +321,106 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/SolarSystem.Test/Tests.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="23" column="12" lean-forward="true" selection-start-line="23" selection-start-column="12" selection-end-line="23" selection-end-column="12" />
+          <folding>
+            <marker date="1508750266811" expanded="true" signature="6:45" ph="..." />
+            <marker date="1508750266811" expanded="true" signature="73:994" ph="{...}" />
+            <marker date="1508750266811" expanded="true" signature="98:992" ph="{...}" />
+            <marker date="1508750266811" expanded="true" signature="147:198" ph="{...}" />
+            <marker date="1508750266811" expanded="true" signature="268:518" ph="{...}" />
+            <marker date="1508750266811" expanded="true" signature="379:508" ph="/* Act ... */" />
+            <marker date="1508750266811" expanded="true" signature="737:968" ph="{...}" />
+            <marker date="1508750266811" expanded="true" signature="760:958" ph="/* Arrange ... */" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SolarSystem/Picking and ERP/ErpScrape.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="13" lean-forward="true" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+          <folding>
+            <marker date="1508749680750" expanded="false" signature="6:115" ph="..." />
+            <marker date="1508749680750" expanded="true" signature="154:190" ph="{...}" />
+            <marker date="1508749680750" expanded="true" signature="176:188" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SolarSystem/Picking and ERP/Article.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="8" column="4" lean-forward="false" selection-start-line="8" selection-start-column="4" selection-end-line="8" selection-end-column="4" />
+          <folding>
+            <marker date="1508749680749" expanded="false" signature="6:115" ph="..." />
+            <marker date="1508749680749" expanded="true" signature="154:554" ph="{...}" />
+            <marker date="1508749680749" expanded="true" signature="174:552" ph="{...}" />
+            <marker date="1508749680749" expanded="true" signature="237:337" ph="{...}" />
+            <marker date="1508749680749" expanded="true" signature="433:546" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SolarSystem/Picking and ERP/Order.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="8" column="11" lean-forward="false" selection-start-line="8" selection-start-column="11" selection-end-line="8" selection-end-column="11" />
+          <folding>
+            <marker date="1508749680753" expanded="false" signature="6:115" ph="..." />
+            <marker date="1508749680753" expanded="true" signature="154:537" ph="{...}" />
+            <marker date="1508749680753" expanded="true" signature="172:535" ph="{...}" />
+            <marker date="1508749680753" expanded="true" signature="227:319" ph="{...}" />
+            <marker date="1508749680753" expanded="true" signature="451:529" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SolarSystem/Picking and ERP/Line.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="8" column="4" lean-forward="false" selection-start-line="8" selection-start-column="4" selection-end-line="8" selection-end-column="4" />
+          <folding>
+            <marker date="1508749680752" expanded="false" signature="6:115" ph="..." />
+            <marker date="1508749680752" expanded="true" signature="154:611" ph="{...}" />
+            <marker date="1508749680752" expanded="true" signature="171:605" ph="{...}" />
+            <marker date="1508749680752" expanded="true" signature="248:370" ph="{...}" />
+            <marker date="1508749680752" expanded="true" signature="492:599" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SolarSystem.Test/Picking and ERP/ErpTest.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="1" lean-forward="false" selection-start-line="11" selection-start-column="1" selection-end-line="11" selection-end-column="1" />
+          <folding>
+            <marker date="1508749702309" expanded="false" signature="6:115" ph="..." />
+            <marker date="1508749702309" expanded="true" signature="159:193" ph="{...}" />
+            <marker date="1508749702309" expanded="true" signature="179:191" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SolarSystem.Test/Tests.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1508750266811" expanded="true" signature="6:45" ph="..." />
+            <marker date="1508750266811" expanded="true" signature="73:994" ph="{...}" />
+            <marker date="1508750266811" expanded="true" signature="98:992" ph="{...}" />
+            <marker date="1508750266811" expanded="true" signature="147:198" ph="{...}" />
+            <marker date="1508750266811" expanded="true" signature="268:518" ph="{...}" />
+            <marker date="1508750266811" expanded="true" signature="379:508" ph="/* Act ... */" />
+            <marker date="1508750266811" expanded="true" signature="737:968" ph="{...}" />
+            <marker date="1508750266811" expanded="true" signature="760:958" ph="/* Arrange ... */" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/SolarSystem.Test/SolarSystem.Test.csproj">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -222,32 +429,237 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/SolarSystem/Program.cs">
+    <entry file="file://$PROJECT_DIR$/SolarSystem.Test/SolarSystem.Test.csproj">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
-          <caret line="0" column="6" lean-forward="false" selection-start-line="0" selection-start-column="6" selection-end-line="0" selection-end-column="6" />
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SolarSystem/Program.cs" />
+    <entry file="file://$PROJECT_DIR$/SolarSystem/SolarSystem.csproj">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SolarSystem/Picking and ERP/Program.cs" />
+    <entry file="file://$PROJECT_DIR$/SolarSystem.Test/Tests.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="660">
+          <caret line="46" column="1" lean-forward="false" selection-start-line="46" selection-start-column="1" selection-end-line="46" selection-end-column="1" />
           <folding>
-            <marker date="1508482834429" expanded="true" signature="6:47" ph="..." />
-            <marker date="1508482834429" expanded="true" signature="70:281" ph="{...}" />
-            <marker date="1508482834429" expanded="true" signature="104:279" ph="{...}" />
-            <marker date="1508482834429" expanded="true" signature="157:177" ph="{...}" />
-            <marker date="1508482834429" expanded="true" signature="227:273" ph="{...}" />
+            <marker date="1508750266811" expanded="true" signature="6:45" ph="..." />
+            <marker date="1508750266811" expanded="true" signature="73:994" ph="{...}" />
+            <marker date="1508750266811" expanded="true" signature="98:992" ph="{...}" />
+            <marker date="1508750266811" expanded="true" signature="147:198" ph="{...}" />
+            <marker date="1508750266811" expanded="true" signature="268:518" ph="{...}" />
+            <marker date="1508750266811" expanded="true" signature="379:508" ph="/* Act ... */" />
+            <marker date="1508750266811" expanded="true" signature="737:968" ph="{...}" />
+            <marker date="1508750266811" expanded="true" signature="760:958" ph="/* Arrange ... */" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SolarSystem.Test/SolarSystem.Test.csproj">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SolarSystem/Program.cs" />
+    <entry file="file://$PROJECT_DIR$/SolarSystem/Picking and ERP/Article.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="8" column="4" lean-forward="false" selection-start-line="8" selection-start-column="4" selection-end-line="8" selection-end-column="4" />
+          <folding>
+            <marker date="1508749680749" expanded="false" signature="6:115" ph="..." />
+            <marker date="1508749680749" expanded="true" signature="154:554" ph="{...}" />
+            <marker date="1508749680749" expanded="true" signature="174:552" ph="{...}" />
+            <marker date="1508749680749" expanded="true" signature="237:337" ph="{...}" />
+            <marker date="1508749680749" expanded="true" signature="433:546" ph="{...}" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/SolarSystem.Test/Tests.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="351">
-          <caret line="36" column="12" lean-forward="false" selection-start-line="36" selection-start-column="12" selection-end-line="36" selection-end-column="12" />
+        <state relative-caret-position="390">
+          <caret line="28" column="16" lean-forward="false" selection-start-line="28" selection-start-column="16" selection-end-line="28" selection-end-column="16" />
           <folding>
-            <marker date="1508483267893" expanded="true" signature="6:45" ph="..." />
-            <marker date="1508483267893" expanded="true" signature="73:994" ph="{...}" />
-            <marker date="1508483267893" expanded="true" signature="98:992" ph="{...}" />
-            <marker date="1508483267893" expanded="true" signature="147:198" ph="{...}" />
-            <marker date="1508483267893" expanded="true" signature="268:522" ph="{...}" />
-            <marker date="1508483267893" expanded="true" signature="741:968" ph="{...}" />
-            <marker date="1508483267893" expanded="true" signature="764:830" ph="/* Arrange ... */" />
+            <marker date="1508750266811" expanded="true" signature="6:45" ph="..." />
+            <marker date="1508750266811" expanded="true" signature="73:994" ph="{...}" />
+            <marker date="1508750266811" expanded="true" signature="98:992" ph="{...}" />
+            <marker date="1508750266811" expanded="true" signature="147:198" ph="{...}" />
+            <marker date="1508750266811" expanded="true" signature="268:518" ph="{...}" />
+            <marker date="1508750266811" expanded="true" signature="379:508" ph="/* Act ... */" />
+            <marker date="1508750266811" expanded="true" signature="737:968" ph="{...}" />
+            <marker date="1508750266811" expanded="true" signature="760:958" ph="/* Arrange ... */" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SolarSystem/Picking and ERP/Line.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="8" column="4" lean-forward="false" selection-start-line="8" selection-start-column="4" selection-end-line="8" selection-end-column="4" />
+          <folding>
+            <marker date="1508749680752" expanded="false" signature="6:115" ph="..." />
+            <marker date="1508749680752" expanded="true" signature="154:611" ph="{...}" />
+            <marker date="1508749680752" expanded="true" signature="171:605" ph="{...}" />
+            <marker date="1508749680752" expanded="true" signature="248:370" ph="{...}" />
+            <marker date="1508749680752" expanded="true" signature="492:599" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SolarSystem/Picking and ERP/Order.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="8" column="11" lean-forward="false" selection-start-line="8" selection-start-column="11" selection-end-line="8" selection-end-column="11" />
+          <folding>
+            <marker date="1508749680753" expanded="false" signature="6:115" ph="..." />
+            <marker date="1508749680753" expanded="true" signature="154:537" ph="{...}" />
+            <marker date="1508749680753" expanded="true" signature="172:535" ph="{...}" />
+            <marker date="1508749680753" expanded="true" signature="227:319" ph="{...}" />
+            <marker date="1508749680753" expanded="true" signature="451:529" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SolarSystem/Picking and ERP/ErpScrape.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="8" column="19" lean-forward="false" selection-start-line="8" selection-start-column="19" selection-end-line="8" selection-end-column="19" />
+          <folding>
+            <marker date="1508749680750" expanded="false" signature="6:115" ph="..." />
+            <marker date="1508749680750" expanded="true" signature="154:190" ph="{...}" />
+            <marker date="1508749680750" expanded="true" signature="176:188" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SolarSystem.Test/SolarSystem.Test.csproj">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SolarSystem/Program.cs" />
+    <entry file="file://$PROJECT_DIR$/SolarSystem.Test/Tests.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="390">
+          <caret line="28" column="16" lean-forward="false" selection-start-line="28" selection-start-column="16" selection-end-line="28" selection-end-column="16" />
+          <folding>
+            <marker date="1508750266811" expanded="true" signature="6:45" ph="..." />
+            <marker date="1508750266811" expanded="true" signature="73:994" ph="{...}" />
+            <marker date="1508750266811" expanded="true" signature="98:992" ph="{...}" />
+            <marker date="1508750266811" expanded="true" signature="147:198" ph="{...}" />
+            <marker date="1508750266811" expanded="true" signature="268:518" ph="{...}" />
+            <marker date="1508750266811" expanded="true" signature="379:508" ph="/* Act ... */" />
+            <marker date="1508750266811" expanded="true" signature="737:968" ph="{...}" />
+            <marker date="1508750266811" expanded="true" signature="760:958" ph="/* Arrange ... */" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SolarSystem.Test/SolarSystem.Test.csproj">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SolarSystem/Program.cs" />
+    <entry file="file://$PROJECT_DIR$/SolarSystem.Test/Tests.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="390">
+          <caret line="28" column="16" lean-forward="false" selection-start-line="28" selection-start-column="16" selection-end-line="28" selection-end-column="16" />
+          <folding>
+            <marker date="1508750266811" expanded="true" signature="6:45" ph="..." />
+            <marker date="1508750266811" expanded="true" signature="73:994" ph="{...}" />
+            <marker date="1508750266811" expanded="true" signature="98:992" ph="{...}" />
+            <marker date="1508750266811" expanded="true" signature="147:198" ph="{...}" />
+            <marker date="1508750266811" expanded="true" signature="268:518" ph="{...}" />
+            <marker date="1508750266811" expanded="true" signature="379:508" ph="/* Act ... */" />
+            <marker date="1508750266811" expanded="true" signature="737:968" ph="{...}" />
+            <marker date="1508750266811" expanded="true" signature="760:958" ph="/* Arrange ... */" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SolarSystem.Test/SolarSystem.Test.csproj">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SolarSystem/Program.cs" />
+    <entry file="file://$PROJECT_DIR$/SolarSystem/Picking and ERP/PickingScrape.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1508749680758" expanded="true" signature="6:132" ph="..." />
+            <marker date="1508749680758" expanded="true" signature="171:1198" ph="{...}" />
+            <marker date="1508749680758" expanded="true" signature="197:1196" ph="{...}" />
+            <marker date="1508749680758" expanded="true" signature="245:291" ph="{...}" />
+            <marker date="1508749680758" expanded="true" signature="405:1190" ph="{...}" />
+            <marker date="1508749680758" expanded="true" signature="678:1180" ph="{...}" />
+            <marker date="1508749680758" expanded="true" signature="775:958" ph="{...}" />
+            <marker date="1508749680758" expanded="true" signature="979:1166" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SolarSystem.Test/Picking and ERP/PickingTest.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="23" column="0" lean-forward="false" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
+          <folding>
+            <marker date="1508749702396" expanded="false" signature="6:147" ph="..." />
+            <marker date="1508749702396" expanded="true" signature="191:478" ph="{...}" />
+            <marker date="1508749702396" expanded="true" signature="215:476" ph="{...}" />
+            <marker date="1508749702396" expanded="true" signature="436:469" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SolarSystem.Test/Picking and ERP/ErpTest.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="9" column="5" lean-forward="false" selection-start-line="9" selection-start-column="5" selection-end-line="9" selection-end-column="5" />
+          <folding>
+            <marker date="1508749702309" expanded="false" signature="6:115" ph="..." />
+            <marker date="1508749702309" expanded="true" signature="159:193" ph="{...}" />
+            <marker date="1508749702309" expanded="true" signature="179:191" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SolarSystem.Test/Tests.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="525">
+          <caret line="35" column="19" lean-forward="true" selection-start-line="35" selection-start-column="19" selection-end-line="35" selection-end-column="19" />
+          <folding>
+            <marker date="1508750266811" expanded="true" signature="6:45" ph="..." />
+            <marker date="1508750266811" expanded="true" signature="73:994" ph="{...}" />
+            <marker date="1508750266811" expanded="true" signature="98:992" ph="{...}" />
+            <marker date="1508750266811" expanded="true" signature="147:198" ph="{...}" />
+            <marker date="1508750266811" expanded="true" signature="268:518" ph="{...}" />
+            <marker date="1508750266811" expanded="true" signature="379:508" ph="/* Act ... */" />
+            <marker date="1508750266811" expanded="true" signature="737:968" ph="{...}" />
+            <marker date="1508750266811" expanded="true" signature="760:958" ph="/* Arrange ... */" />
           </folding>
         </state>
       </provider>
