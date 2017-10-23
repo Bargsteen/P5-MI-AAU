@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SolarSystem.Classes
 {
-    class ArticleNumber
+    public class ArticleNumber
     {
         public int ArticleNum { get; }
         
@@ -14,7 +14,7 @@ namespace SolarSystem.Classes
         {
             ArticleNum = articleNum;
         }
-
+        
         public override string ToString()
         {
             return ArticleNum.ToString();

@@ -6,20 +6,20 @@ using System.Threading.Tasks;
 
 namespace SolarSystem.Classes
 {
-    class OrderBox
+    public class OrderBox
     {
         public Order Order { get; }
-        public int TimeRemaining { get; }
+        public int TimeRemaining { get; set; }
 
         public OrderBox(Order order)
         {
-            Order = order;
+            Order = order ?? throw new ArgumentNullException(nameof(order));
             TimeRemaining = order.TimeToFinish;
         }
 
         public override string ToString()
         {
-            return $@"({Order}, {TimeRemaining}";
+            return $"({Order}, {TimeRemaining})";
         }
     }
 }

@@ -1,6 +1,8 @@
-﻿using SolarSystem.Simulation;
+﻿using BetterPrivateObject;
+using SolarSystem.Simulation;
 using Xunit;
 using Moq;
+using SolarSystem.Classes;
 
 namespace SolarSystem.Test.Simulation
 {
@@ -9,14 +11,22 @@ namespace SolarSystem.Test.Simulation
         [Fact]
         public void Run_GivenATimeUnit_ReturnsString()
         {
+           Assert.False(true);
+           
+        }
+
+        [Fact]
+        public void GetNextOrder_OnRun_ReturnsOrderWithValidName()
+        {
             // Arrange
-            ISim sim = new Sim();
+            dynamic simPo = new PrivateType<Sim>();
             
             // Act
-            var result = sim.Run(10u);
+            dynamic res = simPo.GetNextOrder();
             
             // Assert
-            Assert.IsType<string>(result);
+            Assert.True(res.OrderName[0] >= 'A' && res.OrderName[0] <= 'Z');
+            
         }
     }
 }

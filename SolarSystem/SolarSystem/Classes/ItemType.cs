@@ -6,14 +6,13 @@ using System.Threading.Tasks;
 
 namespace SolarSystem.Classes
 {
-    class ItemType
+    public class ItemType
     {
         public ArticleNumber ArticleNumber { get; }
-        
+
         public ItemType(ArticleNumber articleNumber)
         {
-            ArticleNumber = articleNumber;
+            ArticleNumber = articleNumber ?? throw new ArgumentNullException(nameof(articleNumber));
         }
-
     }
 }

@@ -1,6 +1,0 @@
-/Users/kasper/Google Drive/Uni/Projekt/P5-MI-AAU/SolarSystem/SolarSystem/bin/Debug/SolarSystem.exe
-/Users/kasper/Google Drive/Uni/Projekt/P5-MI-AAU/SolarSystem/SolarSystem/bin/Debug/SolarSystem.pdb
-/Users/kasper/Google Drive/Uni/Projekt/P5-MI-AAU/SolarSystem/SolarSystem/obj/Debug/SolarSystem.csprojResolveAssemblyReference.cache
-/Users/kasper/Google Drive/Uni/Projekt/P5-MI-AAU/SolarSystem/SolarSystem/obj/Debug/SolarSystem.csproj.CoreCompileInputs.cache
-/Users/kasper/Google Drive/Uni/Projekt/P5-MI-AAU/SolarSystem/SolarSystem/obj/Debug/SolarSystem.exe
-/Users/kasper/Google Drive/Uni/Projekt/P5-MI-AAU/SolarSystem/SolarSystem/obj/Debug/SolarSystem.pdb

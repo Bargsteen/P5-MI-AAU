@@ -25,11 +25,11 @@ class Order:
             articlesString += str(str(i+1) + str(art)) + "\n"
         return "Ordernumber: " + self.orderNumber + "\n" + articlesString
         
-pickingPath : str = "../wetransfer-f8286e/"
+pickingPath : str = "~/Downloads/wetransfer-f8286e/"
 pickingSource : str = "Picking 02-10-2017.csv"
 pickingFilepath : str = pickingPath + pickingSource
 
-erpTracePath : str = "../wetransfer-f8286e/"
+erpTracePath : str = "~/Downloads/wetransfer-f8286e/"
 erpTraceSource : str = "ErpTask_trace.log"
 erpTraceFilepath : str = erpTracePath + erpTraceSource
 

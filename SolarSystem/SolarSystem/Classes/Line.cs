@@ -6,19 +6,20 @@ using System.Threading.Tasks;
 
 namespace SolarSystem.Classes
 {
-    class Line
+    public class Line
     {
         public ItemType ItemType { get; }
         public int Count { get; }
 
-        
-        public Line(ItemType itemtype, int count)
+
+        public Line(ItemType itemType, int count)
         {
-            ItemType = itemtype;
+            ItemType = itemType ?? throw new ArgumentNullException(nameof(itemType));
             Count = count;
+            
         }
 
-        
+
         public override string ToString()
         {
             return ($@"({ItemType}, {Count}");
