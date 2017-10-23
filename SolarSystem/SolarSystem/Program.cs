@@ -19,7 +19,7 @@ namespace SolarSystem
             List<Classes.Order> orders = new List<Classes.Order>();
             for (char c = 'A'; c < 'F'; c++)
             {
-                orders.Add(new Classes.Order(c.ToString(), RNG.Next(1000)));
+                orders.Add(new Classes.Order(c.ToString(), RNG.Next(1000), DateTime.Now));
             }
 
 
@@ -45,7 +45,7 @@ namespace SolarSystem
                             Console.WriteLine(o.ToString());
                         }
                         Console.WriteLine("FIFO ORDER IS:");
-                        Console.WriteLine(Classes.OrderBoxPicker.GetNext(Classes.OrderBoxPicker.PickingOrder.FirstInFirstOut, orders));
+                        Console.WriteLine(Classes.OrderBoxPicker.GetNextOrder(Classes.OrderBoxPicker.PickingOrder.FirstInFirstOut, orders));
 
                         break;
 
@@ -58,7 +58,7 @@ namespace SolarSystem
                             Console.WriteLine(o.ToString());
                         }
                         Console.WriteLine("LIFO ORDER IS:");
-                        Console.WriteLine(Classes.OrderBoxPicker.GetNext(Classes.OrderBoxPicker.PickingOrder.LastInFirstOut, orders));
+                        Console.WriteLine(Classes.OrderBoxPicker.GetNextOrder(Classes.OrderBoxPicker.PickingOrder.LastInFirstOut, orders));
 
                         break;
                         

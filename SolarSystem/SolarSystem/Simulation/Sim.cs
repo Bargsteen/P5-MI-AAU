@@ -66,7 +66,7 @@ namespace SolarSystem.Simulation
             string name = ((char) ('A' + Rand.Next(0, 26))).ToString();
             int timeToFinish = Rand.Next(10, 40);
 
-            return new Order(name, timeToFinish);
+            return new Order(name, timeToFinish, DateTime.Now);
         }
 
         

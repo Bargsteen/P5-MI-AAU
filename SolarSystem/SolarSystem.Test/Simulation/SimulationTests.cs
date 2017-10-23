@@ -1,17 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using BetterPrivateObject;
 using Castle.DynamicProxy.Generators.Emitters;
 using Moq;
+using Ploeh.AutoFixture;
+using Ploeh.AutoFixture.AutoMoq;
 using SolarSystem.Classes;
 using SolarSystem.Simulation;
 using Xunit;
 
 namespace SolarSystem.Test.Simulation
 {
-    public class SimulationTests
+    public class SimulationTests : IDisposable
     {
+        private readonly IFixture _fixture;
+        
+        public SimulationTests()
+        {
+            _fixture = new Fixture().Customize(new AutoMoqCustomization());
+        }
+        
+        
         [Fact]
         public void Run_GivenATimeUnit_ReturnsString()
         {
@@ -38,12 +49,51 @@ namespace SolarSystem.Test.Simulation
         {
             // Arrange
             Sim sut = new Sim(1);
+            var order = _fixture.Build<Order>().With(o => o.TimeToFinish, 10).Create();
             
             // Act
-            sut._Update(() => new Order("OrderName", 10));
+            sut._Update(() => order);
 
             // Assert
             Assert.Equal(sut.BoxesInSystem.Count, 1);
+        }
+
+        [Fact]
+        public void Update_BoxTime_GetsDecremented()
+        {
+            // Arrange
+            Sim sut = new Sim(1);
+            const int orderTime = 10;
+            const int expectedTime = orderTime - 1;
+            var order = _fixture.Build<Order>().With(o => o.TimeToFinish, 10).Create();
+            
+            // Act
+            sut._Update(() => order);
+            OrderBox orderBoxFromSystem = sut.BoxesInSystem.First();
+            
+            // Assert
+            Assert.Equal(expectedTime, orderBoxFromSystem.TimeRemaining);
+        }
+
+        [Fact]
+        public void Update_BoxFinishes_AddedToFinishedOrdersAndRemovedFromBoxesInSystem()
+        {
+            // Arrange
+            Sim sut = new Sim(1);
+            var order = _fixture.Build<Order>().With(o => o.TimeToFinish, 10).Create();
+            
+            // Act
+            sut._Update(() => order);
+            
+            // Assert
+            Assert.Equal(0, sut.BoxesInSystem.Count);
+            Assert.Equal(1, sut.FinishedOrders.Count);
+            
+        }
+
+        public void Dispose()
+        {
+            // Nothing to do
         }
     }
 }
