@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ContentModelStore">
+    <e p="$PROJECT_DIR$/../../../../../Caches/Rider2017.2/resharper-host/local/Transient/ReSharperHost/v10/SolutionCaches/_SolarSystem.363642311.00" t="ExcludeRecursive" />
     <e p="$PROJECT_DIR$" t="IncludeFlat">
       <e p="packages" t="ExcludeRecursive" />
       <e p="SolarSystem" t="IncludeRecursive">
         <e p="bin" t="ExcludeRecursive" />
         <e p="obj" t="ExcludeRecursive" />
+        <e p="Picking and ERP" t="Include">
+          <e p="Article.cs" t="Include" />
+          <e p="ErpScrape.cs" t="Include" />
+          <e p="Line.cs" t="Include" />
+          <e p="Order.cs" t="Include" />
+          <e p="PickingScrape.cs" t="Include" />
+        </e>
         <e p="Program.cs" t="Include" />
         <e p="Properties" t="Include">
           <e p="AssemblyInfo.cs" t="Include" />
@@ -16,6 +24,11 @@
       <e p="SolarSystem.Test" t="IncludeRecursive">
         <e p="bin" t="ExcludeRecursive" />
         <e p="obj" t="ExcludeRecursive" />
+        <e p="Picking and ERP" t="Include">
+          <e p="ErpTest.cs" t="Include" />
+          <e p="Picking 02-10-2017.csv" t="Include" />
+          <e p="PickingTest.cs" t="Include" />
+        </e>
         <e p="Properties" t="Include">
           <e p="AssemblyInfo.cs" t="Include" />
         </e>
@@ -23,6 +36,5 @@
         <e p="Tests.cs" t="Include" />
       </e>
     </e>
-    <e p="$USER_HOME$/Library/Caches/Rider2017.2/resharper-host/local/Transient/ReSharperHost/v10/SolutionCaches/_SolarSystem.409817400.00" t="ExcludeRecursive" />
   </component>
 </project>

@@ -11,6 +11,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+<<<<<<< Updated upstream
       <file leaf-file-name="Tests.cs" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/SolarSystem.Test/Tests.cs">
           <provider selected="true" editor-type-id="text-editor">
@@ -25,6 +26,21 @@
                 <marker date="1508750266811" expanded="true" signature="379:508" ph="/* Act ... */" />
                 <marker date="1508750266811" expanded="true" signature="737:968" ph="{...}" />
                 <marker date="1508750266811" expanded="true" signature="760:958" ph="/* Arrange ... */" />
+=======
+      <file leaf-file-name="Tests.cs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/SolarSystem.Test/Tests.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="390">
+              <caret line="28" column="16" lean-forward="false" selection-start-line="28" selection-start-column="16" selection-end-line="28" selection-end-column="16" />
+              <folding>
+                <marker date="1508484727141" expanded="false" signature="6:45" ph="..." />
+                <marker date="1508484727141" expanded="true" signature="73:994" ph="{...}" />
+                <marker date="1508484727141" expanded="true" signature="98:992" ph="{...}" />
+                <marker date="1508484727141" expanded="true" signature="147:198" ph="{...}" />
+                <marker date="1508484727141" expanded="true" signature="268:522" ph="{...}" />
+                <marker date="1508484727141" expanded="true" signature="741:968" ph="{...}" />
+                <marker date="1508484727141" expanded="true" signature="764:830" ph="/* Arrange ... */" />
+>>>>>>> Stashed changes
               </folding>
             </state>
           </provider>
@@ -34,7 +50,11 @@
         <entry file="file://$PROJECT_DIR$/SolarSystem/Picking and ERP/ErpScrape.cs">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="60">
+<<<<<<< Updated upstream
               <caret line="8" column="19" lean-forward="false" selection-start-line="8" selection-start-column="19" selection-end-line="8" selection-end-column="19" />
+=======
+              <caret line="8" column="19" lean-forward="true" selection-start-line="8" selection-start-column="19" selection-end-line="8" selection-end-column="19" />
+>>>>>>> Stashed changes
               <folding>
                 <marker date="1508749680750" expanded="false" signature="6:115" ph="..." />
                 <marker date="1508749680750" expanded="true" signature="154:190" ph="{...}" />
@@ -44,11 +64,19 @@
           </provider>
         </entry>
       </file>
+<<<<<<< Updated upstream
       <file leaf-file-name="PickingTest.cs" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/SolarSystem.Test/Picking and ERP/PickingTest.cs">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="255">
               <caret line="23" column="0" lean-forward="false" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
+=======
+      <file leaf-file-name="PickingTest.cs" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/SolarSystem.Test/Picking and ERP/PickingTest.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="255">
+              <caret line="23" column="0" lean-forward="true" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
+>>>>>>> Stashed changes
               <folding>
                 <marker date="1508749702396" expanded="false" signature="6:147" ph="..." />
                 <marker date="1508749702396" expanded="true" signature="191:478" ph="{...}" />
@@ -61,6 +89,7 @@
       </file>
       <file leaf-file-name="Article.cs" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/SolarSystem/Picking and ERP/Article.cs">
+<<<<<<< Updated upstream
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="60">
               <caret line="8" column="4" lean-forward="false" selection-start-line="8" selection-start-column="4" selection-end-line="8" selection-end-column="4" />
@@ -86,18 +115,52 @@
                 <marker date="1508749680753" expanded="true" signature="172:535" ph="{...}" />
                 <marker date="1508749680753" expanded="true" signature="227:319" ph="{...}" />
                 <marker date="1508749680753" expanded="true" signature="451:529" ph="{...}" />
+=======
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="60">
+              <caret line="8" column="4" lean-forward="false" selection-start-line="8" selection-start-column="4" selection-end-line="8" selection-end-column="4" />
+              <folding>
+                <marker date="1508749680749" expanded="false" signature="6:115" ph="..." />
+                <marker date="1508749680749" expanded="true" signature="154:554" ph="{...}" />
+                <marker date="1508749680749" expanded="true" signature="174:552" ph="{...}" />
+                <marker date="1508749680749" expanded="true" signature="237:337" ph="{...}" />
+                <marker date="1508749680749" expanded="true" signature="433:546" ph="{...}" />
+>>>>>>> Stashed changes
               </folding>
             </state>
           </provider>
         </entry>
       </file>
+<<<<<<< Updated upstream
+=======
+      <file leaf-file-name="Order.cs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/SolarSystem/Picking and ERP/Order.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="60">
+              <caret line="8" column="11" lean-forward="false" selection-start-line="8" selection-start-column="11" selection-end-line="8" selection-end-column="11" />
+              <folding>
+                <marker date="1508749680753" expanded="false" signature="6:115" ph="..." />
+                <marker date="1508749680753" expanded="true" signature="154:537" ph="{...}" />
+                <marker date="1508749680753" expanded="true" signature="172:535" ph="{...}" />
+                <marker date="1508749680753" expanded="true" signature="227:319" ph="{...}" />
+                <marker date="1508749680753" expanded="true" signature="451:529" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+>>>>>>> Stashed changes
       <file leaf-file-name="PickingScrape.cs" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/SolarSystem/Picking and ERP/PickingScrape.cs">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="0">
               <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding>
+<<<<<<< Updated upstream
                 <marker date="1508749680758" expanded="true" signature="6:132" ph="..." />
+=======
+                <marker date="1508749680758" expanded="false" signature="6:132" ph="..." />
+>>>>>>> Stashed changes
                 <marker date="1508749680758" expanded="true" signature="171:1198" ph="{...}" />
                 <marker date="1508749680758" expanded="true" signature="197:1196" ph="{...}" />
                 <marker date="1508749680758" expanded="true" signature="245:291" ph="{...}" />
@@ -129,8 +192,13 @@
       <file leaf-file-name="ErpTest.cs" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/SolarSystem.Test/Picking and ERP/ErpTest.cs">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< Updated upstream
             <state relative-caret-position="75">
               <caret line="9" column="5" lean-forward="false" selection-start-line="9" selection-start-column="5" selection-end-line="9" selection-end-column="5" />
+=======
+            <state relative-caret-position="105">
+              <caret line="11" column="1" lean-forward="false" selection-start-line="11" selection-start-column="1" selection-end-line="11" selection-end-column="1" />
+>>>>>>> Stashed changes
               <folding>
                 <marker date="1508749702309" expanded="false" signature="6:115" ph="..." />
                 <marker date="1508749702309" expanded="true" signature="159:193" ph="{...}" />
@@ -200,13 +268,23 @@
             <path>
               <item name="" type="13324e5d:SolutionExplorerViewPane$ProjectViewPaneTreeStructure$createRoot$1" />
               <item name="SolarSystem (2 projects)" type="977d5f41:SolutionExplorerNodeRider" />
+              <item name="SolarSystem" type="977d5f41:SolutionExplorerNodeRider" />
+              <item name="Picking and ERP" type="977d5f41:SolutionExplorerNodeRider" />
+            </path>
+            <path>
+              <item name="" type="13324e5d:SolutionExplorerViewPane$ProjectViewPaneTreeStructure$createRoot$1" />
+              <item name="SolarSystem (2 projects)" type="977d5f41:SolutionExplorerNodeRider" />
               <item name="SolarSystem.Test" type="977d5f41:SolutionExplorerNodeRider" />
             </path>
             <path>
               <item name="" type="13324e5d:SolutionExplorerViewPane$ProjectViewPaneTreeStructure$createRoot$1" />
               <item name="SolarSystem (2 projects)" type="977d5f41:SolutionExplorerNodeRider" />
               <item name="SolarSystem.Test" type="977d5f41:SolutionExplorerNodeRider" />
+<<<<<<< Updated upstream
               <item name="Picking and ERP" type="6f407253:SolutionExplorerNodeFileSystem" />
+=======
+              <item name="Picking and ERP" type="977d5f41:SolutionExplorerNodeRider" />
+>>>>>>> Stashed changes
             </path>
           </expand>
           <select />
@@ -255,11 +333,16 @@
       <option name="presentableId" value="Default" />
       <updated>1508482376079</updated>
       <workItem from="1508482377221" duration="817000" />
+      <workItem from="1508749616682" duration="221000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
+<<<<<<< Updated upstream
     <option name="totallyTimeSpent" value="953000" />
+=======
+    <option name="totallyTimeSpent" value="1383000" />
+>>>>>>> Stashed changes
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -288,6 +371,7 @@
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+<<<<<<< Updated upstream
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Errors In Solution" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -305,6 +389,14 @@
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+=======
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Build" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+>>>>>>> Stashed changes
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
@@ -326,6 +418,7 @@
         <state relative-caret-position="315">
           <caret line="23" column="12" lean-forward="true" selection-start-line="23" selection-start-column="12" selection-end-line="23" selection-end-column="12" />
           <folding>
+<<<<<<< Updated upstream
             <marker date="1508750266811" expanded="true" signature="6:45" ph="..." />
             <marker date="1508750266811" expanded="true" signature="73:994" ph="{...}" />
             <marker date="1508750266811" expanded="true" signature="98:992" ph="{...}" />
@@ -334,6 +427,15 @@
             <marker date="1508750266811" expanded="true" signature="379:508" ph="/* Act ... */" />
             <marker date="1508750266811" expanded="true" signature="737:968" ph="{...}" />
             <marker date="1508750266811" expanded="true" signature="760:958" ph="/* Arrange ... */" />
+=======
+            <marker date="1508484727141" expanded="false" signature="6:45" ph="..." />
+            <marker date="1508484727141" expanded="true" signature="73:994" ph="{...}" />
+            <marker date="1508484727141" expanded="true" signature="98:992" ph="{...}" />
+            <marker date="1508484727141" expanded="true" signature="147:198" ph="{...}" />
+            <marker date="1508484727141" expanded="true" signature="268:522" ph="{...}" />
+            <marker date="1508484727141" expanded="true" signature="741:968" ph="{...}" />
+            <marker date="1508484727141" expanded="true" signature="764:830" ph="/* Arrange ... */" />
+>>>>>>> Stashed changes
           </folding>
         </state>
       </provider>
@@ -409,6 +511,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
+<<<<<<< Updated upstream
             <marker date="1508750266811" expanded="true" signature="6:45" ph="..." />
             <marker date="1508750266811" expanded="true" signature="73:994" ph="{...}" />
             <marker date="1508750266811" expanded="true" signature="98:992" ph="{...}" />
@@ -417,10 +520,21 @@
             <marker date="1508750266811" expanded="true" signature="379:508" ph="/* Act ... */" />
             <marker date="1508750266811" expanded="true" signature="737:968" ph="{...}" />
             <marker date="1508750266811" expanded="true" signature="760:958" ph="/* Arrange ... */" />
+=======
+            <marker date="1508484727141" expanded="false" signature="6:45" ph="..." />
+            <marker date="1508484727141" expanded="true" signature="73:994" ph="{...}" />
+            <marker date="1508484727141" expanded="true" signature="98:992" ph="{...}" />
+            <marker date="1508484727141" expanded="true" signature="147:198" ph="{...}" />
+            <marker date="1508484727141" expanded="true" signature="268:522" ph="{...}" />
+            <marker date="1508484727141" expanded="true" signature="741:968" ph="{...}" />
+            <marker date="1508484727141" expanded="true" signature="764:830" ph="/* Arrange ... */" />
+>>>>>>> Stashed changes
           </folding>
         </state>
       </provider>
     </entry>
+<<<<<<< Updated upstream
+=======
     <entry file="file://$PROJECT_DIR$/SolarSystem.Test/SolarSystem.Test.csproj">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -429,6 +543,7 @@
         </state>
       </provider>
     </entry>
+>>>>>>> Stashed changes
     <entry file="file://$PROJECT_DIR$/SolarSystem.Test/SolarSystem.Test.csproj">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -437,6 +552,20 @@
         </state>
       </provider>
     </entry>
+<<<<<<< Updated upstream
+    <entry file="file://$PROJECT_DIR$/SolarSystem.Test/SolarSystem.Test.csproj">
+=======
+    <entry file="file://$PROJECT_DIR$/SolarSystem/Program.cs" />
+    <entry file="file://$PROJECT_DIR$/SolarSystem/SolarSystem.csproj">
+>>>>>>> Stashed changes
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+<<<<<<< Updated upstream
     <entry file="file://$PROJECT_DIR$/SolarSystem/Program.cs" />
     <entry file="file://$PROJECT_DIR$/SolarSystem/SolarSystem.csproj">
       <provider selected="true" editor-type-id="text-editor">
@@ -446,12 +575,15 @@
         </state>
       </provider>
     </entry>
+=======
+>>>>>>> Stashed changes
     <entry file="file://$PROJECT_DIR$/SolarSystem/Picking and ERP/Program.cs" />
     <entry file="file://$PROJECT_DIR$/SolarSystem.Test/Tests.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="660">
           <caret line="46" column="1" lean-forward="false" selection-start-line="46" selection-start-column="1" selection-end-line="46" selection-end-column="1" />
           <folding>
+<<<<<<< Updated upstream
             <marker date="1508750266811" expanded="true" signature="6:45" ph="..." />
             <marker date="1508750266811" expanded="true" signature="73:994" ph="{...}" />
             <marker date="1508750266811" expanded="true" signature="98:992" ph="{...}" />
@@ -460,6 +592,15 @@
             <marker date="1508750266811" expanded="true" signature="379:508" ph="/* Act ... */" />
             <marker date="1508750266811" expanded="true" signature="737:968" ph="{...}" />
             <marker date="1508750266811" expanded="true" signature="760:958" ph="/* Arrange ... */" />
+=======
+            <marker date="1508484727141" expanded="false" signature="6:45" ph="..." />
+            <marker date="1508484727141" expanded="true" signature="73:994" ph="{...}" />
+            <marker date="1508484727141" expanded="true" signature="98:992" ph="{...}" />
+            <marker date="1508484727141" expanded="true" signature="147:198" ph="{...}" />
+            <marker date="1508484727141" expanded="true" signature="268:522" ph="{...}" />
+            <marker date="1508484727141" expanded="true" signature="741:968" ph="{...}" />
+            <marker date="1508484727141" expanded="true" signature="764:830" ph="/* Arrange ... */" />
+>>>>>>> Stashed changes
           </folding>
         </state>
       </provider>
@@ -477,6 +618,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
           <caret line="8" column="4" lean-forward="false" selection-start-line="8" selection-start-column="4" selection-end-line="8" selection-end-column="4" />
+<<<<<<< Updated upstream
           <folding>
             <marker date="1508749680749" expanded="false" signature="6:115" ph="..." />
             <marker date="1508749680749" expanded="true" signature="154:554" ph="{...}" />
@@ -643,12 +785,21 @@
             <marker date="1508749702309" expanded="false" signature="6:115" ph="..." />
             <marker date="1508749702309" expanded="true" signature="159:193" ph="{...}" />
             <marker date="1508749702309" expanded="true" signature="179:191" ph="{...}" />
+=======
+          <folding>
+            <marker date="1508749680749" expanded="false" signature="6:115" ph="..." />
+            <marker date="1508749680749" expanded="true" signature="154:554" ph="{...}" />
+            <marker date="1508749680749" expanded="true" signature="174:552" ph="{...}" />
+            <marker date="1508749680749" expanded="true" signature="237:337" ph="{...}" />
+            <marker date="1508749680749" expanded="true" signature="433:546" ph="{...}" />
+>>>>>>> Stashed changes
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/SolarSystem.Test/Tests.cs">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< Updated upstream
         <state relative-caret-position="525">
           <caret line="35" column="19" lean-forward="true" selection-start-line="35" selection-start-column="19" selection-end-line="35" selection-end-column="19" />
           <folding>
@@ -660,6 +811,100 @@
             <marker date="1508750266811" expanded="true" signature="379:508" ph="/* Act ... */" />
             <marker date="1508750266811" expanded="true" signature="737:968" ph="{...}" />
             <marker date="1508750266811" expanded="true" signature="760:958" ph="/* Arrange ... */" />
+=======
+        <state relative-caret-position="390">
+          <caret line="28" column="16" lean-forward="false" selection-start-line="28" selection-start-column="16" selection-end-line="28" selection-end-column="16" />
+          <folding>
+            <marker date="1508484727141" expanded="false" signature="6:45" ph="..." />
+            <marker date="1508484727141" expanded="true" signature="73:994" ph="{...}" />
+            <marker date="1508484727141" expanded="true" signature="98:992" ph="{...}" />
+            <marker date="1508484727141" expanded="true" signature="147:198" ph="{...}" />
+            <marker date="1508484727141" expanded="true" signature="268:522" ph="{...}" />
+            <marker date="1508484727141" expanded="true" signature="741:968" ph="{...}" />
+            <marker date="1508484727141" expanded="true" signature="764:830" ph="/* Arrange ... */" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SolarSystem/Picking and ERP/Line.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="8" column="4" lean-forward="false" selection-start-line="8" selection-start-column="4" selection-end-line="8" selection-end-column="4" />
+          <folding>
+            <marker date="1508749680752" expanded="false" signature="6:115" ph="..." />
+            <marker date="1508749680752" expanded="true" signature="154:611" ph="{...}" />
+            <marker date="1508749680752" expanded="true" signature="171:605" ph="{...}" />
+            <marker date="1508749680752" expanded="true" signature="248:370" ph="{...}" />
+            <marker date="1508749680752" expanded="true" signature="492:599" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SolarSystem/Picking and ERP/Order.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="8" column="11" lean-forward="false" selection-start-line="8" selection-start-column="11" selection-end-line="8" selection-end-column="11" />
+          <folding>
+            <marker date="1508749680753" expanded="false" signature="6:115" ph="..." />
+            <marker date="1508749680753" expanded="true" signature="154:537" ph="{...}" />
+            <marker date="1508749680753" expanded="true" signature="172:535" ph="{...}" />
+            <marker date="1508749680753" expanded="true" signature="227:319" ph="{...}" />
+            <marker date="1508749680753" expanded="true" signature="451:529" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SolarSystem/Picking and ERP/PickingScrape.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1508749680758" expanded="false" signature="6:132" ph="..." />
+            <marker date="1508749680758" expanded="true" signature="171:1198" ph="{...}" />
+            <marker date="1508749680758" expanded="true" signature="197:1196" ph="{...}" />
+            <marker date="1508749680758" expanded="true" signature="245:291" ph="{...}" />
+            <marker date="1508749680758" expanded="true" signature="405:1190" ph="{...}" />
+            <marker date="1508749680758" expanded="true" signature="678:1180" ph="{...}" />
+            <marker date="1508749680758" expanded="true" signature="775:958" ph="{...}" />
+            <marker date="1508749680758" expanded="true" signature="979:1166" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SolarSystem/Picking and ERP/ErpScrape.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="8" column="19" lean-forward="true" selection-start-line="8" selection-start-column="19" selection-end-line="8" selection-end-column="19" />
+          <folding>
+            <marker date="1508749680750" expanded="false" signature="6:115" ph="..." />
+            <marker date="1508749680750" expanded="true" signature="154:190" ph="{...}" />
+            <marker date="1508749680750" expanded="true" signature="176:188" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SolarSystem.Test/Picking and ERP/ErpTest.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="11" column="1" lean-forward="false" selection-start-line="11" selection-start-column="1" selection-end-line="11" selection-end-column="1" />
+          <folding>
+            <marker date="1508749702309" expanded="false" signature="6:115" ph="..." />
+            <marker date="1508749702309" expanded="true" signature="159:193" ph="{...}" />
+            <marker date="1508749702309" expanded="true" signature="179:191" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SolarSystem.Test/Picking and ERP/PickingTest.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="23" column="0" lean-forward="true" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
+          <folding>
+            <marker date="1508749702396" expanded="false" signature="6:147" ph="..." />
+            <marker date="1508749702396" expanded="true" signature="191:478" ph="{...}" />
+            <marker date="1508749702396" expanded="true" signature="215:476" ph="{...}" />
+            <marker date="1508749702396" expanded="true" signature="436:469" ph="{...}" />
+>>>>>>> Stashed changes
           </folding>
         </state>
       </provider>

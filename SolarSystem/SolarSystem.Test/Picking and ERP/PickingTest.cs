@@ -10,7 +10,6 @@ namespace SolarSystem.Test.Picking_and_ERP
 {
     class PickingTest
     {
-        [Data]
 
         [Theory]
         [InlineData(101010, 1, "01-01-1001", 10)]
