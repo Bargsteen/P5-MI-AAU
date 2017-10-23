@@ -7,15 +7,11 @@ using System.IO;
 
 namespace SolarSystem.Picking_and_ERP
 {
-    public class PickingScrape
+    class PickingScrape
     {
-        public PickingScrape(string Path)
-        { }
-
-        List<Order> _pickingOrderList;
-
-        public void GetOrdersFromPicking(string _path)
+        public static List<Order> GetOrdersFromPicking(string _path)
         {
+            List<Order> _pickingOrderList = new List<Order>();
             StreamReader reader = new StreamReader(@_path);
 
             reader.ReadLine();
@@ -36,6 +32,8 @@ namespace SolarSystem.Picking_and_ERP
                     _pickingOrderList.Add(new Order(line[0], new Line(new Article(line[1], line[10]), line[15], DateTime.Parse(line[8].ToString()))));
                 }
             }
+
+            return _pickingOrderList;
         }
     }
 }

@@ -10,9 +10,11 @@ namespace SolarSystem.Test.Picking_and_ERP
 {
     class PickingTest
     {
+        [Data]
+
         [Theory]
         [InlineData(101010, 1, "01-01-1001", 10)]
-        public void GetOrdersFromPickingTest(int ordernumber, int articlenumber, int datetime, int quantity)
+        public void GetOrdersFromPickingTest_PremadeCSVFile_Returns(int ordernumber, int articlenumber, int datetime, int quantity)
         {
             
         }
