@@ -8,6 +8,10 @@ namespace SolarSystem.Picking_and_ERP
 {
     public class Line
     {
+        public Article _article { get; private set; }
+        public int _quantity { get; private set; }
+        public DateTime _timestamp { get; private set; }
+        
         public Line(Article article, int Quantity, DateTime TimeStamp)
         {
             _article = article;
@@ -15,13 +19,11 @@ namespace SolarSystem.Picking_and_ERP
             _timestamp = TimeStamp;
         }
 
-        Article _article;
-        int _quantity;
-        DateTime _timestamp;
+        
 
         public override string ToString()
         {
-            return "Quantity: " + _quantity + "\nTimeStamp: " + _timestamp + _article;
+            return "\n\tTime: " + _timestamp + "\n\t" + _article + "\tQuantity:" + _quantity + "\n";
         }
     }
 
