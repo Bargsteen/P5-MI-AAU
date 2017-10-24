@@ -16,30 +16,69 @@ namespace SolarSystem.Picking_and_ERP
 
         static string _path;
 
-        List<Order> _pickingOrderList;
+        public List<Order> _pickingOrderList;
 
-        public void GetOrdersFromPicking()
+
+        void OrdersFromPicking(string path)
         {
-            StreamReader reader = new StreamReader(@_path);
+            try
+            {
 
+            }
+            catch (ArgumentNullException)
+            {
+
+                throw;
+            }
+        }
+
+
+        public void GetOrdersFromPicking(StreamReader reader)
+        {
             reader.ReadLine();
 
-            var stringLine = reader.ReadLine();
-            string[] list = stringLine.Split(';');
+            List<string[]> list = new List<string[]>();
+
+            while (!reader.EndOfStream)
+            {
+                list.Add(reader.ReadLine().Split(';'));
+            }
 
             int index = 0;
 
-            foreach (string line in list)
+            foreach (string[] line in list)
             {
-                if (index > 0 && line[0] == _pickingOrderList.Last()._ordernumber)
+                if (index > 0 && Int32.Parse(line[0]) == _pickingOrderList.Last()._ordernumber)
                 {
-                    _pickingOrderList.Last().LineList.Add(new Line(new Article(line[1], line[10]), line[15], DateTime.Parse(line[8].ToString())));
+                    _pickingOrderList.Last().LineList.Add(
+                        new Line(
+                            new Article(
+                                int.Parse(line[1]),
+                                int.Parse(line[10])), int.Parse(line[15]), 
+                                DateTime.Parse(line[8].ToString())));
                 }
                 else
                 {
-                    _pickingOrderList.Add(new Order(line[0], new Line(new Article(line[1], line[10]), line[15], DateTime.Parse(line[8].ToString()))));
+                    _pickingOrderList.Add(
+                        new Order(
+                            int.Parse(line[0]), 
+                            new Line(
+                                new Article(
+                                    int.Parse(line[1]),
+                                    int.Parse(line[10])),
+                                    int.Parse(line[15]), 
+                                    DateTime.Parse(line[8].ToString()))));
                 }
+                index++;
             }
+
+            foreach (var item in list)
+            {
+                Console.WriteLine(item);
+            }
+
+
+
         }
     }
 }
