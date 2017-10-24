@@ -2,7 +2,7 @@
 
 namespace SolarSystem.Classes
 {
-    public class OrderBox
+    public class OrderBox : Box
     {
         public Order Order { get; }
         public int TimeRemaining { get; set; }

@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
+using SolarSystem.Classes;
 using SolarSystem.Simulation;
+using SolarSystem.Simulation.Stations;
 
 
 namespace SolarSystem
@@ -9,6 +12,11 @@ namespace SolarSystem
     {
         public static void Main(string[] args)
         {
+            Station Area27 = new Station(Area.Area27, ImmutableArray<ItemType>.Empty, 10, 10);
+            Station Area25 = new Station(Area.Area25, ImmutableArray<ItemType>.Empty, 10 , 10);
+            Station Area27 = new Station(Area.Area27, ImmutableArray<ItemType>.Empty, 10, 10);
+            Station Area27 = new Station(Area.Area27, ImmutableArray<ItemType>.Empty, 10, 10);
+            Station Area27 = new Station(Area.Area27, ImmutableArray<ItemType>.Empty, 10, 10);
             ISim sim = new Sim(3);
             sim.Run(50);
             

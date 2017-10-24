@@ -1,14 +1,18 @@
-﻿using System;
-
-namespace SolarSystem.Classes
+﻿namespace SolarSystem.Classes
 {
     public class ItemType
     {
-        public ArticleNumber ArticleNumber { get; }
+        public string ItemName { get; }
 
-        public ItemType(ArticleNumber articleNumber)
+        public ItemType(string itemName)
         {
-            ArticleNumber = articleNumber ?? throw new ArgumentNullException(nameof(articleNumber));
+            ItemName = itemName;
+        }
+        
+        public override string ToString()
+        {
+            return ItemName;
         }
     }
+
 }
