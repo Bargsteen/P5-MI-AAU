@@ -4,20 +4,20 @@ namespace SolarSystem.Classes
 {
     public class Order
     {
-        public string OrderName { get; }
+        public string OrderID { get; }
         public int TimeToFinish { get; }
         public DateTime OrderTime { get; set; }
 
-        public Order(string orderName, int timeToFinish, DateTime orderTime)
+        public Order(string orderID, int timeToFinish, DateTime orderTime)
         {
-            OrderName = orderName ?? throw new ArgumentNullException(nameof(orderName));
+            OrderID = orderID ?? throw new ArgumentNullException(nameof(orderID));
             TimeToFinish = timeToFinish;
             OrderTime = orderTime;
         }
 
         public override string ToString()
         {
-            return $"({OrderName}, {TimeToFinish})";
+            return $"({OrderID}, {TimeToFinish})";
         }
     }
 }

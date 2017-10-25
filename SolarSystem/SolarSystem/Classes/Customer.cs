@@ -6,7 +6,13 @@ using System.Threading.Tasks;
 
 namespace SolarSystem.Classes
 {
-    class Customer
+    public class Customer
     {
+        public List<Order> CustomerOrderList { get; set; }
+
+        public Customer(List<Order> customerOrderList)
+        {
+            CustomerOrderList = customerOrderList ?? throw new ArgumentNullException(nameof(customerOrderList));
+        }
     }
 }

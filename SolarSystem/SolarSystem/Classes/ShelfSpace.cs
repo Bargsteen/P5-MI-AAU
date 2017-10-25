@@ -8,8 +8,8 @@ namespace SolarSystem.Classes
 {
     public class ShelfSpace
     {
-        public string Name;
-        public List<ShelfBox> ListOfBoxes;
+        public string Name { get; set; }
+        public List<ShelfBox> ListOfBoxes { get; set; }
 
         public ShelfSpace(string name, List<ShelfBox> listOfBoxes)
         {
