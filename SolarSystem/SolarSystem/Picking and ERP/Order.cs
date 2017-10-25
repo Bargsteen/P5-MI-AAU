@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace SolarSystem.Picking_and_ERP
 {
+    [Serializable]
     public class Order
     {
         public List<Line> lineList { get; private set; }

@@ -2,9 +2,18 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Mime;
+using System.Security.Policy;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+
+/*
+ * Make ErpScrape object.
+ * Use ScrapeErp(filepath)
+ * Use SaveToFile()
+ * Load from file with LoadListFromFile() : List<Order>
+ */
 
 namespace SolarSystem.Picking_and_ERP
 {
@@ -12,7 +21,51 @@ namespace SolarSystem.Picking_and_ERP
 	{
 		public List<Order> orders { get; private set; }
 
-		public ErpScrape(string _path)
+		
+		
+		public ErpScrape()
+		{
+			orders = new List<Order>();
+		}
+		
+		public void SaveToFile()
+		{
+			string _path = AppDomain.CurrentDomain.BaseDirectory + "SaveFiles/";
+			string _fileName = "Erp.dat";
+			
+			Directory.CreateDirectory(_path);
+
+			if (orders != null)
+			{
+				using (Stream stream = File.Open(_path + _fileName, FileMode.Create))
+				{
+					var formatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+					formatter.Serialize(stream, orders);
+				}
+			}
+			else
+			{
+				Console.WriteLine("Call ScrapeErp(string path) first");
+			}
+		}
+
+		public List<Order> LoadListFromFile()
+		{
+			List<Order> _orders;
+			
+			string _path = AppDomain.CurrentDomain.BaseDirectory + "SaveFiles/";
+			string _fileName = "Erp.dat";
+			
+			using (Stream stream = File.Open(_path + _fileName, FileMode.Open))
+			{
+				var formatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+				_orders = (List<Order>) formatter.Deserialize(stream);
+			}
+
+			return _orders;
+		}
+		
+		public void ScrapeErp(string _path)
 		{
 			// Does file exist?
 			try
@@ -37,30 +90,33 @@ namespace SolarSystem.Picking_and_ERP
 			int _counter = 0;
 
 			DateTime _date = new DateTime();
-			int _orderNumber, _articleNumber, _quantity, _areaNumber = -1;
+			int _orderNumber = 0, _articleNumber = 0, _quantity = 0, _areaNumber = -1;
 			
 			while ((_line = stream.ReadLine()) != null)
 			{
-				_buffer.Insert(_counter % _bufferLimit, _line);
+				
+				_buffer.Add(_line);
+				
 				_counter++;
 				
 				// For ordernumber and date-time
 				if (_line.Contains("OrderNumber: 15"))
 				{
+					// Clear the lines from the previous orders.
 					_lineList.Clear();
 					
 					// Retrieve ordernumber
 					_orderNumber = int.Parse(_line.Substring(15, 6));
 					
-					// Retrieve data in buffer
-					foreach (string bufferString in _buffer)
-					{
-						if (Regex.IsMatch(bufferString, "\\d-\\d-\\d"))
-						{
-							_date = new DateTime(int.Parse(bufferString.Substring(0, 4)), int.Parse(bufferString.Substring(5, 2)), int.Parse(bufferString.Substring(8, 2)), int.Parse(bufferString.Substring(11,2)), int.Parse(bufferString.Substring(14, 2)), int.Parse(bufferString.Substring(17,2)));
-							break;
-						}
-					}
+					
+					// Retrieve data in buffer (Get the date and time)
+					string bufferString = _buffer[_counter - 6];
+					_date = new DateTime(int.Parse(bufferString.Substring(0, 4)), int.Parse(bufferString.Substring(5, 2)), int.Parse(bufferString.Substring(8, 2)), int.Parse(bufferString.Substring(11,2)), int.Parse(bufferString.Substring(14, 2)), int.Parse(bufferString.Substring(17,2)));
+
+					
+					// Reset buffer and counter
+					_buffer.Clear();
+					_counter = 0;
 					
 					// skip 6 lines to get to articlenumber.
 					_line = stream.ReadLine();
@@ -69,7 +125,7 @@ namespace SolarSystem.Picking_and_ERP
 					_line = stream.ReadLine();
 					_line = stream.ReadLine();
 					_line = stream.ReadLine();
-					
+
 					while (_line.Contains("ArticleNumber: "))
 					{
 						// Read ArticleNumber
@@ -93,17 +149,17 @@ namespace SolarSystem.Picking_and_ERP
 						_line = stream.ReadLine();
 						_line = stream.ReadLine();
 						_line = stream.ReadLine();
+						
 					}
 					
 					// Order done. Add to list
 					_orderList.Add(new Order(_orderNumber, _lineList));
-					Console.WriteLine(_orderList[0]);
 				}
-				
+			
 			}
 			
-			
 			return _orderList;
+
 		}
 	}
 }
