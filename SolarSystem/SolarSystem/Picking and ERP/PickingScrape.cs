@@ -18,7 +18,7 @@ namespace SolarSystem.Picking_and_ERP
 
         public List<Order> _pickingOrderList;
 
-        
+
 
         void OrdersFromPicking(string path)
         {
@@ -56,30 +56,28 @@ namespace SolarSystem.Picking_and_ERP
                         new Line(
                             new Article(
                                 int.Parse(line[1]),
-                                int.Parse(line[10])), int.Parse(line[15]), 
+                                int.Parse(line[10])), int.Parse(line[15]),
                                 DateTime.Parse(line[8].ToString())));
                 }
                 else
                 {
                     _pickingOrderList.Add(
                         new Order(
-                            int.Parse(line[0]), 
+                            int.Parse(line[0]),
                                 new Line(
                                 new Article(
                                     int.Parse(line[1]),
                                     int.Parse(line[10])),
-                                    int.Parse(line[15]), 
+                                    int.Parse(line[15]),
                                     DateTime.Parse(line[8].ToString()))));
-                index++;
+                    index++;
+                }
             }
+        }
 
-            foreach (var item in list)
-            {
-                Console.WriteLine(item);
-            }
-
-
-
+        public void PrintPickingOrderList()
+        {
+            _pickingOrderList.ForEach(x => Console.WriteLine(x));
         }
     }
 }
