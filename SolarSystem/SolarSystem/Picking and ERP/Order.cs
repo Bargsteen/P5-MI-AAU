@@ -18,7 +18,12 @@ namespace SolarSystem.Picking_and_ERP
             this.lineList = lineList;
         }
 
-        
+        public Order(int orderNumber, Line line)
+        {
+            this.orderNumber = orderNumber;
+            this.lineList.Add(line);
+        }
+
 
         public override string ToString()
         {
