@@ -4,6 +4,7 @@ using System.Linq;
 using System.Xml;
 using Ploeh.AutoFixture;
 using SolarSystem.Classes;
+using SolarSystem.Simulation;
 using Xunit;
 
 namespace SolarSystem.Test.Simulation

@@ -47,19 +47,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\Area.cs" />
+    <Compile Include="Classes\Customer.cs" />
     <Compile Include="Classes\ItemType.cs" />
     <Compile Include="Classes\Box.cs" />
     <Compile Include="Classes\Line.cs" />
     <Compile Include="Classes\Order.cs" />
     <Compile Include="Classes\OrderBox.cs" />
     <Compile Include="Classes\ShelfBox.cs" />
+    <Compile Include="Classes\ShelfSpace.cs" />
+    <Compile Include="Classes\Station.cs" />
+    <Compile Include="Classes\PublicEnums.cs" />
+    <Compile Include="Classes\Warehouse.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Simulation\ISim.cs" />
     <Compile Include="Simulation\OrderBoxPicker.cs" />
     <Compile Include="Simulation\Sim.cs" />
-    <Compile Include="Simulation\Stations\Area.cs" />
-    <Compile Include="Simulation\Stations\Station.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

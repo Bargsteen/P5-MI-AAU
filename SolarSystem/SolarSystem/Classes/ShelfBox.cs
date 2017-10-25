@@ -13,7 +13,7 @@ namespace SolarSystem.Classes
             Line = line ?? throw new ArgumentNullException(nameof(line));
         }
 
-        public Line Line { get; set; }
+        public Line Line { get;}
 
         
 

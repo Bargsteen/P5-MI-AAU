@@ -8,6 +8,6 @@ namespace SolarSystem.Classes
 {
     public abstract class Box
     {
-        public string ID;
+        public string Id;
     }
 }
