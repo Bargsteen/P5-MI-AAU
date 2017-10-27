@@ -22,11 +22,9 @@ namespace SolarSystem
         
         public static void Main(string[] args)
         {
-
-            TimeKeeper.Tick += () => Console.WriteLine("HEJ MED JER");
-            var timeKeeper = new TimeKeeper();
-            
-            timeKeeper.Run();
+            var timeKeeper = new TimeKeeper(DateTime.Now);
+            TimeKeeper.Tick += () => Console.WriteLine(timeKeeper.CurrentDateTime);
+            timeKeeper.StartTicking(5);
             
             
             /*  Station area27 = new Station(Area.Area27, ImmutableArray<ItemType>.Empty, 10, 10);
@@ -35,7 +33,7 @@ namespace SolarSystem
               Station area27 = new Station(Area.Area27, ImmutableArray<ItemType>.Empty, 10, 10);
               Station area27 = new Station(Area.Area27, ImmutableArray<ItemType>.Empty, 10, 10);
               ISim sim = new Sim(3);
-              sim.Run(50);
+              sim.StartTicking(50);
               
               
               bool run = true;
@@ -44,7 +42,7 @@ namespace SolarSystem
               List<Classes.Order> orders = new List<Classes.Order>();
               for (char c = 'A'; c < 'F'; c++)
               {
-                  orders.Add(new Classes.Order(c.ToString(), rng.Next(1000), DateTime.Now));
+                  orders.Add(new Classes.Order(c.ToString(), rng.Next(1000), CurrentDateTime.Now));
               }
   
   

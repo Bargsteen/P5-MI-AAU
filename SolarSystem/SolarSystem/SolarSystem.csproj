@@ -33,6 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="C5, Version=2.5.0.0, Culture=neutral, PublicKeyToken=282361b99ded7e8e">
+      <HintPath>..\packages\C5.2.5.3\lib\net45\C5.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Collections.Immutable, Version=1.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Collections.Immutable.1.3.0\lib\portable-net45+win8+wp8+wpa81\System.Collections.Immutable.dll</HintPath>
@@ -52,8 +55,11 @@
     <Compile Include="Classes\ItemType.cs" />
     <Compile Include="Classes\Box.cs" />
     <Compile Include="Classes\Line.cs" />
+    <Compile Include="Classes\MainLoop.cs" />
     <Compile Include="Classes\Order.cs" />
     <Compile Include="Classes\OrderBox.cs" />
+    <Compile Include="Classes\OrderBoxProgress.cs" />
+    <Compile Include="Classes\OrderBoxProgressAndArea.cs" />
     <Compile Include="Classes\ShelfBox.cs" />
     <Compile Include="Classes\ShelfSpace.cs" />
     <Compile Include="Classes\Station.cs" />
