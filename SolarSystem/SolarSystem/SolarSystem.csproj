@@ -58,6 +58,7 @@
     <Compile Include="Classes\ShelfSpace.cs" />
     <Compile Include="Classes\Station.cs" />
     <Compile Include="Classes\PublicEnums.cs" />
+    <Compile Include="Classes\TimeKeeper.cs" />
     <Compile Include="Classes\Warehouse.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

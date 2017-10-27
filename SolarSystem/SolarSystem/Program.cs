@@ -23,7 +23,12 @@ namespace SolarSystem
         public static void Main(string[] args)
         {
 
-
+            TimeKeeper.Tick += () => Console.WriteLine("HEJ MED JER");
+            var timeKeeper = new TimeKeeper();
+            
+            timeKeeper.Run();
+            
+            
             /*  Station area27 = new Station(Area.Area27, ImmutableArray<ItemType>.Empty, 10, 10);
               Station area25 = new Station(Area.Area25, ImmutableArray<ItemType>.Empty, 10 , 10);
               Station area27 = new Station(Area.Area27, ImmutableArray<ItemType>.Empty, 10, 10);

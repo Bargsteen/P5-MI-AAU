@@ -12,7 +12,7 @@ namespace SolarSystem.Classes
 
         public Order(string orderName, int timeToFinish, DateTime orderTime, List<Line> lines)
         {
-            OrderID = orderID ?? throw new ArgumentNullException(nameof(orderID));
+           // OrderID = orderID ?? throw new ArgumentNullException(nameof(orderID));
             TimeToFinish = timeToFinish;
             OrderTime = orderTime;
             Lines = lines ?? throw new ArgumentNullException(nameof(lines));
