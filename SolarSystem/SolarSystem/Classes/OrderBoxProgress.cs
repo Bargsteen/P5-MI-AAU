@@ -4,7 +4,7 @@ namespace SolarSystem.Classes
 {
     public class OrderBoxProgress : IComparable
     {
-        public Order Order { get; }
+        public OrderBox OrderBox { get; }
         public DateTime TimeOfArrival { get; }
         public int SecondsToSpend { get; private set; }
 
