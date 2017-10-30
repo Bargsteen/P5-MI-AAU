@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Net.Mail;
 using System.Runtime.InteropServices.ComTypes;
 using System.Threading;
 using C5;
@@ -9,8 +10,12 @@ using Microsoft.Win32;
 
 namespace SolarSystem.Classes
 {
+
     public class MainLoop
     {
+        public delegate Func<OrderBox> OrderBoxSendHandler(OrderBox box);
+
+        public event OrderBoxSendHandler OrderBoxIsFinishedEvent;
         private Dictionary<int, OrderboxProgressContainer> areaQueues;
 
         public MainLoop()
@@ -22,7 +27,7 @@ namespace SolarSystem.Classes
             areaQueues.Add(28, new OrderboxProgressContainer());
             areaQueues.Add(28, new OrderboxProgressContainer());
             areaQueues.Add(29, new OrderboxProgressContainer());
-            
+
             TimeKeeper.Tick += CheckAndSend;
         }
 
@@ -36,10 +41,11 @@ namespace SolarSystem.Classes
         {
             // Estimate time based on Loop Flow and areas
             int timeToSpend = EstimateTime(area);
-            
+
             // Create new OrderBoxProgress based on orderbox and time.
-            var orderBoxProgress = new OrderBoxProgress(orderBox, Program.TimeKeeper.CurrentDateTime, EstimateTime(area));
-            
+            var orderBoxProgress =
+                new OrderBoxProgress(orderBox, Program.TimeKeeper.CurrentDateTime, EstimateTime(area));
+
             // Return the new OrderBoxProgress.
             return orderBoxProgress;
         }
@@ -53,16 +59,11 @@ namespace SolarSystem.Classes
         {
             foreach (var areaQueue in areaQueues)
             {
-                if(areaQueue.Value.GetNext().SecondsToSpend <= 0)
+                if (areaQueue.Value.GetNext().SecondsToSpend <= 0)
                 {
-                    Send(areaQueue.Value.GetNext().OrderBox);   
-                } 
+                    OrderBoxIsFinishedEvent?.Invoke(areaQueue.Value.GetNext().OrderBox);
+                }
             }
-        }
-
-        private void Send(OrderBox orderBox)
-        {
-            
         }
     }
 }
