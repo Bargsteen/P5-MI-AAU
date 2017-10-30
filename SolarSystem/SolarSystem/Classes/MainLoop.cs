@@ -6,7 +6,7 @@ namespace SolarSystem.Classes
 {
     public class MainLoop
     {
-        private IntervalHeap<OrderBoxProgressAndArea> priorityQueue;
+        private IntervalHeap<OrderBoxProgressAndArea> priorityQueue25;
 
         public MainLoop()
         {
@@ -15,13 +15,10 @@ namespace SolarSystem.Classes
         }
 
         public void AddOrderBox(OrderBoxProgressAndArea boxProgress) => priorityQueue.Add(boxProgress);
-
+        
         private void CheckAndSend()
-        {
-            foreach (var orderBoxProgressAndArea in priorityQueue)
-            {
-                
-            }
+        {        
+            priorityQueue.
         }
     }
 }
