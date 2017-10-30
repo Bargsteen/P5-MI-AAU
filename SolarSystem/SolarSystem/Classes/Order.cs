@@ -5,7 +5,7 @@ namespace SolarSystem.Classes
 {
     public class Order
     {
-        public string OrderID { get; }
+        public string OrderId { get; }
         public int TimeToFinish { get; }
         public DateTime OrderTime { get;}
         public List<Line> Lines { get;}
@@ -20,7 +20,7 @@ namespace SolarSystem.Classes
 
         public override string ToString()
         {
-            return $"({OrderID}, {TimeToFinish})";
+            return $"({OrderId}, {TimeToFinish})";
         }
     }
 }

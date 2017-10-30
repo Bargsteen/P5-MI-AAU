@@ -8,16 +8,16 @@ namespace SolarSystem.Classes
 {
     public class MainLoop
     {
-        private Dictionary<int, IntervalHeap<OrderBoxProgress>> areaQueues;
+        private Dictionary<int, IntervalHeap<OrderBoxProgress>> _areaQueues;
 
         public MainLoop()
         {
-            areaQueues = new Dictionary<int, IntervalHeap<OrderBoxProgress>>();
-            areaQueues.Add(21, new IntervalHeap<OrderBoxProgress>());
-            areaQueues.Add(25, new IntervalHeap<OrderBoxProgress>());
-            areaQueues.Add(27, new IntervalHeap<OrderBoxProgress>());
-            areaQueues.Add(28, new IntervalHeap<OrderBoxProgress>());
-            areaQueues.Add(29, new IntervalHeap<OrderBoxProgress>());
+            _areaQueues = new Dictionary<int, IntervalHeap<OrderBoxProgress>>();
+            _areaQueues.Add(21, new IntervalHeap<OrderBoxProgress>());
+            _areaQueues.Add(25, new IntervalHeap<OrderBoxProgress>());
+            _areaQueues.Add(27, new IntervalHeap<OrderBoxProgress>());
+            _areaQueues.Add(28, new IntervalHeap<OrderBoxProgress>());
+            _areaQueues.Add(29, new IntervalHeap<OrderBoxProgress>());
             
             TimeKeeper.Tick += CheckAndSend;
         }

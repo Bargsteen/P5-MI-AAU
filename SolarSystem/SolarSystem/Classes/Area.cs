@@ -8,7 +8,7 @@ namespace SolarSystem.Classes
     public abstract class Area : IRecieveOrder
     {
         private Order _orderReceived = null;
-        private delegate OrderBoxProgress OrderCompletedHandler(OrderBoxProgress OrderBoxProgress);
+        private delegate OrderBoxProgress OrderCompletedHandler(OrderBoxProgress orderBoxProgress);
         event OrderCompletedHandler OrderBoxProgressDoneEvent;
 
         public int AreaNumber { get; set; }
@@ -46,10 +46,10 @@ namespace SolarSystem.Classes
         }
 
         //Listening on stations for orders that are done
-        public void RecieveOrder(OrderBoxProgress OrderBoxProgress)
+        public void RecieveOrder(OrderBoxProgress orderBoxProgress)
         {
             //call DistributeOrder with input as parameter
-            DistributeOrder(OrderBoxProgress);
+            DistributeOrder(orderBoxProgress);
 
         }
 

@@ -25,9 +25,9 @@ namespace SolarSystem
         
         public static void Main(string[] args)
         {
-            var TimeKeeper = new TimeKeeper(DateTime.Now);
-            TimeKeeper.Tick += () => Console.WriteLine(TimeKeeper.CurrentDateTime);
-            TimeKeeper.StartTicking(5);
+            var timeKeeper = new TimeKeeper(DateTime.Now);
+            TimeKeeper.Tick += () => Console.WriteLine(timeKeeper.CurrentDateTime);
+            timeKeeper.StartTicking(5);
             var container = new WindsorContainer();
             //container.Register(Castle.MicroKernel.Registration.Component.For())
 
