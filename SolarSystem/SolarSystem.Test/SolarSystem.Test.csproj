@@ -80,7 +80,6 @@
     <Compile Include="AreaStation\StationTests.cs" />
     <Compile Include="Simulation\OrderBoxPickerTests.cs" />
     <Compile Include="Simulation\SimulationTests.cs" />
-    <Compile Include="Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

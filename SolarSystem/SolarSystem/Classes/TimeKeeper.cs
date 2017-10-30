@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Threading;
+using SolarSystem.Interfaces;
 
 namespace SolarSystem.Classes
 {
     public delegate void TickHandler();
-    public class TimeKeeper
+    public class TimeKeeper : ITimeKeeper
     {
         public static event TickHandler Tick;
-        private bool running = true;
+        private bool _running = true;
         public DateTime CurrentDateTime { get; private set; }
 
         public TimeKeeper(DateTime startCurrentDateTime)
@@ -22,7 +23,7 @@ namespace SolarSystem.Classes
             // Calculate time to wait between each tick
             int waitingTime = (int)(1000 / ticksPerSecond);  
                        
-            while (running)
+            while (_running)
             {
                 // Wait and invoke
                 Thread.Sleep(waitingTime);

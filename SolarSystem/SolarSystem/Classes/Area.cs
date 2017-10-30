@@ -10,15 +10,17 @@ namespace SolarSystem.Classes
         private Order _orderReceived = null;
 
         event EventHandler<OrderBoxEventArgs> OrderBoxCompleteEvent;
+        private delegate OrderBoxProgress OrderCompletedHandler(OrderBoxProgress orderBoxProgress);
+        event OrderCompletedHandler OrderBoxProgressDoneEvent;
 
-        public string AreaName { get; set; }
+        public int AreaNumber { get; set; }
         public ImmutableArray<ItemType> AvailableWares { get; set; }
         public Station[] Stations { get; }
         public ShelfSpace ShelfSpace { get; }
 
-        public Area(string areaName, ImmutableArray<ItemType> availableWares, Station[] stations, ShelfSpace shelfSpace)
+        public Area(int area, ImmutableArray<ItemType> availableWares, Station[] stations, ShelfSpace shelfSpace)
         {
-            AreaName = areaName ?? throw new ArgumentNullException(nameof(areaName));
+            AreaNumber = area;
             AvailableWares = availableWares;
             Stations = stations ?? throw new ArgumentNullException(nameof(stations));
             ShelfSpace = shelfSpace ?? throw new ArgumentNullException(nameof(shelfSpace));

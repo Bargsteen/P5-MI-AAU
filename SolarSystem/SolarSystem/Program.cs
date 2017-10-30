@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using Castle.Windsor;
 using SolarSystem.Classes;
 using SolarSystem.Simulation;
 
 
 namespace SolarSystem
 {
-    public static class Program
+    public class Program
     {
         private static void PrintList(List<int> list)
         {
@@ -19,14 +20,20 @@ namespace SolarSystem
             p += "]";
             Console.WriteLine(p);
         }
+
+        public static TimeKeeper TimeKeeper { get; set; }
         
         public static void Main(string[] args)
         {
             var timeKeeper = new TimeKeeper(DateTime.Now);
             TimeKeeper.Tick += () => Console.WriteLine(timeKeeper.CurrentDateTime);
             timeKeeper.StartTicking(5);
-            
-            
+            var container = new WindsorContainer();
+            //container.Register(Castle.MicroKernel.Registration.Component.For())
+
+            Backend.Class1.AddNumbers(2, 3);
+
+
             /*  Station area27 = new Station(Area.Area27, ImmutableArray<ItemType>.Empty, 10, 10);
               Station area25 = new Station(Area.Area25, ImmutableArray<ItemType>.Empty, 10 , 10);
               Station area27 = new Station(Area.Area27, ImmutableArray<ItemType>.Empty, 10, 10);

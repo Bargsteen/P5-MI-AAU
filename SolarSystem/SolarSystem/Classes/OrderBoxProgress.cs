@@ -10,7 +10,7 @@ namespace SolarSystem.Classes
 
         public OrderBoxProgress(OrderBox order, DateTime timeOfArrival, int secondsToSpend)
         {
-            Order = order ?? throw new ArgumentNullException(nameof(order));
+            OrderBox = order ?? throw new ArgumentNullException(nameof(order));
             TimeOfArrival = timeOfArrival;
             SecondsToSpend = secondsToSpend;
 
