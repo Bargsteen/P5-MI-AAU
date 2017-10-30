@@ -1,37 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
-namespace SolarSystem.Picking_and_ERP
+namespace SolarSystem.PickingAndErp
 {
     public class Order
     {
-        public List<Line> lineList { get; private set; }
-        public int orderNumber { get; private set; }
+        public List<Line> LineList { get; private set; }
+        public int OrderNumber { get; private set; }
         
         public Order(int orderNumber, List<Line> lineList)
         {
-            this.orderNumber = orderNumber;
-            this.lineList = lineList;
+            this.OrderNumber = orderNumber;
+            this.LineList = lineList;
         }
 
         public Order(int orderNumber, Line line)
         {
-            this.orderNumber = orderNumber;
-            this.lineList.Add(line);
+            this.OrderNumber = orderNumber;
+            this.LineList.Add(line);
         }
 
 
         public override string ToString()
         {
             string returnString = "";
-            foreach (var line in lineList)
+            foreach (var line in LineList)
             {
                 returnString += line;
             }
-            return "OrderNumber: " + orderNumber + returnString;
+            return "OrderNumber: " + OrderNumber + returnString;
         }
     }
 }

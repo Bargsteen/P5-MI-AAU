@@ -1,29 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace SolarSystem.Picking_and_ERP
+namespace SolarSystem.PickingAndErp
 {
     public class Line
     {
-        public Article _article { get; private set; }
-        public int _quantity { get; private set; }
-        public DateTime _timestamp { get; private set; }
+        public Article Article { get; private set; }
+        public int Quantity { get; private set; }
+        public DateTime Timestamp { get; private set; }
         
-        public Line(Article article, int Quantity, DateTime TimeStamp)
+        public Line(Article article, int quantity, DateTime timeStamp)
         {
-            _article = article;
-            _quantity = Quantity;
-            _timestamp = TimeStamp;
+            Article = article;
+            this.Quantity = quantity;
+            Timestamp = timeStamp;
         }
 
         
 
         public override string ToString()
         {
-            return "\n\tTime: " + _timestamp + "\n\t" + _article + "\tQuantity:" + _quantity + "\n";
+            return "\n\tTime: " + Timestamp + "\n\t" + Article + "\tQuantity:" + Quantity + "\n";
         }
     }
 

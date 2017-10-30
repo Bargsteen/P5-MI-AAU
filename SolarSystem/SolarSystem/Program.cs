@@ -31,6 +31,7 @@ namespace SolarSystem
             var container = new WindsorContainer();
             //container.Register(Castle.MicroKernel.Registration.Component.For())
 
+            Backend.Class1.AddNumbers(2, 3);
 
 
             /*  Station area27 = new Station(Area.Area27, ImmutableArray<ItemType>.Empty, 10, 10);

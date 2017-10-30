@@ -1,26 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace SolarSystem.Picking_and_ERP
+namespace SolarSystem.PickingAndErp
 {
 	public class ErpScrape
 	{
-		public List<Order> orders;
-		string path;
+		public List<Order> Orders;
+		string _path;
 
 		public ErpScrape()
 		{
-			orders = new List<Order>();
-			path = "/Users/Casper/Library/Projects/Uni/P5/wetransfer-f8286e/ErpTask_trace.log";
+			Orders = new List<Order>();
+			_path = "/Users/Casper/Library/Projects/Uni/P5/wetransfer-f8286e/ErpTask_trace.log";
 
 			// Does file exist?
 			try
 			{
-				scraperERP(new StreamReader(path));
+				ScraperErp(new StreamReader(_path));
 			}
 			catch (DirectoryNotFoundException e)
 			{
@@ -28,7 +25,7 @@ namespace SolarSystem.Picking_and_ERP
 			}
 		}
 
-		void scraperERP(StreamReader stream)
+		void ScraperErp(StreamReader stream)
 		{
 			// Path goes here
 			string line;

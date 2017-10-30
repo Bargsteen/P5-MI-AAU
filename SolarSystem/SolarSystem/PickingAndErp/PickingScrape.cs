@@ -1,24 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
+using System.Linq;
 
-namespace SolarSystem.Picking_and_ERP
+namespace SolarSystem.PickingAndErp
 {
     class PickingScrape
     {
-        public PickingScrape(string Path)
+        public PickingScrape(string path)
         {
-            _path = Path;
+            _path = path;
         }
 
         static string _path;
 
-        public List<Order> _pickingOrderList;
+        public List<Order> PickingOrderList;
 
-        
+
 
         void OrdersFromPicking(string path)
         {
@@ -42,7 +40,7 @@ namespace SolarSystem.Picking_and_ERP
 
             while (!reader.EndOfStream)
             {
-                list.Add(reader.ReadLine().Split(';'));
+                list.Add(reader.ReadLine()?.Split(';'));
             }
 
             int index = 0;
@@ -50,36 +48,37 @@ namespace SolarSystem.Picking_and_ERP
             foreach (string[] line in list)
             {
 
-                if (index > 0 && Int32.Parse(line[0]) == _pickingOrderList.Last().orderNumber)
+                if (index > 0 && Int32.Parse(line[0]) == PickingOrderList.Last().OrderNumber)
                 {
-                    _pickingOrderList.Last().lineList.Add(
+                    PickingOrderList.Last().LineList.Add(
                         new Line(
                             new Article(
                                 int.Parse(line[1]),
-                                int.Parse(line[10])), int.Parse(line[15]), 
-                                DateTime.Parse(line[8].ToString())));
+                                int.Parse(line[10])), int.Parse(line[15]),
+                            DateTime.Parse(line[8].ToString())));
                 }
                 else
                 {
-                    _pickingOrderList.Add(
+                    PickingOrderList.Add(
                         new Order(
-                            int.Parse(line[0]), 
-                                new Line(
+                            int.Parse(line[0]),
+                            new Line(
                                 new Article(
                                     int.Parse(line[1]),
                                     int.Parse(line[10])),
-                                    int.Parse(line[15]), 
-                                    DateTime.Parse(line[8].ToString()))));
-                index++;
+                                int.Parse(line[15]),
+                                DateTime.Parse(line[8].ToString()))));
+                    index++;
+                }
+
+                foreach (var item in list)
+                {
+                    Console.WriteLine(item);
+                }
+
+
+
             }
-
-            foreach (var item in list)
-            {
-                Console.WriteLine(item);
-            }
-
-
-
         }
     }
 }

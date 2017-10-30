@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SolarSystem.Picking_and_ERP
+﻿namespace SolarSystem.PickingAndErp
 {
     public class Article
     {
-        public Article(int ArticleNumber, int StartArea)
+        public Article(int articleNumber, int startArea)
         {
-            _articlenumber = ArticleNumber;
-            _startarea = StartArea;
+            _articlenumber = articleNumber;
+            _startarea = startArea;
         }
 
         int _articlenumber;
