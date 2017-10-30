@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Runtime.InteropServices.ComTypes;
+using System.Threading;
 using C5;
 using Microsoft.Win32;
 
@@ -8,35 +11,37 @@ namespace SolarSystem.Classes
 {
     public class MainLoop
     {
-        private Dictionary<int, IntervalHeap<OrderBoxProgress>> _areaQueues;
+        private Dictionary<int, OrderboxProgressContainer> areaQueues;
 
         public MainLoop()
         {
-            _areaQueues = new Dictionary<int, IntervalHeap<OrderBoxProgress>>();
-            _areaQueues.Add(21, new IntervalHeap<OrderBoxProgress>());
-            _areaQueues.Add(25, new IntervalHeap<OrderBoxProgress>());
-            _areaQueues.Add(27, new IntervalHeap<OrderBoxProgress>());
-            _areaQueues.Add(28, new IntervalHeap<OrderBoxProgress>());
-            _areaQueues.Add(29, new IntervalHeap<OrderBoxProgress>());
+            areaQueues = new Dictionary<int, OrderboxProgressContainer>();
+            areaQueues.Add(21, new OrderboxProgressContainer());
+            areaQueues.Add(25, new OrderboxProgressContainer());
+            areaQueues.Add(27, new OrderboxProgressContainer());
+            areaQueues.Add(28, new OrderboxProgressContainer());
+            areaQueues.Add(28, new OrderboxProgressContainer());
+            areaQueues.Add(29, new OrderboxProgressContainer());
             
             TimeKeeper.Tick += CheckAndSend;
         }
 
-        public void AddOrderBox((OrderBox, int) orderBoxAndArea)
+        public void AddOrderBox(OrderBox orderBox, int area)
         {
-            
-            //areaQueues[orderBoxAndArea.Item2].Add();
+            var orderBoxProgress = PackToOrderboxProgress(orderBox, area);
+            areaQueues[area].AddOrderBoxProgress(orderBoxProgress);
         }
 
         private OrderBoxProgress PackToOrderboxProgress(OrderBox orderBox, int area)
         {
             // Estimate time based on Loop Flow and areas
             int timeToSpend = EstimateTime(area);
+            
             // Create new OrderBoxProgress based on orderbox and time.
-            //var orderBoxProgress = new OrderBoxProgress(orderBox, TimeKeeper.);
+            var orderBoxProgress = new OrderBoxProgress(orderBox, Program.TimeKeeper.CurrentDateTime, EstimateTime(area));
             
             // Return the new OrderBoxProgress.
-            return null;
+            return orderBoxProgress;
         }
 
         private int EstimateTime(int area)
@@ -46,7 +51,18 @@ namespace SolarSystem.Classes
 
         private void CheckAndSend()
         {
-                
+            foreach (var areaQueue in areaQueues)
+            {
+                if(areaQueue.Value.GetNext().SecondsToSpend <= 0)
+                {
+                    Send(areaQueue.Value.GetNext().OrderBox);   
+                } 
+            }
+        }
+
+        private void Send(OrderBox orderBox)
+        {
+            
         }
     }
 }
