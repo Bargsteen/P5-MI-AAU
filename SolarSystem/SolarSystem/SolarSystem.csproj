@@ -64,6 +64,7 @@
     <Compile Include="Classes\MainLoop.cs" />
     <Compile Include="Classes\Order.cs" />
     <Compile Include="Classes\OrderBox.cs" />
+    <Compile Include="Classes\OrderBoxEventArgs.cs" />
     <Compile Include="Classes\OrderBoxProgress.cs" />
     <Compile Include="Classes\OrderboxProgressContainer.cs" />
     <Compile Include="Classes\ShelfBox.cs" />
