@@ -90,6 +90,9 @@
     <Compile Include="Simulation\OrderBoxPickerTests.cs" />
     <Compile Include="Simulation\OrderboxProgressContainerTest.cs" />
     <Compile Include="Simulation\SimulationTests.cs" />
+    <Compile Include="Picking and ERP\ErpTest.cs" />
+    <Compile Include="Picking and ERP\PickingTest.cs" />
+    <Compile Include="Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

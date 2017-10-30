@@ -8,7 +8,7 @@ using SolarSystem.Simulation;
 
 namespace SolarSystem
 {
-    public static class Program
+    public class Program
     {
         private static void PrintList(List<int> list)
         {
