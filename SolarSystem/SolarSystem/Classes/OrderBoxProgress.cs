@@ -8,7 +8,7 @@ namespace SolarSystem.Classes
         public DateTime TimeOfArrival { get; }
         public int SecondsToSpend { get; private set; }
 
-        public OrderBoxProgress(Order order, DateTime timeOfArrival, int secondsToSpend)
+        public OrderBoxProgress(OrderBox order, DateTime timeOfArrival, int secondsToSpend)
         {
             Order = order ?? throw new ArgumentNullException(nameof(order));
             TimeOfArrival = timeOfArrival;
