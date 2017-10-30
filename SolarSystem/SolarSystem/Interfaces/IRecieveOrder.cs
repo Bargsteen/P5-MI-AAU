@@ -9,11 +9,10 @@ namespace SolarSystem.Interfaces
 {
     interface IRecieveOrder
     {
-        //Temporary Order Object. Used for RecieveOrder()
-        Order _orderRecieved { get; }
-
         //RecieveOrder. Takes an order as input and maps it to the temporary Order within the class.
 
-        void RecieveOrder(Order order);
+        void RecieveOrder(OrderBoxProgress order);
+
+        
     }
 }

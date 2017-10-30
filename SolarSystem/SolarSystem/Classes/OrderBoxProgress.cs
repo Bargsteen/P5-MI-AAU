@@ -4,11 +4,11 @@ namespace SolarSystem.Classes
 {
     public class OrderBoxProgress : IComparable
     {
-        public Order Order { get; }
+        public OrderBox Order { get; }
         public DateTime TimeOfArrival { get; }
         public int SecondsToSpend { get; private set; }
 
-        public OrderBoxProgress(Order order, DateTime timeOfArrival, int secondsToSpend)
+        public OrderBoxProgress(OrderBox order, DateTime timeOfArrival, int secondsToSpend)
         {
             Order = order ?? throw new ArgumentNullException(nameof(order));
             TimeOfArrival = timeOfArrival;
