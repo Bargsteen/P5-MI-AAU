@@ -73,7 +73,7 @@
     <Compile Include="Classes\PublicEnums.cs" />
     <Compile Include="Classes\TimeKeeper.cs" />
     <Compile Include="Classes\Warehouse.cs" />
-    <Compile Include="Interfaces\IRecieveOrder.cs" />
+    <Compile Include="Interfaces\IReceiveOrder.cs" />
     <Compile Include="Interfaces\ITimeKeeper.cs" />
     <Compile Include="PickingAndErp\Article.cs" />
     <Compile Include="PickingAndErp\ErpScrape.cs" />
@@ -85,7 +85,6 @@
     <Compile Include="Simulation\ISim.cs" />
     <Compile Include="Simulation\OrderBoxPicker.cs" />
     <Compile Include="Simulation\Sim.cs" />
-    <Compile Include="Interfaces\IRecieveOrder.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
