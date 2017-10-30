@@ -79,6 +79,7 @@
     <Compile Include="Simulation\ISim.cs" />
     <Compile Include="Simulation\OrderBoxPicker.cs" />
     <Compile Include="Simulation\Sim.cs" />
+	<Compile Include="Interfaces\IRecieveOrder.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

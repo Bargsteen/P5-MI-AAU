@@ -11,7 +11,7 @@ namespace SolarSystem.Interfaces
     {
         //RecieveOrder. Takes an order as input and maps it to the temporary Order within the class.
 
-        void RecieveOrder(OrderBoxProgress order);
+        void RecieveOrder(OrderBoxProgress order); 
 
         
     }
