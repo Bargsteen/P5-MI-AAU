@@ -5,7 +5,7 @@ using SolarSystem.Interfaces;
 
 namespace SolarSystem.Classes
 {
-    public abstract class Area : IRecieveOrder
+    public abstract class Area : IReceiveOrder
     {
         private Order _orderReceived = null;
 
