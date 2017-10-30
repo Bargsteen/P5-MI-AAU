@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+
 
 namespace SolarSystem.Classes
 {
@@ -8,16 +10,18 @@ namespace SolarSystem.Classes
         public string Name { get; }
         private readonly List<ShelfBox> _shelfBoxes;
         public IEnumerable<ShelfBox> ShelfBoxes => _shelfBoxes.AsReadOnly();
-        private readonly List<OrderBox> _orderBoxes;
-        public IEnumerable<OrderBox> OrderBoxes => _orderBoxes.AsReadOnly();
+        private readonly List<OrderBoxProgress> _orderBoxes;
+        public IEnumerable<OrderBoxProgress> OrderBoxes => _orderBoxes.AsReadOnly();
         public int MaxShelfBoxes { get; }
         public int MaxOrderBoxes { get; }
+        public event EventHandler<OrderBoxEventArgs> OrderBoxCompleteEvent;
+        
 
 
         public Station(string name, int maxShelfBoxes,int maxOrderBoxes)
         {
             _shelfBoxes = new List<ShelfBox>(maxShelfBoxes);
-            _orderBoxes = new List<OrderBox>(maxOrderBoxes);
+            _orderBoxes = new List<OrderBoxProgress>(maxOrderBoxes);
             Name = name ?? throw new ArgumentNullException(nameof(name));
             MaxShelfBoxes = maxShelfBoxes;
             MaxOrderBoxes = maxOrderBoxes;
@@ -40,7 +44,9 @@ namespace SolarSystem.Classes
                     break;
                 case OrderBox orderBox:
                     if (_orderBoxes.Count >= MaxOrderBoxes) return StationResult.FullError;
-                    _orderBoxes.Add(orderBox);
+                    //Wrap OderBox in Progress
+                    // TODO: Proper secondsToSpend, And Datetime from Timekeeper
+                    _orderBoxes.Add(new OrderBoxProgress(orderBox, DateTime.Now, 10));
                     break;
                 case null:
                     throw new ArgumentNullException(nameof(box));
@@ -50,21 +56,37 @@ namespace SolarSystem.Classes
             return StationResult.Success;
         }
 
-        // TODO: Add timing
-        public void Step()
+        public void OrderBoxProgressChecker()
         {
-            foreach (var shelfBox in ShelfBoxes)
+
+            OrderBoxProgress result = _orderBoxes.First(x => x.SecondsToSpend <= 0);
+
+            foreach (OrderBoxProgress item in _orderBoxes)
             {
-                foreach (var orderBox in OrderBoxes)
+                if (item.SecondsToSpend < result.SecondsToSpend)
                 {
-                    if (orderBox.LinesNotPicked().Contains(shelfBox.Line))
-                    {
-                        orderBox.PutLineIntoBox(shelfBox.Line);
-                        return;
-                    }
+                    result = item;
                 }
             }
+
+            OrderBoxCompleteEvent(this, new OrderBoxEventArgs(result.OrderBox));
         }
+
+        // TODO: Add timing
+        //public void Step()
+        //{
+        //    foreach (var shelfBox in ShelfBoxes)
+        //    {
+        //        foreach (var orderBox in OrderBoxes)
+        //        {
+        //            if (orderBox.LinesNotPicked().Contains(shelfBox.Line))
+        //            {
+        //                orderBox.PutLineIntoBox(shelfBox.Line);
+        //                return;
+        //            }
+        //        }
+        //    }
+        //}
         
         
         

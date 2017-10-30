@@ -58,6 +58,7 @@
     <Compile Include="Classes\MainLoop.cs" />
     <Compile Include="Classes\Order.cs" />
     <Compile Include="Classes\OrderBox.cs" />
+    <Compile Include="Classes\OrderBoxEventArgs.cs" />
     <Compile Include="Classes\OrderBoxProgress.cs" />
     <Compile Include="Classes\OrderBoxProgressAndArea.cs" />
     <Compile Include="Classes\ShelfBox.cs" />
@@ -71,7 +72,7 @@
     <Compile Include="Simulation\ISim.cs" />
     <Compile Include="Simulation\OrderBoxPicker.cs" />
     <Compile Include="Simulation\Sim.cs" />
-	<Compile Include="Interfaces\IRecieveOrder.cs" />
+    <Compile Include="Interfaces\IRecieveOrder.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
