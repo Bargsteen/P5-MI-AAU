@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Threading;
+using SolarSystem.Interfaces;
 
 namespace SolarSystem.Classes
 {
     public delegate void TickHandler();
-    public class TimeKeeper
+    public class TimeKeeper : ITimeKeeper
     {
         public static event TickHandler Tick;
         private bool running = true;
