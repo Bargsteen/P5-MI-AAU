@@ -79,11 +79,6 @@
     <Compile Include="PickingAndErp\Line.cs" />
     <Compile Include="PickingAndErp\Order.cs" />
     <Compile Include="PickingAndErp\PickingScrape.cs" />
-    <Compile Include="Picking and ERP\Article.cs" />
-    <Compile Include="Picking and ERP\ErpScrape.cs" />
-    <Compile Include="Picking and ERP\Line.cs" />
-    <Compile Include="Picking and ERP\Order.cs" />
-    <Compile Include="Picking and ERP\PickingScrape.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Simulation\ISim.cs" />
@@ -99,7 +94,6 @@
       <Project>{49e2719a-446d-428c-bd27-2a6555f38bab}</Project>
       <Name>SolarSystem.Backend</Name>
     </ProjectReference>
-    <Content Include="Picking and ERP\.DS_Store" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
