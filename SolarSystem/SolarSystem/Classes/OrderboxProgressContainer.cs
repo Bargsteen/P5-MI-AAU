@@ -5,7 +5,7 @@ namespace SolarSystem.Classes
 {
     public class OrderboxProgressContainer
     {
-        private IntervalHeap<OrderBoxProgress> _orderboxHeap;
+        private readonly IntervalHeap<OrderBoxProgress> _orderboxHeap;
 
         public OrderboxProgressContainer()
         {
@@ -16,6 +16,8 @@ namespace SolarSystem.Classes
         {
             _orderboxHeap.Add(orderBoxProgress);
         }
+
+        public OrderBoxProgress Pop() => _orderboxHeap.DeleteMin();
 
         public OrderBoxProgress GetNext()
         {

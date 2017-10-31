@@ -5,31 +5,40 @@ using SolarSystem.Interfaces;
 
 namespace SolarSystem.Classes
 {
-    public abstract class Area : IRecieveOrder
+    public class Area
     {
-        private Order _orderReceived = null;
-
-        event EventHandler<OrderBoxEventArgs> OrderBoxCompleteEvent;
-        private delegate OrderBoxProgress OrderCompletedHandler(OrderBoxProgress orderBoxProgress);
-        event OrderCompletedHandler OrderBoxProgressDoneEvent;
-
-        public int AreaNumber { get; set; }
+        public event Action<OrderBox, AreaCode> OnOrderBoxInAreaFinished;
+        
+        public AreaCode AreaCode { get; set; }
         public ImmutableArray<ItemType> AvailableWares { get; set; }
         public Station[] Stations { get; }
         public ShelfSpace ShelfSpace { get; }
+        private readonly ITimeKeeper _timeKeeper;
 
-        public Area(int area, ImmutableArray<ItemType> availableWares, Station[] stations, ShelfSpace shelfSpace)
+        public Area(AreaCode areaCode, ImmutableArray<ItemType> availableWares, Station[] stations, ShelfSpace shelfSpace, ITimeKeeper timeKeeper)
         {
-            AreaNumber = area;
+            _timeKeeper = timeKeeper ?? throw new ArgumentNullException(nameof(timeKeeper));
+            AreaCode = areaCode;
             AvailableWares = availableWares;
             Stations = stations ?? throw new ArgumentNullException(nameof(stations));
             ShelfSpace = shelfSpace ?? throw new ArgumentNullException(nameof(shelfSpace));
 
             // Subscribe to each Station order complete event
-            foreach (Station x in Stations)
+            foreach (Station station in Stations)
             {
-                x.OrderBoxCompleteEvent += StationOrderCompleted;
+                station.OnOrderBoxFinished += StationOrderCompleted;
             }
+        }
+
+        public Area(AreaCode areaCode, ITimeKeeper timeKeeper)
+        {
+            _timeKeeper = timeKeeper ?? throw new ArgumentNullException(nameof(timeKeeper));
+            Stations = new[]
+            {
+                new Station("A", 1000, 1000, _timeKeeper),
+                new Station("B", 1000, 1000, _timeKeeper),
+                new Station("C", 1000, 1000, _timeKeeper)
+            };
         }
 
 
@@ -62,16 +71,16 @@ namespace SolarSystem.Classes
         }
 
         //Listening on stations for orders that are done
-        public void ReceiveOrder(OrderBox OrderBox)
+        public void ReceiveOrderBox(OrderBox OrderBox)
         {
             //call DistributeOrder with input as parameter
             DistributeOrder(OrderBox);
 
         }
 
-        public void StationOrderCompleted(object sender, OrderBoxEventArgs e)
+        public void StationOrderCompleted(OrderBox orderBox)
         {
-            OrderBoxCompleteEvent(this, e);
+            OnOrderBoxInAreaFinished?.Invoke(orderBox, AreaCode);
         }
 
     }

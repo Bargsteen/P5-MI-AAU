@@ -6,6 +6,8 @@ namespace SolarSystem.Interfaces
 {
     public interface ITimeKeeper
     {        
-        void StartTicking(double ticksPerSecond);   
+        void StartTicking(double ticksPerSecond);
+        DateTime CurrentDateTime { get; }
+        event TickHandler Tick;
     }
 }

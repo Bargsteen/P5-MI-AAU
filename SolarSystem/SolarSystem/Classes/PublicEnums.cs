@@ -12,4 +12,14 @@
         AlreadyPicked,
         SuccesfullyAdded
     }
+
+    public enum AreaCode
+    {
+        Area21,
+        Area25,
+        Area27,
+        Area28,
+        Area29,
+        Pq
+    }
 }

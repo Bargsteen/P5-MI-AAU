@@ -5,9 +5,10 @@ using SolarSystem.Interfaces;
 namespace SolarSystem.Classes
 {
     public delegate void TickHandler();
+    
     public class TimeKeeper : ITimeKeeper
     {
-        public static event TickHandler Tick;
+        public event TickHandler Tick;
         private bool _running = true;
         public DateTime CurrentDateTime { get; private set; }
 

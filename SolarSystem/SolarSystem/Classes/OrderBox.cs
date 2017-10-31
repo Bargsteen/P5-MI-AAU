@@ -11,6 +11,8 @@ namespace SolarSystem.Classes
         private readonly List<Line> _pickedLines;
         public IEnumerable<Line> PickedLines => _pickedLines.AsReadOnly();
         public int TimeRemaining { get; set; }
+        public Dictionary<AreaCode, bool> AreasVisited => Order.Areas;
+        public AreaCode StartAreaCode => Order.StartAreaCode;
 
         public OrderBox(Order order)
         {

@@ -1,4 +1,5 @@
 ﻿using System;
+using SolarSystem.Interfaces;
 
 namespace SolarSystem.Classes
 {
@@ -8,13 +9,13 @@ namespace SolarSystem.Classes
         public DateTime TimeOfArrival { get; }
         public int SecondsToSpend { get; private set; }
 
-        public OrderBoxProgress(OrderBox order, DateTime timeOfArrival, int secondsToSpend)
+        public OrderBoxProgress(ITimeKeeper timeKeeper, OrderBox order, int secondsToSpend)
         {
             OrderBox = order ?? throw new ArgumentNullException(nameof(order));
-            TimeOfArrival = timeOfArrival;
+            TimeOfArrival = timeKeeper.CurrentDateTime;
             SecondsToSpend = secondsToSpend;
 
-            TimeKeeper.Tick += OneSecondSpent;
+            timeKeeper.Tick += OneSecondSpent;
         }
 
         private void OneSecondSpent()

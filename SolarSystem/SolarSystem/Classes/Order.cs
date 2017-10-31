@@ -9,6 +9,8 @@ namespace SolarSystem.Classes
         public int TimeToFinish { get; }
         public DateTime OrderTime { get;}
         public List<Line> Lines { get;}
+        public AreaCode StartAreaCode { get; set; }
+        public Dictionary<AreaCode, bool> Areas { get; set; }
 
         public Order(string orderName, int timeToFinish, DateTime orderTime, List<Line> lines)
         {
@@ -17,10 +19,11 @@ namespace SolarSystem.Classes
             OrderTime = orderTime;
             Lines = lines ?? throw new ArgumentNullException(nameof(lines));
         }
-
+        
         public override string ToString()
         {
             return $"({OrderId}, {TimeToFinish})";
         }
     }
+   
 }
