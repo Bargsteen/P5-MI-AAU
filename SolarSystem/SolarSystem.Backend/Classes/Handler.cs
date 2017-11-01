@@ -47,7 +47,6 @@ namespace SolarSystem.Backend.Classes
 
         private void SendToMainLoop(OrderBox orderBox, AreaCode areaCode)
         {
-            Console.WriteLine("WOO");
             // Call MainLoops ReceiveOrderBox with this input
             MainLoop.ReceiveOrderBoxAndArea(orderBox, areaCode);
         }

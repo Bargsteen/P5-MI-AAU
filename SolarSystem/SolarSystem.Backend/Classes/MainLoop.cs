@@ -27,7 +27,6 @@ namespace SolarSystem.Backend.Classes
 
         public void ReceiveOrderBoxAndArea(OrderBox orderBox, AreaCode areaCode)
         {
-            Console.WriteLine("ReceiveOrderBoxAndArea called!");
             var orderBoxProgress = PackToOrderboxProgress(orderBox, areaCode);
             areaQueues[areaCode].AddOrderBoxProgress(orderBoxProgress);
         }
