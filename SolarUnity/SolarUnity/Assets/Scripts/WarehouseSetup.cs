@@ -1,11 +1,15 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
+using SolarSystem;
+using SolarSystem.Backend;
+using SolarSystem.Backend.Classes;
 
-public class WarehouseSetup : MonoBehaviour {
-
+public class WarehouseSetup : MonoBehaviour
+{
 	//Input
 	//Boxes & Position
 	//Flow
@@ -23,8 +27,7 @@ public class WarehouseSetup : MonoBehaviour {
 
 	// Instantiate orderboxes og Shelfboxes
 	//Shelfboxes skal have line
-
-
+    
 
     public enum BoxTypes
     {
@@ -33,8 +36,7 @@ public class WarehouseSetup : MonoBehaviour {
         Orderbox,
         Shelfbox
     }
- 
-
+    
     private float height;
     private float width;
     public List<GameObject> Areas = new List<GameObject>();
@@ -47,6 +49,7 @@ public class WarehouseSetup : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        
 
         DontDestroyOnLoad(this);
 	    Camera cam = Camera.main;
@@ -58,6 +61,7 @@ public class WarehouseSetup : MonoBehaviour {
         Constants c = this.GetComponent<Constants>();
         c.Setup();
 
+        Debug.Log((Camera.main.transform.position));
 
 		Areas = DrawBoxes (c.Areas.Cast<IDrawable>().ToList(), Camera.main.transform.position, BoxTypes.Area, Areatemplate);
 
@@ -110,13 +114,15 @@ public class WarehouseSetup : MonoBehaviour {
                 x = ((Origin.x - width / 2) + boxWidth / 2 + AreaBoxMarginX);
                 z -= boxHeight + AreaBoxMarginZ;
             }
-
+            
             GameObject box = (GameObject)Instantiate(template, new Vector3(
 				x, 
 				Origin.y-1,
 				z),
 				template.transform.rotation);
-			x += boxWidth + AreaBoxMarginX;
+		    box.transform.position = new Vector3(x, Origin.y - 1, z);
+            x += boxWidth + AreaBoxMarginX;
+
 
 		    switch (type)
 		    {
@@ -158,55 +164,7 @@ public class WarehouseSetup : MonoBehaviour {
 	}
 
 
-
-    //public List<GameObject> DrawBoxes(List<Station> boxes, Vector3 Origin, BoxTypes type)
-    //{
-    //    List<GameObject> Boxes = new List<GameObject>();
-
-    //    float boxWidth = template.GetComponent<BoxCollider>().size.x * template.transform.localScale.x;
-    //    float boxHeight = template.GetComponent<BoxCollider>().size.z * template.transform.localScale.z;
-
-
-    //    int amountOfBoxesOnX = (int)(width / boxWidth);
-    //    float AreaBoxMarginX = (width - amountOfBoxesOnX * boxWidth) / (amountOfBoxesOnX + 1);
-    //    float AreaBoxMarginZ = ((height - ((Mathf.CeilToInt((float)boxes.Count / amountOfBoxesOnX)) * boxHeight)) / ((boxes.Count / amountOfBoxesOnX) + 1));
-
-    //    float x = ((Origin.x - width / 2) + boxWidth / 2 + AreaBoxMarginX);
-    //    float z = ((Origin.z + height / 2) - boxHeight / 2) - AreaBoxMarginZ;
-
-
-    //    int count = 0;
-
-    //    for (int i = 0; i < boxes.Count; i++)
-    //    {
-    //        count++;
-    //        if (count > amountOfBoxesOnX)
-    //        {
-    //            count = 0;
-    //            x = ((Origin.x - width / 2) + boxWidth / 2 + AreaBoxMarginX);
-    //            z -= boxHeight + AreaBoxMarginZ;
-    //        }
-
-    //        GameObject box = (GameObject)Instantiate(template, new Vector3(
-    //                x,
-    //                Origin.y -5,
-    //                z),
-    //            template.transform.rotation);
-    //        x += boxWidth + AreaBoxMarginX;
-    //        box.transform.GetChild(0).GetComponent<TextMesh>().text = boxes[i].Name;
-    //        box.tag = "Station";
-
-    //        Boxes.Add(box);
-    //    }
-
-
-
-
-    //    return Boxes;
-    //}
-
-
-
+    
     // Update is called once per frame
 
 }
