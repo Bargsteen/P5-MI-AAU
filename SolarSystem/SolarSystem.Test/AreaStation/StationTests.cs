@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Ploeh.AutoFixture;
+﻿using Ploeh.AutoFixture;
+using SolarSystem.Backend.Classes;
 using Xunit;
-using Ploeh.AutoFixture.AutoMoq;
-using SolarSystem.Classes;
 
 namespace SolarSystem.Test.AreaStation
 {

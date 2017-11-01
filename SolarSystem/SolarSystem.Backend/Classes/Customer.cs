@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace SolarSystem.Classes
+namespace SolarSystem.Backend.Classes
 {
     public class Customer
     {

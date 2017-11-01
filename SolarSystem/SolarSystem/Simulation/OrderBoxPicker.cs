@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using SolarSystem.Classes;
+using SolarSystem.Backend.Classes;
 
 namespace SolarSystem.Simulation
 {

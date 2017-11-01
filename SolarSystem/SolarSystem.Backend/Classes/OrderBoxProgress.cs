@@ -1,7 +1,7 @@
 ﻿using System;
-using SolarSystem.Interfaces;
+using SolarSystem.Backend.Interfaces;
 
-namespace SolarSystem.Classes
+namespace SolarSystem.Backend.Classes
 {
     public class OrderBoxProgress : IComparable
     {

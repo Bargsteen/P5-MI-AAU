@@ -62,26 +62,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\Area.cs" />
-    <Compile Include="Classes\Customer.cs" />
-    <Compile Include="Classes\Handler.cs" />
-    <Compile Include="Classes\ItemType.cs" />
-    <Compile Include="Classes\Box.cs" />
-    <Compile Include="Classes\Line.cs" />
-    <Compile Include="Classes\MainLoop.cs" />
-    <Compile Include="Classes\Order.cs" />
-    <Compile Include="Classes\OrderBox.cs" />
-    <Compile Include="Classes\OrderBoxEventArgs.cs" />
-    <Compile Include="Classes\OrderBoxProgress.cs" />
-    <Compile Include="Classes\OrderboxProgressContainer.cs" />
-    <Compile Include="Classes\OrderHandler.cs" />
-    <Compile Include="Classes\ShelfBox.cs" />
-    <Compile Include="Classes\ShelfSpace.cs" />
-    <Compile Include="Classes\Station.cs" />
-    <Compile Include="Classes\PublicEnums.cs" />
-    <Compile Include="Classes\TimeKeeper.cs" />
-    <Compile Include="Classes\Warehouse.cs" />
-    <Compile Include="Interfaces\ITimeKeeper.cs" />
     <Compile Include="PickingAndErp\Article.cs" />
     <Compile Include="PickingAndErp\ErpScrape.cs" />
     <Compile Include="PickingAndErp\Line.cs" />

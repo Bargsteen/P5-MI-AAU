@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Immutable;
-using SolarSystem.Classes;
-using SolarSystem.Interfaces;
+using SolarSystem.Backend.Interfaces;
 
-namespace SolarSystem.Classes
+namespace SolarSystem.Backend.Classes
 {
     public class Area
     {

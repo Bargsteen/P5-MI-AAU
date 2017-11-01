@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using C5;
 
-namespace SolarSystem.Classes
+namespace SolarSystem.Backend.Classes
 {
     public class OrderboxProgressContainer
     {

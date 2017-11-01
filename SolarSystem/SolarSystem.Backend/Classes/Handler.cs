@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using SolarSystem.Interfaces;
 using System.Linq;
-using Ploeh.AutoFixture.Kernel;
+using SolarSystem.Backend.Interfaces;
 
-namespace SolarSystem.Classes
+namespace SolarSystem.Backend.Classes
 {
     public class Handler
     {

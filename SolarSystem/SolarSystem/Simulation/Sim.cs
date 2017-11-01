@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.Linq;
-using System.Threading;
-using SolarSystem.Classes;
-
-
-namespace SolarSystem.Simulation
+﻿namespace SolarSystem.Simulation
 {
     public class Sim
     {

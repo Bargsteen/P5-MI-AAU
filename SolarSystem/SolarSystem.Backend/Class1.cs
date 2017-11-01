@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace SolarSystem.Backend
+﻿namespace SolarSystem.Backend
 {
     public class Class1
     {

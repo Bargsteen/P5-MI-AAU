@@ -1,8 +1,7 @@
-﻿
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Ploeh.AutoFixture;
 
-namespace SolarSystem.Classes
+namespace SolarSystem.Backend.Classes
 {
     public static class OrderHandler
     {

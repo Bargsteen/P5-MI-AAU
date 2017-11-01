@@ -84,6 +84,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SolarSystem.Backend\SolarSystem.Backend.csproj">
+      <Project>{49e2719a-446d-428c-bd27-2a6555f38bab}</Project>
+      <Name>SolarSystem.Backend</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SolarSystem\SolarSystem.csproj">
       <Project>{992a0f9a-3c29-4759-84f9-f3bd825c305b}</Project>
       <Name>SolarSystem</Name>

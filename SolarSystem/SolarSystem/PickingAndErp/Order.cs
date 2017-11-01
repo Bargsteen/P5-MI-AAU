@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace SolarSystem.PickingAndErp
 {
@@ -6,7 +7,8 @@ namespace SolarSystem.PickingAndErp
     {
         public List<Line> LineList { get; private set; }
         public int OrderNumber { get; private set; }
-        
+        public DateTime OrderTime { get; set; }
+
         public Order(int orderNumber, List<Line> lineList)
         {
             this.OrderNumber = orderNumber;

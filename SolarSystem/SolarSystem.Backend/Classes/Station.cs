@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using SolarSystem.Interfaces;
+using SolarSystem.Backend.Interfaces;
 
-
-namespace SolarSystem.Classes
+namespace SolarSystem.Backend.Classes
 {
     public class Station
     {

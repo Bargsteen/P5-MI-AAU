@@ -1,15 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using BetterPrivateObject;
-using Castle.DynamicProxy.Generators.Emitters;
-using Moq;
-using Ploeh.AutoFixture;
-using Ploeh.AutoFixture.AutoMoq;
-using SolarSystem.Classes;
-using SolarSystem.Simulation;
-using Xunit;
 
 namespace SolarSystem.Test.Simulation
 {

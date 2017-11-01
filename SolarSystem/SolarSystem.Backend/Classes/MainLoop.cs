@@ -1,15 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Net.Mail;
-using System.Runtime.InteropServices.ComTypes;
-using System.Threading;
-using C5;
-using Microsoft.Win32;
-using SolarSystem.Interfaces;
+using SolarSystem.Backend.Interfaces;
 
-namespace SolarSystem.Classes
+namespace SolarSystem.Backend.Classes
 {
 
     public class MainLoop

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading;
-using SolarSystem.Interfaces;
+using SolarSystem.Backend.Interfaces;
 
-namespace SolarSystem.Classes
+namespace SolarSystem.Backend.Classes
 {
     public delegate void TickHandler();
     

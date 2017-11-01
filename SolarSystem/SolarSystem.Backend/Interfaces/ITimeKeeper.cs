@@ -1,8 +1,7 @@
 ﻿using System;
-using Castle.Core.Resource;
-using SolarSystem.Classes;
+using SolarSystem.Backend.Classes;
 
-namespace SolarSystem.Interfaces
+namespace SolarSystem.Backend.Interfaces
 {
     public interface ITimeKeeper
     {        
