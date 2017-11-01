@@ -9,13 +9,13 @@ namespace SolarSystem.Backend.Classes
         public DateTime TimeOfArrival { get; }
         public int SecondsToSpend { get; private set; }
 
-        public OrderBoxProgress(ITimeKeeper timeKeeper, OrderBox order, int secondsToSpend)
+        public OrderBoxProgress( OrderBox order, int secondsToSpend)
         {
             OrderBox = order ?? throw new ArgumentNullException(nameof(order));
-            TimeOfArrival = timeKeeper.CurrentDateTime;
+            TimeOfArrival = TimeKeeper.CurrentDateTime;
             SecondsToSpend = secondsToSpend;
 
-            timeKeeper.Tick += OneSecondSpent;
+            TimeKeeper.Tick += OneSecondSpent;
         }
 
         private void OneSecondSpent()

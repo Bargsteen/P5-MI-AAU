@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 using System.Linq;
 
 namespace SolarSystem.Backend.Classes
@@ -23,7 +22,6 @@ namespace SolarSystem.Backend.Classes
 
         public BoxResult PutLineIntoBox(Line line)
         {
-            Contract.Assert(line != null);
 
             if (!Order.Lines.Contains(line)) return BoxResult.NotInOrder;
             if (PickedLines.Contains(line)) return BoxResult.AlreadyPicked;

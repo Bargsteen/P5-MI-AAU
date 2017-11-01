@@ -19,13 +19,10 @@ namespace SolarSystem.Backend.Classes
         public int MaxShelfBoxes { get; }
         public int MaxOrderBoxes { get; }
         
-        public event EventHandler<OrderBoxEventArgs> OrderBoxCompleteEvent;
-        private readonly ITimeKeeper _timeKeeper;
-
         private OrderboxProgressContainer _orderboxProgressContainer;
 
 
-        public Station(string name, int maxShelfBoxes,int maxOrderBoxes, ITimeKeeper timeKeeper)
+        public Station(string name, int maxShelfBoxes,int maxOrderBoxes)
         {
             
             _orderboxProgressContainer = new OrderboxProgressContainer();
@@ -35,9 +32,8 @@ namespace SolarSystem.Backend.Classes
             Name = name ?? throw new ArgumentNullException(nameof(name));
             MaxShelfBoxes = maxShelfBoxes;
             MaxOrderBoxes = maxOrderBoxes;
-            _timeKeeper = timeKeeper ?? throw new ArgumentNullException(nameof(timeKeeper));
             
-            _timeKeeper.Tick += OrderBoxProgressChecker;
+            TimeKeeper.Tick += OrderBoxProgressChecker;
             
         }
         
@@ -50,6 +46,7 @@ namespace SolarSystem.Backend.Classes
         /// <exception cref="ArgumentOutOfRangeException">If the Box is not the right type.</exception>
         public StationResult ReceiveBox(Box box)
         {
+            Console.WriteLine("Station: Received box");
             switch (box)
             {
                 case ShelfBox shelfBox:
@@ -73,8 +70,10 @@ namespace SolarSystem.Backend.Classes
             var minOrderBoxProgress = _orderboxProgressContainer.GetNext();
             if (minOrderBoxProgress?.SecondsToSpend <= 0)
             {
-                OnOrderBoxFinished?.Invoke(minOrderBoxProgress.OrderBox);
                 _orderboxProgressContainer.Pop(); // Removes
+                Console.WriteLine("Station: Sending back to Area");
+                OnOrderBoxFinished?.Invoke(minOrderBoxProgress.OrderBox);
+                
             }
             
         }
@@ -86,7 +85,7 @@ namespace SolarSystem.Backend.Classes
 
             // Create new OrderBoxProgress based on orderbox and time.
             var orderBoxProgress =
-                new OrderBoxProgress(_timeKeeper, orderBox, EstimateTime());
+                new OrderBoxProgress(orderBox, EstimateTime());
 
             // Return the new OrderBoxProgress.
             return orderBoxProgress;

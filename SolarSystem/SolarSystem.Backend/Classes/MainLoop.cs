@@ -9,10 +9,9 @@ namespace SolarSystem.Backend.Classes
     {
         public event Action<OrderBox, AreaCode> OnOrderBoxInMainLoopFinished;
         private readonly Dictionary<AreaCode, OrderboxProgressContainer> areaQueues;
-        private readonly ITimeKeeper _timeKeeper;
         
         
-        public MainLoop(ITimeKeeper timeKeeper)
+        public MainLoop()
         {
             areaQueues = new Dictionary<AreaCode, OrderboxProgressContainer>();
             areaQueues.Add(AreaCode.Area21, new OrderboxProgressContainer());
@@ -21,12 +20,12 @@ namespace SolarSystem.Backend.Classes
             areaQueues.Add(AreaCode.Area28, new OrderboxProgressContainer());
             areaQueues.Add(AreaCode.Area29, new OrderboxProgressContainer());
 
-            _timeKeeper = timeKeeper;
-            _timeKeeper.Tick += _CheckAndSend;
+            TimeKeeper.Tick += _CheckAndSend;
         }
 
         public void ReceiveOrderBoxAndArea(OrderBox orderBox, AreaCode areaCode)
         {
+            Console.WriteLine("Mainloop: Received order.");
             var orderBoxProgress = PackToOrderboxProgress(orderBox, areaCode);
             areaQueues[areaCode].AddOrderBoxProgress(orderBoxProgress);
         }
@@ -38,7 +37,7 @@ namespace SolarSystem.Backend.Classes
 
             // Create new OrderBoxProgress based on orderbox and time.
             var orderBoxProgress =
-                new OrderBoxProgress(_timeKeeper, orderBox, EstimateTimeInSeconds(area));
+                new OrderBoxProgress(orderBox, EstimateTimeInSeconds(area));
 
             // Return the new OrderBoxProgress.
             return orderBoxProgress;
@@ -55,6 +54,7 @@ namespace SolarSystem.Backend.Classes
             {
                 if (areaQueue.Value.GetNext()?.SecondsToSpend <= 0)
                 {
+                    Console.WriteLine("MainLoop: Sending back to handler");
                     OnOrderBoxInMainLoopFinished?.Invoke(areaQueue.Value.Pop()?.OrderBox, areaQueue.Key);
                 }
             }

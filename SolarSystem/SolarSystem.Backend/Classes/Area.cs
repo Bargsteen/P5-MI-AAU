@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.Immutable;
 using SolarSystem.Backend.Interfaces;
 
@@ -9,16 +10,14 @@ namespace SolarSystem.Backend.Classes
         public event Action<OrderBox, AreaCode> OnOrderBoxInAreaFinished;
         
         public AreaCode AreaCode { get; set; }
-        public ImmutableArray<ItemType> AvailableWares { get; set; }
+        public List<ItemType> AvailableWares { get; set; }
         public Station[] Stations { get; }
         public ShelfSpace ShelfSpace { get; }
-        private readonly ITimeKeeper _timeKeeper;
 
-        public Area(AreaCode areaCode, ImmutableArray<ItemType> availableWares, Station[] stations, ShelfSpace shelfSpace, ITimeKeeper timeKeeper)
+        public Area(AreaCode areaCode, List<ItemType> availableWares, Station[] stations, ShelfSpace shelfSpace, ITimeKeeper timeKeeper)
         {
-            _timeKeeper = timeKeeper ?? throw new ArgumentNullException(nameof(timeKeeper));
             AreaCode = areaCode;
-            AvailableWares = availableWares;
+            AvailableWares = availableWares ?? throw new ArgumentNullException(nameof(availableWares));
             Stations = stations ?? throw new ArgumentNullException(nameof(stations));
             ShelfSpace = shelfSpace ?? throw new ArgumentNullException(nameof(shelfSpace));
 
@@ -29,21 +28,29 @@ namespace SolarSystem.Backend.Classes
             }
         }
 
-        public Area(AreaCode areaCode, ITimeKeeper timeKeeper)
+        public Area(AreaCode areaCode)
         {
-            _timeKeeper = timeKeeper ?? throw new ArgumentNullException(nameof(timeKeeper));
+            AreaCode = areaCode;
+            
             Stations = new[]
             {
-                new Station("A", 1000, 1000, _timeKeeper),
-                new Station("B", 1000, 1000, _timeKeeper),
-                new Station("C", 1000, 1000, _timeKeeper)
+                new Station("A", 1000, 1000),
+                new Station("B", 1000, 1000),
+                new Station("C", 1000, 1000)
             };
+            
+            // Subscribe to each Station order complete event
+            foreach (Station station in Stations)
+            {
+                station.OnOrderBoxFinished += StationOrderCompleted;
+            }
         }
 
 
         //method for distributing orders to stations
         private void DistributeOrder(OrderBox receivedOrderBox)
         {
+            Console.WriteLine($"Area: {AreaCode}: Sending to station");
             // Variable for checking succes or failure 
             StationResult result = StationResult.FullError;
 
@@ -72,6 +79,7 @@ namespace SolarSystem.Backend.Classes
         //Listening on stations for orders that are done
         public void ReceiveOrderBox(OrderBox OrderBox)
         {
+            Console.WriteLine($"Area: {this.AreaCode} received order");
             //call DistributeOrder with input as parameter
             DistributeOrder(OrderBox);
 
@@ -79,6 +87,7 @@ namespace SolarSystem.Backend.Classes
 
         public void StationOrderCompleted(OrderBox orderBox)
         {
+            Console.WriteLine("Area: Sending back to Handler");
             OnOrderBoxInAreaFinished?.Invoke(orderBox, AreaCode);
         }
 

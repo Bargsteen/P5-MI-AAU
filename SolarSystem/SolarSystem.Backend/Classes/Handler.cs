@@ -8,23 +8,21 @@ namespace SolarSystem.Backend.Classes
     public class Handler
     {
         public event Action<OrderBox> OnOrderBoxFinished;
-        private ITimeKeeper _timeKeeper;
         private Dictionary<AreaCode, Area> _areas;
         public MainLoop MainLoop;
 
-        public Handler(ITimeKeeper timeKeeper)
+        public Handler()
         {
-            _timeKeeper = timeKeeper ?? throw new ArgumentNullException(nameof(timeKeeper));
             _areas = new Dictionary<AreaCode, Area>
             {
-                {AreaCode.Area21, new Area(AreaCode.Area21, timeKeeper)},
-                {AreaCode.Area25, new Area(AreaCode.Area25, timeKeeper)},
-                {AreaCode.Area27, new Area(AreaCode.Area27, timeKeeper)},
-                {AreaCode.Area28, new Area(AreaCode.Area28, timeKeeper)},
-                {AreaCode.Area29, new Area(AreaCode.Area29, timeKeeper)}
+                {AreaCode.Area21, new Area(AreaCode.Area21)},
+                {AreaCode.Area25, new Area(AreaCode.Area25)},
+                {AreaCode.Area27, new Area(AreaCode.Area27)},
+                {AreaCode.Area28, new Area(AreaCode.Area28)},
+                {AreaCode.Area29, new Area(AreaCode.Area29)}
             };
             
-            MainLoop = new MainLoop(_timeKeeper);
+            MainLoop = new MainLoop();
 
             foreach (var area in _areas.Values)
             {
@@ -35,7 +33,7 @@ namespace SolarSystem.Backend.Classes
 
         public void ReceiveOrder(Order order)
         {
-            
+            Console.WriteLine("Handler: Getting new order");   
             // Convert Order to OrderBox
             OrderBox orderBox = new OrderBox(order);
             // Choose area to send to
@@ -48,28 +46,33 @@ namespace SolarSystem.Backend.Classes
         private void SendToMainLoop(OrderBox orderBox, AreaCode areaCode)
         {
             // Call MainLoops ReceiveOrderBox with this input
+            Console.WriteLine("Handler: Sending to mainloop");
             MainLoop.ReceiveOrderBoxAndArea(orderBox, areaCode);
         }
 
         private void SendToArea(OrderBox orderBox, AreaCode areaCode)
         {
             // If orderBox has been in areaCode already - throw exception
+            Console.WriteLine($"Handler: Sending to area: {areaCode}");
             if (orderBox.AreasVisited[areaCode])
             {
                 throw new ArgumentException("Area has already been visited.");
             }
             // Send orderBox to area
+            
             _areas[areaCode].ReceiveOrderBox(orderBox);
             
         }
 
         private void ReceiveOrderBoxFromMainLoop(OrderBox orderBox, AreaCode areaTo)
         {
+            Console.WriteLine("Handler: Received new order from MainLoop");
             SendToArea(orderBox, areaTo);
         }
 
         private void ReceiverOrderBoxFromArea(OrderBox orderBox, AreaCode areaFrom)
         {
+            Console.WriteLine($"Handler: Received orderbox from {areaFrom}");
             // Update AreaVisited in orderBox
             orderBox.AreasVisited[areaFrom] = true;
             // Check if all areas has been visited
@@ -92,7 +95,7 @@ namespace SolarSystem.Backend.Classes
                 return orderBox.StartAreaCode;
             }
             // If the box comes from an area, decide next area
-            return orderBox.AreasVisited.First(a => a.Value).Key;
+            return orderBox.AreasVisited.First(a => !a.Value).Key;
         }
     }
 }

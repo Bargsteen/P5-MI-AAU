@@ -6,25 +6,20 @@ namespace SolarSystem.Backend.Classes
 {
     public delegate void TickHandler();
     
-    public class TimeKeeper : ITimeKeeper
+    public static class TimeKeeper
     {
-        public event TickHandler Tick;
-        private bool _running = true;
-        public DateTime CurrentDateTime { get; private set; }
-
-        public TimeKeeper(DateTime startCurrentDateTime)
-        {
-            CurrentDateTime = startCurrentDateTime;
-            
-        }
+        public static event Action Tick;
         
+        public static DateTime CurrentDateTime { get; private set; }
 
-        public void StartTicking(double ticksPerSecond)
+        public static void StartTicking(double ticksPerSecond, DateTime startDateTime)
         {
+            CurrentDateTime = startDateTime;
+            
             // Calculate time to wait between each tick
             int waitingTime = (int)(1000 / ticksPerSecond);  
                        
-            while (_running)
+            while (true)
             {
                 // Wait and invoke
                 Thread.Sleep(waitingTime);

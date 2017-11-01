@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Globalization;
+using System.Threading;
+using Ploeh.AutoFixture;
 using SolarSystem.Backend.Classes;
 
 
@@ -8,21 +11,29 @@ namespace SolarSystem
     {
         public static void Main(string[] args)
         {
-            Console.WriteLine("Hi!");
-            var timeKeeper = new TimeKeeper(DateTime.Now);
-            timeKeeper.Tick += () => Console.WriteLine($"Tick: {timeKeeper.CurrentDateTime}");
             var order = OrderHandler.ConstructOrder();
-            var handler = new Handler(timeKeeper);
-            handler.MainLoop.OnOrderBoxInMainLoopFinished += (orderBox, code) =>
-                Console.WriteLine($"MainLoop: OrderBoxFinished {orderBox}");
+            var handler = new Handler();
             handler.OnOrderBoxFinished += box => Console.WriteLine($"BOX FINISHED: {box}");
-
+            
+            TimeKeeper.Tick += () => Console.WriteLine(TimeKeeper.CurrentDateTime);
+            
             Console.WriteLine("Start ticking");
-            timeKeeper.StartTicking(13);
-
+            var t = new Thread(() => TimeKeeper.StartTicking(10, DateTime.Now));
+            t.Start();
             Console.WriteLine("Listen for completed orders");
             handler.ReceiveOrder(order);
             
         }
+
+        public event TickHandler OnTick;
+        
+      
+        /*static void Main(string[] args) {
+            //var t = new Thread(() => CallToChildThread(1000));
+            Console.WriteLine("In Main: Creating the Child thread");
+            t.Start();
+            Console.ReadKey();
+            
+        }*/
     }
 }

@@ -12,6 +12,7 @@
     <AssemblyName>SolarSystem.Backend</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <LangVersion>7</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -62,6 +63,7 @@
     <Compile Include="Classes\OrderBoxProgress.cs" />
     <Compile Include="Classes\OrderboxProgressContainer.cs" />
     <Compile Include="Classes\OrderHandler.cs" />
+    <Compile Include="Classes\OrderSender.cs" />
     <Compile Include="Classes\PublicEnums.cs" />
     <Compile Include="Classes\ShelfBox.cs" />
     <Compile Include="Classes\ShelfSpace.cs" />
