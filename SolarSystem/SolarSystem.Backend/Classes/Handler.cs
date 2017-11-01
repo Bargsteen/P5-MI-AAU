@@ -8,12 +8,12 @@ namespace SolarSystem.Backend.Classes
     public class Handler
     {
         public event Action<OrderBox> OnOrderBoxFinished;
-        private Dictionary<AreaCode, Area> _areas;
+        public readonly Dictionary<AreaCode, Area> Areas;
         public MainLoop MainLoop;
 
         public Handler()
         {
-            _areas = new Dictionary<AreaCode, Area>
+            Areas = new Dictionary<AreaCode, Area>
             {
                 {AreaCode.Area21, new Area(AreaCode.Area21)},
                 {AreaCode.Area25, new Area(AreaCode.Area25)},
@@ -24,7 +24,7 @@ namespace SolarSystem.Backend.Classes
             
             MainLoop = new MainLoop();
 
-            foreach (var area in _areas.Values)
+            foreach (var area in Areas.Values)
             {
                 area.OnOrderBoxInAreaFinished += ReceiverOrderBoxFromArea;
             }
@@ -60,7 +60,7 @@ namespace SolarSystem.Backend.Classes
             }
             // Send orderBox to area
             
-            _areas[areaCode].ReceiveOrderBox(orderBox);
+            Areas[areaCode].ReceiveOrderBox(orderBox);
             
         }
 
