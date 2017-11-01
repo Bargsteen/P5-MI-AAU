@@ -15,7 +15,7 @@ namespace SolarSystem.Test.Simulation
 {
     public class SimulationTests : IDisposable
     {
-        private readonly IFixture _fixture;
+    /*    private readonly IFixture _fixture;
         
         public SimulationTests()
         {
@@ -89,11 +89,12 @@ namespace SolarSystem.Test.Simulation
             Assert.Equal(0, sut.BoxesInSystem.Count);
             Assert.Equal(1, sut.FinishedOrders.Count);
             
-        }
+        }*/
 
         public void Dispose()
         {
             // Nothing to do
         }
+        
     }
 }

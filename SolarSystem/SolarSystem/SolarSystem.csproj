@@ -33,9 +33,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="C5, Version=2.5.0.0, Culture=neutral, PublicKeyToken=282361b99ded7e8e">
+      <HintPath>..\packages\C5.2.5.3\lib\net45\C5.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc">
+      <HintPath>..\packages\Castle.Core.4.2.0\lib\net45\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Windsor, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc">
+      <HintPath>..\packages\Castle.Windsor.4.1.0\lib\net45\Castle.Windsor.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Collections.Immutable, Version=1.2.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-      <HintPath>..\packages\System.Collections.Immutable.1.4.0\lib\portable-net45+win8+wp8+wpa81\System.Collections.Immutable.dll</HintPath>
+    <Reference Include="System.Collections.Immutable, Version=1.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Collections.Immutable.1.3.0\lib\portable-net45+win8+wp8+wpa81\System.Collections.Immutable.dll</HintPath>
     </Reference>
     <Reference Include="System.Core" />
     <Reference Include="System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51">
@@ -47,20 +56,44 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\ArticleNumber.cs" />
+    <Compile Include="Classes\Area.cs" />
+    <Compile Include="Classes\Customer.cs" />
     <Compile Include="Classes\ItemType.cs" />
+    <Compile Include="Classes\Box.cs" />
     <Compile Include="Classes\Line.cs" />
+    <Compile Include="Classes\MainLoop.cs" />
     <Compile Include="Classes\Order.cs" />
     <Compile Include="Classes\OrderBox.cs" />
+    <Compile Include="Classes\OrderBoxEventArgs.cs" />
+    <Compile Include="Classes\OrderBoxProgress.cs" />
+    <Compile Include="Classes\OrderboxProgressContainer.cs" />
+    <Compile Include="Classes\ShelfBox.cs" />
+    <Compile Include="Classes\ShelfSpace.cs" />
+    <Compile Include="Classes\Station.cs" />
+    <Compile Include="Classes\PublicEnums.cs" />
+    <Compile Include="Classes\TimeKeeper.cs" />
+    <Compile Include="Classes\Warehouse.cs" />
+    <Compile Include="Interfaces\IReceiveOrder.cs" />
+    <Compile Include="Interfaces\ITimeKeeper.cs" />
+    <Compile Include="PickingAndErp\Article.cs" />
+    <Compile Include="PickingAndErp\ErpScrape.cs" />
+    <Compile Include="PickingAndErp\Line.cs" />
+    <Compile Include="PickingAndErp\Order.cs" />
+    <Compile Include="PickingAndErp\PickingScrape.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Simulation\ISim.cs" />
     <Compile Include="Simulation\OrderBoxPicker.cs" />
     <Compile Include="Simulation\Sim.cs" />
-    <Compile Include="Simulation\Stations\Station.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SolarSystem.Backend\SolarSystem.Backend.csproj">
+      <Project>{49e2719a-446d-428c-bd27-2a6555f38bab}</Project>
+      <Name>SolarSystem.Backend</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
