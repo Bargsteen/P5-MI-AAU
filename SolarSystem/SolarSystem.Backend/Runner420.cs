@@ -31,7 +31,7 @@ namespace SolarSystem.Backend
             Handler.ReceiveOrder(order);
         }
 
-        public Dictionary<AreaCode, Area> Areas => Handler.Areas;
+        public IEnumerable<Area> Areas => Handler.Areas.Values;
 
 
     }
