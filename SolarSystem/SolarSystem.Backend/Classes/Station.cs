@@ -7,6 +7,8 @@ namespace SolarSystem.Backend.Classes
     public class Station
     {
         public event Action<OrderBox> OnOrderBoxFinished;
+        public delegate void OnBoxReceived();
+        public event OnBoxReceived OnOrderBoxReceivedAtStationEvent;
         
         public string Name { get; }
         
@@ -46,6 +48,7 @@ namespace SolarSystem.Backend.Classes
         /// <exception cref="ArgumentOutOfRangeException">If the Box is not the right type.</exception>
         public StationResult ReceiveBox(Box box)
         {
+            OnOrderBoxReceivedAtStationEvent?.Invoke();
             Console.WriteLine("Station: Received box");
             switch (box)
             {
