@@ -57,6 +57,7 @@
      <Compile Include="Assets\Scripts\IDrawable.cs" />
      <Compile Include="Assets\Scripts\MouseController.cs" />
      <Compile Include="Assets\Scripts\StationComponent.cs" />
+     <Compile Include="Assets\Scripts\WarehouseManager.cs" />
      <Compile Include="Assets\Scripts\WarehouseSetup.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity 2017.3.0b7/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
@@ -85,23 +86,23 @@
  <Reference Include="UnityEngine.SpatialTracking">
  <HintPath>C:/Program Files/Unity 2017.3.0b7/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/RuntimeEditor/UnityEngine.SpatialTracking.dll</HintPath>
  </Reference>
- <Reference Include="Castle.Windsor">
- <HintPath>C:/Users/Kasper/Documents/P5-MI-AAU/SolarUnity/SolarUnity/Assets/Backend/Castle.Windsor.dll</HintPath>
+ <Reference Include="C5">
+ <HintPath>C:/Users/Kasper/Documents/P5-MI-AAU/SolarUnity/SolarUnity/Assets/Backend/C5.dll</HintPath>
  </Reference>
  <Reference Include="Castle.Core">
  <HintPath>C:/Users/Kasper/Documents/P5-MI-AAU/SolarUnity/SolarUnity/Assets/Backend/Castle.Core.dll</HintPath>
  </Reference>
- <Reference Include="C5">
- <HintPath>C:/Users/Kasper/Documents/P5-MI-AAU/SolarUnity/SolarUnity/Assets/Backend/C5.dll</HintPath>
+ <Reference Include="Castle.Windsor">
+ <HintPath>C:/Users/Kasper/Documents/P5-MI-AAU/SolarUnity/SolarUnity/Assets/Backend/Castle.Windsor.dll</HintPath>
  </Reference>
  <Reference Include="Ploeh.AutoFixture">
  <HintPath>C:/Users/Kasper/Documents/P5-MI-AAU/SolarUnity/SolarUnity/Assets/Backend/Ploeh.AutoFixture.dll</HintPath>
  </Reference>
- <Reference Include="System.Collections.Immutable">
- <HintPath>C:/Users/Kasper/Documents/P5-MI-AAU/SolarUnity/SolarUnity/Assets/Backend/System.Collections.Immutable.dll</HintPath>
- </Reference>
  <Reference Include="SolarSystem.Backend">
  <HintPath>C:/Users/Kasper/Documents/P5-MI-AAU/SolarUnity/SolarUnity/Assets/Backend/SolarSystem.Backend.dll</HintPath>
+ </Reference>
+ <Reference Include="System.Collections.Immutable">
+ <HintPath>C:/Users/Kasper/Documents/P5-MI-AAU/SolarUnity/SolarUnity/Assets/Backend/System.Collections.Immutable.dll</HintPath>
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

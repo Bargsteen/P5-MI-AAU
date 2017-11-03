@@ -33,7 +33,8 @@ public class MouseController : MonoBehaviour
                         transform.GetComponent<WarehouseSetup>().DrawBoxes(objectHit.gameObject.GetComponent<AreaComponent>().Stations,
                             objectHit.transform.position,
                             WarehouseSetup.BoxTypes.Station,
-                            transform.GetComponent<WarehouseSetup>().Stationtemplate);
+                            transform.GetComponent<WarehouseSetup>().Stationtemplate,
+                            hit.transform.gameObject);
                         break;
 
                     case "Station":
@@ -47,7 +48,8 @@ public class MouseController : MonoBehaviour
                         transform.GetComponent<WarehouseSetup>().DrawBoxes(objectHit.GetComponent<StationComponent>().orderBoxes,
                             objectHit.transform.position,
                             WarehouseSetup.BoxTypes.Orderbox,
-                            transform.GetComponent<WarehouseSetup>().OrderBoxtemplate);
+                            transform.GetComponent<WarehouseSetup>().OrderBoxtemplate,
+                            hit.transform.gameObject);
                         break;
 
                 }
