@@ -1,20 +1,23 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Castle.MicroKernel.ModelBuilder.Descriptors;
 using UnityEngine.SceneManagement;
 
-public class MouseController : MonoBehaviour {
+public class MouseController : MonoBehaviour
+{
+    private Stack _level = new Stack();
 
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
+    void Start()
+    {
+        _level.Push(new Tuple<int, Vector3>(0, Camera.main.transform.position));
+    }
+
 	// Update is called once per frame
 	void Update () {
-	
 		if(Input.GetMouseButtonDown(0)){
 			RaycastHit hit;
 			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -22,51 +25,65 @@ public class MouseController : MonoBehaviour {
 			if (Physics.Raycast(ray, out hit)) {
 				Transform objectHit = hit.transform;
 
-				switch (objectHit.gameObject.tag) {
+                switch (objectHit.gameObject.tag)
+                {
                     case "Area":
-					Camera.main.transform.position = hit.transform.position;
-				    transform.GetComponent<WarehouseSetup>().DrawBoxes(objectHit.gameObject.GetComponent<Area>().stations.Cast<IDrawable>().ToList(),
-                        objectHit.transform.position, 
-                        WarehouseSetup.BoxTypes.Station,
-                        transform.GetComponent<WarehouseSetup>().Stationtemplate);
-					break;
+                        _level.Push(new Tuple<int, Vector3>(1, Camera.main.transform.position));
+                        Camera.main.transform.position = hit.transform.position;
+                        transform.GetComponent<WarehouseSetup>().DrawBoxes(objectHit.gameObject.GetComponent<AreaComponent>().Stations,
+                            objectHit.transform.position,
+                            WarehouseSetup.BoxTypes.Station,
+                            transform.GetComponent<WarehouseSetup>().Stationtemplate);
+                        break;
 
                     case "Station":
+                        _level.Push(new Tuple<int, Vector3>(2, Camera.main.transform.position));
                         Camera.main.transform.position = hit.transform.position;
-                        transform.GetComponent<WarehouseSetup>().DrawBoxes(objectHit.GetComponent<Station>().shelfBoxes.Cast<IDrawable>().ToList(),
-                            objectHit.transform.position,
-                            WarehouseSetup.BoxTypes.Shelfbox,
-                            transform.GetComponent<WarehouseSetup>().ShelfBoxtemplate);
+                        //transform.GetComponent<WarehouseSetup>().DrawBoxes(objectHit.GetComponent<StationComponent>().shelfBoxes.Cast<IDrawable>().ToList(),
+                        //    objectHit.transform.position,
+                        //    WarehouseSetup.BoxTypes.Shelfbox,
+                        //    transform.GetComponent<WarehouseSetup>().ShelfBoxtemplate);
 
-                        transform.GetComponent<WarehouseSetup>().DrawBoxes(objectHit.GetComponent<Station>().orderBoxes.Cast<IDrawable>().ToList(),
+                        transform.GetComponent<WarehouseSetup>().DrawBoxes(objectHit.GetComponent<StationComponent>().orderBoxes,
                             objectHit.transform.position,
                             WarehouseSetup.BoxTypes.Orderbox,
                             transform.GetComponent<WarehouseSetup>().OrderBoxtemplate);
                         break;
 
-				}
+                }
 
 
-			}
+            }
 		} 
 
-		if (Input.GetMouseButtonDown (1)) {
-			Camera.main.transform.position = new Vector3 (0, 10, 0);
-		    foreach (GameObject GO in GameObject.FindGameObjectsWithTag("Station"))
+		if (Input.GetMouseButtonDown (1))
+		{
+		    Tuple<int, Vector3> _currentLevel = (Tuple<int, Vector3>) _level.Pop();
+		    Camera.main.transform.position = _currentLevel.Item2;
+
+		    switch (_currentLevel.Item1)
 		    {
-		        Destroy(GO);
+		        case 2:
+		            foreach (GameObject GO in GameObject.FindGameObjectsWithTag("OrderBox"))
+		            {
+		                Destroy(GO);
+		            }
+
+		            foreach (GameObject GO in GameObject.FindGameObjectsWithTag("ShelfBox"))
+		            {
+		                Destroy(GO);
+		            }
+		            break;
+
+		        case 1:
+		            foreach (GameObject GO in GameObject.FindGameObjectsWithTag("Station"))
+		            {
+		                Destroy(GO);
+		            }
+		            break;
 		    }
 
-		    foreach (GameObject GO in GameObject.FindGameObjectsWithTag("OrderBox"))
-		    {
-		        Destroy(GO);
-		    }
-
-		    foreach (GameObject GO in GameObject.FindGameObjectsWithTag("ShelfBox"))
-		    {
-		        Destroy(GO);
-		    }
-        }
+		}
 
 	}
 }

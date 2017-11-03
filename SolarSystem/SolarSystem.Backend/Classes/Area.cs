@@ -8,6 +8,7 @@ namespace SolarSystem.Backend.Classes
     public class Area
     {
         public event Action<OrderBox, AreaCode> OnOrderBoxInAreaFinished;
+        public event Action<AreaCode> OnOrderBoxReceivedAtAreaEvent;
         
         public AreaCode AreaCode { get; set; }
         public List<ItemType> AvailableWares { get; set; }
@@ -79,6 +80,7 @@ namespace SolarSystem.Backend.Classes
         //Listening on stations for orders that are done
         public void ReceiveOrderBox(OrderBox OrderBox)
         {
+            OnOrderBoxReceivedAtAreaEvent?.Invoke(this.AreaCode);
             Console.WriteLine($"Area: {this.AreaCode} received order");
             //call DistributeOrder with input as parameter
             DistributeOrder(OrderBox);
