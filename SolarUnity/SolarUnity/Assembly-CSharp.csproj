@@ -51,14 +51,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\Area.cs" />
-     <Compile Include="Assets\Scripts\Box.cs" />
+     <Compile Include="Assets\GameobjectController.cs" />
+     <Compile Include="Assets\Scripts\AreaComponent.cs" />
      <Compile Include="Assets\Scripts\Constants.cs" />
      <Compile Include="Assets\Scripts\IDrawable.cs" />
      <Compile Include="Assets\Scripts\MouseController.cs" />
-     <Compile Include="Assets\Scripts\OrderBox.cs" />
-     <Compile Include="Assets\Scripts\ShelfBox.cs" />
-     <Compile Include="Assets\Scripts\Station.cs" />
+     <Compile Include="Assets\Scripts\StationComponent.cs" />
      <Compile Include="Assets\Scripts\WarehouseSetup.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity 2017.3.0b7/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
@@ -87,11 +85,23 @@
  <Reference Include="UnityEngine.SpatialTracking">
  <HintPath>C:/Program Files/Unity 2017.3.0b7/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/RuntimeEditor/UnityEngine.SpatialTracking.dll</HintPath>
  </Reference>
- <Reference Include="SolarSystem.Backend">
- <HintPath>C:/Users/Kasper/Documents/P5-MI-AAU/SolarUnity/SolarUnity/Assets/Plugins/SolarSystem.Backend.dll</HintPath>
+ <Reference Include="Castle.Windsor">
+ <HintPath>C:/Users/Kasper/Documents/P5-MI-AAU/SolarUnity/SolarUnity/Assets/Backend/Castle.Windsor.dll</HintPath>
  </Reference>
- <Reference Include="SolarSystem">
- <HintPath>C:/Users/Kasper/Documents/P5-MI-AAU/SolarUnity/SolarUnity/Assets/Plugins/SolarSystem.dll</HintPath>
+ <Reference Include="Castle.Core">
+ <HintPath>C:/Users/Kasper/Documents/P5-MI-AAU/SolarUnity/SolarUnity/Assets/Backend/Castle.Core.dll</HintPath>
+ </Reference>
+ <Reference Include="C5">
+ <HintPath>C:/Users/Kasper/Documents/P5-MI-AAU/SolarUnity/SolarUnity/Assets/Backend/C5.dll</HintPath>
+ </Reference>
+ <Reference Include="Ploeh.AutoFixture">
+ <HintPath>C:/Users/Kasper/Documents/P5-MI-AAU/SolarUnity/SolarUnity/Assets/Backend/Ploeh.AutoFixture.dll</HintPath>
+ </Reference>
+ <Reference Include="System.Collections.Immutable">
+ <HintPath>C:/Users/Kasper/Documents/P5-MI-AAU/SolarUnity/SolarUnity/Assets/Backend/System.Collections.Immutable.dll</HintPath>
+ </Reference>
+ <Reference Include="SolarSystem.Backend">
+ <HintPath>C:/Users/Kasper/Documents/P5-MI-AAU/SolarUnity/SolarUnity/Assets/Backend/SolarSystem.Backend.dll</HintPath>
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
