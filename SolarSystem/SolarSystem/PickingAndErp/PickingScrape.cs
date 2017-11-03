@@ -1,84 +1,97 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
+using Castle.MicroKernel.SubSystems.Conversion;
+using SolarSystem.Backend.Classes;
 
 namespace SolarSystem.PickingAndErp
 {
-    class PickingScrape
+    internal class PickingScrape
     {
         public PickingScrape(string path)
         {
             _path = path;
+            OrderList = new List<Order>();
         }
 
-        static string _path;
+        private readonly string _path;
 
-        public List<Order> PickingOrderList;
+        public readonly List<Order> OrderList;
 
 
-
-        void OrdersFromPicking(string path)
+        private AreaCode AreaIntToCode(int areaInt)
         {
-            try
+            switch (areaInt)
             {
-
-            }
-            catch (ArgumentNullException)
-            {
-
-                throw;
+                    case 21:
+                        return AreaCode.Area21;
+                    case 25:
+                        return AreaCode.Area25;
+                    case 27:
+                        return AreaCode.Area27;
+                    case 28:
+                        return AreaCode.Area28;
+                    case 29:
+                        return AreaCode.Area29;
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(areaInt));
             }
         }
 
 
-        public void GetOrdersFromPicking(StreamReader reader)
+        public void GetOrdersFromPicking()
         {
-            reader.ReadLine();
-
-            List<string[]> list = new List<string[]>();
+            // Initialize reader
+            var reader = new StreamReader(_path);
+            
+            // Skip the column-name line
+            reader.ReadLine(); 
+            
+            var ordersGathered = new Dictionary<int, List<Line>>();
 
             while (!reader.EndOfStream)
             {
-                list.Add(reader.ReadLine()?.Split(';'));
+                var lineElements = reader.ReadLine()?.Split(';');
+
+                try
+                {
+                    if (lineElements != null)
+                    {
+                        var orderNumber = int.Parse(lineElements[0]);
+                        var articleNumber = long.Parse(lineElements[1]);
+                        var areaCode = AreaIntToCode(int.Parse(lineElements[10]));
+                        var stationNumber = int.Parse(lineElements[11]);
+                        var timeStampForPicking = DateTime.Parse(lineElements[8]);
+                        var lineQuantity = int.Parse(lineElements[15].Replace(".", ""));
+                        var materialName = lineElements[4];
+
+                        var article = new Article(articleNumber, materialName, areaCode);
+                        var line = new Line(article, lineQuantity, timeStampForPicking);
+
+                        if (!ordersGathered.ContainsKey(orderNumber))
+                        {
+                            ordersGathered.Add(orderNumber, new List<Line> {line});
+                            continue;
+                        }
+                        ordersGathered[orderNumber].Add(line);
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine($"ERROR : {e}");
+                }
+                
+                
+               
             }
 
-            int index = 0;
-
-            foreach (string[] line in list)
+            foreach (var kvp in ordersGathered)
             {
-
-                if (index > 0 && Int32.Parse(line[0]) == PickingOrderList.Last().OrderNumber)
-                {
-                    PickingOrderList.Last().LineList.Add(
-                        new Line(
-                            new Article(
-                                int.Parse(line[1]),
-                                int.Parse(line[10])), int.Parse(line[15]),
-                            DateTime.Parse(line[8].ToString())));
-                }
-                else
-                {
-                    PickingOrderList.Add(
-                        new Order(
-                            int.Parse(line[0]),
-                            new Line(
-                                new Article(
-                                    int.Parse(line[1]),
-                                    int.Parse(line[10])),
-                                int.Parse(line[15]),
-                                DateTime.Parse(line[8].ToString()))));
-                    index++;
-                }
-
-                foreach (var item in list)
-                {
-                    Console.WriteLine(item);
-                }
-
-
-
+                OrderList.Add(new Order(kvp.Key, kvp.Value));
             }
+
         }
     }
 }

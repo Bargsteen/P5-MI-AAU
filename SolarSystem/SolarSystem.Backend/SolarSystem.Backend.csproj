@@ -49,7 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Runner420.cs" />
+    <Compile Include="Runner.cs" />
     <Compile Include="Classes\Area.cs" />
     <Compile Include="Classes\Box.cs" />
     <Compile Include="Classes\Customer.cs" />
@@ -63,7 +63,7 @@
     <Compile Include="Classes\OrderBoxProgress.cs" />
     <Compile Include="Classes\OrderboxProgressContainer.cs" />
     <Compile Include="Classes\OrderHandler.cs" />
-    <Compile Include="Classes\OrderSender.cs" />
+    <Compile Include="Classes\OrderGenerator.cs" />
     <Compile Include="Classes\PublicEnums.cs" />
     <Compile Include="Classes\ShelfBox.cs" />
     <Compile Include="Classes\ShelfSpace.cs" />

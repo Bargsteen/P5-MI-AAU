@@ -4,6 +4,7 @@ using System.Threading;
 using Ploeh.AutoFixture;
 using SolarSystem.Backend;
 using SolarSystem.Backend.Classes;
+using SolarSystem.PickingAndErp;
 
 
 namespace SolarSystem
@@ -12,10 +13,18 @@ namespace SolarSystem
     {
         public static void Main(string[] args)
         {
+            var pickNScrape = new PickingScrape("/Users/kasper/Downloads/wetransfer-f8286e/Picking 02-10-2017.csv");
+            pickNScrape.GetOrdersFromPicking();
 
-            var runner = new Runner420();
-            runner.StartSendingOrders();
+            var orders = pickNScrape.OrderList;
             
+            orders.ForEach(Console.WriteLine);
+
+
+
+            //var runner = new Runner();
+            //runner.StartSendingOrders();
+
             /* var order = OrderHandler.ConstructOrder();
              var handler = new Handler();
              handler.OnOrderBoxFinished += box => Console.WriteLine($"BOX FINISHED: {box}");

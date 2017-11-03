@@ -1,8 +1,8 @@
 ﻿namespace SolarSystem.Backend.Classes
 {
-    public class OrderSender
+    public class OrderGenerator
     {
-        public static void SendNewOrder()
+        public static void GenerateOrder()
         {
             
         }

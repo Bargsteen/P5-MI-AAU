@@ -1,19 +1,25 @@
-﻿namespace SolarSystem.PickingAndErp
+﻿using System;
+using SolarSystem.Backend.Classes;
+
+namespace SolarSystem.PickingAndErp
 {
     public class Article
     {
-        public Article(int articleNumber, int startArea)
+        public Article(long id, string name, AreaCode areaCode)
         {
-            _articlenumber = articleNumber;
-            _startarea = startArea;
+            Id = id;
+            Name = name ?? throw new ArgumentNullException(nameof(name));
+            AreaCode = areaCode;
         }
 
-        int _articlenumber;
-        int _startarea;
+        public long Id { get; }
+        public string Name { get;  }
+        public AreaCode AreaCode { get; set; }
+        
 
         public override string ToString()
         {
-            return "ArticleNumber: " + _articlenumber + "\nStartArea: " + _startarea + "\n";
+            return "ArticleNumber: " + Id + "\nStartArea: " + AreaCode + "\n";
         }
     }
 }

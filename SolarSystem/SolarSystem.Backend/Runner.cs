@@ -5,11 +5,11 @@ using SolarSystem.Backend.Classes;
 
 namespace SolarSystem.Backend
 {
-    public class Runner420
+    public class Runner
     {
         public readonly Handler Handler;
         
-        public Runner420()
+        public Runner()
         {
             Handler = new Handler();
             
@@ -24,7 +24,7 @@ namespace SolarSystem.Backend
            // Handler.ReceiveOrder(order);
             
         }
-
+        
         public void StartSendingOrders()
         {
             var order = OrderHandler.ConstructOrder();
