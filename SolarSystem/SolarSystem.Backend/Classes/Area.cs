@@ -50,7 +50,6 @@ namespace SolarSystem.Backend.Classes
         //method for distributing orders to stations
         private void DistributeOrder(OrderBox receivedOrderBox)
         {
-            Console.WriteLine($"Area: {AreaCode}: Sending to station");
             // Variable for checking succes or failure 
             StationResult result = StationResult.FullError;
 
@@ -80,7 +79,6 @@ namespace SolarSystem.Backend.Classes
         public void ReceiveOrderBox(OrderBox OrderBox)
         {
             OnOrderBoxReceivedAtAreaEvent?.Invoke(AreaCode);
-            Console.WriteLine($"Area: {AreaCode} received order");
             //call DistributeOrder with input as parameter
             DistributeOrder(OrderBox);
 
@@ -88,7 +86,6 @@ namespace SolarSystem.Backend.Classes
 
         public void StationOrderCompleted(OrderBox orderBox)
         {
-            Console.WriteLine("Area: Sending back to Handler");
             OnOrderBoxInAreaFinished?.Invoke(orderBox, AreaCode);
         }
 

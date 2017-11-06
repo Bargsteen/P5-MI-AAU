@@ -1,9 +1,12 @@
-﻿using SolarSystem.Backend;
+﻿using System;
+using System.Globalization;
+using SolarSystem.Backend;
 
 namespace SolarSystem
 {
     public class Program
     {
+<<<<<<< HEAD
         
         
         public static void Main(string[] args)
@@ -15,27 +18,21 @@ namespace SolarSystem
 
             //var runner = new Runner();
             //runner.StartSendingOrders();
+=======
+>>>>>>> master
 
-             /*var order = OrderHandler.ConstructOrder();
-             var handler = new Handler();
-             handler.OnOrderBoxFinished += box => Console.WriteLine($"BOX FINISHED: {box}");
-             
-             TimeKeeper.Tick += () => Console.WriteLine(TimeKeeper.CurrentDateTime);
-             
-             Console.WriteLine("Start ticking");
-             var t = new Thread(() => TimeKeeper.StartTicking(10, DateTime.Now));
-             t.Start();
-             Console.WriteLine("Listen for completed orders");
-             handler.ReceiveOrder(order);*/
 
-        }
+        public static void Main(string[] args)
+        {
+            Runner runner = new Runner("/Users/Casper/Library/Projects/Uni/P5/wetransfer-f8286e/Picking 02-10-2017.csv",
+                5, 0.2);
 
-        /*static void Main(string[] args) {
-            //var t = new Thread(() => CallToChildThread(1000));
-            Console.WriteLine("In Main: Creating the Child thread");
-            t.Start();
-            Console.ReadKey();
+            Console.WriteLine("Starting simulation!");
             
-        }*/
+            // Event Subscription Output
+            runner.Handler.OnOrderBoxFinished += o => Console.WriteLine($"Handler: Orderbox {o.Order}");
+            //runner.Handler.MainLoop.OnOrderBoxInMainLoopFinished += (o, v) => Console.WriteLine("MainLoop: OnOrderBoxInMainLoopFinished.");
+            //runner.Handler.Areas[0].OnOrderBoxInAreaFinished += (box, code) => Console.WriteLine($"{code}: OnOrderBoxInAreaFinished");
+        }
     }
 }

@@ -10,15 +10,20 @@ namespace SolarSystem.Backend.Classes
         
         public readonly Dictionary<Line, bool> LineIsPickedStatuses; // True == isPicked
         public int TimeRemaining { get; set; }
-        public Dictionary<AreaCode, bool> AreasVisited => Order.Areas;
-        public AreaCode StartAreaCode => Order.StartAreaCode;
-
+        public Dictionary<AreaCode, bool> AreasVisited { get; }
+        
+        
         public OrderBox(Order order)
         {
             Order = order ?? throw new ArgumentNullException(nameof(order));
+<<<<<<< HEAD
             LineIsPickedStatuses = Order.Lines.ToDictionary(key => key, value => false);
+=======
+            _pickedLines = new List<Line>();
+            AreasVisited = order.Areas;
+>>>>>>> master
         }
-
+        
         public BoxResult PutLineIntoBox(Line line)
         {
 
