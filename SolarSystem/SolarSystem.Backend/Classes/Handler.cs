@@ -6,19 +6,14 @@ namespace SolarSystem.Backend.Classes
 {
     public class Handler
     {
+        private const int PoolTimerMinutes = 15;
+        
         public event Action<OrderBox> OnOrderBoxFinished;
         public readonly Dictionary<AreaCode, Area> Areas;
         public readonly MainLoop MainLoop;
-
-        private List<Order> OrderPool { get; set; }
-
-        private OrderGenerator OrderGenerator { get; }            
         
-        public Handler(OrderGenerator orderGenerator)
+        public Handler()
         {
-            OrderPool = new List<Order>();
-
-            OrderGenerator = orderGenerator ?? throw new ArgumentNullException(nameof(orderGenerator));
             
             Areas = new Dictionary<AreaCode, Area>
             {
@@ -36,16 +31,9 @@ namespace SolarSystem.Backend.Classes
                 area.OnOrderBoxInAreaFinished += ReceiverOrderBoxFromArea;
             }
             MainLoop.OnOrderBoxInMainLoopFinished += ReceiveOrderBoxFromMainLoop;
-            OrderGenerator.CostumerSendsOrderEvent += AddOrderToPool;
-
         }
 
-        private void AddOrderToPool(Order order)
-        {
-            OrderPool.Add(order);
-            ReceiveOrder(order);
-            // Added Order To Handler
-        }
+     
         
         public void ReceiveOrder(Order order)
         {
@@ -79,7 +67,6 @@ namespace SolarSystem.Backend.Classes
 
         private void ReceiveOrderBoxFromMainLoop(OrderBox orderBox, AreaCode areaTo)
         {
-            Console.WriteLine("Handler: Received new order from MainLoop");
             SendToArea(orderBox, areaTo);
         }
 
