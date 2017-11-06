@@ -47,7 +47,6 @@ namespace SolarSystem.Backend.Classes
         /// <exception cref="ArgumentOutOfRangeException">If the Box is not the right type.</exception>
         public StationResult ReceiveBox(Box box)
         {
-            Console.WriteLine("Station: Received box");
             switch (box)
             {
                 case ShelfBox shelfBox:

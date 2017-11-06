@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\Article.cs" />
+    <Compile Include="Classes\Scheduler.cs" />
     <Compile Include="PickingAndErp\ErpScrape.cs" />
     <Compile Include="PickingAndErp\Line.cs" />
     <Compile Include="PickingAndErp\Order.cs" />
