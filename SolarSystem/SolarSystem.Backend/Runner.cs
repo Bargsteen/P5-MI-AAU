@@ -9,7 +9,7 @@ namespace SolarSystem.Backend
     {
         public readonly Handler Handler;
         
-        public Runner()
+        public Runner(double simulationSpeed)
         {
             Handler = new Handler();
             
@@ -18,7 +18,7 @@ namespace SolarSystem.Backend
             //TimeKeeper.Tick += () => Console.WriteLine(TimeKeeper.CurrentDateTime);
             
             //Console.WriteLine("Start ticking");
-            var t = new Thread(() => TimeKeeper.StartTicking(10, DateTime.Now));
+            var t = new Thread(() => TimeKeeper.StartTicking(simulationSpeed, DateTime.Now));
             t.Start();
             //Console.WriteLine("Listen for completed orders");
            // Handler.ReceiveOrder(order);
