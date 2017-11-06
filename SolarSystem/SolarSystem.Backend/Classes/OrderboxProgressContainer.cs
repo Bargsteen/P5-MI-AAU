@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using C5;
 
 namespace SolarSystem.Backend.Classes
@@ -23,7 +24,11 @@ namespace SolarSystem.Backend.Classes
         {
             return _orderboxHeap.Min();
         }
-        
+
+        public List<OrderBoxProgress> ToList()
+        {
+             return _orderboxHeap.ToList();
+        }
         
     }
 }
