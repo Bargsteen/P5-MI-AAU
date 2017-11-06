@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SolarSystem.Backend.Classes
 {
@@ -19,14 +20,16 @@ namespace SolarSystem.Backend.Classes
         
         public int MaxShelfBoxes { get; }
         public int MaxOrderBoxes { get; }
-        
-        public OrderboxProgressContainer OBPContainer;
+
+        private int RemainingPickingTime = 0;
+
+        private (OrderBox, Line, int) OrderBoxLineTime = (null, null, 0);
+
+        private readonly Storage _storage;
 
 
         public Station(string name, int maxShelfBoxes,int maxOrderBoxes)
         {
-            
-            OBPContainer = new OrderboxProgressContainer();
             
             _shelfBoxes = new List<ShelfBox>(maxShelfBoxes);
             _orderBoxes = new List<OrderBox>(maxOrderBoxes);
@@ -34,8 +37,12 @@ namespace SolarSystem.Backend.Classes
             MaxShelfBoxes = maxShelfBoxes;
             MaxOrderBoxes = maxOrderBoxes;
             
-            TimeKeeper.Tick += OrderBoxProgressChecker;
-            
+            _storage = new Storage();
+
+            _storage.OnShelfBoxReadyFromStorage += ReceiveShelfBoxFromStorage;
+
+            TimeKeeper.Tick += TickToDo;
+
         }
         
         /// <summary>
@@ -53,11 +60,10 @@ namespace SolarSystem.Backend.Classes
                 case ShelfBox shelfBox:
                     if (_shelfBoxes.Count >= MaxShelfBoxes) return StationResult.FullError;
                     _shelfBoxes.Add(shelfBox);
-                    OnOrderBoxReceivedAtStationEvent?.Invoke();
                     break;
                 case OrderBox orderBox:
                     if (_orderBoxes.Count >= MaxOrderBoxes) return StationResult.FullError;
-                    OBPContainer.AddOrderBoxProgress(PackToOrderboxProgress(orderBox));
+                    _orderBoxes.Add(orderBox);
                     OnOrderBoxReceivedAtStationEvent?.Invoke();
                     break;
                 case null:
@@ -68,35 +74,136 @@ namespace SolarSystem.Backend.Classes
             return StationResult.Success;
         }
 
-        public void OrderBoxProgressChecker()
+
+        public void TickToDo()
         {
-            var minOrderBoxProgress = OBPContainer.GetNext();
+            if (_orderBoxes.Any())
+            {
+                PackLineIntoBox();
+            }
+            
+        }
+
+
+        private void CheckAndSendUnnecessaryShelfBoxes()
+        {
+            // Check each shelfbox
+            foreach (var shelfBox in _shelfBoxes)
+            {
+                // Find all orderBoxes needing this shelfbox
+                var orderBoxesNeedingThisShelfBox = _orderBoxes.Where(o => o.LinesNotPicked().Contains(shelfBox.Line));
+                
+                // If an unnecessary shelfbox is found
+                if (!orderBoxesNeedingThisShelfBox.Any())
+                {
+                    // Send it to storage
+                    SendShelfBoxToStorage(shelfBox);
+                    
+                    // Break, so only one shelfbox can be send at each tick
+                    break;
+                }
+            }
+        }
+
+        private void PackLineIntoBox()
+        {
+            if (OrderBoxLineTime.Item3 > 0)
+            {
+                OrderBoxLineTime.Item3--;
+                return;
+            }
+            
+            // If packing is done, change the picked line status
+            if (OrderBoxLineTime.Item1 != null && OrderBoxLineTime.Item3 == 0)
+            {
+                var orderBoxToUpdateProgressOn = _orderBoxes.First(o => o.Equals(OrderBoxLineTime.Item1));
+                orderBoxToUpdateProgressOn.PutLineIntoBox(OrderBoxLineTime.Item2);
+                CheckIfOrderBoxIsFinished(orderBoxToUpdateProgressOn);
+            }
+
+            bool pickableLineFound = false;
+            
+            // Find a box we can actually pack (the corresponding shelfbox is present)
+            foreach (var orderBox in _orderBoxes)
+            {
+                var pickableLines = orderBox.LinesNotPicked()
+                    .Where(l => _shelfBoxes.Select(s => s.Line)
+                    .Contains(l)).ToList();
+                
+                if (pickableLines.Any())
+                {
+                    pickableLineFound = true;
+                    var lineToPick = pickableLines.First();
+                    var timeToPick = orderBox.LinesNotPicked().First(l => Equals(l, lineToPick)).Quantity;
+                    OrderBoxLineTime = (orderBox, pickableLines.First(), timeToPick);
+                }
+            }
+
+            if (!pickableLineFound)
+            {
+                CheckAndSendUnnecessaryShelfBoxes();
+                
+                RequestShelfBoxFromStorage(_orderBoxes
+                    .First()
+                    .LinesNotPicked()
+                    .First()
+                    .Article);
+            }
+        }
+        
+        
+        public void CheckIfOrderBoxIsFinished(OrderBox orderBox)
+        {
+            if (!orderBox.LinesNotPicked().Any())
+            {
+                OnOrderBoxFinished?.Invoke(orderBox);
+            }
+            
+            /*var minOrderBoxProgress = OBPContainer.GetNext();
             if (minOrderBoxProgress?.SecondsToSpend <= 0)
             {
                 OBPContainer.Pop(); // Removes
                 Console.WriteLine("Station: Sending back to Area");
                 OnOrderBoxFinished?.Invoke(minOrderBoxProgress.OrderBox);
                 
-            }
+            }*/
+        }
+
+
+        private void RequestShelfBoxFromStorage(Article articleNeeded)
+        {
+            // Send request to storage
+            _storage.ReceiveRequestForOrderBox(articleNeeded);
             
         }
-        
-        private OrderBoxProgress PackToOrderboxProgress(OrderBox orderBox)
+
+        private void ReceiveShelfBoxFromStorage(ShelfBox shelfBox)
         {
-            // Estimate time based on Loop Flow and areas
-            int timeToSpend = EstimateTime();
-
-            // Create new OrderBoxProgress based on orderbox and time.
-            var orderBoxProgress =
-                new OrderBoxProgress(orderBox, EstimateTime());
-
-            // Return the new OrderBoxProgress.
-            return orderBoxProgress;
+            // If shelfBox is null throw an exception
+            if(shelfBox == null) throw new ArgumentNullException(nameof(shelfBox));
+            // If shelfBoxList is full then throw an exception
+            if(_shelfBoxes.Count >= MaxShelfBoxes) throw new InvalidOperationException("Too many shelfboxes");
+            // Add shelfBox to list of shelfboxes
+            _shelfBoxes.Add(shelfBox);
         }
-
-        private int EstimateTime()
+        
+        private void SendShelfBoxToStorage(ShelfBox shelfBox)
         {
-            return 10;
+            // Send shelfBox to storage
+            
+            _shelfBoxes.Remove(shelfBox); // FAKED
+        }
+    }
+
+    class Storage
+    {
+        public event Action<ShelfBox> OnShelfBoxReadyFromStorage;
+        
+        public void ReceiveRequestForOrderBox(Article articleNeeded)
+        {
+            var line = new Line(articleNeeded, 100000);
+            var shelfBox = new ShelfBox(line);
+            OnShelfBoxReadyFromStorage?.Invoke(shelfBox);   
         }
     }
 }
