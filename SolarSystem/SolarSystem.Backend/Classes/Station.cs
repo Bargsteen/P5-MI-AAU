@@ -21,13 +21,13 @@ namespace SolarSystem.Backend.Classes
         public int MaxShelfBoxes { get; }
         public int MaxOrderBoxes { get; }
         
-        private OrderboxProgressContainer _orderboxProgressContainer;
+        public OrderboxProgressContainer OBPContainer;
 
 
         public Station(string name, int maxShelfBoxes,int maxOrderBoxes)
         {
             
-            _orderboxProgressContainer = new OrderboxProgressContainer();
+            OBPContainer = new OrderboxProgressContainer();
             
             _shelfBoxes = new List<ShelfBox>(maxShelfBoxes);
             _orderBoxes = new List<OrderBox>(maxOrderBoxes);
@@ -48,17 +48,18 @@ namespace SolarSystem.Backend.Classes
         /// <exception cref="ArgumentOutOfRangeException">If the Box is not the right type.</exception>
         public StationResult ReceiveBox(Box box)
         {
-            OnOrderBoxReceivedAtStationEvent?.Invoke();
             Console.WriteLine("Station: Received box");
             switch (box)
             {
                 case ShelfBox shelfBox:
                     if (_shelfBoxes.Count >= MaxShelfBoxes) return StationResult.FullError;
                     _shelfBoxes.Add(shelfBox);
+                    OnOrderBoxReceivedAtStationEvent?.Invoke();
                     break;
                 case OrderBox orderBox:
                     if (_orderBoxes.Count >= MaxOrderBoxes) return StationResult.FullError;
-                    _orderboxProgressContainer.AddOrderBoxProgress(PackToOrderboxProgress(orderBox));
+                    OBPContainer.AddOrderBoxProgress(PackToOrderboxProgress(orderBox));
+                    OnOrderBoxReceivedAtStationEvent?.Invoke();
                     break;
                 case null:
                     throw new ArgumentNullException(nameof(box));
@@ -70,10 +71,10 @@ namespace SolarSystem.Backend.Classes
 
         public void OrderBoxProgressChecker()
         {
-            var minOrderBoxProgress = _orderboxProgressContainer.GetNext();
+            var minOrderBoxProgress = OBPContainer.GetNext();
             if (minOrderBoxProgress?.SecondsToSpend <= 0)
             {
-                _orderboxProgressContainer.Pop(); // Removes
+                OBPContainer.Pop(); // Removes
                 Console.WriteLine("Station: Sending back to Area");
                 OnOrderBoxFinished?.Invoke(minOrderBoxProgress.OrderBox);
                 
