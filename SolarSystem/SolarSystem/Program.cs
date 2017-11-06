@@ -6,26 +6,12 @@ namespace SolarSystem
 {
     public class Program
     {
-<<<<<<< HEAD
         
         
         public static void Main(string[] args)
         {
-            // Picking Path
-            // "/Users/Casper/Library/Projects/Uni/P5/wetransfer-f8286e/Picking 02-10-2017.csv"
-            Runner runner = new Runner("/Users/kasper/Downloads/wetransfer-f8286e/Picking 02-10-2017.csv", 5, 0.2);
             
-
-            //var runner = new Runner();
-            //runner.StartSendingOrders();
-=======
->>>>>>> master
-
-
-        public static void Main(string[] args)
-        {
-            Runner runner = new Runner("/Users/Casper/Library/Projects/Uni/P5/wetransfer-f8286e/Picking 02-10-2017.csv",
-                5, 0.2);
+            Runner runner = new Runner("/Users/kasper/Downloads/wetransfer-f8286e/Picking 02-10-2017.csv", 5, 0.2);
 
             Console.WriteLine("Starting simulation!");
             

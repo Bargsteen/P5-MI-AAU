@@ -16,12 +16,9 @@ namespace SolarSystem.Backend.Classes
         public OrderBox(Order order)
         {
             Order = order ?? throw new ArgumentNullException(nameof(order));
-<<<<<<< HEAD
             LineIsPickedStatuses = Order.Lines.ToDictionary(key => key, value => false);
-=======
-            _pickedLines = new List<Line>();
             AreasVisited = order.Areas;
->>>>>>> master
+
         }
         
         public BoxResult PutLineIntoBox(Line line)
