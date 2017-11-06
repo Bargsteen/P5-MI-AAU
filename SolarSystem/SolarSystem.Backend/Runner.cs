@@ -37,7 +37,7 @@ namespace SolarSystem.Backend
             //Console.WriteLine("Listen for completed orders");
            // Handler.ReceiveOrder(order);
             
-            Handler handler = new Handler(OrderGenerator);
+            Handler = new Handler(OrderGenerator);
         }
         
         public IEnumerable<Area> Areas => Handler.Areas.Values;

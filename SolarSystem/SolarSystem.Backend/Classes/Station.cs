@@ -74,7 +74,6 @@ namespace SolarSystem.Backend.Classes
             if (minOrderBoxProgress?.SecondsToSpend <= 0)
             {
                 OBPContainer.Pop(); // Removes
-                Console.WriteLine("Station: Sending back to Area");
                 OnOrderBoxFinished?.Invoke(minOrderBoxProgress.OrderBox);
                 
             }

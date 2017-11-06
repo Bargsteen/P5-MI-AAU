@@ -49,7 +49,6 @@ namespace SolarSystem.Backend.Classes
         
         public void ReceiveOrder(Order order)
         {
-            Console.WriteLine("Handler: Getting new order");   
             // Convert Order to OrderBox
             OrderBox orderBox = new OrderBox(order);
             // Choose area to send to
@@ -62,14 +61,12 @@ namespace SolarSystem.Backend.Classes
         private void SendToMainLoop(OrderBox orderBox, AreaCode areaCode)
         {
             // Call MainLoops ReceiveOrderBox with this input
-            Console.WriteLine("Handler: Sending to mainloop");
             MainLoop.ReceiveOrderBoxAndArea(orderBox, areaCode);
         }
 
         private void SendToArea(OrderBox orderBox, AreaCode areaCode)
         {
             // If orderBox has been in areaCode already - throw exception
-            Console.WriteLine($"Handler: Sending to area: {areaCode}");
             if (orderBox.AreasVisited[areaCode])
             {
                 throw new ArgumentException("Area has already been visited.");
@@ -88,7 +85,6 @@ namespace SolarSystem.Backend.Classes
 
         private void ReceiverOrderBoxFromArea(OrderBox orderBox, AreaCode areaFrom)
         {
-            Console.WriteLine($"Handler: Received orderbox from {areaFrom}");
             // Update AreaVisited in orderBox
             orderBox.AreasVisited[areaFrom] = true;
             // Check if all areas has been visited
