@@ -17,26 +17,7 @@ namespace SolarSystem.Backend.Classes
         {
             Order = order ?? throw new ArgumentNullException(nameof(order));
             _pickedLines = new List<Line>();
-            AreasVisited = ConstructAreasVisited(order);
-        }
-
-        private Dictionary<AreaCode, bool> ConstructAreasVisited(Order order)
-        {
-            // Dictionary to be returned.
-            var returnAreas = new Dictionary<AreaCode, bool>();
-
-            // Iterate through all lines and add to dictionary
-            foreach (var line in order.Lines)
-            {
-                returnAreas.Add(line.Article.AreaCode, false);
-            }
-            
-            // Sort according to the real flow
-            // TODO: Sorting of dictionary needs do!!!
-            
-            // Return Dictionary
-            return returnAreas;
-
+            AreasVisited = order.Areas;
         }
         
         public BoxResult PutLineIntoBox(Line line)

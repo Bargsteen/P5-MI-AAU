@@ -51,12 +51,33 @@ namespace SolarSystem.Backend.Classes
             List<Article> chosenArticles = ArticleList.OrderBy(x => _rand.Next()).Take(numberOfLines).ToList();
             // Generate lines based on chosen articles
             IEnumerable<Line> generatedLines = chosenArticles.Select(GenerateLine);
-            // Return order
+            
+            // Construct AreasVisited for areas.
             Order order = new Order(_rand.Next(minOrderNumberId, maxOrderNumberId), TimeKeeper.CurrentDateTime, generatedLines.ToList());
-
+            order.Areas = ConstructAreasVisited(order);
+            
             return order;
         }
 
+        private Dictionary<AreaCode, bool> ConstructAreasVisited(Order order)
+        {
+            // Dictionary to be returned.
+            var returnAreas = new Dictionary<AreaCode, bool>();
+
+            // Iterate through all lines and add to dictionary
+            foreach (var line in order.Lines)
+            {
+                returnAreas.Add(line.Article.AreaCode, false);
+            }
+            
+            // Sort according to the real flow
+            // TODO: Sorting of dictionary needs do!!!
+            
+            // Return Dictionary
+            return returnAreas;
+
+        }
+        
         private Line GenerateLine(Article article)
         {
             // Randomly choose quantity
