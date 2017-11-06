@@ -50,10 +50,14 @@ public class WarehouseSetup : MonoBehaviour
     public GameObject ShelfBoxtemplate;
     public GameObject OrderBoxtemplate;
 
+    private ConveyorBelt Belt;
     // Use this for initialization
+
+
+
     void Start ()
     {
-
+        Belt = GetComponent<ConveyorBelt>();
         Runner runner = GetComponent<WarehouseManager>().runner;
 
         DontDestroyOnLoad(this);
@@ -69,10 +73,31 @@ public class WarehouseSetup : MonoBehaviour
 
         Debug.Log((Camera.main.transform.position));
 
-        Areas = DrawBoxes (runner.Areas.ToList(), Camera.main.transform.position, BoxTypes.Area, Areatemplate);
+        Areas = DrawBoxes (runner.Handler.Areas.Values.ToList(), Camera.main.transform.position, BoxTypes.Area, Areatemplate);
 
+        foreach (GameObject GO in GameObject.FindGameObjectsWithTag("Area"))
+        {
+            Vector3 stop;
+            switch (GO.GetComponent<AreaComponent>().areaCode)
+            {
+                case AreaCode.Area21:
+                    stop = new Vector3(GO.transform.position.x, GO.transform.position.y, GO.transform.position.z);
+                    Belt.Stops.Add(AreaCode.Area21, stop);
+                break;
 
+                case AreaCode.Area25:
+                    stop = new Vector3(GO.transform.position.x, GO.transform.position.y, GO.transform.position.z);
+                    Belt.Stops.Add(AreaCode.Area25, stop);
+                    break;
 
+                case AreaCode.Area27:
+                    stop = new Vector3(GO.transform.position.x, GO.transform.position.y, GO.transform.position.z);
+                    Belt.Stops.Add(AreaCode.Area27, stop);
+                    break;
+                    
+
+            }
+        }
 
 
 	}
@@ -153,6 +178,7 @@ public class WarehouseSetup : MonoBehaviour
                     stationComponent.areaCode = parent.GetComponent<AreaComponent>().areaCode;
                     stationComponent.stationNumber = i;
                     stationComponent.WhManager = GetComponent<WarehouseManager>();
+                    stationComponent.OBPContainer = (boxes[i] as Station).OBPContainer;
                     box.tag = "Station";
                     break;
 
@@ -163,7 +189,7 @@ public class WarehouseSetup : MonoBehaviour
 
 
                 case BoxTypes.Orderbox:
-                    box.transform.GetChild(0).GetComponent<TextMesh>().text = (boxes[i] as OrderBox).Order.OrderId;
+                    box.transform.GetChild(0).GetComponent<TextMesh>().text = (boxes[i] as OrderBoxProgress).OrderBox.Order.OrderId.ToString();
                     box.tag = "OrderBox";
                     break;
             }
