@@ -6,8 +6,8 @@ namespace SolarSystem
 {
     public class Program
     {
-
-
+        
+        
         public static void Main(string[] args)
         {
             Runner runner = new Runner("/Users/Casper/Library/Projects/Uni/P5/wetransfer-f8286e/Picking 02-10-2017.csv",
