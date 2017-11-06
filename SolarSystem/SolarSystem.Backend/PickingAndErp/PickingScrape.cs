@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
-using System.Linq;
 using SolarSystem.Backend.Classes;
 
 namespace SolarSystem.PickingAndErp
@@ -65,7 +63,7 @@ namespace SolarSystem.PickingAndErp
                         var lineQuantity = int.Parse(lineElements[15].Replace(".", ""));
                         var materialName = lineElements[4];
 
-                        var article = new Backend.Classes.Article(articleNumber, materialName, areaCode);
+                        var article = new Article(articleNumber, materialName, areaCode);
                         var line = new Line(article, lineQuantity, timeStampForPicking);
 
                         if (!ordersGathered.ContainsKey(orderNumber))

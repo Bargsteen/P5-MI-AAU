@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Threading;
-using Ploeh.AutoFixture;
-using SolarSystem.Backend;
-using SolarSystem.Backend.Classes;
-using SolarSystem.PickingAndErp;
-
+﻿using SolarSystem.Backend;
 
 namespace SolarSystem
 {
@@ -19,7 +10,7 @@ namespace SolarSystem
         {
             // Picking Path
             // "/Users/Casper/Library/Projects/Uni/P5/wetransfer-f8286e/Picking 02-10-2017.csv"
-            Runner runner = new Runner("/Users/Casper/Library/Projects/Uni/P5/wetransfer-f8286e/Picking 02-10-2017.csv", 5);
+            Runner runner = new Runner("/Users/Casper/Library/Projects/Uni/P5/wetransfer-f8286e/Picking 02-10-2017.csv", 5, 0.2);
             
 
             //var runner = new Runner();

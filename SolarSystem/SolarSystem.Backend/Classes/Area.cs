@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using SolarSystem.Backend.Interfaces;
 
 namespace SolarSystem.Backend.Classes
@@ -80,8 +79,8 @@ namespace SolarSystem.Backend.Classes
         //Listening on stations for orders that are done
         public void ReceiveOrderBox(OrderBox OrderBox)
         {
-            OnOrderBoxReceivedAtAreaEvent?.Invoke(this.AreaCode);
-            Console.WriteLine($"Area: {this.AreaCode} received order");
+            OnOrderBoxReceivedAtAreaEvent?.Invoke(AreaCode);
+            Console.WriteLine($"Area: {AreaCode} received order");
             //call DistributeOrder with input as parameter
             DistributeOrder(OrderBox);
 

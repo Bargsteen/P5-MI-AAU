@@ -13,21 +13,21 @@ namespace SolarSystem.Backend
         public readonly Handler Handler;
         public string PickingScrapePath { get; set; }
         
-        public Runner(string pickingPath, double simulationSpeed)
+        public Runner(string pickingPath, double simulationSpeed, double orderChance)
         {
             var pickNScrape = new PickingScrape(pickingPath);
             pickNScrape.GetOrdersFromPicking();
 
             var orders = pickNScrape.OrderList;
 
-            List<Backend.Classes.Article> articleList = orders
+            List<Article> articleList = orders
                 .SelectMany(o => o.LineList)
                 .Distinct()
                 .Select(line => line.Article)
                 .ToList();
             
             
-            OrderGenerator orderGenerator = new OrderGenerator(articleList, 0.3);            
+            OrderGenerator orderGenerator = new OrderGenerator(articleList, orderChance);            
             
             //TimeKeeper.Tick += () => Console.WriteLine(TimeKeeper.CurrentDateTime);
             

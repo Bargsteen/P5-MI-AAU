@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading;
-using SolarSystem.Backend.Interfaces;
 
 namespace SolarSystem.Backend.Classes
 {

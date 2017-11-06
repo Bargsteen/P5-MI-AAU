@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.AccessControl;
 
 namespace SolarSystem.Backend.Classes
 {
@@ -55,8 +54,6 @@ namespace SolarSystem.Backend.Classes
             // Return order
             Order order = new Order(_rand.Next(minOrderNumberId, maxOrderNumberId), TimeKeeper.CurrentDateTime, generatedLines.ToList());
 
-
-            Console.WriteLine(order);
             return order;
         }
 

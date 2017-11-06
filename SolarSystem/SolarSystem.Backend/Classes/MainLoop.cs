@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using SolarSystem.Backend.Interfaces;
 
 namespace SolarSystem.Backend.Classes
 {
