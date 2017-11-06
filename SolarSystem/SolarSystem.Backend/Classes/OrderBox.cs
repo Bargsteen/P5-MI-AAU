@@ -10,15 +10,35 @@ namespace SolarSystem.Backend.Classes
         private readonly List<Line> _pickedLines;
         public IEnumerable<Line> PickedLines => _pickedLines.AsReadOnly();
         public int TimeRemaining { get; set; }
-        public Dictionary<AreaCode, bool> AreasVisited => Order.Areas;
-        public AreaCode StartAreaCode => Order.StartAreaCode;
-
+        public Dictionary<AreaCode, bool> AreasVisited { get; }
+        
+        
         public OrderBox(Order order)
         {
             Order = order ?? throw new ArgumentNullException(nameof(order));
             _pickedLines = new List<Line>();
+            AreasVisited = ConstructAreasVisited(order);
         }
 
+        private Dictionary<AreaCode, bool> ConstructAreasVisited(Order order)
+        {
+            // Dictionary to be returned.
+            var returnAreas = new Dictionary<AreaCode, bool>();
+
+            // Iterate through all lines and add to dictionary
+            foreach (var line in order.Lines)
+            {
+                returnAreas.Add(line.Article.AreaCode, false);
+            }
+            
+            // Sort according to the real flow
+            // TODO: Sorting of dictionary needs do!!!
+            
+            // Return Dictionary
+            return returnAreas;
+
+        }
+        
         public BoxResult PutLineIntoBox(Line line)
         {
 

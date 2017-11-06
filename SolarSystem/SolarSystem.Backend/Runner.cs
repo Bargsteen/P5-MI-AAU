@@ -11,7 +11,7 @@ namespace SolarSystem.Backend
     public class Runner
     {
         public readonly Handler Handler;
-        public string PickingScrapePath { get; set; }
+        public readonly OrderGenerator OrderGenerator;
         
         public Runner(string pickingPath, double simulationSpeed, double orderChance)
         {
@@ -27,7 +27,7 @@ namespace SolarSystem.Backend
                 .ToList();
             
             
-            OrderGenerator orderGenerator = new OrderGenerator(articleList, orderChance);            
+            OrderGenerator = new OrderGenerator(articleList, orderChance);            
             
             //TimeKeeper.Tick += () => Console.WriteLine(TimeKeeper.CurrentDateTime);
             
@@ -37,9 +37,7 @@ namespace SolarSystem.Backend
             //Console.WriteLine("Listen for completed orders");
            // Handler.ReceiveOrder(order);
             
-            Handler handler = new Handler(orderGenerator);
-            
-            
+            Handler handler = new Handler(OrderGenerator);
         }
         
         public void StartSendingOrders()

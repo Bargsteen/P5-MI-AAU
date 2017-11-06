@@ -8,7 +8,7 @@ namespace SolarSystem.Backend.Classes
     {
         public event Action<OrderBox> OnOrderBoxFinished;
         public readonly Dictionary<AreaCode, Area> Areas;
-        public MainLoop MainLoop;
+        public readonly MainLoop MainLoop;
 
         private List<Order> OrderPool { get; set; }
 
@@ -52,7 +52,7 @@ namespace SolarSystem.Backend.Classes
             // Convert Order to OrderBox
             OrderBox orderBox = new OrderBox(order);
             // Choose area to send to
-            var nextArea = ChooseNextArea(orderBox, orderBox.StartAreaCode, true);
+            var nextArea = ChooseNextArea(orderBox);
             // Send to Main Loop
             SendToMainLoop(orderBox, nextArea);
 
@@ -97,19 +97,14 @@ namespace SolarSystem.Backend.Classes
                 return;
             }
             // Choose Next Area
-            var nextArea = ChooseNextArea(orderBox, areaFrom);
+            var nextArea = ChooseNextArea(orderBox);
             // Send to MainLoop with area
             SendToMainLoop(orderBox, nextArea);
         }
 
-        private AreaCode ChooseNextArea(OrderBox orderBox, AreaCode areaFrom, bool initial = false)
+        private AreaCode ChooseNextArea(OrderBox orderBox)
         {
-            // If the box is from outside decide next area
-            if (initial)
-            {
-                return orderBox.StartAreaCode;
-            }
-            // If the box comes from an area, decide next area
+            // Decide the next area to be visited.
             return orderBox.AreasVisited.First(a => !a.Value).Key;
         }
     }
