@@ -11,14 +11,14 @@ namespace SolarSystem.PickingAndErp
 
         public Order(int orderNumber, List<Line> lineList)
         {
-            this.OrderNumber = orderNumber;
-            this.LineList = lineList;
+            OrderNumber = orderNumber;
+            LineList = lineList;
         }
 
         public Order(int orderNumber, Line line)
         {
-            this.OrderNumber = orderNumber;
-            this.LineList.Add(line);
+            OrderNumber = orderNumber;
+            LineList.Add(line);
         }
 
 

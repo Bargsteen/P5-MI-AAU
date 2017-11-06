@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using SolarSystem.Backend.Classes;
 
 namespace SolarSystem.PickingAndErp
 {
@@ -51,7 +52,6 @@ namespace SolarSystem.PickingAndErp
 							break;
 						}
 					}
-					Console.WriteLine(line);
 				}
 			}
 		}

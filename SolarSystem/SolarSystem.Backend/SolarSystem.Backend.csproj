@@ -49,12 +49,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\Article.cs" />
+    <Compile Include="PickingAndErp\ErpScrape.cs" />
+    <Compile Include="PickingAndErp\Line.cs" />
+    <Compile Include="PickingAndErp\Order.cs" />
+    <Compile Include="PickingAndErp\PickingScrape.cs" />
     <Compile Include="Runner.cs" />
     <Compile Include="Classes\Area.cs" />
     <Compile Include="Classes\Box.cs" />
     <Compile Include="Classes\Customer.cs" />
     <Compile Include="Classes\Handler.cs" />
-    <Compile Include="Classes\ItemType.cs" />
     <Compile Include="Classes\Line.cs" />
     <Compile Include="Classes\MainLoop.cs" />
     <Compile Include="Classes\Order.cs" />

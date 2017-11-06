@@ -1,14 +1,15 @@
 ﻿using System;
+using SolarSystem.Backend.Classes;
 
 namespace SolarSystem.PickingAndErp
 {
     public class Line
     {
-        public Article Article { get; private set; }
+        public Backend.Classes.Article Article { get;  }
         public int Quantity { get; private set; }
         public DateTime Timestamp { get; private set; }
         
-        public Line(Article article, int quantity, DateTime timeStamp)
+        public Line(Backend.Classes.Article article, int quantity, DateTime timeStamp)
         {
             Article = article;
             this.Quantity = quantity;

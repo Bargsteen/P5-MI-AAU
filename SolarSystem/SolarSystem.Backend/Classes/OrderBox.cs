@@ -16,7 +16,6 @@ namespace SolarSystem.Backend.Classes
         public OrderBox(Order order)
         {
             Order = order ?? throw new ArgumentNullException(nameof(order));
-            TimeRemaining = order.TimeToFinish;
             _pickedLines = new List<Line>();
         }
 

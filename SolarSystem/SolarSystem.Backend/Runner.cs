@@ -1,27 +1,44 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using SolarSystem.Backend.Classes;
+using SolarSystem.PickingAndErp;
 
 namespace SolarSystem.Backend
 {
+    
     public class Runner
     {
         public readonly Handler Handler;
+        public string PickingScrapePath { get; set; }
         
-        public Runner()
+        public Runner(string pickingPath, double simulationSpeed)
         {
-            Handler = new Handler();
+            var pickNScrape = new PickingScrape(pickingPath);
+            pickNScrape.GetOrdersFromPicking();
+
+            var orders = pickNScrape.OrderList;
+
+            List<Backend.Classes.Article> articleList = orders
+                .SelectMany(o => o.LineList)
+                .Distinct()
+                .Select(line => line.Article)
+                .ToList();
             
             
+            OrderGenerator orderGenerator = new OrderGenerator(articleList, 0.3);            
             
             //TimeKeeper.Tick += () => Console.WriteLine(TimeKeeper.CurrentDateTime);
             
             //Console.WriteLine("Start ticking");
-            var t = new Thread(() => TimeKeeper.StartTicking(10, DateTime.Now));
+            var t = new Thread(() => TimeKeeper.StartTicking(simulationSpeed, DateTime.Now));
             t.Start();
             //Console.WriteLine("Listen for completed orders");
            // Handler.ReceiveOrder(order);
+            
+            Handler handler = new Handler(orderGenerator);
+            
             
         }
         
@@ -35,4 +52,5 @@ namespace SolarSystem.Backend
 
 
     }
+
 }

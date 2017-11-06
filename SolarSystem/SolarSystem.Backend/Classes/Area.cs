@@ -11,11 +11,11 @@ namespace SolarSystem.Backend.Classes
         public event Action<AreaCode> OnOrderBoxReceivedAtAreaEvent;
         
         public AreaCode AreaCode { get; set; }
-        public List<ItemType> AvailableWares { get; set; }
+        public List<Article> AvailableWares { get; set; }
         public Station[] Stations { get; }
         public ShelfSpace ShelfSpace { get; }
 
-        public Area(AreaCode areaCode, List<ItemType> availableWares, Station[] stations, ShelfSpace shelfSpace, ITimeKeeper timeKeeper)
+        public Area(AreaCode areaCode, List<Article> availableWares, Station[] stations, ShelfSpace shelfSpace, ITimeKeeper timeKeeper)
         {
             AreaCode = areaCode;
             AvailableWares = availableWares ?? throw new ArgumentNullException(nameof(availableWares));

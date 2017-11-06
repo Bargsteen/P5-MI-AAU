@@ -11,8 +11,16 @@ namespace SolarSystem.Backend.Classes
         public readonly Dictionary<AreaCode, Area> Areas;
         public MainLoop MainLoop;
 
-        public Handler()
+        private List<Order> OrderPool { get; set; }
+
+        private OrderGenerator OrderGenerator { get; }            
+        
+        public Handler(OrderGenerator orderGenerator)
         {
+            OrderPool = new List<Order>();
+
+            OrderGenerator = orderGenerator ?? throw new ArgumentNullException(nameof(orderGenerator));
+            
             Areas = new Dictionary<AreaCode, Area>
             {
                 {AreaCode.Area21, new Area(AreaCode.Area21)},
@@ -29,8 +37,16 @@ namespace SolarSystem.Backend.Classes
                 area.OnOrderBoxInAreaFinished += ReceiverOrderBoxFromArea;
             }
             MainLoop.OnOrderBoxInMainLoopFinished += ReceiveOrderBoxFromMainLoop;
+            OrderGenerator.CostumerSendsOrderEvent += AddOrderToPool;
+
         }
 
+        private void AddOrderToPool(Order order)
+        {
+            OrderPool.Add(order);
+            // Added Order To Handler
+        }
+        
         public void ReceiveOrder(Order order)
         {
             Console.WriteLine("Handler: Getting new order");   

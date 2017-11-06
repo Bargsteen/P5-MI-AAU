@@ -1,10 +1,14 @@
 ﻿using System;
-using SolarSystem.Backend.Classes;
+using Ploeh.AutoFixture;
 
-namespace SolarSystem.PickingAndErp
+namespace SolarSystem.Backend.Classes
 {
     public class Article
     {
+        public long Id { get; }
+        public string Name { get;  }
+        public AreaCode AreaCode { get; set; }
+        
         public Article(long id, string name, AreaCode areaCode)
         {
             Id = id;
@@ -12,9 +16,7 @@ namespace SolarSystem.PickingAndErp
             AreaCode = areaCode;
         }
 
-        public long Id { get; }
-        public string Name { get;  }
-        public AreaCode AreaCode { get; set; }
+        
         
 
         public override string ToString()

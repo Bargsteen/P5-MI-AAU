@@ -4,14 +4,14 @@ namespace SolarSystem.Backend.Classes
 {
     public class Line
     {
-        public ItemType ItemType { get; }
-        public int Count { get; }
+        public Article Article { get; }
+        public int Quantity { get; }
 
 
-        public Line(ItemType itemType, int count)
+        public Line(Article article, int quantity)
         {
-            ItemType = itemType ?? throw new ArgumentNullException(nameof(itemType));
-            Count = count;
+            Article = article ?? throw new ArgumentNullException(nameof(article));
+            Quantity = quantity;
             
         }
 
@@ -26,20 +26,20 @@ namespace SolarSystem.Backend.Classes
 
         private bool Equals(Line other)
         {
-            return Equals(ItemType, other.ItemType) && Count == other.Count;
+            return Equals(Article, other.Article) && Quantity == other.Quantity;
         }
 
         public override int GetHashCode()
         {
             unchecked
             {
-                return ((ItemType != null ? ItemType.GetHashCode() : 0) * 397) ^ Count;
+                return ((Article != null ? Article.GetHashCode() : 0) * 397) ^ Quantity;
             }
         }
 
         public override string ToString()
         {
-            return ($@"({ItemType}, {Count}");
+            return ($@"({Article.Id}, {Quantity}");
         }
     }
 }

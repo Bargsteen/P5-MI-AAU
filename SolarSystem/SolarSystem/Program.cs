@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Threading;
 using Ploeh.AutoFixture;
 using SolarSystem.Backend;
@@ -11,21 +13,19 @@ namespace SolarSystem
 {
     public class Program
     {
+        
+        
         public static void Main(string[] args)
         {
-            var pickNScrape = new PickingScrape("/Users/kasper/Downloads/wetransfer-f8286e/Picking 02-10-2017.csv");
-            pickNScrape.GetOrdersFromPicking();
-
-            var orders = pickNScrape.OrderList;
+            // Picking Path
+            // "/Users/Casper/Library/Projects/Uni/P5/wetransfer-f8286e/Picking 02-10-2017.csv"
+            Runner runner = new Runner("/Users/Casper/Library/Projects/Uni/P5/wetransfer-f8286e/Picking 02-10-2017.csv", 5);
             
-            orders.ForEach(Console.WriteLine);
-
-
 
             //var runner = new Runner();
             //runner.StartSendingOrders();
 
-            /* var order = OrderHandler.ConstructOrder();
+             /*var order = OrderHandler.ConstructOrder();
              var handler = new Handler();
              handler.OnOrderBoxFinished += box => Console.WriteLine($"BOX FINISHED: {box}");
              

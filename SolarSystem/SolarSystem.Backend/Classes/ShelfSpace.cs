@@ -18,7 +18,7 @@ namespace SolarSystem.Backend.Classes
             ListOfBoxes = listOfBoxes ?? throw new ArgumentNullException(nameof(listOfBoxes));
         }
 
-        public ShelfSpace(string name, IEnumerable<ItemType> itemTypes) : this(name)
+        public ShelfSpace(string name, IEnumerable<Article> itemTypes) : this(name)
         {
             ListOfBoxes = new List<ShelfBox>();
             foreach (var itemType in itemTypes)
