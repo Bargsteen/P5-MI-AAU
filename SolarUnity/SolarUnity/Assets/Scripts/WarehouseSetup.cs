@@ -51,9 +51,10 @@ public class WarehouseSetup : MonoBehaviour
     public GameObject OrderBoxtemplate;
 
     // Use this for initialization
-    void Start () {
-        
-        Runner420 runner = new Runner420();
+    void Start ()
+    {
+
+        Runner runner = GetComponent<WarehouseManager>().runner;
 
         DontDestroyOnLoad(this);
 	    Camera cam = Camera.main;
@@ -68,7 +69,7 @@ public class WarehouseSetup : MonoBehaviour
 
         Debug.Log((Camera.main.transform.position));
 
-        Areas = DrawBoxes (runner.Areas.Values.ToList(), Camera.main.transform.position, BoxTypes.Area, Areatemplate);
+        Areas = DrawBoxes (runner.Areas.ToList(), Camera.main.transform.position, BoxTypes.Area, Areatemplate);
 
 
 
@@ -77,7 +78,7 @@ public class WarehouseSetup : MonoBehaviour
 	}
 
 
-    public List<GameObject> DrawBoxes<T>(List<T> boxes, Vector3 Origin, BoxTypes type, GameObject template)
+    public List<GameObject> DrawBoxes<T>(List<T> boxes, Vector3 Origin, BoxTypes type, GameObject template, GameObject parent = null)
     {
         List<GameObject> Boxes = new List<GameObject>();
 
@@ -135,14 +136,23 @@ public class WarehouseSetup : MonoBehaviour
             switch (type)
             {
                 case BoxTypes.Area:
+                    AreaComponent areaComponent = box.GetComponent<AreaComponent>();
                     box.transform.GetChild(0).GetComponent<TextMesh>().text = (boxes[i] as Area).AreaCode.ToString();
-                    box.gameObject.GetComponent<AreaComponent>().Stations = (boxes[i] as Area).Stations.ToList();
+                    areaComponent.Stations = (boxes[i] as Area).Stations.ToList();
+                    areaComponent.WhManager = GetComponent<WarehouseManager>();
+                    areaComponent.GO = box;
+                    areaComponent.areaCode = (boxes[i] as Area).AreaCode;
                     box.tag = "Area";
                     break;
 
                 case BoxTypes.Station:
+                    StationComponent stationComponent = box.GetComponent<StationComponent>();
                     box.transform.GetChild(0).GetComponent<TextMesh>().text = (boxes[i] as Station).Name;
-                    box.gameObject.GetComponent<StationComponent>().orderBoxes = (boxes[i] as Station).OrderBoxes.ToList();
+                    stationComponent.orderBoxes = (boxes[i] as Station).OrderBoxes.ToList();
+                    stationComponent.GO = box;
+                    stationComponent.areaCode = parent.GetComponent<AreaComponent>().areaCode;
+                    stationComponent.stationNumber = i;
+                    stationComponent.WhManager = GetComponent<WarehouseManager>();
                     box.tag = "Station";
                     break;
 

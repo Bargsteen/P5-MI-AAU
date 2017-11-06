@@ -59,6 +59,7 @@ namespace SolarSystem.Backend.Classes
                 case OrderBox orderBox:
                     if (_orderBoxes.Count >= MaxOrderBoxes) return StationResult.FullError;
                     _orderboxProgressContainer.AddOrderBoxProgress(PackToOrderboxProgress(orderBox));
+                    _orderBoxes.Add(orderBox);
                     break;
                 case null:
                     throw new ArgumentNullException(nameof(box));
