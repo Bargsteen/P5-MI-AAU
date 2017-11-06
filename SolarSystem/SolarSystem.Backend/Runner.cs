@@ -40,12 +40,6 @@ namespace SolarSystem.Backend
             Handler handler = new Handler(OrderGenerator);
         }
         
-        public void StartSendingOrders()
-        {
-            var order = OrderHandler.ConstructOrder();
-            Handler.ReceiveOrder(order);
-        }
-
         public IEnumerable<Area> Areas => Handler.Areas.Values;
 
 

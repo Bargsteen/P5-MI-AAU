@@ -67,7 +67,10 @@ namespace SolarSystem.Backend.Classes
             // Iterate through all lines and add to dictionary
             foreach (var line in order.Lines)
             {
-                returnAreas.Add(line.Article.AreaCode, false);
+                if (!returnAreas.ContainsKey(line.Article.AreaCode))
+                {
+                    returnAreas.Add(line.Article.AreaCode, false);
+                }
             }
             
             // Sort according to the real flow
