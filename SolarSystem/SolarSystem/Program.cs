@@ -14,7 +14,7 @@ namespace SolarSystem
                 5, 0.2);
             
             // Event Subscription Output
-            runner.Handler.OnOrderBoxFinished += o => Console.WriteLine("Handler: OnOrderBoxFinished.");
+            //runner.Handler.OnOrderBoxFinished += o => Console.WriteLine("Handler: OnOrderBoxFinished.");
             //runner.Handler.MainLoop.OnOrderBoxInMainLoopFinished += (o, v) => Console.WriteLine("MainLoop: OnOrderBoxInMainLoopFinished.");
             //runner.Handler.Areas[0].OnOrderBoxInAreaFinished += (box, code) => Console.WriteLine($"{code}: OnOrderBoxInAreaFinished");
         }

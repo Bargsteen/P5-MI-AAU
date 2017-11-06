@@ -43,6 +43,7 @@ namespace SolarSystem.Backend.Classes
         private void AddOrderToPool(Order order)
         {
             OrderPool.Add(order);
+            ReceiveOrder(order);
             // Added Order To Handler
         }
         
