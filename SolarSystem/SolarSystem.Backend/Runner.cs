@@ -12,6 +12,7 @@ namespace SolarSystem.Backend
     {
         public readonly Handler Handler;
         public readonly OrderGenerator OrderGenerator;
+        public readonly Scheduler Scheduler;
         
         public Runner(string pickingPath, double simulationSpeed, double orderChance)
         {
@@ -29,17 +30,15 @@ namespace SolarSystem.Backend
             
             OrderGenerator = new OrderGenerator(articleList, orderChance);            
             
-            //TimeKeeper.Tick += () => Console.WriteLine(TimeKeeper.CurrentDateTime);
-            
-            //Console.WriteLine("Start ticking");
             var t = new Thread(() => TimeKeeper.StartTicking(simulationSpeed, DateTime.Now));
             t.Start();
-            //Console.WriteLine("Listen for completed orders");
-           // Handler.ReceiveOrder(order);
             
-            Handler = new Handler(OrderGenerator);
+            Handler = new Handler();
+            
+            Scheduler = new Scheduler(OrderGenerator, Handler, 5);
         }
-        
+
+
         public IEnumerable<Area> Areas => Handler.Areas.Values;
 
 
