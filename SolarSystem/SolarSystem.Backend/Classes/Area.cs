@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using SolarSystem.Backend.Interfaces;
 
 namespace SolarSystem.Backend.Classes
@@ -13,6 +14,8 @@ namespace SolarSystem.Backend.Classes
         public List<Article> AvailableWares { get; set; }
         public Station[] Stations { get; }
         public ShelfSpace ShelfSpace { get; }
+        
+        private static Random _rand = new Random();
 
         public Area(AreaCode areaCode, List<Article> availableWares, Station[] stations, ShelfSpace shelfSpace, ITimeKeeper timeKeeper)
         {
@@ -53,8 +56,11 @@ namespace SolarSystem.Backend.Classes
             // Variable for checking succes or failure 
             StationResult result = StationResult.FullError;
 
+            // Randomize order of stations to try
+            var stationsInRandomOrder = Stations.OrderBy(a => _rand.Next());
+            
             // Foreach station in stations:
-            foreach (Station station in Stations)
+            foreach (Station station in stationsInRandomOrder)
             {
                 // Call Station.RecieveBox()
                 result = station.ReceiveBox(receivedOrderBox);

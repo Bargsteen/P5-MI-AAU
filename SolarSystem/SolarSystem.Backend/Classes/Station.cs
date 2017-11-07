@@ -127,8 +127,9 @@ namespace SolarSystem.Backend.Classes
             foreach (var orderBox in _orderBoxes)
             {
                 var pickableLines = orderBox.LinesNotPicked()
-                    .Where(l => _shelfBoxes.Select(s => s.Line)
-                    .Contains(l)).ToList();
+                    .Where(l => _shelfBoxes.Select(s => s.Line.Article).Contains(l.Article)).ToList();
+                    
+                    
                 
                 if (pickableLines.Any())
                 {
@@ -156,6 +157,7 @@ namespace SolarSystem.Backend.Classes
         {
             if (!orderBox.LinesNotPicked().Any())
             {
+                _orderBoxes.Remove(orderBox);
                 OnOrderBoxFinished?.Invoke(orderBox);
             }
             
