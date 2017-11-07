@@ -10,8 +10,9 @@ namespace SolarSystem
         
         public static void Main(string[] args)
         {
-            Runner runner = new Runner("/Users/Casper/Library/Projects/Uni/P5/wetransfer-f8286e/Picking 02-10-2017.csv",
-                15, 0.2);
+            // 
+            Runner runner = new Runner("/Users/kasper/Downloads/wetransfer-f8286e/Picking 02-10-2017.csv",
+                300, 0.2);
 
             Console.WriteLine("Starting simulation!");
             
@@ -20,7 +21,7 @@ namespace SolarSystem
             //runner.Handler.MainLoop.OnOrderBoxInMainLoopFinished += (o, v) => Console.WriteLine("MainLoop: OnOrderBoxInMainLoopFinished.");
             //runner.Handler.Areas[0].OnOrderBoxInAreaFinished += (box, code) => Console.WriteLine($"{code}: OnOrderBoxInAreaFinished");
             runner.OrderGenerator.CostumerSendsOrderEvent +=
-                Order => Console.WriteLine($"OrderGenerator: {Order.OrderId} Created.");
+                order => Console.WriteLine($"OrderGenerator: {order.OrderId} Created.");
             
         }
     }

@@ -16,6 +16,7 @@ namespace SolarSystem.Backend.Classes
             OrderTime = orderTime;
             Lines = lines ?? throw new ArgumentNullException(nameof(lines));
         }
+
     }
    
 }

@@ -116,7 +116,7 @@ namespace SolarSystem.Backend.Classes
             if (OrderBoxLineTime.Item1 != null && OrderBoxLineTime.Item3 == 0)
             {
                 var orderBoxToUpdateProgressOn = _orderBoxes.First(o => o.Equals(OrderBoxLineTime.Item1));
-                orderBoxToUpdateProgressOn.PutLineIntoBox(OrderBoxLineTime.Item2);
+                orderBoxToUpdateProgressOn?.PutLineIntoBox(OrderBoxLineTime.Item2);
                 CheckIfOrderBoxIsFinished(orderBoxToUpdateProgressOn);
             }
 
@@ -135,19 +135,22 @@ namespace SolarSystem.Backend.Classes
                     pickableLineFound = true;
                     var lineToPick = pickableLines.First();
                     var timeToPick = orderBox.LinesNotPicked().First(l => Equals(l, lineToPick)).Quantity;
+
                     OrderBoxLineTime = (orderBox, pickableLines.First(), timeToPick);
+                    
                 }
             }
 
             if (!pickableLineFound)
             {
                 CheckAndSendUnnecessaryShelfBoxes();
+
                 
                 RequestShelfBoxFromStorage(_orderBoxes
-                    .First()
-                    .LinesNotPicked()
-                    .First()
-                    .Article);
+                        .First()
+                        .LinesNotPicked()
+                        .First()
+                        .Article);
             }
         }
         
@@ -157,6 +160,7 @@ namespace SolarSystem.Backend.Classes
             if (!orderBox.LinesNotPicked().Any())
             {
                 _orderBoxes.Remove(orderBox);
+                OrderBoxLineTime = (null, null, 0);
                 OnOrderBoxFinished?.Invoke(orderBox);
             }
             

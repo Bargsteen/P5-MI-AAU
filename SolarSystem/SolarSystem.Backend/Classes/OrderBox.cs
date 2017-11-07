@@ -11,8 +11,8 @@ namespace SolarSystem.Backend.Classes
         public readonly Dictionary<Line, bool> LineIsPickedStatuses; // True == isPicked
         public int TimeRemaining { get; set; }
         public Dictionary<AreaCode, bool> AreasVisited { get; }
-        
-        
+
+
         public OrderBox(Order order)
         {
             Order = order ?? throw new ArgumentNullException(nameof(order));
@@ -42,7 +42,7 @@ namespace SolarSystem.Backend.Classes
 
         public override string ToString()
         {
-            return $"({Order}, {TimeRemaining})";
+            return $"(OrderBox: {Id})";
         }
     }
 }
