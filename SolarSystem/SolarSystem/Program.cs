@@ -1,13 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Threading;
-using Ploeh.AutoFixture;
 using SolarSystem.Backend;
-using SolarSystem.Backend.Classes;
-using SolarSystem.PickingAndErp;
-
 
 namespace SolarSystem
 {
@@ -17,34 +10,19 @@ namespace SolarSystem
         
         public static void Main(string[] args)
         {
-            // Picking Path
-            // "/Users/Casper/Library/Projects/Uni/P5/wetransfer-f8286e/Picking 02-10-2017.csv"
-            Runner runner = new Runner("/Users/Casper/Library/Projects/Uni/P5/wetransfer-f8286e/Picking 02-10-2017.csv", 5);
+            // 
+            Runner runner = new Runner("/Users/kasper/Downloads/wetransfer-f8286e/Picking 02-10-2017.csv",
+                300, 0.2);
+
+            Console.WriteLine("Starting simulation!");
             
-
-            //var runner = new Runner();
-            //runner.StartSendingOrders();
-
-             /*var order = OrderHandler.ConstructOrder();
-             var handler = new Handler();
-             handler.OnOrderBoxFinished += box => Console.WriteLine($"BOX FINISHED: {box}");
-             
-             TimeKeeper.Tick += () => Console.WriteLine(TimeKeeper.CurrentDateTime);
-             
-             Console.WriteLine("Start ticking");
-             var t = new Thread(() => TimeKeeper.StartTicking(10, DateTime.Now));
-             t.Start();
-             Console.WriteLine("Listen for completed orders");
-             handler.ReceiveOrder(order);*/
-
+            // Event Subscription Output
+            //runner.Handler.OnOrderBoxFinished += o => Console.WriteLine($"Handler: Orderbox {o.Order}");
+            //runner.Handler.MainLoop.OnOrderBoxInMainLoopFinished += (o, v) => Console.WriteLine("MainLoop: OnOrderBoxInMainLoopFinished.");
+            //runner.Handler.Areas[0].OnOrderBoxInAreaFinished += (box, code) => Console.WriteLine($"{code}: OnOrderBoxInAreaFinished");
+            runner.OrderGenerator.CostumerSendsOrderEvent +=
+                order => Console.WriteLine($"OrderGenerator: {order.OrderId} Created.");
+            
         }
-
-        /*static void Main(string[] args) {
-            //var t = new Thread(() => CallToChildThread(1000));
-            Console.WriteLine("In Main: Creating the Child thread");
-            t.Start();
-            Console.ReadKey();
-            
-        }*/
     }
 }

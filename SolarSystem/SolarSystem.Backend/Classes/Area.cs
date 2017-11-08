@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
+using System.Linq;
 using SolarSystem.Backend.Interfaces;
 
 namespace SolarSystem.Backend.Classes
@@ -14,6 +14,8 @@ namespace SolarSystem.Backend.Classes
         public List<Article> AvailableWares { get; set; }
         public Station[] Stations { get; }
         public ShelfSpace ShelfSpace { get; }
+        
+        private static Random _rand = new Random();
 
         public Area(AreaCode areaCode, List<Article> availableWares, Station[] stations, ShelfSpace shelfSpace, ITimeKeeper timeKeeper)
         {
@@ -51,12 +53,14 @@ namespace SolarSystem.Backend.Classes
         //method for distributing orders to stations
         private void DistributeOrder(OrderBox receivedOrderBox)
         {
-            Console.WriteLine($"Area: {AreaCode}: Sending to station");
             // Variable for checking succes or failure 
             StationResult result = StationResult.FullError;
 
+            // Randomize order of stations to try
+            var stationsInRandomOrder = Stations.OrderBy(a => _rand.Next());
+            
             // Foreach station in stations:
-            foreach (Station station in Stations)
+            foreach (Station station in stationsInRandomOrder)
             {
                 // Call Station.RecieveBox()
                 result = station.ReceiveBox(receivedOrderBox);
@@ -80,8 +84,7 @@ namespace SolarSystem.Backend.Classes
         //Listening on stations for orders that are done
         public void ReceiveOrderBox(OrderBox OrderBox)
         {
-            OnOrderBoxReceivedAtAreaEvent?.Invoke(this.AreaCode);
-            Console.WriteLine($"Area: {this.AreaCode} received order");
+            OnOrderBoxReceivedAtAreaEvent?.Invoke(AreaCode);
             //call DistributeOrder with input as parameter
             DistributeOrder(OrderBox);
 
@@ -89,7 +92,6 @@ namespace SolarSystem.Backend.Classes
 
         public void StationOrderCompleted(OrderBox orderBox)
         {
-            Console.WriteLine("Area: Sending back to Handler");
             OnOrderBoxInAreaFinished?.Invoke(orderBox, AreaCode);
         }
 

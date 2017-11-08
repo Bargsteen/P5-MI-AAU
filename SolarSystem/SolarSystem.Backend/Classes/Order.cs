@@ -8,7 +8,6 @@ namespace SolarSystem.Backend.Classes
         public int OrderId { get; }
         public DateTime OrderTime { get;}
         public List<Line> Lines { get;}
-        public AreaCode StartAreaCode { get; set; }
         public Dictionary<AreaCode, bool> Areas { get; set; }
 
         public Order(int orderId, DateTime orderTime, List<Line> lines)
@@ -17,6 +16,7 @@ namespace SolarSystem.Backend.Classes
             OrderTime = orderTime;
             Lines = lines ?? throw new ArgumentNullException(nameof(lines));
         }
+
     }
    
 }

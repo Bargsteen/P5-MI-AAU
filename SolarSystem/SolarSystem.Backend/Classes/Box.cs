@@ -2,6 +2,13 @@
 {
     public abstract class Box
     {
-        public string Id;
+        public int Id;
+
+        private static int NextId = 1;
+        
+        public Box()
+        {
+            Id = NextId++;
+        }
     }
 }

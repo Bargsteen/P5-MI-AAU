@@ -15,21 +15,32 @@ public class AreaComponent : MonoBehaviour, IDrawable {
     private int _boxState = 0;
 
 
-    IEnumerator resetColour()
+    IEnumerator ResetColour()
     {
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(1);
         GO.GetComponent<Renderer>().material.color = Color.white;
     }
 
 
+    IEnumerator SetToActiveColour()
+    {
+        yield return new WaitForSeconds(1);
+        GO.GetComponent<Renderer>().material.color = Color.yellow;
+    }
+
+    
+
+
     void Start()
     {
-        WhManager.runner.Areas.ToList().Find(x => x.AreaCode == areaCode).OnOrderBoxInAreaFinished += delegate
+        WhManager.runner.Handler.Areas.Values.ToList().Find(x => x.AreaCode == areaCode).OnOrderBoxInAreaFinished += delegate
         {
+            
             _boxState = -1;
+            //GameObject.Find("GameManager").GetComponent<ConveyorBelt>().Transport(areaCode, );
         };
 
-        WhManager.runner.Areas.ToList().Find(x => x.AreaCode == areaCode).OnOrderBoxReceivedAtAreaEvent += delegate
+        WhManager.runner.Handler.Areas.Values.ToList().Find(x => x.AreaCode == areaCode).OnOrderBoxReceivedAtAreaEvent += delegate
         {
             _boxState = 1;
         };
@@ -42,15 +53,23 @@ public class AreaComponent : MonoBehaviour, IDrawable {
         {
             case -1:
                 GO.GetComponent<Renderer>().material.color = Color.red;
-                StartCoroutine(resetColour());
+                StartCoroutine(ResetColour());
                 _boxState = 0;
                 break;
             case 1:
                 GO.GetComponent<Renderer>().material.color = Color.green;
-                StartCoroutine(resetColour());
+                StartCoroutine(SetToActiveColour());
                 _boxState = 0;
                 break;
         }
+
+        int activeOrders = 0;
+        foreach (Station s in Stations)
+        {
+            activeOrders += s.OBPContainer.ToList().Count;
+        }
+        GO.transform.GetChild(2).GetChild(0).GetComponent<TextMesh>().text = activeOrders.ToString();
+
     }
 
 }

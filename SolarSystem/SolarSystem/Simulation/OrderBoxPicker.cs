@@ -12,7 +12,7 @@ namespace SolarSystem.Simulation
             FirstInFirstOut,
             LastInFirstOut
             //ActiveArticlesFirst
-        };
+        }
 
 
         public static Order GetNextOrder (PickingOrder pickingAlgorithm, IEnumerable<Order> orders)

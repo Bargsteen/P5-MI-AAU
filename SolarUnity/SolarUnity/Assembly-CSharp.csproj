@@ -54,6 +54,7 @@
      <Compile Include="Assets\GameobjectController.cs" />
      <Compile Include="Assets\Scripts\AreaComponent.cs" />
      <Compile Include="Assets\Scripts\Constants.cs" />
+     <Compile Include="Assets\Scripts\ConveyorBelt.cs" />
      <Compile Include="Assets\Scripts\IDrawable.cs" />
      <Compile Include="Assets\Scripts\MouseController.cs" />
      <Compile Include="Assets\Scripts\StationComponent.cs" />

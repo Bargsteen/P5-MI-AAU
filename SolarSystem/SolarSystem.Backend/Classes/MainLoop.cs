@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using SolarSystem.Backend.Interfaces;
 
 namespace SolarSystem.Backend.Classes
 {
@@ -25,7 +24,6 @@ namespace SolarSystem.Backend.Classes
 
         public void ReceiveOrderBoxAndArea(OrderBox orderBox, AreaCode areaCode)
         {
-            Console.WriteLine("Mainloop: Received order.");
             var orderBoxProgress = PackToOrderboxProgress(orderBox, areaCode);
             areaQueues[areaCode].AddOrderBoxProgress(orderBoxProgress);
         }
@@ -54,7 +52,6 @@ namespace SolarSystem.Backend.Classes
             {
                 if (areaQueue.Value.GetNext()?.SecondsToSpend <= 0)
                 {
-                    Console.WriteLine("MainLoop: Sending back to handler");
                     OnOrderBoxInMainLoopFinished?.Invoke(areaQueue.Value.Pop()?.OrderBox, areaQueue.Key);
                 }
             }
