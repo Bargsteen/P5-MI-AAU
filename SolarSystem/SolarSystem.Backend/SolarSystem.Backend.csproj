@@ -53,9 +53,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\Article.cs" />
+    <Compile Include="Classes\OrderBoxPickingContainer.cs" />
     <Compile Include="Classes\Scheduler.cs" />
+    <Compile Include="Classes\Storage.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="PickingAndErp\ErpScrape.cs" />
-    <Compile Include="PickingAndErp\Line.cs" />
+    <Compile Include="PickingAndErp\LineErp.cs" />
     <Compile Include="PickingAndErp\Order.cs" />
     <Compile Include="PickingAndErp\PickingScrape.cs" />
     <Compile Include="Runner.cs" />

@@ -8,7 +8,7 @@ namespace SolarSystem.Backend.Classes
 {
     public class Scheduler
     {
-        private int TimerStartMinutes { get; }
+        private double TimerStartMinutes { get; }
         private int PoolTimer { get; set; }
         
         // Order pool from costumers
@@ -20,7 +20,7 @@ namespace SolarSystem.Backend.Classes
         private OrderGenerator OrderGenerator { get; }
         public Handler Handler { get; set; }
         
-        public Scheduler(OrderGenerator orderGenerator, Handler handler, int timerStartMinutes)
+        public Scheduler(OrderGenerator orderGenerator, Handler handler, double timerStartMinutes)
         {
             OrderGenerator = orderGenerator;
             Handler = handler;
@@ -29,7 +29,7 @@ namespace SolarSystem.Backend.Classes
             InitialOrderPool = new List<Order>();
             ActualOrderPool = new List<Order>();
             
-            ResetTimer();
+            StartTimer();
 
             OrderGenerator.CostumerSendsOrderEvent += AddOrderToPool;
             TimeKeeper.Tick += PoolTimeChecker;
@@ -39,10 +39,13 @@ namespace SolarSystem.Backend.Classes
         {
             InitialOrderPool.Add(order);
         }
+
+
+        void StartTimer() => ResetTimer();
         
         void ResetTimer()
         {
-            PoolTimer = TimerStartMinutes * 60;
+            PoolTimer = (int) TimerStartMinutes * 60;
         }
 
         Order OrderSelectorFromActualPool()

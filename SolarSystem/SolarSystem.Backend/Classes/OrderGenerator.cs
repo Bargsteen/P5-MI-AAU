@@ -13,10 +13,10 @@ namespace SolarSystem.Backend.Classes
         public double OrderChance { get; }
 
         private int minAmountOfLines = 1;
-        private int maxAmountOfLines = 100;
+        private int maxAmountOfLines = 4;
 
         private int minArticleQuantity = 1;
-        private int maxArticleQuantity = 100;
+        private int maxArticleQuantity = 10;
 
         private const int minOrderNumberId = 10000000;
         private const int maxOrderNumberId = 999999999;

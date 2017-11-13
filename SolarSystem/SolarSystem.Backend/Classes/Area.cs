@@ -14,7 +14,7 @@ namespace SolarSystem.Backend.Classes
         public List<Article> AvailableWares { get; set; }
         public Station[] Stations { get; }
         public ShelfSpace ShelfSpace { get; }
-        
+        public Storage Storage { get; }
         private static Random _rand = new Random();
 
         public Area(AreaCode areaCode, List<Article> availableWares, Station[] stations, ShelfSpace shelfSpace, ITimeKeeper timeKeeper)
@@ -35,17 +35,20 @@ namespace SolarSystem.Backend.Classes
         {
             AreaCode = areaCode;
             
+            Storage = new Storage();
+            
             Stations = new[]
             {
-                new Station("A", 1000, 1000),
-                new Station("B", 1000, 1000),
-                new Station("C", 1000, 1000)
+                new Station("A", 7, 5),
+                new Station("B", 7, 5),
+                new Station("C", 7, 5)
             };
             
             // Subscribe to each Station order complete event
             foreach (Station station in Stations)
             {
                 station.OnOrderBoxFinished += StationOrderCompleted;
+                station.OnShelfBoxNeededRequest += Storage.ReceiveRequestForShelfBoxes;
             }
         }
 

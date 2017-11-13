@@ -13,6 +13,7 @@ namespace SolarSystem.Backend
         public readonly Handler Handler;
         public readonly OrderGenerator OrderGenerator;
         public readonly Scheduler Scheduler;
+     
         
         public Runner(string pickingPath, double simulationSpeed, double orderChance)
         {
@@ -35,7 +36,7 @@ namespace SolarSystem.Backend
             
             Handler = new Handler();
             
-            Scheduler = new Scheduler(OrderGenerator, Handler, 5);
+            Scheduler = new Scheduler(OrderGenerator, Handler, 0.01);
         }
 
 
