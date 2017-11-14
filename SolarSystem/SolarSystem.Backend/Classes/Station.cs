@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Security;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading;
@@ -10,19 +11,22 @@ namespace SolarSystem.Backend.Classes
 {
     public class Station
     {
-        public event Action<OrderBox> OnOrderBoxFinished;
-        public event Action OnOrderBoxReceivedAtStationEvent;
+        public event Action<OrderBox> OnOrderBoxFinishedAtStation;
+        public event Action<OrderBox> OnOrderBoxReceivedAtStation;
         public event Action<Station, List<Article>> OnShelfBoxNeededRequest;
         
         public string Name { get; }
         
-        private readonly List<ShelfBox> _shelfBoxes;
-        public IEnumerable<ShelfBox> ShelfBoxes => _shelfBoxes.AsReadOnly();
+        public List<ShelfBox> ShelfBoxes;
+
+        private readonly AreaCode _areaCode;
         
-        private readonly List<OrderBox> _orderBoxes;
+        public List<OrderBox> OrderBoxes;
         
         public int MaxShelfBoxes { get; }
         public int MaxOrderBoxes { get; }
+
+        public bool StationIsFull => OrderBoxes.Capacity == OrderBoxes.Count;
 
         private int RemainingPickingTime = 0;
 
@@ -35,64 +39,46 @@ namespace SolarSystem.Backend.Classes
         
 
 
-        public Station(string name, int maxShelfBoxes,int maxOrderBoxes)
+        public Station(string name, int maxShelfBoxes,int maxOrderBoxes, AreaCode areaCode)
         {
-            
-            _shelfBoxes = new List<ShelfBox>(maxShelfBoxes);
-            _orderBoxes = new List<OrderBox>(maxOrderBoxes);
+            ShelfBoxes = new List<ShelfBox>(maxShelfBoxes);
+            OrderBoxes = new List<OrderBox>(maxOrderBoxes);
             Name = name ?? throw new ArgumentNullException(nameof(name));
             MaxShelfBoxes = maxShelfBoxes;
             MaxOrderBoxes = maxOrderBoxes;
+            _areaCode = areaCode;
             _shelfBoxWaitCount = 0;
-
-  //          _storage = new Storage();
-
-//            _storage.OnShelfBoxReadyFromStorage += ReceiveShelfBoxFromStorage;
 
             TimeKeeper.Tick += TickLoop;
 
         }
-        
-        /// <summary>
-        /// Receives a ShelfBox or a OrderBox and tries to add it to appropriate list.
-        /// </summary>
-        /// <param name="box">ShelfBox or OrderBox</param>
-        /// <returns>StationResult with description</returns>
-        /// <exception cref="ArgumentNullException">If box is null.</exception>
-        /// <exception cref="ArgumentOutOfRangeException">If the Box is not the right type.</exception>
-        public StationResult ReceiveBox(Box box)
+
+        public void ReceiveOrderBox(OrderBox orderBox)
         {
-            switch (box)
+            // If the station is full but still received an orderBox -> throw error
+            if (OrderBoxes.Count >= MaxOrderBoxes)
             {
-                case ShelfBox shelfBox:
-                    if (_shelfBoxes.Count >= MaxShelfBoxes) return StationResult.FullError;
-                    _shelfBoxes.Add(shelfBox);
-                    break;
-                case OrderBox orderBox:
-                    if (_orderBoxes.Count >= MaxOrderBoxes) return StationResult.FullError;
-                    _orderBoxes.Add(orderBox);
-                    MaybeRequestShelfBoxes();
-                    OnOrderBoxReceivedAtStationEvent?.Invoke();
-                    break;
-                case null:
-                    throw new ArgumentNullException(nameof(box));
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(box));
+                throw new AccessViolationException($"Station {this} in should not have received an orderBox.");
             }
-            return StationResult.Success;
+            // Add orderBox to orderBoxes
+            OrderBoxes.Add(orderBox);
+            
+            // Maybe request more shelfboxes - depends on if there is more space left for shelfBoxes
+            MaybeRequestShelfBoxes();
+            
+            // Invoke event stating this happened
+            OnOrderBoxReceivedAtStation?.Invoke(orderBox);
         }
 
         private void TickLoop()
         {
             // If no orderBoxes -> skip
-            if (!_orderBoxes.Any()) return;
+            if (!OrderBoxes.Any()) return;
             // Else call ChooseOrderBoxToPack
             if (_orderBoxBeingPacked == null)
             {
                 ChooseOrderBoxToPack();
             }
-            
-
         }
 
         private void MaybeRequestShelfBoxes()
@@ -115,12 +101,12 @@ namespace SolarSystem.Backend.Classes
         private List<Article> FindNeededArticlesInOrderBoxes()
         {
             // Calculate spaces left for shelfBoxes, call it spacesLeft
-            var spacesLeft = _shelfBoxes.Capacity - _shelfBoxes.Count;
+            var spacesLeft = ShelfBoxes.Capacity - ShelfBoxes.Count;
             // Create neededArticlesList with size spacesLeft
             var neededArticlesList = new List<Article>(spacesLeft);
             
             // Loop through orderBoxes in FIFO.
-            foreach (var orderBox in _orderBoxes)
+            foreach (var orderBox in OrderBoxes)
             {
                 // Loop through unpicked lines in orderbox
                 foreach (var unpickedLine in orderBox.LinesNotPicked())
@@ -132,7 +118,7 @@ namespace SolarSystem.Backend.Classes
                     }
                     
                     // Else if this line does not have a corresponding shelfbox then
-                    if (!_shelfBoxes.Select(s => s.Line).Contains(unpickedLine))
+                    if (!ShelfBoxes.Select(s => s.Line).Contains(unpickedLine))
                     {
                         // then add its article to neededArticlesList
                         neededArticlesList.Add(unpickedLine.Article);
@@ -146,20 +132,20 @@ namespace SolarSystem.Backend.Classes
         private void EvictOrderBox(OrderBox orderBox)
         {
             // Remove orderBox from orderBoxes
-            _orderBoxes.Remove(orderBox);
-            // Invoke OnOrderBoxFinished with orderBox
-            OnOrderBoxFinished?.Invoke(orderBox);
+            OrderBoxes.Remove(orderBox);
+            // Invoke OnOrderBoxFinishedAtStation with orderBox
+            OnOrderBoxFinishedAtStation?.Invoke(orderBox);
         }
 
-        private void MaybeEvictShelfBoxes()
+        public void MaybeEvictShelfBoxes()
         {
             // Create evictionList
             var evictionList = new List<ShelfBox>();
             // Loop through all shelfBoxes
-            foreach (var shelfBox in _shelfBoxes)
+            foreach (var shelfBox in ShelfBoxes)
             {
                 // Check if any unpacked lines of this type exist
-                bool shelfBoxIsNeeded = _orderBoxes.SelectMany(o => o.LinesNotPicked()).Any(l => Equals(l, shelfBox.Line));
+                bool shelfBoxIsNeeded = OrderBoxes.SelectMany(o => o.LinesNotPicked()).Any(l => Equals(l.Article, shelfBox.Line.Article));
                 // if not, add to evictionList
                 if ( ! shelfBoxIsNeeded)
                 {
@@ -180,7 +166,7 @@ namespace SolarSystem.Backend.Classes
         private void SendShelfBoxToStorage(ShelfBox shelfBox)
         {
             // Remove shelfBox from ShelfBoxes
-            _shelfBoxes.Remove(shelfBox);
+            ShelfBoxes.Remove(shelfBox);
             // faked sending: beep, beep
         }
 
@@ -208,13 +194,13 @@ namespace SolarSystem.Backend.Classes
             }
             
             // Loop through orderBoxes
-            foreach (var orderBox in _orderBoxes)
+            foreach (var orderBox in OrderBoxes)
             {
                 // Loop through unpacked lines
-                foreach (var line in orderBox.LinesNotPicked())
+                foreach (var line in orderBox.LinesNotPicked().Where(l => l.Article.AreaCode == _areaCode))
                 {
                     // If line matches shelfbox then
-                    if (_shelfBoxes.Any(s => Equals(s.Line.Article, line.Article)))
+                    if (ShelfBoxes.Any(s => Equals(s.Line.Article, line.Article)))
                     {
                         // Create new OrderBoxLineBeingPicked with orderBox and line to be picked
                         _orderBoxBeingPacked = new OrderBoxPickingContainer(orderBox, line);
@@ -233,9 +219,12 @@ namespace SolarSystem.Backend.Classes
             // Decrement StorageReceiveWaitingTime by one
             _shelfBoxWaitCount -= 1;
             // Add received shelfbox to shelfboxes
-            _shelfBoxes.Add(shelfBox);
+            ShelfBoxes.Add(shelfBox);
         }
-       
 
+        public override string ToString()
+        {
+            return $"{Name}";
+        }
     }
 }

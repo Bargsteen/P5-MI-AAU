@@ -9,17 +9,19 @@ namespace SolarSystem.Backend.Classes
         public event Action<Order> CostumerSendsOrderEvent;
         
         private List<Article> ArticleList { get; }
-        private static Random _rand = new Random();
+        private static readonly Random Rand = new Random();
         public double OrderChance { get; }
 
         private int minAmountOfLines = 1;
-        private int maxAmountOfLines = 4;
+        private int maxAmountOfLines = 5;
 
         private int minArticleQuantity = 1;
-        private int maxArticleQuantity = 10;
+        private int maxArticleQuantity = 40;
 
         private const int minOrderNumberId = 10000000;
         private const int maxOrderNumberId = 999999999;
+
+        private int SendOrderCount = 0;
       
         public OrderGenerator(List<Article> articleList, double orderChance)
         {
@@ -33,27 +35,35 @@ namespace SolarSystem.Backend.Classes
 
         public void MaybeSendOrder()
         {
-            double chance = _rand.NextDouble();
-
-            if (chance <= OrderChance)
+            if (SendOrderCount++ >= 10)
             {
+                SendOrderCount = 0;
                 var order = GenerateOrder();
                 CostumerSendsOrderEvent?.Invoke(order);
             }
+            
+            
+            /*double chance = Rand.NextDouble();
+
+            if (chance <= OrderChance)
+            {
+                
+                
+            }*/
             
         }
         
         private Order GenerateOrder()
         {
             // Randomly choose amount of lines
-            int numberOfLines = _rand.Next(minAmountOfLines, maxAmountOfLines);
+            int numberOfLines = Rand.Next(minAmountOfLines, maxAmountOfLines);
             // Choose amount of unique articles
-            List<Article> chosenArticles = ArticleList.OrderBy(x => _rand.Next()).Take(numberOfLines).ToList();
+            List<Article> chosenArticles = ArticleList.OrderBy(x => Rand.Next()).Take(numberOfLines).ToList();
             // Generate lines based on chosen articles
-            IEnumerable<Line> generatedLines = chosenArticles.Select(GenerateLine);
+            var generatedLines = chosenArticles.Select(GenerateLine).ToList();
             
             // Construct AreasVisited for areas.
-            Order order = new Order(_rand.Next(minOrderNumberId, maxOrderNumberId), TimeKeeper.CurrentDateTime, generatedLines.ToList());
+            Order order = new Order(Rand.Next(minOrderNumberId, maxOrderNumberId), TimeKeeper.CurrentDateTime, generatedLines);
             order.Areas = ConstructAreasVisited(order);
             
             return order;
@@ -84,7 +94,7 @@ namespace SolarSystem.Backend.Classes
         private Line GenerateLine(Article article)
         {
             // Randomly choose quantity
-            int quantity = _rand.Next(minArticleQuantity, maxArticleQuantity);
+            int quantity = Rand.Next(minArticleQuantity, maxArticleQuantity);
             
             // Assemble a line and return
             Line line = new Line(article, quantity);

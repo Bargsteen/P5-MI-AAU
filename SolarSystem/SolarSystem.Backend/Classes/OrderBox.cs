@@ -9,12 +9,16 @@ namespace SolarSystem.Backend.Classes
         public Order Order { get; }
         
         public readonly Dictionary<Line, bool> LineIsPickedStatuses; // True == isPicked
-        public int TimeRemaining { get; set; }
         public Dictionary<AreaCode, bool> AreasVisited { get; }
 
+        private DateTime TimeCreated;
 
+        public TimeSpan TimeInSystem => TimeKeeper.CurrentDateTime - TimeCreated;
+        
         public OrderBox(Order order)
         {
+            TimeCreated = TimeKeeper.CurrentDateTime;
+            
             Order = order ?? throw new ArgumentNullException(nameof(order));
             LineIsPickedStatuses = Order.Lines.ToDictionary(key => key, value => false);
             AreasVisited = order.Areas;

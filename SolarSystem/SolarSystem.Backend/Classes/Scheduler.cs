@@ -10,6 +10,7 @@ namespace SolarSystem.Backend.Classes
     {
         private double TimerStartMinutes { get; }
         private int PoolTimer { get; set; }
+        private static readonly Random Rand = new Random();
         
         // Order pool from costumers
         private List<Order> InitialOrderPool { get; }
@@ -50,10 +51,8 @@ namespace SolarSystem.Backend.Classes
 
         Order OrderSelectorFromActualPool()
         {
-            Random rnd = new Random();
-            
             // Select random order
-            var returnOrder = ActualOrderPool[rnd.Next(0, ActualOrderPool.Count - 1)] ?? throw new IndexOutOfRangeException();
+            var returnOrder = ActualOrderPool[Rand.Next(0, ActualOrderPool.Count - 1)] ?? throw new IndexOutOfRangeException();
             
             // Remove it from transfer pool
             ActualOrderPool.Remove(returnOrder);
@@ -64,6 +63,9 @@ namespace SolarSystem.Backend.Classes
 
         void OrderToHandlerMover()
         {
+            // If system/handler is full then return
+            if (Handler.HandlerIsFull) return;
+            
             // Select next order for pushing to handler
             var nextOrder = OrderSelectorFromActualPool();
              

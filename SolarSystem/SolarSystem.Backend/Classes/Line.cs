@@ -4,8 +4,8 @@ namespace SolarSystem.Backend.Classes
 {
     public class Line
     {
-        public Article Article { get; }
-        public int Quantity { get; }
+        public Article Article { get; set; }
+        public int Quantity { get; set; }
 
 
         public Line(Article article, int quantity)
@@ -39,7 +39,7 @@ namespace SolarSystem.Backend.Classes
 
         public override string ToString()
         {
-            return ($@"({Article.Id}, {Quantity}");
+            return ($@"({Article.Name}, {Quantity}");
         }
     }
 }

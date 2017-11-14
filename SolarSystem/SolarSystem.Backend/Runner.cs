@@ -36,7 +36,7 @@ namespace SolarSystem.Backend
             
             Handler = new Handler();
             
-            Scheduler = new Scheduler(OrderGenerator, Handler, 0.01);
+            Scheduler = new Scheduler(OrderGenerator, Handler, 0.0001);
         }
 
 

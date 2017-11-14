@@ -36,7 +36,16 @@ namespace SolarSystem.Backend.Classes
                 _orderBox.LineIsPickedStatuses[_lineBeingPicked] = true;
                 
                 // Invoke event telling that this line has been picked
-                OnLinePickedForOrderBox?.Invoke(_orderBox);   
+                OnLinePickedForOrderBox?.Invoke(_orderBox);
+
+                if (OnLinePickedForOrderBox != null)
+                {
+                    foreach (var d in OnLinePickedForOrderBox?.GetInvocationList())
+                    {
+                        OnLinePickedForOrderBox -= (Action<OrderBox>) d;
+                    }
+                }
+                    
             }
         }
     }

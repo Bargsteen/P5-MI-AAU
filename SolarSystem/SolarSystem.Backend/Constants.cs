@@ -2,6 +2,6 @@
 {
     public static class GlobalConstants
     {
-        public static readonly double TimePerArticlePick = 0.1;
+        public static readonly double TimePerArticlePick = 1;
     }
 }

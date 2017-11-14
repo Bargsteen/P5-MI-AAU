@@ -11,6 +11,8 @@ namespace SolarSystem.Backend.Classes
         public event Action<OrderBox> OnOrderBoxFinished;
         public readonly Dictionary<AreaCode, Area> Areas;
         public readonly MainLoop MainLoop;
+
+        public bool HandlerIsFull => Areas.Values.All(a => a.AreaIsFull);
         
         public Handler()
         {
@@ -48,6 +50,10 @@ namespace SolarSystem.Backend.Classes
 
         private void SendToMainLoop(OrderBox orderBox, AreaCode areaCode)
         {
+            if (orderBox.AreasVisited[areaCode])
+            {
+                Console.WriteLine("WEOWEOWEOSD");
+            }
             // Call MainLoops ReceiveOrderBox with this input
             MainLoop.ReceiveOrderBoxAndArea(orderBox, areaCode);
         }
@@ -60,14 +66,24 @@ namespace SolarSystem.Backend.Classes
                 throw new ArgumentException("Area has already been visited.");
             }
             // Send orderBox to area
-            
             Areas[areaCode].ReceiveOrderBox(orderBox);
             
         }
 
         private void ReceiveOrderBoxFromMainLoop(OrderBox orderBox, AreaCode areaTo)
         {
-            SendToArea(orderBox, areaTo);
+            // If Area is full, then choose new area and give it another turn in MainLoop
+           
+            if (Areas[areaTo].AreaIsFull)
+            {
+                var newArea = ChooseNextArea(orderBox);
+                SendToMainLoop(orderBox, newArea);
+            }
+            else
+            {
+                // Else send to the area
+                SendToArea(orderBox, areaTo);
+            }
         }
 
         private void ReceiverOrderBoxFromArea(OrderBox orderBox, AreaCode areaFrom)
@@ -88,7 +104,12 @@ namespace SolarSystem.Backend.Classes
 
         private AreaCode ChooseNextArea(OrderBox orderBox)
         {
-            // Decide the next area to be visited.
+            // Find areaCode of first needed area which is not full
+            if (orderBox.AreasVisited.Any(a => !a.Value && !Areas[a.Key].AreaIsFull))
+            {
+                return orderBox.AreasVisited.First(a => !a.Value && !Areas[a.Key].AreaIsFull).Key;
+            }
+            // If all needed areas are full -> just choose a needed area and take a chill on the MainLoop
             return orderBox.AreasVisited.First(a => !a.Value).Key;
         }
     }

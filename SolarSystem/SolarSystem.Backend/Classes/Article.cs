@@ -4,7 +4,7 @@ namespace SolarSystem.Backend.Classes
 {
     public class Article
     {
-        public long Id { get; }
+        public long Id { get; set; }
         public string Name { get;  }
         public AreaCode AreaCode { get; set; }
         
@@ -15,8 +15,15 @@ namespace SolarSystem.Backend.Classes
             AreaCode = areaCode;
         }
 
-        
-        
+        protected bool Equals(Article other)
+        {
+            return Id == other.Id;
+        }
+
+        public override int GetHashCode()
+        {
+            return Id.GetHashCode();
+        }
 
         public override string ToString()
         {

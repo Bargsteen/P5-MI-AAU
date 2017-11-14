@@ -17,6 +17,10 @@ namespace SolarSystem.Backend.Classes
             Lines = lines ?? throw new ArgumentNullException(nameof(lines));
         }
 
+        public override string ToString()
+        {
+            return $"{OrderId}";
+        }
     }
    
 }

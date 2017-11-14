@@ -8,7 +8,7 @@ namespace SolarSystem.Backend.Classes
     public class Area
     {
         public event Action<OrderBox, AreaCode> OnOrderBoxInAreaFinished;
-        public event Action<AreaCode> OnOrderBoxReceivedAtAreaEvent;
+        public event Action<OrderBox, AreaCode> OnOrderBoxReceivedAtAreaEvent;
         
         public AreaCode AreaCode { get; set; }
         public List<Article> AvailableWares { get; set; }
@@ -16,6 +16,8 @@ namespace SolarSystem.Backend.Classes
         public ShelfSpace ShelfSpace { get; }
         public Storage Storage { get; }
         private static Random _rand = new Random();
+        
+        public bool AreaIsFull => Stations.All(s => s.StationIsFull);
 
         public Area(AreaCode areaCode, List<Article> availableWares, Station[] stations, ShelfSpace shelfSpace, ITimeKeeper timeKeeper)
         {
@@ -27,7 +29,7 @@ namespace SolarSystem.Backend.Classes
             // Subscribe to each Station order complete event
             foreach (Station station in Stations)
             {
-                station.OnOrderBoxFinished += StationOrderCompleted;
+                station.OnOrderBoxFinishedAtStation += StationOrderCompleted;
             }
         }
 
@@ -39,15 +41,15 @@ namespace SolarSystem.Backend.Classes
             
             Stations = new[]
             {
-                new Station("A", 7, 5),
-                new Station("B", 7, 5),
-                new Station("C", 7, 5)
+                new Station(areaCode + "+S:A", 7, 5, AreaCode),
+                new Station(areaCode + "+S:B", 7, 5, AreaCode),
+                new Station(areaCode + "+S:C", 7, 5, AreaCode)
             };
             
             // Subscribe to each Station order complete event
             foreach (Station station in Stations)
             {
-                station.OnOrderBoxFinished += StationOrderCompleted;
+                station.OnOrderBoxFinishedAtStation += StationOrderCompleted;
                 station.OnShelfBoxNeededRequest += Storage.ReceiveRequestForShelfBoxes;
             }
         }
@@ -56,40 +58,25 @@ namespace SolarSystem.Backend.Classes
         //method for distributing orders to stations
         private void DistributeOrder(OrderBox receivedOrderBox)
         {
-            // Variable for checking succes or failure 
-            StationResult result = StationResult.FullError;
-
-            // Randomize order of stations to try
-            var stationsInRandomOrder = Stations.OrderBy(a => _rand.Next());
-            
-            // Foreach station in stations:
-            foreach (Station station in stationsInRandomOrder)
+            // Make a list of all non-full stations in a random order
+            var nonFullStationsInRandomOrder = Stations
+                .Where(s => !s.StationIsFull)
+                .OrderBy(a => _rand.Next()).ToList();
+            // Choose one station and send the receivedOrderBox to it
+            if (!nonFullStationsInRandomOrder.Any())
             {
-                // Call Station.RecieveBox()
-                result = station.ReceiveBox(receivedOrderBox);
-
-                // Check return of Station.RecieveBox()
-                if (result == StationResult.Success)
-                {
-                    break;
-                }
-
-                // Keep looping Stations
+                throw new AccessViolationException($"{this} should not have received an orderBox because area is full.");
             }
 
-            // If all FullError - Alert Handler
-            if (result == StationResult.FullError)
-            {
-                // Alert Handler, Orderbox needs to go to main loop
-            }
+            nonFullStationsInRandomOrder.First().ReceiveOrderBox(receivedOrderBox);
         }
 
         //Listening on stations for orders that are done
-        public void ReceiveOrderBox(OrderBox OrderBox)
+        public void ReceiveOrderBox(OrderBox orderBox)
         {
-            OnOrderBoxReceivedAtAreaEvent?.Invoke(AreaCode);
+            OnOrderBoxReceivedAtAreaEvent?.Invoke(orderBox, AreaCode);
             //call DistributeOrder with input as parameter
-            DistributeOrder(OrderBox);
+            DistributeOrder(orderBox);
 
         }
 
@@ -98,5 +85,9 @@ namespace SolarSystem.Backend.Classes
             OnOrderBoxInAreaFinished?.Invoke(orderBox, AreaCode);
         }
 
+        public override string ToString()
+        {
+            return AreaCode.ToString();
+        }
     }
 }
