@@ -11,8 +11,9 @@ namespace SolarSystem.Backend.Classes
 
         public Line Line { get;}
 
-        
-
-
+        public override string ToString()
+        {
+            return Line.ToString();
+        }
     }
 }

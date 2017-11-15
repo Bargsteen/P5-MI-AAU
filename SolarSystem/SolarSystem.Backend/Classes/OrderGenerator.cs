@@ -13,10 +13,10 @@ namespace SolarSystem.Backend.Classes
         public double OrderChance { get; }
 
         private int minAmountOfLines = 1;
-        private int maxAmountOfLines = 5;
+        private int maxAmountOfLines = 8;
 
         private int minArticleQuantity = 1;
-        private int maxArticleQuantity = 40;
+        private int maxArticleQuantity = 5;
 
         private const int minOrderNumberId = 10000000;
         private const int maxOrderNumberId = 999999999;
@@ -59,6 +59,7 @@ namespace SolarSystem.Backend.Classes
             int numberOfLines = Rand.Next(minAmountOfLines, maxAmountOfLines);
             // Choose amount of unique articles
             List<Article> chosenArticles = ArticleList.OrderBy(x => Rand.Next()).Take(numberOfLines).ToList();
+            //List<Article> chosenArticles = ArticleList.Where(a => a.AreaCode == AreaCode.Area21 || a.AreaCode == AreaCode.Area25).OrderBy(x => Rand.Next()).Take(numberOfLines).ToList();
             // Generate lines based on chosen articles
             var generatedLines = chosenArticles.Select(GenerateLine).ToList();
             

@@ -15,7 +15,7 @@ namespace SolarSystem.Backend.Classes
         public Station[] Stations { get; }
         public ShelfSpace ShelfSpace { get; }
         public Storage Storage { get; }
-        private static Random _rand = new Random();
+        private static readonly Random Rand = new Random();
         
         public bool AreaIsFull => Stations.All(s => s.StationIsFull);
 
@@ -61,7 +61,7 @@ namespace SolarSystem.Backend.Classes
             // Make a list of all non-full stations in a random order
             var nonFullStationsInRandomOrder = Stations
                 .Where(s => !s.StationIsFull)
-                .OrderBy(a => _rand.Next()).ToList();
+                .OrderBy(a => Rand.Next()).ToList();
             // Choose one station and send the receivedOrderBox to it
             if (!nonFullStationsInRandomOrder.Any())
             {
@@ -74,6 +74,11 @@ namespace SolarSystem.Backend.Classes
         //Listening on stations for orders that are done
         public void ReceiveOrderBox(OrderBox orderBox)
         {
+            if (this.AreaCode == AreaCode.Area25)
+            {
+                var a = 2;
+            }
+            
             OnOrderBoxReceivedAtAreaEvent?.Invoke(orderBox, AreaCode);
             //call DistributeOrder with input as parameter
             DistributeOrder(orderBox);

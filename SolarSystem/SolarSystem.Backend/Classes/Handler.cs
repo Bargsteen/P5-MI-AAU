@@ -39,6 +39,10 @@ namespace SolarSystem.Backend.Classes
         
         public void ReceiveOrder(Order order)
         {
+            if (HandlerIsFull)
+            {
+                throw new AccessViolationException("Handler received order when it is full!");
+            }
             // Convert Order to OrderBox
             OrderBox orderBox = new OrderBox(order);
             // Choose area to send to
@@ -50,10 +54,6 @@ namespace SolarSystem.Backend.Classes
 
         private void SendToMainLoop(OrderBox orderBox, AreaCode areaCode)
         {
-            if (orderBox.AreasVisited[areaCode])
-            {
-                Console.WriteLine("WEOWEOWEOSD");
-            }
             // Call MainLoops ReceiveOrderBox with this input
             MainLoop.ReceiveOrderBoxAndArea(orderBox, areaCode);
         }

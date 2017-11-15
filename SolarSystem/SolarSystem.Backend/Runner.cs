@@ -13,6 +13,8 @@ namespace SolarSystem.Backend
         public readonly Handler Handler;
         public readonly OrderGenerator OrderGenerator;
         public readonly Scheduler Scheduler;
+
+        public readonly DateTime StartTime;
      
         
         public Runner(string pickingPath, double simulationSpeed, double orderChance)
@@ -29,9 +31,11 @@ namespace SolarSystem.Backend
                 .ToList();
             
             
-            OrderGenerator = new OrderGenerator(articleList, orderChance);            
+            OrderGenerator = new OrderGenerator(articleList, orderChance);
             
-            var t = new Thread(() => TimeKeeper.StartTicking(simulationSpeed, DateTime.Now));
+            StartTime = DateTime.Now;
+            
+            var t = new Thread(() => TimeKeeper.StartTicking(simulationSpeed, StartTime));
             t.Start();
             
             Handler = new Handler();

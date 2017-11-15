@@ -38,6 +38,7 @@ namespace SolarSystem.Backend.Classes
                 // Invoke event telling that this line has been picked
                 OnLinePickedForOrderBox?.Invoke(_orderBox);
 
+                TimeKeeper.Tick -= DecrementAndMaybeInvoke;
                 if (OnLinePickedForOrderBox != null)
                 {
                     foreach (var d in OnLinePickedForOrderBox?.GetInvocationList())

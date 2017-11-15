@@ -68,7 +68,7 @@ namespace SolarSystem.Backend.Classes
             
             // Select next order for pushing to handler
             var nextOrder = OrderSelectorFromActualPool();
-             
+            
             // Send to handler
             Handler.ReceiveOrder(nextOrder);
         }

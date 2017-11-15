@@ -44,6 +44,15 @@ namespace SolarSystem.Backend.Classes
                 .ToList();
         }
 
+        public List<Line> LinesNotPickedIn(AreaCode inArea)
+        {
+            return LineIsPickedStatuses
+                .Where(l => l.Value == false)
+                .Select(kvp => kvp.Key)
+                .Where(l => l.Article.AreaCode == inArea)
+                .ToList();
+        }
+
         public override string ToString()
         {
             return $"(OrderBox: {Id})";

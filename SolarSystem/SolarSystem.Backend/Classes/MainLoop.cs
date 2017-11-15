@@ -8,7 +8,8 @@ namespace SolarSystem.Backend.Classes
     {
         public event Action<OrderBox, AreaCode> OnOrderBoxInMainLoopFinished;
         private readonly Dictionary<AreaCode, OrderboxProgressContainer> areaQueues;
-        
+
+        public int BoxesInMainLoop => areaQueues.Count;
         
         public MainLoop()
         {

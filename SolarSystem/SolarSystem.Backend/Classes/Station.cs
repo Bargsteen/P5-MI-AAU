@@ -28,8 +28,6 @@ namespace SolarSystem.Backend.Classes
 
         public bool StationIsFull => OrderBoxes.Capacity == OrderBoxes.Count;
 
-        private int RemainingPickingTime = 0;
-
         private OrderBoxPickingContainer _orderBoxBeingPacked = null;
 
         private readonly Storage _storage;
@@ -118,7 +116,7 @@ namespace SolarSystem.Backend.Classes
                     }
                     
                     // Else if this line does not have a corresponding shelfbox then
-                    if (!ShelfBoxes.Select(s => s.Line).Contains(unpickedLine))
+                    if (!ShelfBoxes.Select(s => s.Line.Article).Contains(unpickedLine.Article))
                     {
                         // then add its article to neededArticlesList
                         neededArticlesList.Add(unpickedLine.Article);
@@ -145,7 +143,7 @@ namespace SolarSystem.Backend.Classes
             foreach (var shelfBox in ShelfBoxes)
             {
                 // Check if any unpacked lines of this type exist
-                bool shelfBoxIsNeeded = OrderBoxes.SelectMany(o => o.LinesNotPicked()).Any(l => Equals(l.Article, shelfBox.Line.Article));
+                bool shelfBoxIsNeeded = OrderBoxes.SelectMany(o => o.LinesNotPickedIn(_areaCode)).Any(l => Equals(l.Article, shelfBox.Line.Article));
                 // if not, add to evictionList
                 if ( ! shelfBoxIsNeeded)
                 {
@@ -174,15 +172,17 @@ namespace SolarSystem.Backend.Classes
         {
             // Check if any shelfBoxes can be evicted
             MaybeEvictShelfBoxes();
+            
+            // Set orderBoxLineBeingPicked to null
+            _orderBoxBeingPacked = null;
+            
             // If orderBox is fully packed then
-            if (!orderBox.LinesNotPicked().Any())
+            if (!orderBox.LinesNotPickedIn(_areaCode).Any())
             {
                 // Evict orderBox
                 EvictOrderBox(orderBox);
-                
-                // Set orderBoxLineBeingPicked to null
-                _orderBoxBeingPacked = null;
             }
+            
         }
 
         private void ChooseOrderBoxToPack()
@@ -197,7 +197,7 @@ namespace SolarSystem.Backend.Classes
             foreach (var orderBox in OrderBoxes)
             {
                 // Loop through unpacked lines
-                foreach (var line in orderBox.LinesNotPicked().Where(l => l.Article.AreaCode == _areaCode))
+                foreach (var line in orderBox.LinesNotPickedIn(_areaCode))
                 {
                     // If line matches shelfbox then
                     if (ShelfBoxes.Any(s => Equals(s.Line.Article, line.Article)))
