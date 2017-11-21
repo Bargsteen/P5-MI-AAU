@@ -27,7 +27,7 @@ namespace SolarSystem
             sut2.OnLinePickedForOrderBox += box => PrintStatus("sut2 done");
 */
             // 
-            Runner runner = new Runner("/Users/kasper/Downloads/wetransfer-f8286e/Picking 02-10-2017.csv",
+            Runner runner = new Runner("C:/Users/Christian Knudsen/Documents/P5-MI-AAU/SolarSystem/SolarSystem.Backend/SolarData/Picking 02-10-2017.csv",
                 1000, 0.2);
 
             Console.WriteLine("Starting simulation!");
@@ -42,49 +42,58 @@ namespace SolarSystem
             };
 
             int totalFinishedOrders = 0;
+            int finishedOrdersPerHour = 0;
+            DateTime currentHour = runner.StartTime;
+            List<Tuple<int, int>> OrdersFinishedPerHour = new List<Tuple<int, int>>();
             
             //runner.Handler.OnOrderBoxFinished += o => PrintStatus($"Handler: Orderbox Finished {o} -- TimeSpend = {o.TimeInSystem}");
 
             runner.Handler.OnOrderBoxFinished += orderBox =>
             {
                 totalFinishedOrders += orderBox.LineIsPickedStatuses.Keys.Count;
+                finishedOrdersPerHour += orderBox.LineIsPickedStatuses.Keys.Count;
+
+                if (TimeKeeper.CurrentDateTime.Hour == currentHour.Hour + 1)
+                {
+                    OrdersFinishedPerHour.Add(Tuple.Create(currentHour.Hour, finishedOrdersPerHour));
+                    
+                    currentHour = TimeKeeper.CurrentDateTime;
+                    finishedOrdersPerHour = 0;
+
+                    finishedOrdersPerHour += orderBox.LineIsPickedStatuses.Keys.Count;
+                }
+
+
+
             };
+
+
             
             foreach (var area in runner.Areas)
             {
-                //area.OnOrderBoxReceivedAtAreaEvent += (orderBox, areaCode) => PrintStatus($"{areaCode} << received orderBox {orderBox}");
-                //area.OnOrderBoxInAreaFinished += (orderBox, areaCode) => PrintStatus($"{areaCode} >> finished orderBox {orderBox} - MainLoopCount: {runner.Handler.MainLoop.BoxesInMainLoop}");
                 area.OnOrderBoxInAreaFinished += (orderBox, areaCode) =>
                 {
                     IncrementBoxPerAreaCount(FinishedBoxesInAreas, areaCode);
                     PrintBoxDict(FinishedBoxesInAreas);
                     PrintLinesFinishedPerHour(runner.StartTime, TimeKeeper.CurrentDateTime, totalFinishedOrders);
+                    OrdersFinishedPerHour.ForEach(x => Console.WriteLine("Lines between " + x.Item1 + " - " + (x.Item1 + 1) + ": " + x.Item2 + " lines"));
+                    Console.WriteLine("Lines between " + TimeKeeper.CurrentDateTime.Hour + " - " + (TimeKeeper.CurrentDateTime.Hour + 1) + ": " + finishedOrdersPerHour + " lines");
                 };
-                   
-                //area.Storage.OnSendShelfBoxToStation += () => PrintStatus($"{area} STORAGE >> send shelfBox");
+                
                 foreach (var station in area.Stations)
                 {
-                    //station.OnShelfBoxNeededRequest += (station1, list) =>
-                      //  PrintStatus($"Station {station1} >?> requesting shelfbox");
-                    //station.OnOrderBoxReceivedAtStation += orderBox => PrintStatus($"Station {station} << received orderBox {orderBox}");
-                    //station.OnOrderBoxFinishedAtStation +=
-                      //  orderBox => PrintStatus($"Station {station} >> finished orderBox {orderBox.Order}");
+                    station.OnOrderBoxFinishedAtStation += orderBox =>
+                    {
+
+                        
+                    };
+
                 }
+
+                
             }
-           /* var firstArea = runner.Areas.First();
+
             
-            firstArea.OnOrderBoxReceivedAtAreaEvent += (orderBox, areaCode) => PrintStatus($"Received {orderBox}");
-            firstArea.OnOrderBoxInAreaFinished += (orderBox, areaCode) => PrintStatus($"Finished {orderBox}");
-
-
-            var firstStation = firstArea.Stations.First();
-            firstStation.OnOrderBoxReceivedAtStation += orderBox => PrintStatus($"Station Received {orderBox}");
-            firstStation.OnOrderBoxFinishedAtStation += orderBox => PrintStatus($"Station Finished {orderBox}");*/
-            //runner.Handler.MainLoop.OnOrderBoxInMainLoopFinished += (o, v) => Console.WriteLine("MainLoop: OnOrderBoxInMainLoopFinished.");
-            //runner.Handler.Areas[0].OnOrderBoxInAreaFinished += (box, code) => Console.WriteLine($"{code}: OnOrderBoxInAreaFinished");
-            //runner.OrderGenerator.CostumerSendsOrderEvent +=
-            //  order => PrintStatus($"OrderGenerator: {order.OrderId} Created.");
-
         }
 
 
