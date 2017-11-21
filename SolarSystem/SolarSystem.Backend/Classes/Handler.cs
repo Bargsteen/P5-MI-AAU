@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 
 namespace SolarSystem.Backend.Classes
 {
     public class Handler
     {
-        private const int PoolTimerMinutes = 15;
-        
         public event Action<OrderBox> OnOrderBoxFinished;
         public readonly Dictionary<AreaCode, Area> Areas;
         public readonly MainLoop MainLoop;
@@ -73,7 +72,6 @@ namespace SolarSystem.Backend.Classes
         private void ReceiveOrderBoxFromMainLoop(OrderBox orderBox, AreaCode areaTo)
         {
             // If Area is full, then choose new area and give it another turn in MainLoop
-           
             if (Areas[areaTo].AreaIsFull)
             {
                 var newArea = ChooseNextArea(orderBox);

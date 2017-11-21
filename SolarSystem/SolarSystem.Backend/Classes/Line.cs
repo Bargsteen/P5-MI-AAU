@@ -39,7 +39,7 @@ namespace SolarSystem.Backend.Classes
 
         public override string ToString()
         {
-            return ($@"({Article.Name}, {Quantity}");
+            return ($@"({Article.Name}, {Quantity})");
         }
     }
 }

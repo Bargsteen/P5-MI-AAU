@@ -16,7 +16,7 @@ namespace SolarSystem.Backend.Classes
         private int maxAmountOfLines = 8;
 
         private int minArticleQuantity = 1;
-        private int maxArticleQuantity = 5;
+        private int maxArticleQuantity = 20;
 
         private const int minOrderNumberId = 10000000;
         private const int maxOrderNumberId = 999999999;
@@ -53,7 +53,7 @@ namespace SolarSystem.Backend.Classes
             
         }
         
-        private Order GenerateOrder()
+        public Order GenerateOrder()
         {
             // Randomly choose amount of lines
             int numberOfLines = Rand.Next(minAmountOfLines, maxAmountOfLines);

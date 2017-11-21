@@ -13,7 +13,6 @@ namespace SolarSystem.Backend
         public readonly Handler Handler;
         public readonly OrderGenerator OrderGenerator;
         public readonly Scheduler Scheduler;
-
         public readonly DateTime StartTime;
      
         
@@ -40,7 +39,7 @@ namespace SolarSystem.Backend
             
             Handler = new Handler();
             
-            Scheduler = new Scheduler(OrderGenerator, Handler, 0.0001);
+            Scheduler = new Scheduler(OrderGenerator, Handler, 0.001);
         }
 
 

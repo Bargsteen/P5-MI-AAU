@@ -44,7 +44,7 @@ namespace SolarSystem.Backend.Classes
 
         private int EstimateTimeInSeconds(AreaCode area)
         {
-            return 10;
+            return 120;
         }
 
         public void _CheckAndSend()
