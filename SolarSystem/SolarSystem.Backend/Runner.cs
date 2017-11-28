@@ -31,7 +31,7 @@ namespace SolarSystem.Backend
                 .ToList();
             
             
-            OrderGenerator = new OrderGenerator(articleList, orderChance);
+            OrderGenerator = new OrderGenerator(articleList, orderChance, orders);
             
             StartTime = DateTime.Now;
             

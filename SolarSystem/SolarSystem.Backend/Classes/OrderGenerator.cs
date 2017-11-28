@@ -22,12 +22,17 @@ namespace SolarSystem.Backend.Classes
         private const int maxOrderNumberId = 999999999;
 
         private int SendOrderCount = 0;
-      
-        public OrderGenerator(List<Article> articleList, double orderChance)
+
+        private List<PickingAndErp.Order> ScrapedOrders;
+
+        public OrderGenerator(List<Article> articleList, double orderChance, List<PickingAndErp.Order> scrapedOrders)
         {
+
             ArticleList = articleList ?? throw new ArgumentNullException(nameof(articleList));
 
             OrderChance = orderChance;
+
+            ScrapedOrders = scrapedOrders;
             
             TimeKeeper.Tick += MaybeSendOrder;
 
@@ -37,8 +42,9 @@ namespace SolarSystem.Backend.Classes
         {
             if (SendOrderCount++ >= 10)
             {
-                SendOrderCount = 0;
-                var order = GenerateOrder();
+                SendOrderCount = 1337;
+                var order = ScrapedOrders[0].ToSimOrder();
+                order.Areas = ConstructAreasVisited(order);
                 CostumerSendsOrderEvent?.Invoke(order);
             }
             

@@ -31,5 +31,18 @@ namespace SolarSystem.PickingAndErp
             }
             return "OrderNumber: " + OrderNumber + returnString;
         }
+
+        public Backend.Classes.Order ToSimOrder()
+        {
+            List<Backend.Classes.Line> simlinelist = new List<Backend.Classes.Line>();
+
+            foreach (Line line in LineList)
+            {
+                simlinelist.Add(line.ToSimLine());
+            }
+
+            return new Backend.Classes.Order(this.OrderNumber, this.OrderTime, simlinelist);
+
+        }
     }
 }

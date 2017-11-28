@@ -22,6 +22,12 @@ namespace SolarSystem.PickingAndErp
         {
             return "\n\tTime: " + Timestamp + "\n\t" + Article + "\tQuantity:" + Quantity + "\n";
         }
+
+        public Backend.Classes.Line ToSimLine()
+        {
+            return new Backend.Classes.Line(this.Article, this.Quantity);
+           
+        }
     }
 
 
