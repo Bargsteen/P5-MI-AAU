@@ -27,7 +27,7 @@ namespace SolarSystem
             sut2.OnLinePickedForOrderBox += box => PrintStatus("sut2 done");
 */
             // 
-            Runner runner = new Runner("C:/Users/Christian Knudsen/Documents/P5-MI-AAU/SolarSystem/SolarSystem.Backend/SolarData/Picking 02-10-2017.csv",
+            Runner runner = new Runner("/Users/Casper/Library/Projects/Uni/P5/wetransfer-f8286e/Picking 02-10-2017.csv",
                 1000, 0.2);
             Console.WriteLine("Starting simulation!");
 

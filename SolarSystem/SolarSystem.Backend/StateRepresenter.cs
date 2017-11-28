@@ -29,7 +29,7 @@ namespace SolarSystem.Backend
                     orderVector[i] = 0;
                 }
             }
-            return Sparse.FromDense(orderVector);
+            return Sparse.FromDense(orderVector, false);
         }
 
         public static double[] MakeSimulationRepresentation(Dictionary<string, double> simStats)

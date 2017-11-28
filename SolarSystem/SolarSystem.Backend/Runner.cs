@@ -13,6 +13,9 @@ namespace SolarSystem.Backend
         public readonly Handler Handler;
         public readonly OrderGenerator OrderGenerator;
         public readonly Scheduler Scheduler;
+        
+        public readonly MiScheduler MiScheduler;
+        public readonly SimulationInformation SimulationInformation;
 
         public readonly DateTime StartTime;
      
@@ -30,6 +33,7 @@ namespace SolarSystem.Backend
                 .Select(line => line.Article)
                 .ToList();
             
+            Handler = new Handler(); 
             
             OrderGenerator = new OrderGenerator(articleList, orderChance);
             
@@ -38,9 +42,11 @@ namespace SolarSystem.Backend
             var t = new Thread(() => TimeKeeper.StartTicking(simulationSpeed, StartTime));
             t.Start();
             
-            Handler = new Handler();
             
-            Scheduler = new Scheduler(OrderGenerator, Handler, 0.0001);
+            SimulationInformation = new SimulationInformation(Handler);
+            
+            //Scheduler = new Scheduler(OrderGenerator, Handler, 0.0001);
+            MiScheduler = new MiScheduler(5, articleList.ToArray(), SimulationInformation, OrderGenerator, Handler);
         }
 
 

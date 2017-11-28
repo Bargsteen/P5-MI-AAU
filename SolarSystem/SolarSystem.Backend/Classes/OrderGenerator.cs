@@ -35,6 +35,7 @@ namespace SolarSystem.Backend.Classes
 
         public void MaybeSendOrder()
         {
+            // Only send every tenth order.
             if (SendOrderCount++ >= 10)
             {
                 SendOrderCount = 0;

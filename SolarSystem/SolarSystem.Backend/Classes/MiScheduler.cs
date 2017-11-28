@@ -6,28 +6,62 @@ using Accord.Math;
 namespace SolarSystem.Backend.Classes
 {
     public class MiScheduler
-    {
-        private double[] weights;
+    { 
+        private double[] weights; 
 
-        private readonly Dictionary<Order, Sparse<int>> _actions;
-
-        private Article[] _articles;
-
-        private double[] _simulationState;
+        public readonly Dictionary<Order, Sparse<int>> _actions; 
+ 
+        public SimulationInformation SimulationInformation { get; set; }
+        private readonly Handler Handler;
         
-        public MiScheduler(int simFeatureCount, Article[] articles)
+        
+        private readonly Article[] _articles; 
+ 
+        private double[] _simulationState; 
+ 
+        private const int AvgLinesHour = 200; 
+        private int avgLinesActual = 0; 
+        private int avgLinesLeft; 
+        private int LastHourSinceSent = 0; 
+        
+        public MiScheduler(int simFeatureCount, Article[] articles, SimulationInformation simulationInformation, OrderGenerator orderGenerator, Handler handler)
         {
-            _simulationState = new double[simFeatureCount];
-            _articles = articles;
-            weights = Enumerable.Repeat(1d, articles.Length + simFeatureCount).ToArray();
-            _actions = new Dictionary<Order, Sparse<int>>();
+            Handler = handler;
+            
+            _simulationState = new double[simFeatureCount]; 
+            _articles = articles; 
+            SimulationInformation = simulationInformation; 
+ 
+            if (SimulationInformation.AreaInformation.Count == simFeatureCount) 
+            { 
+                // All Good, all features match in size 
+            } 
+            else 
+            { 
+                throw new IndexOutOfRangeException("Features and simulationFeatures needs to be the same size."); 
+            } 
+             
+            weights = Enumerable.Repeat(1d, _articles.Length + simFeatureCount).ToArray(); 
+            _actions = new Dictionary<Order, Sparse<int>>(); 
+ 
+            // Sentinel waiting action. Must be checked for later 
+            var waitOrder = new Order(0, DateTime.Now, new List<Line>()); 
+            _actions.Add(waitOrder, StateRepresenter.MakeOrderRepresentation(waitOrder, _articles.ToList())); 
+             
+            UpdateAreaFeatures();
 
-            // Sentinel waiting action. Must be checked for later
-            var waitOrder = new Order(0, DateTime.Now, new List<Line>());
-            _actions.Add(waitOrder, new Sparse<int>());
-
+            orderGenerator.CostumerSendsOrderEvent += AddNewOrder;
+            TimeKeeper.Tick += TimeActionToHandler;
         }
 
+        private void UpdateAreaFeatures() 
+        { 
+            // Update the array to hold the updated with features 
+            var areaFeatures = SimulationInformation.AreaInformation.Values.ToList(); 
+ 
+            _simulationState = areaFeatures.ToArray(); 
+        } 
+        
         public void AddNewOrder(Order order)
         {
             _actions.Add(order, StateRepresenter.MakeOrderRepresentation(order, _articles.ToList()));
@@ -66,38 +100,77 @@ namespace SolarSystem.Backend.Classes
             return actionAndValue;
         }
 
-
-        private void ChooseAction()
+        private void SendActionToHandler(Order order)
         {
-            var actionValues = CalculateAllActionValues();
-            var bestAction = actionValues.OrderByDescending(kvp => kvp.Value).First().Key;
+            // Send to handler
+            Handler.ReceiveOrder(order);
+        }
+        
+        private void TimeActionToHandler()
+        {
+            // Select an action
+            var actionOrder = ChooseAndReturnAction();
 
-            // Check if this is the special wait action
-            if (bestAction.OrderId != 0)
+            // If action orderID != 0; Send
+            if (actionOrder.OrderId != 0)
             {
-                // Send Order to simulation
+                SendActionToHandler(actionOrder);
             }
             
-            UpdateKnowledge();
+            // Else return
         }
 
-        private void UpdateKnowledge()
+        public Order ChooseAndReturnAction()
         {
-            var reward = CalculateRewardValue();
+            var actionValues = CalculateAllActionValues(); 
+            var bestAction = actionValues.OrderByDescending(kvp => kvp.Value).First().Key; 
+            
+            UpdateKnowledge(bestAction);
+
+            if (bestAction.OrderId != 0)
+            {
+                _actions.Remove(bestAction);
+            }
+
+            return bestAction; 
+        }
+
+        private void UpdateKnowledge(Order order)
+        {
+            var reward = CalculateRewardValue(order); 
             var learningRate = 0.1;
             int weightsLength = weights.Length;
             
             for(int i = 0; i < weightsLength; i++)
             {
-                // LEARN SOMETHING - FAKED
+                // LEARN SOMETHING
                 weights[i] += learningRate * reward;
             }
         }
 
-        private double CalculateRewardValue()
-        {
-            // Moving average
-            return 3;
-        }
+        private double CalculateRewardValue(Order order) 
+        { 
+            // Reset the actual sent lines if an hour has passed. 
+            if (LastHourSinceSent != TimeKeeper.CurrentDateTime.Hour) 
+            { 
+                avgLinesActual = 0; 
+                LastHourSinceSent = TimeKeeper.CurrentDateTime.Hour; 
+            } 
+             
+            // Calculate reward. 
+            avgLinesLeft = AvgLinesHour - avgLinesActual; 
+            var timeLeft = 60 - TimeKeeper.CurrentDateTime.Minute; 
+ 
+            var shouldSendLines = avgLinesLeft / timeLeft; 
+              
+            var actualLinesSent = order.Lines.Count; 
+ 
+            var reward = (double)actualLinesSent / (double)shouldSendLines; 
+ 
+            avgLinesActual += actualLinesSent; 
+             
+            // Moving average 
+            return reward; 
+        } 
     }
 }
