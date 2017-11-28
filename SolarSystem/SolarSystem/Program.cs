@@ -27,9 +27,8 @@ namespace SolarSystem
             sut2.OnLinePickedForOrderBox += box => PrintStatus("sut2 done");
 */
             // 
-            Runner runner = new Runner("/Users/kasper/Downloads/wetransfer-f8286e/Picking 02-10-2017.csv",
+            Runner runner = new Runner("C:/Users/Christian Knudsen/Documents/P5-MI-AAU/SolarSystem/SolarSystem.Backend/SolarData/Picking 02-10-2017.csv",
                 1000, 0.2);
-
             Console.WriteLine("Starting simulation!");
 
             Dictionary<AreaCode, int> FinishedBoxesInAreas = new Dictionary<AreaCode, int>()
@@ -42,12 +41,26 @@ namespace SolarSystem
             };
 
             int totalFinishedOrders = 0;
-            
+            int finishedOrdersPerHour = 0;
+            DateTime currentHour = runner.StartTime;
+            List<Tuple<int, int>> OrdersFinishedPerHour = new List<Tuple<int, int>>();
+
             //runner.Handler.OnOrderBoxFinished += o => PrintStatus($"Handler: Orderbox Finished {o} -- TimeSpend = {o.TimeInSystem}");
 
             runner.Handler.OnOrderBoxFinished += orderBox =>
             {
                 totalFinishedOrders += orderBox.LineIsPickedStatuses.Keys.Count;
+                finishedOrdersPerHour += orderBox.LineIsPickedStatuses.Keys.Count;
+
+                if (TimeKeeper.CurrentDateTime.Hour == currentHour.Hour + 1)
+                {
+                    OrdersFinishedPerHour.Add(Tuple.Create(currentHour.Hour, finishedOrdersPerHour));
+
+                    currentHour = TimeKeeper.CurrentDateTime;
+                    finishedOrdersPerHour = 0;
+
+                    finishedOrdersPerHour += orderBox.LineIsPickedStatuses.Keys.Count;
+                }
             };
             
             foreach (var area in runner.Areas)
@@ -59,6 +72,8 @@ namespace SolarSystem
                     IncrementBoxPerAreaCount(FinishedBoxesInAreas, areaCode);
                     PrintBoxDict(FinishedBoxesInAreas);
                     PrintLinesFinishedPerHour(runner.StartTime, TimeKeeper.CurrentDateTime, totalFinishedOrders);
+                    OrdersFinishedPerHour.ForEach(x => Console.WriteLine("Lines between " + x.Item1 + " - " + (x.Item1 + 1) + ": " + x.Item2 + " lines"));
+                    Console.WriteLine("Lines between " + TimeKeeper.CurrentDateTime.Hour + " - " + (TimeKeeper.CurrentDateTime.Hour + 1) + ": " + finishedOrdersPerHour + " lines");
                 };
                    
                 //area.Storage.OnSendShelfBoxToStation += () => PrintStatus($"{area} STORAGE >> send shelfBox");
@@ -101,6 +116,7 @@ namespace SolarSystem
             {
                 str += $"[{kvp.Key}: {kvp.Value}] ";
             }
+            //Thread.Sleep(10);
             Console.Clear();
             PrintStatus(str);
         }
