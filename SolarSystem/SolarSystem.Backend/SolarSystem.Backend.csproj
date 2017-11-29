@@ -69,9 +69,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\Article.cs" />
-    <Compile Include="Classes\MiScheduler.cs" />
     <Compile Include="Classes\OrderBoxPickingContainer.cs" />
     <Compile Include="Classes\Scheduler.cs" />
+    <Compile Include="Classes\Schedulers\FifoScheduler.cs" />
+    <Compile Include="Classes\Schedulers\MiScheduler.cs" />
+    <Compile Include="Classes\Schedulers\SchedulerModular.cs" />
     <Compile Include="Classes\SimulationInformation.cs" />
     <Compile Include="Classes\Storage.cs" />
     <Compile Include="Constants.cs" />

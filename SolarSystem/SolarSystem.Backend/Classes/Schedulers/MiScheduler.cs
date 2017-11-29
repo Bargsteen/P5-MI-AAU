@@ -19,7 +19,7 @@ namespace SolarSystem.Backend.Classes
  
         private double[] _simulationState; 
  
-        private const int AvgLinesHour = 200; 
+        private const int AvgLinesHour = 1400; 
         private int avgLinesActual = 0; 
         private int avgLinesLeft; 
         private int LastHourSinceSent = 0; 
@@ -108,15 +108,18 @@ namespace SolarSystem.Backend.Classes
         
         private void TimeActionToHandler()
         {
-            // Select an action
-            var actionOrder = ChooseAndReturnAction();
-
-            // If action orderID != 0; Send
-            if (actionOrder.OrderId != 0)
+            if (_actions.Any())
             {
-                SendActionToHandler(actionOrder);
+                // Select an action
+                var actionOrder = ChooseAndReturnAction();
+
+                // If action orderID != 0; Send
+                if (actionOrder.OrderId != 0)
+                {
+                    SendActionToHandler(actionOrder);
+                }
             }
-            
+
             // Else return
         }
 

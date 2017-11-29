@@ -42,11 +42,11 @@ namespace SolarSystem.Backend
             var t = new Thread(() => TimeKeeper.StartTicking(simulationSpeed, StartTime));
             t.Start();
             
-            
             SimulationInformation = new SimulationInformation(Handler);
             
             //Scheduler = new Scheduler(OrderGenerator, Handler, 0.0001);
-            MiScheduler = new MiScheduler(5, articleList.ToArray(), SimulationInformation, OrderGenerator, Handler);
+            //MiScheduler = new MiScheduler(5, articleList.ToArray(), SimulationInformation, OrderGenerator, Handler);
+            FifoScheduler fifoScheduler = new FifoScheduler(OrderGenerator, Handler, 0);
         }
 
 
