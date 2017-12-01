@@ -12,7 +12,7 @@ namespace SolarSystem.Backend.Classes
 
         public override Order ChooseNextOrder()
         {
-            return ActualOrderPool.First();
+            return ActualOrderPool.OrderBy(o => o.OrderTime).First();
         }
     }
 }

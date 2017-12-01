@@ -19,20 +19,6 @@ namespace SolarSystem.Backend.Classes
         
         public bool AreaIsFull => Stations.All(s => s.StationIsFull);
 
-        public Area(AreaCode areaCode, List<Article> availableWares, Station[] stations, ShelfSpace shelfSpace, ITimeKeeper timeKeeper)
-        {
-            AreaCode = areaCode;
-            AvailableWares = availableWares ?? throw new ArgumentNullException(nameof(availableWares));
-            Stations = stations ?? throw new ArgumentNullException(nameof(stations));
-            ShelfSpace = shelfSpace ?? throw new ArgumentNullException(nameof(shelfSpace));
-
-            // Subscribe to each Station order complete event
-            foreach (Station station in Stations)
-            {
-                station.OnOrderBoxFinishedAtStation += StationOrderCompleted;
-            }
-        }
-
         public Area(AreaCode areaCode)
         {
             AreaCode = areaCode;
@@ -73,12 +59,7 @@ namespace SolarSystem.Backend.Classes
 
         //Listening on stations for orders that are done
         public void ReceiveOrderBox(OrderBox orderBox)
-        {
-            if (this.AreaCode == AreaCode.Area25)
-            {
-                var a = 2;
-            }
-            
+        {   
             OnOrderBoxReceivedAtAreaEvent?.Invoke(orderBox, AreaCode);
             //call DistributeOrder with input as parameter
             DistributeOrder(orderBox);

@@ -11,7 +11,7 @@ namespace SolarSystem.Backend.Classes
 
         public readonly Dictionary<Order, Sparse<int>> _actions; 
  
-        public SimulationInformation SimulationInformation { get; set; }
+        public SimulationInformation SimulationInformation { get; }
         private readonly Handler Handler;
         
         
@@ -27,10 +27,11 @@ namespace SolarSystem.Backend.Classes
         public MiScheduler(int simFeatureCount, Article[] articles, SimulationInformation simulationInformation, OrderGenerator orderGenerator, Handler handler)
         {
             Handler = handler;
+            SimulationInformation = new SimulationInformation(Handler); 
+
             
             _simulationState = new double[simFeatureCount]; 
             _articles = articles; 
-            SimulationInformation = simulationInformation; 
  
             if (SimulationInformation.AreaInformation.Count == simFeatureCount) 
             { 

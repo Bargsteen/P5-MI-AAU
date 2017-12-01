@@ -8,6 +8,8 @@ namespace SolarSystem.Backend.Classes
     {
         private double TimerStartMinutes { get; }
         private int PoolTimer { get; set; }
+
+        public SimulationInformation SimulationInformation { get; }
         
         // Order pool from costumers
         private List<Order> InitialOrderPool { get; }
@@ -18,10 +20,11 @@ namespace SolarSystem.Backend.Classes
         private OrderGenerator OrderGenerator { get; }
         private Handler Handler { get; set; }
         
-        public SchedulerModular(OrderGenerator orderGenerator, Handler handler, double poolMoverTime)
+        public SchedulerModular(OrderGenerator orderGenerator, Handler handler,  double poolMoverTime)
         {
             OrderGenerator = orderGenerator;
             Handler = handler;
+            SimulationInformation = new SimulationInformation(Handler);
             InitialOrderPool = new List<Order>();
             ActualOrderPool = new List<Order>();;
 
