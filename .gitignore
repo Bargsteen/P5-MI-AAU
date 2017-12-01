@@ -305,3 +305,5 @@ __pycache__/
 OpenCover/
 
 SolarSystem/SolarSystem\.Test/obj/
+
+SolarSystem/SolarSystem/
