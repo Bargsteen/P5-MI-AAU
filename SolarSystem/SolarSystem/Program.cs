@@ -9,7 +9,7 @@ using SolarSystem.Backend.Classes;
 
 namespace SolarSystem
 {
-    public class Program
+    public static class Program
     {
         
         
@@ -27,11 +27,14 @@ namespace SolarSystem
             sut2.OnLinePickedForOrderBox += box => PrintStatus("sut2 done");
 */
             // 
-            Runner runner = new Runner("C:/Users/Christian Knudsen/Documents/P5-MI-AAU/SolarSystem/SolarSystem.Backend/SolarData/Picking 02-10-2017.csv",
+            /*Runner runner = new Runner("C:/Users/Christian Knudsen/Documents/P5-MI-AAU/SolarSystem/SolarSystem.Backend/SolarData/Picking 02-10-2017.csv",
+                1000, 0.2);*/
+            Runner runner = new Runner("/Users/kasper/Downloads/wetransfer-f8286e/Picking 02-10-2017.csv",
                 1000, 0.2);
+            
             Console.WriteLine("Starting simulation!");
 
-            Dictionary<AreaCode, int> FinishedBoxesInAreas = new Dictionary<AreaCode, int>()
+            Dictionary<AreaCode, int> finishedBoxesInAreas = new Dictionary<AreaCode, int>()
             {
                 {AreaCode.Area21, 0},
                 {AreaCode.Area25, 0},
@@ -43,7 +46,7 @@ namespace SolarSystem
             int totalFinishedOrders = 0;
             int finishedOrdersPerHour = 0;
             DateTime currentHour = runner.StartTime;
-            List<Tuple<int, int>> OrdersFinishedPerHour = new List<Tuple<int, int>>();
+            List<Tuple<int, int>> ordersFinishedPerHour = new List<Tuple<int, int>>();
 
             //runner.Handler.OnOrderBoxFinished += o => PrintStatus($"Handler: Orderbox Finished {o} -- TimeSpend = {o.TimeInSystem}");
 
@@ -54,7 +57,7 @@ namespace SolarSystem
 
                 if (TimeKeeper.CurrentDateTime.Hour == currentHour.Hour + 1)
                 {
-                    OrdersFinishedPerHour.Add(Tuple.Create(currentHour.Hour, finishedOrdersPerHour));
+                    ordersFinishedPerHour.Add(Tuple.Create(currentHour.Hour, finishedOrdersPerHour));
 
                     currentHour = TimeKeeper.CurrentDateTime;
                     finishedOrdersPerHour = 0;
@@ -69,10 +72,10 @@ namespace SolarSystem
                 //area.OnOrderBoxInAreaFinished += (orderBox, areaCode) => PrintStatus($"{areaCode} >> finished orderBox {orderBox} - MainLoopCount: {runner.Handler.MainLoop.BoxesInMainLoop}");
                 area.OnOrderBoxInAreaFinished += (orderBox, areaCode) =>
                 {
-                    IncrementBoxPerAreaCount(FinishedBoxesInAreas, areaCode);
-                    PrintBoxDict(FinishedBoxesInAreas);
+                    IncrementBoxPerAreaCount(finishedBoxesInAreas, areaCode);
+                    PrintBoxDict(finishedBoxesInAreas);
                     PrintLinesFinishedPerHour(runner.StartTime, TimeKeeper.CurrentDateTime, totalFinishedOrders);
-                    OrdersFinishedPerHour.ForEach(x => Console.WriteLine("Lines between " + x.Item1 + " - " + (x.Item1 + 1) + ": " + x.Item2 + " lines"));
+                    ordersFinishedPerHour.ForEach(x => Console.WriteLine("Lines between " + x.Item1 + " - " + (x.Item1 + 1) + ": " + x.Item2 + " lines"));
                     Console.WriteLine("Lines between " + TimeKeeper.CurrentDateTime.Hour + " - " + (TimeKeeper.CurrentDateTime.Hour + 1) + ": " + finishedOrdersPerHour + " lines");
                 };
                    

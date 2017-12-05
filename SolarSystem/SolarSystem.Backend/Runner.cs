@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using SolarSystem.Backend.Classes;
@@ -33,7 +34,8 @@ namespace SolarSystem.Backend
             
             OrderGenerator = new OrderGenerator(articleList, orderChance);
             
-            StartTime = DateTime.Now;
+            const string s = "2017-10-02 08:00";
+            StartTime = DateTime.ParseExact(s, "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture);
             
             var t = new Thread(() => TimeKeeper.StartTicking(simulationSpeed, StartTime));
             t.Start();
