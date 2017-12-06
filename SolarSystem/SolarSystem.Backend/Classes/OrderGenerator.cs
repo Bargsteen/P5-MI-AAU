@@ -1,13 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
+using System.Threading;
 
 namespace SolarSystem.Backend.Classes
 {
     public class OrderGenerator
     {
         public event Action<Order> CostumerSendsOrderEvent;
-        
+
+        public enum  configuration
+        {
+            Random,
+            FromFile
+        }
+
+        private configuration _currentConfiguration;
+
+
+        private int sentIndex = 0;
         private List<Article> ArticleList { get; }
         private static readonly Random Rand = new Random();
         public double OrderChance { get; }
@@ -25,7 +37,7 @@ namespace SolarSystem.Backend.Classes
 
         private List<PickingAndErp.Order> ScrapedOrders;
 
-        public OrderGenerator(List<Article> articleList, double orderChance, List<PickingAndErp.Order> scrapedOrders)
+        public OrderGenerator(List<Article> articleList, double orderChance, List<PickingAndErp.Order> scrapedOrders, configuration conf)
         {
 
             ArticleList = articleList ?? throw new ArgumentNullException(nameof(articleList));
@@ -33,22 +45,54 @@ namespace SolarSystem.Backend.Classes
             OrderChance = orderChance;
 
             ScrapedOrders = scrapedOrders;
-            
+
+            ScrapedOrders.Sort((x, y) => { return x.OrderTime.CompareTo(y.OrderTime); });
+
+
             TimeKeeper.Tick += MaybeSendOrder;
 
+
+
+            _currentConfiguration = conf;
         }
 
         public void MaybeSendOrder()
         {
-            if (SendOrderCount++ >= 10)
-            {
-                SendOrderCount = 1337;
-                var order = ScrapedOrders[0].ToSimOrder();
-                order.Areas = ConstructAreasVisited(order);
-                CostumerSendsOrderEvent?.Invoke(order);
-            }
+            if (ScrapedOrders.Count == 0)
+                return;
+                Order order;
+                switch (_currentConfiguration)
+                {
+                    case configuration.FromFile:
+
+
+                        if(ScrapedOrders[0].OrderTime.CompareTo(TimeKeeper.CurrentDateTime) < 0) { 
+   
+                            order = ScrapedOrders[0].ToSimOrder();
+                            order.Areas = ConstructAreasVisited(order);
+                            CostumerSendsOrderEvent?.Invoke(order);
+                            ScrapedOrders.RemoveAt(0);
+                            SendOrderCount = 0;
+                            //Console.WriteLine("Sent number " + sentIndex++ +":" + order.OrderId);
+                        }
+
+                        break;
+
+
+                    case configuration.Random:
+                        SendOrderCount = 0;
+                        order = GenerateOrder();
+                        order.Areas = ConstructAreasVisited(order);
+                        CostumerSendsOrderEvent?.Invoke(order);
+                    break;
+
+
+
+
+                }
             
-            
+
+
             /*double chance = Rand.NextDouble();
 
             if (chance <= OrderChance)
@@ -56,7 +100,7 @@ namespace SolarSystem.Backend.Classes
                 
                 
             }*/
-            
+
         }
         
         private Order GenerateOrder()

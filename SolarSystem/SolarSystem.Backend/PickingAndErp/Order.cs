@@ -20,6 +20,7 @@ namespace SolarSystem.PickingAndErp
             OrderNumber = orderNumber;
             LineList.Add(line);
         }
+        
 
 
         public override string ToString()
@@ -44,5 +45,6 @@ namespace SolarSystem.PickingAndErp
             return new Backend.Classes.Order(this.OrderNumber, this.OrderTime, simlinelist);
 
         }
+        
     }
 }

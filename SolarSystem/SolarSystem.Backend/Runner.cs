@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using SolarSystem.Backend.Classes;
+using SolarSystem.Backend.PickingandERP;
 using SolarSystem.PickingAndErp;
+using Order = SolarSystem.PickingAndErp.Order;
 
 namespace SolarSystem.Backend
 {
@@ -23,6 +25,33 @@ namespace SolarSystem.Backend
             pickNScrape.GetOrdersFromPicking();
 
             var orders = pickNScrape.OrderList;
+            var erpscrape = new ErpScrape();
+            erpscrape.ScrapeErp("C:/ErpTask_trace.log");
+
+            erpscrape.orders.Sort((x,y) => { return x.OrderTime.CompareTo(y.OrderTime); });
+
+            //foreach (Order order in erpscrape.orders)
+            //{
+            //    Console.WriteLine(order.OrderNumber);
+            //}
+
+            for (int i = 0; i < orders.Count; i++)
+            {
+                Order order = orders[i];
+
+                //Console.WriteLine(order.OrderNumber);
+                //Console.WriteLine(erpscrape.orders[0].OrderNumber);
+                try
+                {
+                    order.OrderTime = erpscrape.orders.Find(x => x.OrderNumber == order.OrderNumber).OrderTime;
+                }
+                catch (NullReferenceException)
+                {
+                    orders.Remove(order);
+                    i--;
+                }
+            }
+           
 
             List<Article> articleList = orders
                 .SelectMany(o => o.LineList)
@@ -31,9 +60,9 @@ namespace SolarSystem.Backend
                 .ToList();
             
             
-            OrderGenerator = new OrderGenerator(articleList, orderChance, orders);
+            OrderGenerator = new OrderGenerator(articleList, orderChance, orders, OrderGenerator.configuration.FromFile);
             
-            StartTime = DateTime.Now;
+            StartTime = new DateTime(2017, 10, 2, 8, 0, 0); //02/10/2017
             
             var t = new Thread(() => TimeKeeper.StartTicking(simulationSpeed, StartTime));
             t.Start();

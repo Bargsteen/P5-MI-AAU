@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using SolarSystem.Backend.Classes;
 
 namespace SolarSystem.PickingAndErp
@@ -85,7 +86,9 @@ namespace SolarSystem.PickingAndErp
 
             foreach (var kvp in ordersGathered)
             {
-                OrderList.Add(new Order(kvp.Key, kvp.Value));
+                Order order = new Order(kvp.Key, kvp.Value);
+                order.OrderTime = DateTime.Now;
+                OrderList.Add(order);
             }
 
         }

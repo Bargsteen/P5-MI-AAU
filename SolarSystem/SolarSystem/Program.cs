@@ -27,7 +27,7 @@ namespace SolarSystem
             sut2.OnLinePickedForOrderBox += box => PrintStatus("sut2 done");
 */
             // 
-            Runner runner = new Runner("C:/Users/Bbress/Desktop/Warehouse project/SolarSystem/SolarSystem.Backend/SolarData/Picking 02-10-2017.csv",
+            Runner runner = new Runner("C:/Picking 02-10-2017.csv",
                 1000, 0.2);
             Console.WriteLine("Starting simulation!");
 
@@ -62,6 +62,19 @@ namespace SolarSystem
                     finishedOrdersPerHour += orderBox.LineIsPickedStatuses.Keys.Count;
                 }
             };
+
+            //int index = 0;
+            //TimeKeeper.Tick += () =>
+            //{
+            //    if(index++ > 60) { 
+            //        PrintBoxDict(FinishedBoxesInAreas);
+            //        PrintLinesFinishedPerHour(runner.StartTime, TimeKeeper.CurrentDateTime, totalFinishedOrders);
+            //        OrdersFinishedPerHour.ForEach(x => Console.WriteLine("Lines between " + x.Item1 + " - " + (x.Item1 + 1) + ": " + x.Item2 + " lines"));
+            //        Console.WriteLine("Lines between " + TimeKeeper.CurrentDateTime.Hour + " - " + (TimeKeeper.CurrentDateTime.Hour + 1) + ": " + finishedOrdersPerHour + " lines");
+            //        index = 0;
+            //    }
+            //};
+
             
             foreach (var area in runner.Areas)
             {

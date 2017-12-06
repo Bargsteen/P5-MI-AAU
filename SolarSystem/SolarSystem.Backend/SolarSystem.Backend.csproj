@@ -57,6 +57,7 @@
     <Compile Include="Classes\Scheduler.cs" />
     <Compile Include="Classes\Storage.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="PickingAndErp\Article.cs" />
     <Compile Include="PickingAndErp\ErpScrape.cs" />
     <Compile Include="PickingAndErp\LineErp.cs" />
     <Compile Include="PickingAndErp\Order.cs" />
