@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic; 
-using System.Linq; 
- 
+using System.Linq;
+using Accord.Math;
+
 namespace SolarSystem.Backend.Classes  
 {  
     public class SimulationInformation  
@@ -20,6 +21,11 @@ namespace SolarSystem.Backend.Classes
                 area.Value.OnOrderBoxReceivedAtAreaEvent += (box, code) => AreaInformation[code] += 1;  
                 area.Value.OnOrderBoxInAreaFinished += (box, code) => AreaInformation[code] -= 1;  
             }  
-        }  
+        }
+
+        public double[] GetState()
+        {
+            return AreaInformation.Values.ToArray();
+        }
     }  
 }  

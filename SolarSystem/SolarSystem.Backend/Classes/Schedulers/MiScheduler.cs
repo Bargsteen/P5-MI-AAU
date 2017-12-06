@@ -7,12 +7,12 @@ namespace SolarSystem.Backend.Classes
 {
     public class MiScheduler
     { 
-        private double[] weights; 
+        private readonly double[] _weights;
 
-        public readonly Dictionary<Order, Sparse<int>> _actions; 
- 
-        public SimulationInformation SimulationInformation { get; }
-        private readonly Handler Handler;
+        private readonly Dictionary<Order, Sparse<double>> _actions;
+
+        private SimulationInformation SimulationInformation { get; }
+        private readonly Handler _handler;
         
         
         private readonly Article[] _articles; 
@@ -20,14 +20,14 @@ namespace SolarSystem.Backend.Classes
         private double[] _simulationState; 
  
         private const int AvgLinesHour = 1400; 
-        private int avgLinesActual = 0; 
-        private int avgLinesLeft; 
-        private int LastHourSinceSent = 0; 
+        private int _avgLinesActual = 0; 
+        private int _avgLinesLeft; 
+        private int _lastHourSinceSent = 0; 
         
         public MiScheduler(int simFeatureCount, Article[] articles, SimulationInformation simulationInformation, OrderGenerator orderGenerator, Handler handler)
         {
-            Handler = handler;
-            SimulationInformation = new SimulationInformation(Handler); 
+            _handler = handler;
+            SimulationInformation = new SimulationInformation(_handler); 
 
             
             _simulationState = new double[simFeatureCount]; 
@@ -42,8 +42,8 @@ namespace SolarSystem.Backend.Classes
                 throw new IndexOutOfRangeException("Features and simulationFeatures needs to be the same size."); 
             } 
              
-            weights = Enumerable.Repeat(1d, _articles.Length + simFeatureCount).ToArray(); 
-            _actions = new Dictionary<Order, Sparse<int>>(); 
+            _weights = Enumerable.Repeat(1d, _articles.Length + simFeatureCount).ToArray(); 
+            _actions = new Dictionary<Order, Sparse<double>>(); 
  
             // Sentinel waiting action. Must be checked for later 
             var waitOrder = new Order(0, DateTime.Now, new List<Line>()); 
@@ -86,8 +86,7 @@ namespace SolarSystem.Backend.Classes
             foreach (var action in _actions)
             {
                 // Convert to dense vector representing the article counts for each order
-                int[] denseActionVector = action.Value.ToDense();
-                double[] denseActionDoubles = denseActionVector.ToDouble();
+                double[] denseActionDoubles = action.Value.ToDense();
                 
                 // Merge with simulation state vector
                 var fullStateVector = new List<double>();
@@ -95,7 +94,7 @@ namespace SolarSystem.Backend.Classes
                 fullStateVector.AddRange(_simulationState);
                 
                 // Calculate single action value and add to dict
-                actionAndValue.Add(action.Key, CalculateSingleActionValue(fullStateVector.ToArray(), weights));
+                actionAndValue.Add(action.Key, CalculateSingleActionValue(fullStateVector.ToArray(), _weights));
             }
             // return dict
             return actionAndValue;
@@ -104,7 +103,7 @@ namespace SolarSystem.Backend.Classes
         private void SendActionToHandler(Order order)
         {
             // Send to handler
-            Handler.ReceiveOrder(order);
+            _handler.ReceiveOrder(order);
         }
         
         private void TimeActionToHandler()
@@ -142,36 +141,36 @@ namespace SolarSystem.Backend.Classes
         private void UpdateKnowledge(Order order)
         {
             var reward = CalculateRewardValue(order); 
-            var learningRate = 0.1;
-            int weightsLength = weights.Length;
+            const double learningRate = 0.1;
+            int weightsLength = _weights.Length;
             
             for(int i = 0; i < weightsLength; i++)
             {
                 // LEARN SOMETHING
-                weights[i] += learningRate * reward;
+                _weights[i] += learningRate * reward;
             }
         }
 
         private double CalculateRewardValue(Order order) 
         { 
             // Reset the actual sent lines if an hour has passed. 
-            if (LastHourSinceSent != TimeKeeper.CurrentDateTime.Hour) 
+            if (_lastHourSinceSent != TimeKeeper.CurrentDateTime.Hour) 
             { 
-                avgLinesActual = 0; 
-                LastHourSinceSent = TimeKeeper.CurrentDateTime.Hour; 
+                _avgLinesActual = 0; 
+                _lastHourSinceSent = TimeKeeper.CurrentDateTime.Hour; 
             } 
              
             // Calculate reward. 
-            avgLinesLeft = AvgLinesHour - avgLinesActual; 
+            _avgLinesLeft = AvgLinesHour - _avgLinesActual; 
             var timeLeft = 60 - TimeKeeper.CurrentDateTime.Minute; 
  
-            var shouldSendLines = avgLinesLeft / timeLeft; 
+            var shouldSendLines = _avgLinesLeft / timeLeft; 
               
             var actualLinesSent = order.Lines.Count; 
  
-            var reward = (double)actualLinesSent / (double)shouldSendLines; 
+            var reward = actualLinesSent / (double)shouldSendLines; 
  
-            avgLinesActual += actualLinesSent; 
+            _avgLinesActual += actualLinesSent; 
              
             // Moving average 
             return reward; 

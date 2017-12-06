@@ -112,7 +112,7 @@ namespace SolarSystem.Backend.Classes
             foreach (var orderBox in OrderBoxes)
             {
                 // Loop through unpicked lines in orderbox
-                foreach (var unpickedLine in orderBox.LinesNotPicked())
+                foreach (var unpickedLine in orderBox.LinesNotPickedIn(_areaCode))
                 {
                     // If neededArticlesList is full then return neededArticlesList
                     if (neededArticlesList.Count == neededArticlesList.Capacity)

@@ -13,7 +13,7 @@ namespace SolarSystem.Backend.Classes
         public double OrderChance { get; }
 
         private int minAmountOfLines = 1;
-        private int maxAmountOfLines = 11;
+        private int maxAmountOfLines = 15;
 
         private int minArticleQuantity = 1;
         private int maxArticleQuantity = 8;
