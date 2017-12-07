@@ -42,12 +42,12 @@ namespace SolarSystem.Backend.Classes
 
             ScrapedOrders.Sort((x, y) => { return x.OrderTime.CompareTo(y.OrderTime); });
 
-
-            TimeKeeper.Tick += MaybeSendOrder;
-
-
-
             _currentOrderGenerationConfiguration = conf;
+        }
+
+        public void Start()
+        {
+            TimeKeeper.Tick += MaybeSendOrder;
         }
 
         public void MaybeSendOrder()

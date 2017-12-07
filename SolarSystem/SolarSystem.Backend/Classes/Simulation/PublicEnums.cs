@@ -28,4 +28,11 @@
         Random,
         FromFile
     }
+
+    public enum SchedulerType
+    {
+        FIFO,
+        MI1,
+        MI2
+    }
 }

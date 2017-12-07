@@ -32,6 +32,11 @@ namespace SolarSystem.Backend.Classes
             TimerStartMinutes = poolMoverTime * 60;
 
             OrderGenerator.CostumerSendsOrderEvent += order => InitialOrderPool.Add(order);
+            
+        }
+
+        public void Start()
+        {
             TimeKeeper.Tick += TickLoop;
         }
 

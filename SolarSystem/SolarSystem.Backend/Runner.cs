@@ -21,13 +21,19 @@ namespace SolarSystem.Backend
         public readonly SimulationInformation SimulationInformation;
 
         public readonly DateTime StartTime;
+
+        private readonly double _simulationSpeed;
+        private SchedulerModular _scheduler;
      
         
-        public Runner(string filePath, double simulationSpeed, double orderChance, OrderGenerationConfiguration orderGenerationConfiguration)
+        public Runner(string filePath, double simulationSpeed, double orderChance, OrderGenerationConfiguration orderGenerationConfiguration, SchedulerType schedulerType)
         {
+            
+
             var pickNScrape = new PickingScrape(filePath + "Picking 02-10-2017.csv");
             pickNScrape.GetOrdersFromPicking();
 
+            _simulationSpeed = simulationSpeed;
             var orders = pickNScrape.OrderList;
             var erpscrape = new ErpScrape();
             erpscrape.ScrapeErp(filePath + "ErpTask_trace.log");
@@ -62,12 +68,37 @@ namespace SolarSystem.Backend
             
             StartTime = new DateTime(2017, 10, 2, 8, 0, 0); //02/10/2017
             
-            var t = new Thread(() => TimeKeeper.StartTicking(simulationSpeed, StartTime));
+
+            switch (schedulerType)
+            {
+                case SchedulerType.FIFO:
+                    _scheduler = new FifoScheduler(OrderGenerator, Handler, 4);
+                    break;
+                case SchedulerType.MI1:
+                    throw new NotImplementedException("MI1 is not implemented yet..");
+                    break;
+                case SchedulerType.MI2:
+                    throw new NotImplementedException("MI2 is not implemented yet..");
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(schedulerType), schedulerType, null);
+            }
+            
+            
+            
+        }
+
+        public void Start()
+        {
+            // Start Ticking
+            var t = new Thread(() => TimeKeeper.StartTicking(_simulationSpeed, StartTime));
             t.Start();
-                       
-            //Scheduler = new Scheduler(OrderGenerator, Handler, 0.0001);
-            //MiScheduler = new MiScheduler(5, articleList.ToArray(), SimulationInformation, OrderGenerator, Handler);
-            FifoScheduler fifoScheduler = new FifoScheduler(OrderGenerator, Handler, 4);
+            
+            // Start Schedular
+            _scheduler.Start();
+            
+            // Start OrderGeneration
+            OrderGenerator.Start();
         }
 
 
