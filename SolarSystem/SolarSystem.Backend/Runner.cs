@@ -24,28 +24,22 @@ namespace SolarSystem.Backend
         public readonly DateTime StartTime;
      
         
-        public Runner(string pickingPath, double simulationSpeed, double orderChance)
+        public Runner(string filePath, double simulationSpeed, double orderChance, OrderGenerationConfiguration orderGenerationConfiguration)
         {
-            var pickNScrape = new PickingScrape(pickingPath);
+            var pickNScrape = new PickingScrape(filePath + "Picking 02-10-2017.csv");
             pickNScrape.GetOrdersFromPicking();
 
             var orders = pickNScrape.OrderList;
             var erpscrape = new ErpScrape();
-            erpscrape.ScrapeErp("C:/ErpTask_trace.log");
+            erpscrape.ScrapeErp(filePath + "ErpTask_trace.log");
 
-            erpscrape.orders.Sort((x,y) => { return x.OrderTime.CompareTo(y.OrderTime); });
+            erpscrape.orders.Sort((x,y) => x.OrderTime.CompareTo(y.OrderTime));
 
-            //foreach (Order order in erpscrape.orders)
-            //{
-            //    Console.WriteLine(order.OrderNumber);
-            //}
 
             for (int i = 0; i < orders.Count; i++)
             {
                 Order order = orders[i];
 
-                //Console.WriteLine(order.OrderNumber);
-                //Console.WriteLine(erpscrape.orders[0].OrderNumber);
                 try
                 {
                     order.OrderTime = erpscrape.orders.Find(x => x.OrderNumber == order.OrderNumber).OrderTime;
@@ -65,7 +59,7 @@ namespace SolarSystem.Backend
                 .ToList();
 
             Handler = new Handler(); 
-            OrderGenerator = new OrderGenerator(articleList, orderChance, orders, OrderGenerator.configuration.FromFile);
+            OrderGenerator = new OrderGenerator(articleList, orderChance, orders, orderGenerationConfiguration);
             
             StartTime = new DateTime(2017, 10, 2, 8, 0, 0); //02/10/2017
             

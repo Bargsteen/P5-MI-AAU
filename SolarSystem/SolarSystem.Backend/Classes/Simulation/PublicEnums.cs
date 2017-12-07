@@ -22,4 +22,10 @@
         Area29,
         Pq
     }
+    
+    public enum OrderGenerationConfiguration
+    {
+        Random,
+        FromFile
+    }
 }
