@@ -92,7 +92,8 @@ namespace SolarSystem
                     IncrementBoxPerAreaCount(FinishedBoxesInAreas, areaCode);
                     PrintBoxDict(FinishedBoxesInAreas);
                     PrintLinesFinishedPerHour(runner.StartTime, TimeKeeper.CurrentDateTime, totalFinishedOrders);
-                    ordersFinishedPerHour.ForEach(x => Console.WriteLine("Lines between " + x.Item1 + " - " + (x.Item1 + 1) + ": " + x.Item2 + " lines"));
+                    ordersFinishedPerHour.ForEach(x => Console.Write("[ " + x.Item1 + " - " + (x.Item1 + 1) + " : " + x.Item2 + " ] "));
+                    Console.WriteLine();
                     Console.WriteLine("Lines between " + TimeKeeper.CurrentDateTime.Hour + " - " + (TimeKeeper.CurrentDateTime.Hour + 1) + ": " + finishedOrdersPerHour + " lines");
                 };
             }
