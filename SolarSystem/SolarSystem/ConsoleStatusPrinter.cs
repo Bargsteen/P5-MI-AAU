@@ -58,7 +58,7 @@ namespace SolarSystem.Backend.Classes
                 //area.OnOrderBoxInAreaFinished += (orderBox, areaCode) => PrintStatus($"{areaCode} >> finished orderBox {orderBox} - MainLoopCount: {runner.Handler.MainLoop.BoxesInMainLoop}");
                 area.OnOrderBoxInAreaFinished += (orderBox, areaCode) =>
                 {
-                    Console.Clear();
+                    //Console.Clear();
                     IncrementBoxPerAreaCount(FinishedBoxesInAreas, areaCode);
                     PrintBoxDict(FinishedBoxesInAreas);
                     PrintLinesFinishedPerHour(_runner.StartTime, TimeKeeper.CurrentDateTime, totalFinishedOrders);
