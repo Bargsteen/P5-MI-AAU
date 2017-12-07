@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Threading;
 using SolarSystem.Backend.Classes;
+using SolarSystem.Backend.Classes.Schedulers;
 using SolarSystem.Backend.PickingandERP;
 using SolarSystem.PickingAndErp;
 using Order = SolarSystem.PickingAndErp.Order;
@@ -73,7 +74,8 @@ namespace SolarSystem.Backend
                        
             //Scheduler = new Scheduler(OrderGenerator, Handler, 0.0001);
             //MiScheduler = new MiScheduler(5, articleList.ToArray(), SimulationInformation, OrderGenerator, Handler);
-            FifoScheduler fifoScheduler = new FifoScheduler(OrderGenerator, Handler, 4);
+            //FifoScheduler fifoScheduler = new FifoScheduler(OrderGenerator, Handler, 4);
+            RealismScheduler realismScheduler = new RealismScheduler(OrderGenerator, Handler, 4);
         }
 
 

@@ -72,6 +72,7 @@
     <Compile Include="Classes\Schedulers\FifoScheduler.cs" />
     <Compile Include="Classes\Schedulers\Mi2Scheduler.cs" />
     <Compile Include="Classes\Schedulers\MiScheduler.cs" />
+    <Compile Include="Classes\Schedulers\RealismScheduler.cs" />
     <Compile Include="Classes\Schedulers\SchedulerModular.cs" />
     <Compile Include="Classes\SimulationInformation.cs" />
     <Compile Include="Classes\Simulation\Area.cs" />
@@ -89,6 +90,7 @@
     <Compile Include="Classes\Simulation\OrderboxProgressContainer.cs" />
     <Compile Include="Classes\Simulation\OrderGenerator.cs" />
     <Compile Include="Classes\Simulation\OrderHandler.cs" />
+    <Compile Include="Classes\Simulation\Outputter.cs" />
     <Compile Include="Classes\Simulation\PublicEnums.cs" />
     <Compile Include="Classes\Simulation\ShelfBox.cs" />
     <Compile Include="Classes\Simulation\ShelfSpace.cs" />

@@ -6,6 +6,7 @@ using System.Net.Security;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading;
+using SolarSystem.Backend.Classes.Simulation;
 
 namespace SolarSystem.Backend.Classes
 {
@@ -190,6 +191,8 @@ namespace SolarSystem.Backend.Classes
             {
                 // Evict orderBox
                 EvictOrderBox(orderBox);
+                string s = orderBox.Id + ";" + TimeKeeper.CurrentDateTime.Hour + ":" + TimeKeeper.CurrentDateTime.Minute + ":" + TimeKeeper.CurrentDateTime.Second;
+                Outputter.WriteLineToFile(s);
             }
             
         }
