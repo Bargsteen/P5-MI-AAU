@@ -50,6 +50,8 @@ namespace SolarSystem.Backend.Classes
                         currentHour = TimeKeeper.CurrentDateTime;
                         finishedOrdersPerHour = 0;
                     }
+
+                PrintFullStatus(FinishedBoxesInAreas, totalFinishedOrders, ordersFinishedPerHour, finishedOrdersPerHour);
             };
 
 
@@ -58,17 +60,22 @@ namespace SolarSystem.Backend.Classes
                 //area.OnOrderBoxInAreaFinished += (orderBox, areaCode) => PrintStatus($"{areaCode} >> finished orderBox {orderBox} - MainLoopCount: {runner.Handler.MainLoop.BoxesInMainLoop}");
                 area.OnOrderBoxInAreaFinished += (orderBox, areaCode) =>
                 {
-                    Console.Clear();
+                    
                     IncrementBoxPerAreaCount(FinishedBoxesInAreas, areaCode);
-                    PrintBoxDict(FinishedBoxesInAreas);
-                    PrintLinesFinishedPerHour(_runner.StartTime, TimeKeeper.CurrentDateTime, totalFinishedOrders);
-                    ordersFinishedPerHour.ForEach(x =>
-                        Console.Write("[ " + x.Item1 + " - " + (x.Item1 + 1) + " : " + x.Item2 + " ] "));
-                    Console.WriteLine();
-                    Console.WriteLine("Lines between " + TimeKeeper.CurrentDateTime.Hour + " - " +
-                                      (TimeKeeper.CurrentDateTime.Hour + 1) + ": " + finishedOrdersPerHour +
-                                      " lines");
                 };
+        }
+
+        private void PrintFullStatus(Dictionary<AreaCode, int> FinishedBoxesInAreas, int totalFinishedOrders, List<Tuple<int, int>> ordersFinishedPerHour,
+            int finishedOrdersPerHour)
+        {
+            Console.Clear();
+            PrintBoxDict(FinishedBoxesInAreas);
+            PrintLinesFinishedPerHour(_runner.StartTime, TimeKeeper.CurrentDateTime, totalFinishedOrders);
+            Console.WriteLine("Lines between " + TimeKeeper.CurrentDateTime.Hour + " - " +
+                              (TimeKeeper.CurrentDateTime.Hour + 1) + ": " + finishedOrdersPerHour +
+                              " lines");
+            ordersFinishedPerHour.ForEach(x =>
+                Console.Write("[ " + x.Item1 + " - " + (x.Item1 + 1) + " : " + x.Item2 + " ] "));           
         }
 
         private static void IncrementBoxPerAreaCount(IDictionary<AreaCode, int> dict, AreaCode areaCode)
