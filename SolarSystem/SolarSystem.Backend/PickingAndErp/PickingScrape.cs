@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using SolarSystem.Backend.Classes;
+using SolarSystem.Backend.Classes.Simulation;
 
 namespace SolarSystem.PickingAndErp
 {
@@ -91,6 +92,13 @@ namespace SolarSystem.PickingAndErp
                 OrderList.Add(order);
             }
 
+            foreach (Order order in OrderList)
+            {
+                for(int i = 0; i < order.LineList.Count; i++)
+                {
+                    Outputter.LinesFromScrape.Add(order.OrderNumber + order.LineList[i].Article.Id + order.LineList[i].Timestamp.ToString());
+                }
+            }
         }
 
     }
