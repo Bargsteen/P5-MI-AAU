@@ -10,13 +10,7 @@ namespace SolarSystem.Backend.Classes
     {
         public event Action<Order> CostumerSendsOrderEvent;
 
-        public enum configuration
-        {
-            Random,
-            FromFile
-        }
-
-        private configuration _currentConfiguration;
+        private readonly OrderGenerationConfiguration _currentOrderGenerationConfiguration;
 
 
         private int sentIndex = 0;
@@ -37,7 +31,7 @@ namespace SolarSystem.Backend.Classes
 
         private List<PickingAndErp.Order> ScrapedOrders;
 
-        public OrderGenerator(List<Article> articleList, double orderChance, List<PickingAndErp.Order> scrapedOrders, configuration conf)
+        public OrderGenerator(List<Article> articleList, double orderChance, List<PickingAndErp.Order> scrapedOrders, OrderGenerationConfiguration conf)
         {
 
             ArticleList = articleList ?? throw new ArgumentNullException(nameof(articleList));
@@ -53,7 +47,7 @@ namespace SolarSystem.Backend.Classes
 
 
 
-            _currentConfiguration = conf;
+            _currentOrderGenerationConfiguration = conf;
         }
 
         public void MaybeSendOrder()
@@ -61,9 +55,9 @@ namespace SolarSystem.Backend.Classes
             if (ScrapedOrders.Count == 0)
                 return;
             Order order;
-            switch (_currentConfiguration)
+            switch (_currentOrderGenerationConfiguration)
             {
-                case configuration.FromFile:
+                case OrderGenerationConfiguration.FromFile:
 
 
                     if (ScrapedOrders[0].OrderTime.CompareTo(TimeKeeper.CurrentDateTime) < 0)
@@ -74,13 +68,12 @@ namespace SolarSystem.Backend.Classes
                         CostumerSendsOrderEvent?.Invoke(order);
                         ScrapedOrders.RemoveAt(0);
                         SendOrderCount = 0;
-                        //Console.WriteLine("Sent number " + sentIndex++ +":" + order.OrderId);
                     }
 
                     break;
 
 
-                case configuration.Random:
+                case OrderGenerationConfiguration.Random:
                     SendOrderCount = 0;
                     order = GenerateOrder();
                     order.Areas = ConstructAreasVisited(order);
@@ -88,8 +81,8 @@ namespace SolarSystem.Backend.Classes
                     break;
 
 
-
-
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
 
 
