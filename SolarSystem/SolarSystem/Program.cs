@@ -29,8 +29,7 @@ namespace SolarSystem
             // 
            /* Runner runner = new Runner("/Users/Casper/Library/Projects/Uni/P5/wetransfer-f8286e/Picking 02-10-2017.csv",
                 1000, 0.2);*/
-            Runner runner = new Runner("/Users/kasper/Downloads/wetransfer-f8286e/Picking 02-10-2017.csv",
-                1000, 0.2);
+            Runner runner = new Runner("C:/Picking 02-10-2017.csv", 5000, 0.2);
             Console.WriteLine("Starting simulation!");
 
             Dictionary<AreaCode, int> FinishedBoxesInAreas = new Dictionary<AreaCode, int>()
@@ -65,19 +64,20 @@ namespace SolarSystem
                 }
             };
 
-            //int index = 0;
-            //TimeKeeper.Tick += () =>
-            //{
-            //    if(index++ > 60) { 
-            //        PrintBoxDict(FinishedBoxesInAreas);
-            //        PrintLinesFinishedPerHour(runner.StartTime, TimeKeeper.CurrentDateTime, totalFinishedOrders);
-            //        OrdersFinishedPerHour.ForEach(x => Console.WriteLine("Lines between " + x.Item1 + " - " + (x.Item1 + 1) + ": " + x.Item2 + " lines"));
-            //        Console.WriteLine("Lines between " + TimeKeeper.CurrentDateTime.Hour + " - " + (TimeKeeper.CurrentDateTime.Hour + 1) + ": " + finishedOrdersPerHour + " lines");
-            //        index = 0;
-            //    }
-            //};
+            int index = 0;
+            TimeKeeper.Tick += () =>
+            {
+                if (index++ > 60)
+                {
+                    PrintBoxDict(FinishedBoxesInAreas);
+                    PrintLinesFinishedPerHour(runner.StartTime, TimeKeeper.CurrentDateTime, totalFinishedOrders);
+                    OrdersFinishedPerHour.ForEach(x => Console.WriteLine("Lines between " + x.Item1 + " - " + (x.Item1 + 1) + ": " + x.Item2 + " lines"));
+                    Console.WriteLine("Lines between " + TimeKeeper.CurrentDateTime.Hour + " - " + (TimeKeeper.CurrentDateTime.Hour + 1) + ": " + finishedOrdersPerHour + " lines");
+                    index = 0;
+                }
+            };
 
-            
+
             foreach (var area in runner.Areas)
             {
                 //area.OnOrderBoxReceivedAtAreaEvent += (orderBox, areaCode) => PrintStatus($"{areaCode} << received orderBox {orderBox}");
@@ -133,8 +133,7 @@ namespace SolarSystem
             {
                 str += $"[{kvp.Key}: {kvp.Value}] ";
             }
-            Thread.Sleep(10);
-            Console.Clear();
+            //Console.Clear();
             PrintStatus(str);
         }
 

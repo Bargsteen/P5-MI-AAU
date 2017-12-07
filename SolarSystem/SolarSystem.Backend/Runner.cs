@@ -62,9 +62,8 @@ namespace SolarSystem.Backend
                 .Distinct()
                 .Select(line => line.Article)
                 .ToList();
-            
+
             Handler = new Handler(); 
-            
             OrderGenerator = new OrderGenerator(articleList, orderChance, orders, OrderGenerator.configuration.FromFile);
             
             StartTime = new DateTime(2017, 10, 2, 8, 0, 0); //02/10/2017
