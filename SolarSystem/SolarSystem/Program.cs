@@ -6,6 +6,7 @@ using System.Threading;
 using Ploeh.AutoFixture;
 using SolarSystem.Backend;
 using SolarSystem.Backend.Classes;
+using SolarSystem.Backend.Classes.Simulation;
 
 namespace SolarSystem
 {

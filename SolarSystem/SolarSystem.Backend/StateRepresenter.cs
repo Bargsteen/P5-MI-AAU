@@ -2,6 +2,7 @@
 using System.Linq;
 using Accord.Math;
 using SolarSystem.Backend.Classes;
+using SolarSystem.Backend.Classes.Simulation;
 
 namespace SolarSystem.Backend
 {

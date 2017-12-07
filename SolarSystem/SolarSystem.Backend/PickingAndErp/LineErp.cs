@@ -1,7 +1,7 @@
 ﻿using System;
-using SolarSystem.Backend.Classes;
+using SolarSystem.Backend.Classes.Simulation;
 
-namespace SolarSystem.PickingAndErp
+namespace SolarSystem.Backend.PickingAndErp
 {
     public class Line
     {

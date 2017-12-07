@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace SolarSystem.PickingAndErp
+namespace SolarSystem.Backend.PickingAndErp
 {
     public class Order
     {

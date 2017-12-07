@@ -1,4 +1,4 @@
-﻿namespace SolarSystem.Backend.Classes
+﻿namespace SolarSystem.Backend.Classes.Simulation
 {
     public enum StationResult
     {

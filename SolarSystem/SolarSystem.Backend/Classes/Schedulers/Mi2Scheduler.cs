@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Accord.Math;
+using SolarSystem.Backend.Classes.Simulation;
 
-namespace SolarSystem.Backend.Classes
+namespace SolarSystem.Backend.Classes.Schedulers
 {
     public class Mi2Scheduler : SchedulerModular
     {
@@ -35,6 +35,7 @@ namespace SolarSystem.Backend.Classes
         {
             // HMM
            /* Matrix.Dot(Actions.ToArray(), Weights.ToDense());
+            
                 
                
             

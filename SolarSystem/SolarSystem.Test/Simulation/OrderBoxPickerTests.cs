@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Ploeh.AutoFixture;
 using SolarSystem.Backend.Classes;
+using SolarSystem.Backend.Classes.Simulation;
 using SolarSystem.Simulation;
 using Xunit;
 

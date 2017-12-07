@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using SolarSystem.Backend.Classes;
+using SolarSystem.Backend.Classes.Simulation;
 
-namespace SolarSystem.PickingAndErp
+namespace SolarSystem.Backend.PickingAndErp
 {
     public class PickingScrape
     {

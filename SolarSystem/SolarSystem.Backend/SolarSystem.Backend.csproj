@@ -95,7 +95,6 @@
     <Compile Include="Classes\Simulation\Station.cs" />
     <Compile Include="Classes\Simulation\Storage.cs" />
     <Compile Include="Classes\Simulation\TimeKeeper.cs" />
-    <Compile Include="Classes\Simulation\Warehouse.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="PickingAndErp\ErpScrape.cs" />
     <Compile Include="PickingAndErp\LineErp.cs" />

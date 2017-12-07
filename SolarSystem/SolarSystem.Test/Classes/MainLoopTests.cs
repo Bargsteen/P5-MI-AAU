@@ -1,5 +1,6 @@
 ﻿using Ploeh.AutoFixture;
 using SolarSystem.Backend.Classes;
+using SolarSystem.Backend.Classes.Simulation;
 using Xunit;
 
 namespace SolarSystem.Test.Classes

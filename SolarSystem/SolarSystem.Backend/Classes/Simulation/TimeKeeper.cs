@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 
-namespace SolarSystem.Backend.Classes
+namespace SolarSystem.Backend.Classes.Simulation
 {
     public delegate void TickHandler();
     

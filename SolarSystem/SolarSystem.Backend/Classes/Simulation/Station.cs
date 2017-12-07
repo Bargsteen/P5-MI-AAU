@@ -2,12 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net.Security;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Threading;
 
-namespace SolarSystem.Backend.Classes
+namespace SolarSystem.Backend.Classes.Simulation
 {
     public class Station
     {
@@ -33,8 +29,7 @@ namespace SolarSystem.Backend.Classes
         private readonly Storage _storage;
 
         private int _shelfBoxWaitCount;
-        
-        
+        private List<Article> _articlesAlreadyRequested;        
 
 
         public Station(string name, int maxShelfBoxes,int maxOrderBoxes, AreaCode areaCode)
@@ -46,6 +41,7 @@ namespace SolarSystem.Backend.Classes
             MaxOrderBoxes = maxOrderBoxes;
             _areaCode = areaCode;
             _shelfBoxWaitCount = 0;
+            _articlesAlreadyRequested = new List<Article>();
 
             TimeKeeper.Tick += TickLoop;
 
@@ -120,14 +116,18 @@ namespace SolarSystem.Backend.Classes
                         return neededArticlesList;
                     }
                     
-                    // Else if this line does not have a corresponding shelfbox then
-                    if (!ShelfBoxes.Select(s => s.Line.Article).Contains(unpickedLine.Article))
+                    // Else if this line does not have a corresponding shelfbox then - and it should not already be requested
+                    if (!ShelfBoxes.Select(s => s.Line.Article).Contains(unpickedLine.Article) 
+                        && !_articlesAlreadyRequested.Contains(unpickedLine.Article) 
+                        && !neededArticlesList.Contains((unpickedLine.Article)))
                     {
                         // then add its article to neededArticlesList
                         neededArticlesList.Add(unpickedLine.Article);
                     }
                 }
             }
+            
+            _articlesAlreadyRequested.AddRange(neededArticlesList);
             
             return neededArticlesList;
         }
@@ -231,6 +231,8 @@ namespace SolarSystem.Backend.Classes
             _shelfBoxWaitCount -= 1;
             // Add received shelfbox to shelfboxes
             ShelfBoxes.Add(shelfBox);
+            // Remove article from articles already requested
+            _articlesAlreadyRequested.Remove(shelfBox.Line.Article);
         }
 
         public override string ToString()

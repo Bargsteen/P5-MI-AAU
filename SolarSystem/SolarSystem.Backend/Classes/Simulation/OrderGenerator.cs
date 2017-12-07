@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SolarSystem.Backend.Classes
+namespace SolarSystem.Backend.Classes.Simulation
 {
     public class OrderGenerator
     {
@@ -13,7 +13,7 @@ namespace SolarSystem.Backend.Classes
         public double OrderChance { get; }
 
         private int minAmountOfLines = 1;
-        private int maxAmountOfLines = 15;
+        private int maxAmountOfLines = 40;
 
         private int minArticleQuantity = 1;
         private int maxArticleQuantity = 8;

@@ -1,5 +1,6 @@
 ﻿using System;
 using SolarSystem.Backend.Classes;
+using SolarSystem.Backend.Classes.Simulation;
 
 namespace SolarSystem.Backend.Interfaces
 {

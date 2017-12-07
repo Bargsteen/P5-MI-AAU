@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using SolarSystem.Backend.Classes.Simulation;
 
-namespace SolarSystem.Backend.Classes
+namespace SolarSystem.Backend.Classes.Schedulers
 {
     public abstract class SchedulerModular
     {
@@ -32,6 +32,11 @@ namespace SolarSystem.Backend.Classes
             TimerStartMinutes = poolMoverTime * 60;
 
             OrderGenerator.CostumerSendsOrderEvent += order => InitialOrderPool.Add(order);
+            
+        }
+
+        public void Start()
+        {
             TimeKeeper.Tick += TickLoop;
         }
 
