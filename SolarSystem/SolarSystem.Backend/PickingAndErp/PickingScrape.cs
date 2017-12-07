@@ -5,7 +5,7 @@ using System.Linq;
 using SolarSystem.Backend.Classes;
 using SolarSystem.Backend.Classes.Simulation;
 
-namespace SolarSystem.PickingAndErp
+namespace SolarSystem.Backend.PickingAndErp
 {
     public class PickingScrape
     {
@@ -65,7 +65,7 @@ namespace SolarSystem.PickingAndErp
                         var lineQuantity = int.Parse(lineElements[15].Replace(".", ""));
                         var materialName = lineElements[4];
 
-                        var article = new Article(articleNumber, materialName, areaCode);
+                        var article = new Classes.Simulation.Article(articleNumber, materialName, areaCode);
                         var line = new Line(article, lineQuantity, timeStampForPicking);
 
                         if (!ordersGathered.ContainsKey(orderNumber))

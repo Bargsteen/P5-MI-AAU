@@ -1,26 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using SolarSystem.Backend.Classes.Simulation;
 
-namespace SolarSystem.Backend.Classes
+namespace SolarSystem.Backend.Classes.Schedulers
 {
-    public abstract class SchedulerModular
+    public abstract class Scheduler
     {
         private double TimerStartMinutes { get; }
         private int PoolTimer { get; set; }
 
-        public SimulationInformation SimulationInformation { get; }
+        protected SimulationInformation SimulationInformation { get; }
         
         // Order pool from costumers
         private List<Order> InitialOrderPool { get; }
         
         // The pool that is actively being moved to Handler
-        public List<Order> ActualOrderPool { get; }
+        protected List<Order> ActualOrderPool { get; }
 
         private OrderGenerator OrderGenerator { get; }
         private Handler Handler { get; set; }
-        
-        public SchedulerModular(OrderGenerator orderGenerator, Handler handler,  double poolMoverTime)
+
+        protected Scheduler(OrderGenerator orderGenerator, Handler handler, double poolMoverTime)
         {
             OrderGenerator = orderGenerator;
             Handler = handler;
@@ -40,7 +41,7 @@ namespace SolarSystem.Backend.Classes
             TimeKeeper.Tick += TickLoop;
         }
 
-        public void TickLoop()
+        private void TickLoop()
         {
             // Move OrderPool
             MoveInitialToActualPool();
@@ -68,7 +69,7 @@ namespace SolarSystem.Backend.Classes
             // If the time has passed, and there is something to move => move.
             if (TimerStartMinutes <= PoolTimer++)
             {
-                InitialOrderPool.ForEach(o => ActualOrderPool.Add(o));
+                ActualOrderPool.AddRange(InitialOrderPool);
                 InitialOrderPool.Clear();
                 
                 // Reset timer
@@ -78,7 +79,7 @@ namespace SolarSystem.Backend.Classes
             // Else return.
         }
 
-        public abstract Order ChooseNextOrder();
+        protected abstract Order ChooseNextOrder();
 
         private bool SendActionToHandler(Order action)
         {

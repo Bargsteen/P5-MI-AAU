@@ -1,15 +1,14 @@
 ﻿using System;
-using SolarSystem.Backend.Classes;
 
-namespace SolarSystem.PickingAndErp
+namespace SolarSystem.Backend.PickingAndErp
 {
     public class Line
     {
-        public Article Article { get;  }
+        public Classes.Simulation.Article Article { get;  }
         public int Quantity { get; private set; }
         public DateTime Timestamp { get; private set; }
         
-        public Line(Article article, int quantity, DateTime timeStamp)
+        public Line(Classes.Simulation.Article article, int quantity, DateTime timeStamp)
         {
             Article = article;
             Quantity = quantity;
@@ -23,9 +22,9 @@ namespace SolarSystem.PickingAndErp
             return "\n\tTime: " + Timestamp + "\n\t" + Article + "\tQuantity:" + Quantity + "\n";
         }
 
-        public Backend.Classes.Line ToSimLine()
+        public Classes.Simulation.Line ToSimLine()
         {
-            return new Backend.Classes.Line(this.Article, this.Quantity);
+            return new Classes.Simulation.Line(this.Article, this.Quantity);
            
         }
     }

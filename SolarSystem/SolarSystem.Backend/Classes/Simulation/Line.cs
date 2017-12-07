@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SolarSystem.Backend.Classes
+namespace SolarSystem.Backend.Classes.Simulation
 {
     public class Line
     {

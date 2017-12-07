@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using SolarSystem.Backend;
 using SolarSystem.Backend.Classes;
 using System.IO;
+using SolarSystem.Backend.Classes.Simulation;
 
 namespace SolarSystem
 {
@@ -11,16 +10,21 @@ namespace SolarSystem
     {
         public static void Main(string[] args)
         {
-            //var filePath = "/Users/Casper/Library/Projects/Uni/P5/wetransfer-f8286e/";
-            //var filePath = "C:/";
-
             var filePath =
                 Directory.GetParent(Directory.GetParent(Directory.GetParent(Environment.CurrentDirectory).ToString())
-                    .ToString()).ToString() + "/SolarSystem.Backend/SolarData/";
-
-
-
-            var runner = new Runner(filePath, 86400, 0.2, OrderGenerationConfiguration.FromFile, SchedulerType.FIFO);
+                    .ToString()) + "/SolarSystem.Backend/SolarData/";
+            
+            const int simSpeed = 200000;
+            const double randomNewOrderChance = 0.1;
+            const OrderGenerationConfiguration orderGenerationConfiguration = OrderGenerationConfiguration.FromFile;
+            const SchedulerType schedulerType = SchedulerType.Fifo;
+            const int daysToSimulate = 1;
+            DateTime simulationStartTime = new DateTime(2017, 10, 2, 8, 0, 0); //02/10/2017
+            DateTime schedulerStartTime = simulationStartTime.AddHours(4);
+            
+            var runner = new Runner(filePath, simSpeed, randomNewOrderChance, orderGenerationConfiguration, 
+                schedulerType, daysToSimulate, simulationStartTime, schedulerStartTime);
+           
             runner.Start();
             
             var consoleStatusPrinter = new ConsoleStatusPrinter(runner);

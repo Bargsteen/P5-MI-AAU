@@ -1,13 +1,6 @@
-﻿using SolarSystem.PickingAndErp;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Net.Mime;
-using System.Security.Policy;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 /*
  * Make ErpScrape object.
@@ -16,32 +9,32 @@ using System.Threading.Tasks;
  * Load from file with LoadListFromFile() : List<Order>
  */
 
-namespace SolarSystem.Backend.PickingandERP
+namespace SolarSystem.Backend.PickingAndErp
 {
     public class ErpScrape
     {
-        public List<Order> orders { get; private set; }
+        public List<Order> Orders { get; private set; }
 
 
 
         public ErpScrape()
         {
-            orders = new List<Order>();
+            Orders = new List<Order>();
         }
 
         public void SaveToFile()
         {
-            string _path = AppDomain.CurrentDomain.BaseDirectory + "SaveFiles/";
-            string _fileName = "Erp.dat";
+            string path = AppDomain.CurrentDomain.BaseDirectory + "SaveFiles/";
+            string fileName = "Erp.dat";
 
-            Directory.CreateDirectory(_path);
+            Directory.CreateDirectory(path);
 
-            if (orders != null)
+            if (Orders != null)
             {
-                using (Stream stream = File.Open(_path + _fileName, FileMode.Create))
+                using (Stream stream = File.Open(path + fileName, FileMode.Create))
                 {
                     var formatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-                    formatter.Serialize(stream, orders);
+                    formatter.Serialize(stream, Orders);
                 }
             }
             else
@@ -52,26 +45,26 @@ namespace SolarSystem.Backend.PickingandERP
 
         public List<Order> LoadListFromFile()
         {
-            List<Order> _orders;
+            List<Order> orders;
 
-            string _path = AppDomain.CurrentDomain.BaseDirectory + "SaveFiles/";
-            string _fileName = "Erp.dat";
+            string path = AppDomain.CurrentDomain.BaseDirectory + "SaveFiles/";
+            string fileName = "Erp.dat";
 
-            using (Stream stream = File.Open(_path + _fileName, FileMode.Open))
+            using (Stream stream = File.Open(path + fileName, FileMode.Open))
             {
                 var formatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-                _orders = (List<Order>)formatter.Deserialize(stream);
+                orders = (List<Order>)formatter.Deserialize(stream);
             }
 
-            return _orders;
+            return orders;
         }
 
-        public void ScrapeErp(string _path)
+        public void ScrapeErp(string path)
         {
             // Does file exist?
             try
             {
-                orders = _scraperERPToOrderList(new StreamReader(_path));
+                Orders = _scraperERPToOrderList(new StreamReader(path));
             }
             catch (DirectoryNotFoundException e)
             {
@@ -79,64 +72,64 @@ namespace SolarSystem.Backend.PickingandERP
             }
         }
 
-        List<Order> _scraperERPToOrderList(StreamReader stream)
+        private List<Order> _scraperERPToOrderList(StreamReader stream)
         {
-            List<Order> _orderList = new List<Order>();
-            List<Line> _lineList = new List<Line>();
+            List<Order> orderList = new List<Order>();
+            List<Line> lineList = new List<Line>();
 
             // Retrive orders.
-            List<String> _buffer = new List<string>();
-            string _line;
-            int _bufferLimit = 6;
-            int _counter = 0;
+            List<String> buffer = new List<string>();
+            string line;
+            int bufferLimit = 6;
+            int counter = 0;
 
-            DateTime _date = new DateTime();
-            int _orderNumber = 0, _articleNumber = 0, _quantity = 0, _areaNumber = -1;
+            DateTime date = new DateTime();
+            int orderNumber = 0, articleNumber = 0, quantity = 0, areaNumber = -1;
 
-            while ((_line = stream.ReadLine()) != null)
+            while ((line = stream.ReadLine()) != null)
             {
 
-                _buffer.Add(_line);
+                buffer.Add(line);
 
-                _counter++;
+                counter++;
 
                 // For ordernumber and date-time
-                if (_line.Contains("OrderNumber: 15"))
+                if (line.Contains("OrderNumber: 15"))
                 {
                     // Clear the lines from the previous orders.
-                    _lineList.Clear();
+                    lineList.Clear();
 
                     // Retrieve ordernumber
-                    _orderNumber = int.Parse(_line.Substring(15, 6));
+                    orderNumber = int.Parse(line.Substring(15, 6));
 
 
                     // Retrieve data in buffer (Get the date and time)
-                    string bufferString = _buffer[_counter - 6];
-                    _date = new DateTime(int.Parse(bufferString.Substring(0, 4)), int.Parse(bufferString.Substring(5, 2)), int.Parse(bufferString.Substring(8, 2)), int.Parse(bufferString.Substring(11, 2)), int.Parse(bufferString.Substring(14, 2)), int.Parse(bufferString.Substring(17, 2)));
+                    string bufferString = buffer[counter - 6];
+                    date = new DateTime(int.Parse(bufferString.Substring(0, 4)), int.Parse(bufferString.Substring(5, 2)), int.Parse(bufferString.Substring(8, 2)), int.Parse(bufferString.Substring(11, 2)), int.Parse(bufferString.Substring(14, 2)), int.Parse(bufferString.Substring(17, 2)));
 
 
                     // Reset buffer and counter
-                    _buffer.Clear();
-                    _counter = 0;
+                    buffer.Clear();
+                    counter = 0;
 
                     // skip 6 lines to get to articlenumber.
-                    _line = stream.ReadLine();
-                    _line = stream.ReadLine();
-                    _line = stream.ReadLine();
-                    _line = stream.ReadLine();
-                    _line = stream.ReadLine();
-                    _line = stream.ReadLine();
+                    line = stream.ReadLine();
+                    line = stream.ReadLine();
+                    line = stream.ReadLine();
+                    line = stream.ReadLine();
+                    line = stream.ReadLine();
+                    line = stream.ReadLine();
 
-                    while (_line.Contains("ArticleNumber: "))
+                    while (line.Contains("ArticleNumber: "))
                     {
                         // Read ArticleNumber
-                        _articleNumber = int.Parse(_line.Substring(15, 9));
+                        articleNumber = int.Parse(line.Substring(15, 9));
 
 
                         // Skip 3 lines
-                        _line = stream.ReadLine();
-                        _line = stream.ReadLine();
-                        _line = stream.ReadLine();
+                        line = stream.ReadLine();
+                        line = stream.ReadLine();
+                        line = stream.ReadLine();
 
                         // Read Quantity
                         //_quantity = int.Parse(_line.Substring(9));
@@ -146,22 +139,22 @@ namespace SolarSystem.Backend.PickingandERP
 
 
                         // Skip 4 times to see if there is any more lines for this order
-                        _line = stream.ReadLine();
-                        _line = stream.ReadLine();
-                        _line = stream.ReadLine();
-                        _line = stream.ReadLine();
+                        line = stream.ReadLine();
+                        line = stream.ReadLine();
+                        line = stream.ReadLine();
+                        line = stream.ReadLine();
 
                     }
 
                     // Order done. Add to list
-                    Order order = new Order(_orderNumber, _lineList);
-                    order.OrderTime = _date;
-                    _orderList.Add(order);
+                    Order order = new Order(orderNumber, lineList);
+                    order.OrderTime = date;
+                    orderList.Add(order);
                 }
 
             }
 
-            return _orderList;
+            return orderList;
 
         }
     }
