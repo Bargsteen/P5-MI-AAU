@@ -27,11 +27,7 @@ namespace SolarSystem.Backend.Classes
             
             Stations = new[]
             {
-                new Station(areaCode + "+S:A", 7, 5, AreaCode),
-                new Station(areaCode + "+S:B", 7, 5, AreaCode),
                 new Station(areaCode + "+S:C", 7, 5, AreaCode),
-                new Station(areaCode + "+S:C", 7, 5, AreaCode),
-                new Station(areaCode + "+S:C", 7, 5, AreaCode)
             };
             
             // Subscribe to each Station order complete event
