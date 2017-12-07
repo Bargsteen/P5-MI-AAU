@@ -1,13 +1,17 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 
 namespace SolarSystem.Backend.Classes.Simulation
 {
     public static class Outputter
     {
-        private static readonly StreamWriter File = new StreamWriter(@"C:\output.csv");
+
+        public static List<string> LinesFinished = new List<string>();
+
+        private static StreamWriter file = new StreamWriter(@"C:\output.csv");
         public static void WriteLineToFile(string s)
         {
-                File.WriteLine(s);
+               //File.Wr
         }
     }
 }
