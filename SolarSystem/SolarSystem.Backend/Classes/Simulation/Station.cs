@@ -58,11 +58,12 @@ namespace SolarSystem.Backend.Classes
             {
                 throw new AccessViolationException($"Station {this} in should not have received an orderBox.");
             }
+            
             // Add orderBox to orderBoxes
             OrderBoxes.Add(orderBox);
             
             // Maybe request more shelfboxes - depends on if there is more space left for shelfBoxes
-            MaybeRequestShelfBoxes();
+            MaybeRequestShelfBoxes();    
             
             // Invoke event stating this happened
             OnOrderBoxReceivedAtStation?.Invoke(orderBox);
@@ -72,11 +73,15 @@ namespace SolarSystem.Backend.Classes
         {
             // If no orderBoxes -> skip
             if (!OrderBoxes.Any()) return;
+            
             // Else call ChooseOrderBoxToPack
             if (_orderBoxBeingPacked == null)
             {
                 ChooseOrderBoxToPack();
             }
+            
+            MaybeEvictShelfBoxes();
+            MaybeRequestShelfBoxes();
         }
 
         private void MaybeRequestShelfBoxes()
@@ -107,7 +112,7 @@ namespace SolarSystem.Backend.Classes
             foreach (var orderBox in OrderBoxes)
             {
                 // Loop through unpicked lines in orderbox
-                foreach (var unpickedLine in orderBox.LinesNotPicked())
+                foreach (var unpickedLine in orderBox.LinesNotPickedIn(_areaCode))
                 {
                     // If neededArticlesList is full then return neededArticlesList
                     if (neededArticlesList.Count == neededArticlesList.Capacity)
@@ -143,7 +148,7 @@ namespace SolarSystem.Backend.Classes
             foreach (var shelfBox in ShelfBoxes)
             {
                 // Check if any unpacked lines of this type exist
-                bool shelfBoxIsNeeded = OrderBoxes.SelectMany(o => o.LinesNotPickedIn(_areaCode)).Any(l => Equals(l.Article, shelfBox.Line.Article));
+                bool shelfBoxIsNeeded = OrderBoxes.SelectMany(o => o.LinesNotPickedIn(_areaCode)).Any(l => Equals(l.Article.Id, shelfBox.Line.Article.Id));
                 // if not, add to evictionList
                 if ( ! shelfBoxIsNeeded)
                 {
@@ -159,12 +164,16 @@ namespace SolarSystem.Backend.Classes
             {
                 MaybeRequestShelfBoxes();
             }
+            
+            // If there is room for more shelfboxes, retrieve those.
+            if(ShelfBoxes.Count < MaxShelfBoxes) MaybeRequestShelfBoxes();
         }
 
         private void SendShelfBoxToStorage(ShelfBox shelfBox)
         {
             // Remove shelfBox from ShelfBoxes
             ShelfBoxes.Remove(shelfBox);
+            
             // faked sending: beep, beep
         }
 
@@ -212,6 +221,8 @@ namespace SolarSystem.Backend.Classes
                     }
                 }
             }
+            
+            MaybeEvictShelfBoxes();
         }
         
         public void ReceiveShelfBoxFromStorage(ShelfBox shelfBox)

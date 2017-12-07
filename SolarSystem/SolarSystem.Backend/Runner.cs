@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using SolarSystem.Backend.Classes;
@@ -15,6 +16,9 @@ namespace SolarSystem.Backend
         public readonly Handler Handler;
         public readonly OrderGenerator OrderGenerator;
         public readonly Scheduler Scheduler;
+        
+        public readonly MiScheduler MiScheduler;
+        public readonly SimulationInformation SimulationInformation;
 
         public readonly DateTime StartTime;
      
@@ -59,6 +63,7 @@ namespace SolarSystem.Backend
                 .Select(line => line.Article)
                 .ToList();
             
+            Handler = new Handler(); 
             
             OrderGenerator = new OrderGenerator(articleList, orderChance, orders, OrderGenerator.configuration.FromFile);
             
@@ -66,10 +71,10 @@ namespace SolarSystem.Backend
             
             var t = new Thread(() => TimeKeeper.StartTicking(simulationSpeed, StartTime));
             t.Start();
-            
-            Handler = new Handler();
-            
-            Scheduler = new Scheduler(OrderGenerator, Handler, 0.0001);
+                       
+            //Scheduler = new Scheduler(OrderGenerator, Handler, 0.0001);
+            //MiScheduler = new MiScheduler(5, articleList.ToArray(), SimulationInformation, OrderGenerator, Handler);
+            FifoScheduler fifoScheduler = new FifoScheduler(OrderGenerator, Handler, 4);
         }
 
 
