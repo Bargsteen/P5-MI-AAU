@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
+using SolarSystem.Backend.Classes.Simulation;
 
 namespace SolarSystem.Backend.Classes.Schedulers
 {
-    class RealismScheduler : SchedulerModular
-    { 
-        public override Order ChooseNextOrder()
+    internal class RealismScheduler : Scheduler
+    {
+        protected override Order ChooseNextOrder()
         {
             return ActualOrderPool.OrderBy(o => o.OrderTime).First();
         }

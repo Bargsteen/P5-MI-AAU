@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Accord.Math;
+using SolarSystem.Backend.Classes.Simulation;
 
-namespace SolarSystem.Backend.Classes
+namespace SolarSystem.Backend.Classes.Schedulers
 {
-    public class Mi2Scheduler : SchedulerModular
+    public class Mi2Scheduler : Scheduler
     {
         private const int N = 100;
         private const int WeightCount = 19000;
@@ -29,9 +29,9 @@ namespace SolarSystem.Backend.Classes
             ActualOrderPool.Add(waitOrder);
             Actions.Add(StateRepresenter.MakeFullRepresentation(waitOrder, articles,
                 Sparse.FromDense(SimulationInformation.GetState())));
-        }        
+        }
 
-        public override Order ChooseNextOrder()
+        protected override Order ChooseNextOrder()
         {
             // HMM
            /* Matrix.Dot(Actions.ToArray(), Weights.ToDense());
@@ -59,10 +59,10 @@ namespace SolarSystem.Backend.Classes
 
     internal struct Memory
     {
-        public Sparse<double> s_t { get; set; }
-        public Sparse<double> a_t { get; set; }
-        public double r_t { get; set; }
-        public Sparse<double> s_t_1 { get; set; }
+        public Sparse<double> ST { get; set; }
+        public Sparse<double> AT { get; set; }
+        public double RT { get; set; }
+        public Sparse<double> ST1 { get; set; }
         
     }
 }

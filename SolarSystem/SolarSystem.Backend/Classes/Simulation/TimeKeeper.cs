@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 
-namespace SolarSystem.Backend.Classes
+namespace SolarSystem.Backend.Classes.Simulation
 {
     public delegate void TickHandler();
     
@@ -11,14 +11,16 @@ namespace SolarSystem.Backend.Classes
         
         public static DateTime CurrentDateTime { get; private set; }
 
-        public static void StartTicking(double ticksPerSecond, DateTime startDateTime)
+        public static event Action SimulationFinished;
+
+        public static void StartTicking(double ticksPerSecond, DateTime startDateTime, int daysToSimulate)
         {
             CurrentDateTime = startDateTime;
             
             // Calculate time to wait between each tick
             int waitingTime = (int)(1000 / ticksPerSecond);  
                        
-            while (true)
+            while (CurrentDateTime < startDateTime.AddDays(daysToSimulate))
             {
                 // Wait and invoke
                 Thread.Sleep(waitingTime);
@@ -28,8 +30,8 @@ namespace SolarSystem.Backend.Classes
                 CurrentDateTime = CurrentDateTime.AddSeconds(1);
             }
             
+            SimulationFinished?.Invoke();
+            
         }
-        
-        
     }
 }

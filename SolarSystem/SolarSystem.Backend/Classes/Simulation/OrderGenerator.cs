@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Threading;
 
-namespace SolarSystem.Backend.Classes
+namespace SolarSystem.Backend.Classes.Simulation
 {
     public class OrderGenerator
     {
@@ -13,23 +11,22 @@ namespace SolarSystem.Backend.Classes
         private readonly OrderGenerationConfiguration _currentOrderGenerationConfiguration;
 
 
-        private int sentIndex = 0;
         private List<Article> ArticleList { get; }
         private static readonly Random Rand = new Random();
-        public double OrderChance { get; }
+        private double OrderChance { get; }
 
-        private int minAmountOfLines = 1;
-        private int maxAmountOfLines = 8;
+        private const int MinAmountOfLines = 1;
+        private const int MaxAmountOfLines = 8;
 
-        private int minArticleQuantity = 1;
-        private int maxArticleQuantity = 5;
+        private const int MinArticleQuantity = 1;
+        private const int MaxArticleQuantity = 5;
 
-        private const int minOrderNumberId = 10000000;
-        private const int maxOrderNumberId = 999999999;
+        private const int MinOrderNumberId = 10000000;
+        private const int MaxOrderNumberId = 999999999;
 
-        private int SendOrderCount = 0;
+        private int _sendOrderCount = 0;
 
-        private List<PickingAndErp.Order> ScrapedOrders;
+        private readonly List<PickingAndErp.Order> _scrapedOrders;
 
         public OrderGenerator(List<Article> articleList, double orderChance, List<PickingAndErp.Order> scrapedOrders, OrderGenerationConfiguration conf)
         {
@@ -38,9 +35,9 @@ namespace SolarSystem.Backend.Classes
 
             OrderChance = orderChance;
 
-            ScrapedOrders = scrapedOrders;
+            _scrapedOrders = scrapedOrders;
 
-            ScrapedOrders.Sort((x, y) => { return x.OrderTime.CompareTo(y.OrderTime); });
+            _scrapedOrders.Sort((x, y) => x.OrderTime.CompareTo(y.OrderTime));
 
             _currentOrderGenerationConfiguration = conf;
         }
@@ -52,7 +49,7 @@ namespace SolarSystem.Backend.Classes
 
         public void MaybeSendOrder()
         {
-            if (ScrapedOrders.Count == 0)
+            if (_scrapedOrders.Count == 0)
                 return;
             Order order;
             switch (_currentOrderGenerationConfiguration)
@@ -60,47 +57,39 @@ namespace SolarSystem.Backend.Classes
                 case OrderGenerationConfiguration.FromFile:
 
 
-                    if (ScrapedOrders[0].OrderTime.CompareTo(TimeKeeper.CurrentDateTime) < 0)
+                    if (_scrapedOrders[0].OrderTime.CompareTo(TimeKeeper.CurrentDateTime) < 0)
                     {
-
-                        order = ScrapedOrders[0].ToSimOrder();
+                        order = _scrapedOrders[0].ToSimOrder();
                         order.Areas = ConstructAreasVisited(order);
                         CostumerSendsOrderEvent?.Invoke(order);
-                        ScrapedOrders.RemoveAt(0);
-                        SendOrderCount = 0;
+                        _scrapedOrders.RemoveAt(0);
+                        _sendOrderCount = 0;
                     }
 
                     break;
 
 
                 case OrderGenerationConfiguration.Random:
-                    SendOrderCount = 0;
-                    order = GenerateOrder();
-                    order.Areas = ConstructAreasVisited(order);
-                    CostumerSendsOrderEvent?.Invoke(order);
+                    
+                    double chance = Rand.NextDouble();
+                    if (chance <= OrderChance)
+                    {
+                        _sendOrderCount = 0;
+                        order = GenerateOrder();
+                        order.Areas = ConstructAreasVisited(order);
+                        CostumerSendsOrderEvent?.Invoke(order);
+                    }
                     break;
-
 
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-
-
-
-            /*double chance = Rand.NextDouble();
-
-            if (chance <= OrderChance)
-            {
-                
-                
-            }*/
-
         }
 
         private Order GenerateOrder()
         {
             // Randomly choose amount of lines
-            int numberOfLines = Rand.Next(minAmountOfLines, maxAmountOfLines);
+            int numberOfLines = Rand.Next(MinAmountOfLines, MaxAmountOfLines);
             // Choose amount of unique articles
             List<Article> chosenArticles = ArticleList.OrderBy(x => Rand.Next()).Take(numberOfLines).ToList();
             //List<Article> chosenArticles = ArticleList.Where(a => a.AreaCode == AreaCode.Area21 || a.AreaCode == AreaCode.Area25).OrderBy(x => Rand.Next()).Take(numberOfLines).ToList();
@@ -108,7 +97,7 @@ namespace SolarSystem.Backend.Classes
             var generatedLines = chosenArticles.Select(GenerateLine).ToList();
 
             // Construct AreasVisited for areas.
-            Order order = new Order(Rand.Next(minOrderNumberId, maxOrderNumberId), TimeKeeper.CurrentDateTime, generatedLines);
+            Order order = new Order(Rand.Next(MinOrderNumberId, MaxOrderNumberId), TimeKeeper.CurrentDateTime, generatedLines);
             order.Areas = ConstructAreasVisited(order);
 
             return order;
@@ -139,7 +128,7 @@ namespace SolarSystem.Backend.Classes
         private Line GenerateLine(Article article)
         {
             // Randomly choose quantity
-            int quantity = Rand.Next(minArticleQuantity, maxArticleQuantity);
+            int quantity = Rand.Next(MinArticleQuantity, MaxArticleQuantity);
 
             // Assemble a line and return
             Line line = new Line(article, quantity);

@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Timers;
+using SolarSystem.Backend.Classes.Simulation;
 
 namespace SolarSystem.Backend.Classes
 {
-    public class Scheduler
+    public class SchedulerOLD
     {
         private double TimerStartMinutes { get; }
         private int PoolTimer { get; set; }
@@ -21,7 +20,7 @@ namespace SolarSystem.Backend.Classes
         private OrderGenerator OrderGenerator { get; }
         public Handler Handler { get; set; }
         
-        public Scheduler(OrderGenerator orderGenerator, Handler handler, double timerStartMinutes)
+        public SchedulerOLD(OrderGenerator orderGenerator, Handler handler, double timerStartMinutes)
         {
             OrderGenerator = orderGenerator;
             Handler = handler;
@@ -42,14 +41,14 @@ namespace SolarSystem.Backend.Classes
         }
 
 
-        void StartTimer() => ResetTimer();
-        
-        void ResetTimer()
+        private void StartTimer() => ResetTimer();
+
+        private void ResetTimer()
         {
             PoolTimer = (int) TimerStartMinutes * 60;
         }
 
-        Order OrderSelectorFromActualPool()
+        private Order OrderSelectorFromActualPool()
         {
             // Select random order
             var returnOrder = ActualOrderPool[Rand.Next(0, ActualOrderPool.Count - 1)] ?? throw new IndexOutOfRangeException();
@@ -61,7 +60,7 @@ namespace SolarSystem.Backend.Classes
             return returnOrder;
         }
 
-        void OrderToHandlerMover()
+        private void OrderToHandlerMover()
         {
             // If system/handler is full then return
             if (Handler.HandlerIsFull) return;
@@ -74,7 +73,7 @@ namespace SolarSystem.Backend.Classes
         }
         
         // Check every tick if the timer hits 0
-        void PoolTimeChecker()
+        private void PoolTimeChecker()
         {
             // Check if timer is <= 0
             if (PoolTimer <= 0)
