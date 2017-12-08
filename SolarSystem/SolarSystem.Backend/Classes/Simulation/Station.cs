@@ -186,9 +186,9 @@ namespace SolarSystem.Backend.Classes.Simulation
             if (!orderBox.LinesNotPickedIn(_areaCode).Any())
             {
                 // Evict orderBox
+
+                Outputter.LinesFinished.Add(orderBox.Order.OrderId + ";" + orderBox.Order.Lines.Last().Article.Id + ";" + TimeKeeper.CurrentDateTime.Hour + ":" + TimeKeeper.CurrentDateTime.Minute + ":" + TimeKeeper.CurrentDateTime.Second);
                 EvictOrderBox(orderBox);
-                string s = orderBox.Id + ";" + TimeKeeper.CurrentDateTime.Hour + ":" + TimeKeeper.CurrentDateTime.Minute + ":" + TimeKeeper.CurrentDateTime.Second;
-                Outputter.WriteLineToFile(s);
             }
             
         }

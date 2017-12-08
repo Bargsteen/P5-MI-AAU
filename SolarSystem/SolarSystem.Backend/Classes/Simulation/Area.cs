@@ -9,7 +9,7 @@ namespace SolarSystem.Backend.Classes.Simulation
         public event Action<OrderBox, AreaCode> OnOrderBoxInAreaFinished;
         public event Action<OrderBox, AreaCode> OnOrderBoxReceivedAtAreaEvent;
 
-        private AreaCode AreaCode { get; set; }
+        AreaCode AreaCode { get; set; }
         private Station[] Stations { get; }
         private Storage Storage { get; }
         private static readonly Random Rand = new Random();

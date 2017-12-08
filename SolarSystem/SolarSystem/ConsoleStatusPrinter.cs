@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 using SolarSystem.Backend;
 using SolarSystem.Backend.Classes.Simulation;
 
@@ -35,28 +36,80 @@ namespace SolarSystem
             };
         }
 
+
+        private int totalFinishedOrders = 0;
+        private int finishedOrdersPerHour = 0;
+        DateTime currentHour;
+        private readonly List<Tuple<int, int>> ordersFinishedPerHour = new List<Tuple<int, int>>();
+        Dictionary<Area, List<Tuple<DateTime, int>>> areaLines = new Dictionary<Area, List<Tuple<DateTime, int>>>();
+        Dictionary<Area, double> areaStandartDeviation = new Dictionary<Area, double>();
+        bool firstIteration = true;
+        double average;
+        double sumOfSquaresOfDifferences;
+        double sd;
+
+            //runner.Handler.OnOrderBoxFinished += o => PrintStatus($"Handler: Orderbox Finished {o} -- TimeSpend = {o.TimeInSystem}");
+
         public void StartPrinting()
         {
             Console.WriteLine("Starting simulation!");
+
 
             _runner.Handler.OnOrderBoxFinished += orderBox =>
             {
                 _totalFinishedOrders += orderBox.LineIsPickedStatuses.Keys.Count;
                 _finishedOrdersPerHour += orderBox.LineIsPickedStatuses.Keys.Count;
             };
-
+            
             var index = 0;
             TimeKeeper.Tick += () =>
             {
                 if (index++ > 60)
-                    if (TimeKeeper.CurrentDateTime.Hour == _currentHour.Hour + 1)
+                    if (TimeKeeper.CurrentDateTime.Hour == currentHour.Hour + 1 || TimeKeeper.CurrentDateTime.Hour == 0)
+
                     {
                         PrintFullStatus();
                         
                         _ordersFinishedPerHour.Add(Tuple.Create(_currentHour.Hour, _finishedOrdersPerHour));
 
-                        _currentHour = TimeKeeper.CurrentDateTime;
-                        _finishedOrdersPerHour = 0;
+
+                        currentHour = TimeKeeper.CurrentDateTime;
+                        finishedOrdersPerHour = 0;
+
+                        foreach (var _a in areaLines.Keys)
+                        {
+                            //using (StreamWriter dataWriter = new StreamWriter(@"Data/" + _a.Key.ToString() + ".xml"))
+                            using (StreamWriter dataWriter = new StreamWriter("Data/" + _a + ".xml", firstIteration))
+                            {
+                                areaLines[_a].ForEach(x => dataWriter.WriteLine(x.Item1 + ", " + x.Item2));
+                                dataWriter.Close();
+                            }
+
+                            using (StreamWriter dataWriter = new StreamWriter("Data/StandartDeviation" + _a + ".txt", firstIteration))
+                            {
+                                average = 0;
+                                sumOfSquaresOfDifferences = 0;
+                                if (!areaStandartDeviation.ContainsKey(_a))
+                                {
+                                    average = areaLines[_a].Average(v => v.Item2);
+                                    sumOfSquaresOfDifferences = areaLines[_a].Select(val => (val.Item2 - average) * (val.Item2 - average)).Sum();
+                                    sd = Math.Sqrt(sumOfSquaresOfDifferences / areaLines[_a].Count());
+                                    areaStandartDeviation[_a] = sd;
+                                }
+                                else
+                                {
+                                    average = areaLines[_a].Average(v => v.Item2);
+                                    sumOfSquaresOfDifferences = areaLines[_a].Select(val => (val.Item2 - average) * (val.Item2 - average)).Sum();
+                                    sd = Math.Sqrt(sumOfSquaresOfDifferences / areaLines[_a].Count());
+                                    areaStandartDeviation[_a] = ((areaStandartDeviation[_a] + sd) / 2);
+                                }
+
+                                dataWriter.WriteLine("This is the sd: " + areaStandartDeviation[_a]);
+                                dataWriter.Close();
+                            }
+                        }
+                        areaLines.Clear();
+                        firstIteration = false;
                     }
             };
 
@@ -64,6 +117,26 @@ namespace SolarSystem
             foreach (var area in _runner.Areas)
                 area.OnOrderBoxInAreaFinished += (orderBox, areaCode) =>
                 {
+                   //Console.Clear();
+                    IncrementBoxPerAreaCount(_finishedBoxesInAreas, areaCode);
+                    PrintBoxDict(_finishedBoxesInAreas);
+                    PrintLinesFinishedPerHour(_runner.StartTime, TimeKeeper.CurrentDateTime, totalFinishedOrders);
+                    ordersFinishedPerHour.ForEach(x =>
+                        Console.Write("[ " + x.Item1 + " - " + (x.Item1 + 1) + " : " + x.Item2 + " ] "));
+                    Console.WriteLine();
+                    Console.WriteLine("Lines between " + TimeKeeper.CurrentDateTime.Hour + " - " +
+                                      (TimeKeeper.CurrentDateTime.Hour + 1) + ": " + finishedOrdersPerHour +
+                                      " lines");
+
+                    if (areaLines.ContainsKey(area))
+                    {
+                        areaLines[area].Add(new Tuple<DateTime, int>(TimeKeeper.CurrentDateTime, orderBox.LineIsPickedStatuses.Keys.Count()));
+                    }
+                    else
+                    {
+                        areaLines.Add(area, new List<Tuple<DateTime, int>> { new Tuple<DateTime, int>(TimeKeeper.CurrentDateTime, orderBox.LineIsPickedStatuses.Keys.Count()) });
+                    }
+
                     IncrementBoxPerAreaCount(_finishedBoxesInAreas, areaCode);
                 };
         }
