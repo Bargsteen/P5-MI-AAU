@@ -84,6 +84,9 @@ namespace SolarSystem.Backend
                 case SchedulerType.Mi2:
                     _scheduler = new Mi2Scheduler(OrderGenerator, Handler, 4, articleList);
                     break;
+                case SchedulerType.LST:
+                    _scheduler = new LSTScheduer(OrderGenerator, Handler, 4);
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(schedulerType), schedulerType, null);
             }

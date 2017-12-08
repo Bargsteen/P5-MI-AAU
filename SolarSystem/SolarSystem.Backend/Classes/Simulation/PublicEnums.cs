@@ -33,6 +33,7 @@
     {
         Fifo,
         Mi1,
-        Mi2
+        Mi2,
+        LST
     }
 }
