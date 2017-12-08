@@ -13,7 +13,9 @@ namespace SolarSystem
             var filePath =
                 Directory.GetParent(Directory.GetParent(Directory.GetParent(Environment.CurrentDirectory).ToString())
                     .ToString()) + "/SolarSystem.Backend/SolarData/";
-            
+
+            TimeKeeper.SimulationFinished += Outputter.WriteLineToFile;
+
             const int simSpeed = 200000;
             const double randomNewOrderChance = 0.1;
             const OrderGenerationConfiguration orderGenerationConfiguration = OrderGenerationConfiguration.FromFile;

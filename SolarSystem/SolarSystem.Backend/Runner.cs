@@ -8,6 +8,7 @@ using SolarSystem.Backend.Classes.Simulation;
 using SolarSystem.Backend.PickingAndErp;
 using Article = SolarSystem.Backend.Classes.Simulation.Article;
 using Order = SolarSystem.Backend.PickingAndErp.Order;
+using SolarSystem.Backend.Classes.Schedulers;
 
 namespace SolarSystem.Backend
 {
@@ -16,7 +17,6 @@ namespace SolarSystem.Backend
     {
         public readonly Handler Handler;
         public readonly OrderGenerator OrderGenerator;
-        public readonly SchedulerOLD SchedulerOld;
         
         public readonly MiScheduler MiScheduler;
         public readonly SimulationInformation SimulationInformation;
