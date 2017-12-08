@@ -36,17 +36,13 @@ namespace SolarSystem
             };
         }
 
-
-        private int totalFinishedOrders = 0;
-        private int finishedOrdersPerHour = 0;
         DateTime currentHour;
-        private readonly List<Tuple<int, int>> ordersFinishedPerHour = new List<Tuple<int, int>>();
         Dictionary<Area, List<Tuple<DateTime, int>>> areaLines = new Dictionary<Area, List<Tuple<DateTime, int>>>();
         Dictionary<Area, double> areaStandartDeviation = new Dictionary<Area, double>();
-        bool firstIteration = true;
-        double average;
-        double sumOfSquaresOfDifferences;
-        double sd;
+        private bool firstIteration = true;
+        private double average;
+        private double sumOfSquaresOfDifferences;
+        private double sd;
 
             //runner.Handler.OnOrderBoxFinished += o => PrintStatus($"Handler: Orderbox Finished {o} -- TimeSpend = {o.TimeInSystem}");
 
@@ -74,7 +70,7 @@ namespace SolarSystem
 
 
                         currentHour = TimeKeeper.CurrentDateTime;
-                        finishedOrdersPerHour = 0;
+                        _finishedOrdersPerHour = 0;
 
                         foreach (var _a in areaLines.Keys)
                         {
@@ -120,12 +116,12 @@ namespace SolarSystem
                    //Console.Clear();
                     IncrementBoxPerAreaCount(_finishedBoxesInAreas, areaCode);
                     PrintBoxDict(_finishedBoxesInAreas);
-                    PrintLinesFinishedPerHour(_runner.StartTime, TimeKeeper.CurrentDateTime, totalFinishedOrders);
-                    ordersFinishedPerHour.ForEach(x =>
+                    PrintLinesFinishedPerHour(_runner.StartTime, TimeKeeper.CurrentDateTime, _totalFinishedOrders);
+                    _ordersFinishedPerHour.ForEach(x =>
                         Console.Write("[ " + x.Item1 + " - " + (x.Item1 + 1) + " : " + x.Item2 + " ] "));
                     Console.WriteLine();
                     Console.WriteLine("Lines between " + TimeKeeper.CurrentDateTime.Hour + " - " +
-                                      (TimeKeeper.CurrentDateTime.Hour + 1) + ": " + finishedOrdersPerHour +
+                                      (TimeKeeper.CurrentDateTime.Hour + 1) + ": " + _finishedOrdersPerHour +
                                       " lines");
 
                     if (areaLines.ContainsKey(area))
