@@ -25,7 +25,6 @@ namespace SolarSystem
             var runner = new Runner(filePath, simSpeed, randomNewOrderChance, orderGenerationConfiguration, 
                 schedulerType, daysToSimulate, simulationStartTime, schedulerStartTime);
            
-
             runner.Start();
             
             var consoleStatusPrinter = new ConsoleStatusPrinter(runner);

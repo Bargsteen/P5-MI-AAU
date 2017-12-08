@@ -117,8 +117,7 @@ namespace SolarSystem
             foreach (var area in _runner.Areas)
                 area.OnOrderBoxInAreaFinished += (orderBox, areaCode) =>
                 {
-
-                    //Console.Clear();
+                   //Console.Clear();
                     IncrementBoxPerAreaCount(_finishedBoxesInAreas, areaCode);
                     PrintBoxDict(_finishedBoxesInAreas);
                     PrintLinesFinishedPerHour(_runner.StartTime, TimeKeeper.CurrentDateTime, totalFinishedOrders);
@@ -139,7 +138,6 @@ namespace SolarSystem
                     }
 
                     IncrementBoxPerAreaCount(_finishedBoxesInAreas, areaCode);
-
                 };
         }
 
