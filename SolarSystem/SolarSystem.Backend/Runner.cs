@@ -84,6 +84,9 @@ namespace SolarSystem.Backend
                 case SchedulerType.Mi2:
                     throw new NotImplementedException("MI2 is not implemented yet..");
                     break;
+                case SchedulerType.LST:
+                    _scheduler = new LSTScheduer(OrderGenerator, Handler, 4);
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(schedulerType), schedulerType, null);
             }
