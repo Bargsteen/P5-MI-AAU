@@ -82,7 +82,7 @@ namespace SolarSystem.Backend
                     throw new NotImplementedException("MI1 is not implemented yet..");
                     break;
                 case SchedulerType.Mi2:
-                    throw new NotImplementedException("MI2 is not implemented yet..");
+                    _scheduler = new Mi2Scheduler(OrderGenerator, Handler, 4, articleList);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(schedulerType), schedulerType, null);
