@@ -70,6 +70,7 @@
   <ItemGroup>
     <Compile Include="Classes\SchedulerOLD.cs" />
     <Compile Include="Classes\Schedulers\FifoScheduler.cs" />
+    <Compile Include="Classes\Schedulers\LSTScheduer.cs" />
     <Compile Include="Classes\Schedulers\Mi2Scheduler.cs" />
     <Compile Include="Classes\Schedulers\MiScheduler.cs" />
     <Compile Include="Classes\Schedulers\RealismScheduler.cs" />
@@ -109,6 +110,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="SolarSystem.Backend.csproj">
+      <Project>{49e2719a-446d-428c-bd27-2a6555f38bab}</Project>
+      <Name>SolarSystem.Backend</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Accord.3.8.0\build\Accord.targets" />
