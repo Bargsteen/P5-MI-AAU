@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Threading;
 using SolarSystem.Backend.Classes;
 using SolarSystem.Backend.Classes.Schedulers;
-using SolarSystem.Backend.PickingandERP;
-using SolarSystem.PickingAndErp;
-using Order = SolarSystem.PickingAndErp.Order;
+using SolarSystem.Backend.Classes.Simulation;
+using SolarSystem.Backend.PickingAndErp;
+using Article = SolarSystem.Backend.Classes.Simulation.Article;
+using Order = SolarSystem.Backend.PickingAndErp.Order;
 
 namespace SolarSystem.Backend
 {
@@ -16,30 +16,36 @@ namespace SolarSystem.Backend
     {
         public readonly Handler Handler;
         public readonly OrderGenerator OrderGenerator;
-        public readonly Scheduler Scheduler;
+        public readonly SchedulerOLD SchedulerOld;
         
         public readonly MiScheduler MiScheduler;
         public readonly SimulationInformation SimulationInformation;
 
         public readonly DateTime StartTime;
+        private readonly DateTime _schedulerStartTime;
 
         private readonly double _simulationSpeed;
-        private SchedulerModular _scheduler;
+        private readonly Scheduler _scheduler;
+
+        private readonly int _daysToSimulate;
      
         
-        public Runner(string filePath, double simulationSpeed, double orderChance, OrderGenerationConfiguration orderGenerationConfiguration, SchedulerType schedulerType)
+        public Runner(string filePath, double simulationSpeed, double orderChance, 
+            OrderGenerationConfiguration orderGenerationConfiguration, SchedulerType schedulerType, 
+            int daysToSimulate, DateTime startTime, DateTime schedulerStartTime)
         {
-            
-
             var pickNScrape = new PickingScrape(filePath + "Picking 02-10-2017.csv");
             pickNScrape.GetOrdersFromPicking();
 
             _simulationSpeed = simulationSpeed;
+            _daysToSimulate = daysToSimulate;
+            StartTime = startTime;
+            _schedulerStartTime = schedulerStartTime;
             var orders = pickNScrape.OrderList;
             var erpscrape = new ErpScrape();
             erpscrape.ScrapeErp(filePath + "ErpTask_trace.log");
 
-            erpscrape.orders.Sort((x,y) => x.OrderTime.CompareTo(y.OrderTime));
+            erpscrape.Orders.Sort((x,y) => x.OrderTime.CompareTo(y.OrderTime));
 
 
             for (int i = 0; i < orders.Count; i++)
@@ -48,7 +54,7 @@ namespace SolarSystem.Backend
 
                 try
                 {
-                    order.OrderTime = erpscrape.orders.Find(x => x.OrderNumber == order.OrderNumber).OrderTime;
+                    order.OrderTime = erpscrape.Orders.Find(x => x.OrderNumber == order.OrderNumber).OrderTime;
                 }
                 catch (NullReferenceException)
                 {
@@ -67,39 +73,42 @@ namespace SolarSystem.Backend
             Handler = new Handler(); 
             OrderGenerator = new OrderGenerator(articleList, orderChance, orders, orderGenerationConfiguration);
             
-            StartTime = new DateTime(2017, 10, 2, 8, 0, 0); //02/10/2017
-            
-
             switch (schedulerType)
             {
-                case SchedulerType.FIFO:
+                case SchedulerType.Fifo:
                     _scheduler = new FifoScheduler(OrderGenerator, Handler, 4);
                     break;
-                case SchedulerType.MI1:
+                case SchedulerType.Mi1:
                     throw new NotImplementedException("MI1 is not implemented yet..");
                     break;
-                case SchedulerType.MI2:
+                case SchedulerType.Mi2:
                     throw new NotImplementedException("MI2 is not implemented yet..");
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(schedulerType), schedulerType, null);
             }
             
-            
-            
         }
 
         public void Start()
         {
             // Start Ticking
-            var t = new Thread(() => TimeKeeper.StartTicking(_simulationSpeed, StartTime));
+            var t = new Thread(() => TimeKeeper.StartTicking(_simulationSpeed, StartTime, _daysToSimulate));
             t.Start();
-            
-            // Start Schedular
-            _scheduler.Start();
+
+            TimeKeeper.Tick += MaybeStartScheduler;
             
             // Start OrderGeneration
             OrderGenerator.Start();
+        }
+
+        private void MaybeStartScheduler()
+        {
+            if (TimeKeeper.CurrentDateTime == _schedulerStartTime)
+            {
+                // Start Schedular
+                _scheduler.Start();
+            }
         }
 
 

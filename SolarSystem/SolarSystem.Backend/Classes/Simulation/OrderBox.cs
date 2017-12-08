@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SolarSystem.Backend.Classes
+namespace SolarSystem.Backend.Classes.Simulation
 {
     public class OrderBox : Box
     {
@@ -11,13 +11,13 @@ namespace SolarSystem.Backend.Classes
         public readonly Dictionary<Line, bool> LineIsPickedStatuses; // True == isPicked
         public Dictionary<AreaCode, bool> AreasVisited { get; }
 
-        private DateTime TimeCreated;
+        private readonly DateTime _timeCreated;
 
-        public TimeSpan TimeInSystem => TimeKeeper.CurrentDateTime - TimeCreated;
+        public TimeSpan TimeInSystem => TimeKeeper.CurrentDateTime - _timeCreated;
         
         public OrderBox(Order order)
         {
-            TimeCreated = TimeKeeper.CurrentDateTime;
+            _timeCreated = TimeKeeper.CurrentDateTime;
             
             Order = order ?? throw new ArgumentNullException(nameof(order));
             LineIsPickedStatuses = Order.Lines.ToDictionary(key => key, value => false);

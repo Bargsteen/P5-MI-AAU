@@ -1,24 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace SolarSystem.Backend.Classes
+namespace SolarSystem.Backend.Classes.Simulation
 {
 
     public class MainLoop
     {
         public event Action<OrderBox, AreaCode> OnOrderBoxInMainLoopFinished;
-        private readonly Dictionary<AreaCode, OrderboxProgressContainer> areaQueues;
+        private readonly Dictionary<AreaCode, OrderboxProgressContainer> _areaQueues;
 
-        public int BoxesInMainLoop => areaQueues.Count;
+        public int BoxesInMainLoop => _areaQueues.Count;
         
         public MainLoop()
         {
-            areaQueues = new Dictionary<AreaCode, OrderboxProgressContainer>();
-            areaQueues.Add(AreaCode.Area21, new OrderboxProgressContainer());
-            areaQueues.Add(AreaCode.Area25, new OrderboxProgressContainer());
-            areaQueues.Add(AreaCode.Area27, new OrderboxProgressContainer());
-            areaQueues.Add(AreaCode.Area28, new OrderboxProgressContainer());
-            areaQueues.Add(AreaCode.Area29, new OrderboxProgressContainer());
+            _areaQueues = new Dictionary<AreaCode, OrderboxProgressContainer>();
+            _areaQueues.Add(AreaCode.Area21, new OrderboxProgressContainer());
+            _areaQueues.Add(AreaCode.Area25, new OrderboxProgressContainer());
+            _areaQueues.Add(AreaCode.Area27, new OrderboxProgressContainer());
+            _areaQueues.Add(AreaCode.Area28, new OrderboxProgressContainer());
+            _areaQueues.Add(AreaCode.Area29, new OrderboxProgressContainer());
 
             TimeKeeper.Tick += _CheckAndSend;
         }
@@ -26,7 +26,7 @@ namespace SolarSystem.Backend.Classes
         public void ReceiveOrderBoxAndArea(OrderBox orderBox, AreaCode areaCode)
         {
             var orderBoxProgress = PackToOrderboxProgress(orderBox, areaCode);
-            areaQueues[areaCode].AddOrderBoxProgress(orderBoxProgress);
+            _areaQueues[areaCode].AddOrderBoxProgress(orderBoxProgress);
         }
 
         private OrderBoxProgress PackToOrderboxProgress(OrderBox orderBox, AreaCode area)
@@ -49,7 +49,7 @@ namespace SolarSystem.Backend.Classes
 
         public void _CheckAndSend()
         {
-            foreach (var areaQueue in areaQueues)
+            foreach (var areaQueue in _areaQueues)
             {
                 if (areaQueue.Value.GetNext()?.SecondsToSpend <= 0)
                 {

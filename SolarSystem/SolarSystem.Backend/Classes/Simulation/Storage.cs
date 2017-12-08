@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SolarSystem.Backend.Classes
+namespace SolarSystem.Backend.Classes.Simulation
 {
     public class Storage
     {
@@ -10,7 +10,7 @@ namespace SolarSystem.Backend.Classes
         
         private readonly Queue<(Station, Article)> _requestQueue;
     
-        private const int MaxLineQuantity = 10000;
+        private const int MaxLineQuantity = 100000;
 
         public Storage()
         {

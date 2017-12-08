@@ -82,9 +82,6 @@
     <Compile Include="ConsoleStatusPrinter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Simulation\ISim.cs" />
-    <Compile Include="Simulation\OrderBoxPicker.cs" />
-    <Compile Include="Simulation\Sim.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

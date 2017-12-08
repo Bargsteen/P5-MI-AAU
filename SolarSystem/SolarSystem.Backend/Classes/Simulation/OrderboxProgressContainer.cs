@@ -2,7 +2,7 @@
 using System.Linq;
 using C5;
 
-namespace SolarSystem.Backend.Classes
+namespace SolarSystem.Backend.Classes.Simulation
 {
     public class OrderboxProgressContainer
     {

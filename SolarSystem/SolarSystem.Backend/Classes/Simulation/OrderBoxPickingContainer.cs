@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SolarSystem.Backend.Classes
+namespace SolarSystem.Backend.Classes.Simulation
 {
     public class OrderBoxPickingContainer
     {
@@ -21,7 +21,7 @@ namespace SolarSystem.Backend.Classes
                 throw new ArgumentException($"{nameof(lineBeingPicked)} is not in {nameof(orderBox)}");
             }
             // Calculate the time it needs to actually this line. At least one.
-            _timeLeftOfPicking = Math.Max(1, (int) (lineBeingPicked.Quantity * GlobalConstants.TimePerArticlePick));
+            _timeLeftOfPicking = CalcPickingTime(lineBeingPicked.Quantity);
 
             TimeKeeper.Tick += DecrementAndMaybeInvoke;
         }
@@ -47,6 +47,18 @@ namespace SolarSystem.Backend.Classes
                     }
                 }
                     
+            }
+        }
+
+        private int CalcPickingTime(int amount)
+        {
+            if (amount < 100)
+            {
+                return Math.Max(1, (int) (amount * GlobalConstants.TimePerArticlePick));
+            }
+            else
+            {
+                return (int) (amount * GlobalConstants.TimePerArticlePick * 0.0001);
             }
         }
     }

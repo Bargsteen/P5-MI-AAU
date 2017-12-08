@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SolarSystem.Backend.Classes.Simulation
 {
@@ -15,7 +11,7 @@ namespace SolarSystem.Backend.Classes.Simulation
         private static StreamWriter file = new StreamWriter(@"C:\output.csv");
         public static void WriteLineToFile(string s)
         {
-                file.WriteLine(s);
+               //File.Wr
         }
     }
 }

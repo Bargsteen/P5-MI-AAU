@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace SolarSystem.PickingAndErp
+namespace SolarSystem.Backend.PickingAndErp
 {
     public class Order
     {
@@ -33,16 +33,16 @@ namespace SolarSystem.PickingAndErp
             return "OrderNumber: " + OrderNumber + returnString;
         }
 
-        public Backend.Classes.Order ToSimOrder()
+        public Classes.Simulation.Order ToSimOrder()
         {
-            List<Backend.Classes.Line> simlinelist = new List<Backend.Classes.Line>();
+            List<Classes.Simulation.Line> simlinelist = new List<Classes.Simulation.Line>();
 
             foreach (Line line in LineList)
             {
                 simlinelist.Add(line.ToSimLine());
             }
 
-            return new Backend.Classes.Order(this.OrderNumber, this.OrderTime, simlinelist);
+            return new Classes.Simulation.Order(this.OrderNumber, this.OrderTime, simlinelist);
 
         }
         

@@ -2,55 +2,63 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.IO;
+using SolarSystem.Backend;
+using SolarSystem.Backend.Classes.Simulation;
 
-namespace SolarSystem.Backend.Classes
+namespace SolarSystem
 {
     public class ConsoleStatusPrinter
     {
+        private int _totalFinishedOrders;
+        private int _finishedOrdersPerHour;
+        private DateTime _currentHour;
+        private readonly List<Tuple<int, int>> _ordersFinishedPerHour;
+        private readonly Dictionary<AreaCode, int> _finishedBoxesInAreas;
+        
         private readonly Runner _runner;
 
         public ConsoleStatusPrinter(Runner runner)
         {
             _runner = runner;
+
+            _currentHour = _runner.StartTime;
+            _ordersFinishedPerHour = new List<Tuple<int, int>>();
+            
+            TimeKeeper.SimulationFinished += PrintSimulationFinished;
+            
+            _finishedBoxesInAreas = new Dictionary<AreaCode, int>
+            {
+                {AreaCode.Area21, 0},
+                {AreaCode.Area25, 0},
+                {AreaCode.Area27, 0},
+                {AreaCode.Area28, 0},
+                {AreaCode.Area29, 0}
+            };
         }
+
+
+        private int totalFinishedOrders = 0;
+        private int finishedOrdersPerHour = 0;
+        DateTime currentHour;
+        private readonly List<Tuple<int, int>> ordersFinishedPerHour = new List<Tuple<int, int>>();
+        Dictionary<Area, List<Tuple<DateTime, int>>> areaLines = new Dictionary<Area, List<Tuple<DateTime, int>>>();
+        Dictionary<Area, double> areaStandartDeviation = new Dictionary<Area, double>();
+        bool firstIteration = true;
+        double average;
+        double sumOfSquaresOfDifferences;
+        double sd;
+
+            //runner.Handler.OnOrderBoxFinished += o => PrintStatus($"Handler: Orderbox Finished {o} -- TimeSpend = {o.TimeInSystem}");
 
         public void StartPrinting()
         {
             Console.WriteLine("Starting simulation!");
 
-            var FinishedBoxesInAreas = new Dictionary<AreaCode, int>
-            {
-                {AreaCode.Area21, 0},
-                {AreaCode.Area25, 0},
-                {AreaCode.Area27, 0},
-                {AreaCode.Area28, 0},
-                {AreaCode.Area29, 0}
-            };
-
-            var totalFinishedOrders = 0;
-            var finishedOrdersPerHour = 0;
-            DateTime currentHour = _runner.StartTime;
-            var ordersFinishedPerHour = new List<Tuple<int, int>>();
-            Dictionary<Area, List<Tuple<DateTime, int>>> areaLines = new Dictionary<Area, List<Tuple<DateTime, int>>>();
-            Dictionary<AreaCode, double> areaStandartDeviation = new Dictionary<AreaCode, double>()
-            {
-                {AreaCode.Area21, 0},
-                {AreaCode.Area25, 0},
-                {AreaCode.Area27, 0},
-                {AreaCode.Area28, 0},
-                {AreaCode.Area29, 0}
-            };
-            bool firstIteration = true;
-            double average;
-            double sumOfSquaresOfDifferences;
-            double sd;
-
-            //runner.Handler.OnOrderBoxFinished += o => PrintStatus($"Handler: Orderbox Finished {o} -- TimeSpend = {o.TimeInSystem}");
 
             _runner.Handler.OnOrderBoxFinished += orderBox =>
             {
-                totalFinishedOrders += orderBox.LineIsPickedStatuses.Keys.Count;
-                finishedOrdersPerHour += orderBox.LineIsPickedStatuses.Keys.Count;
+                _totalFinishedOrders += orderBox.LineIsPickedStatuses.Keys.Count;
+                _finishedOrdersPerHour += orderBox.LineIsPickedStatuses.Keys.Count;
             };
             
             var index = 0;
@@ -58,8 +66,12 @@ namespace SolarSystem.Backend.Classes
             {
                 if (index++ > 60)
                     if (TimeKeeper.CurrentDateTime.Hour == currentHour.Hour + 1 || TimeKeeper.CurrentDateTime.Hour == 0)
+
                     {
-                        ordersFinishedPerHour.Add(Tuple.Create(currentHour.Hour, finishedOrdersPerHour));
+                        PrintFullStatus();
+                        
+                        _ordersFinishedPerHour.Add(Tuple.Create(_currentHour.Hour, _finishedOrdersPerHour));
+
 
                         currentHour = TimeKeeper.CurrentDateTime;
                         finishedOrdersPerHour = 0;
@@ -77,22 +89,22 @@ namespace SolarSystem.Backend.Classes
                             {
                                 average = 0;
                                 sumOfSquaresOfDifferences = 0;
-                                if (!areaStandartDeviation.ContainsKey(_a.AreaCode))
+                                if (!areaStandartDeviation.ContainsKey(_a))
                                 {
                                     average = areaLines[_a].Average(v => v.Item2);
                                     sumOfSquaresOfDifferences = areaLines[_a].Select(val => (val.Item2 - average) * (val.Item2 - average)).Sum();
                                     sd = Math.Sqrt(sumOfSquaresOfDifferences / areaLines[_a].Count());
-                                    areaStandartDeviation[_a.AreaCode] = sd;
+                                    areaStandartDeviation[_a] = sd;
                                 }
                                 else
                                 {
                                     average = areaLines[_a].Average(v => v.Item2);
                                     sumOfSquaresOfDifferences = areaLines[_a].Select(val => (val.Item2 - average) * (val.Item2 - average)).Sum();
                                     sd = Math.Sqrt(sumOfSquaresOfDifferences / areaLines[_a].Count());
-                                    areaStandartDeviation[_a.AreaCode] = ((areaStandartDeviation[_a.AreaCode] + sd) / 2);
+                                    areaStandartDeviation[_a] = ((areaStandartDeviation[_a] + sd) / 2);
                                 }
 
-                                dataWriter.WriteLine("This is the sd: " + areaStandartDeviation[_a.AreaCode]);
+                                dataWriter.WriteLine("This is the sd: " + areaStandartDeviation[_a]);
                                 dataWriter.Close();
                             }
                         }
@@ -103,13 +115,12 @@ namespace SolarSystem.Backend.Classes
 
 
             foreach (var area in _runner.Areas)
-                //area.OnOrderBoxReceivedAtAreaEvent += (orderBox, areaCode) => PrintStatus($"{areaCode} << received orderBox {orderBox}");
-                //area.OnOrderBoxInAreaFinished += (orderBox, areaCode) => PrintStatus($"{areaCode} >> finished orderBox {orderBox} - MainLoopCount: {runner.Handler.MainLoop.BoxesInMainLoop}");
                 area.OnOrderBoxInAreaFinished += (orderBox, areaCode) =>
                 {
+
                     //Console.Clear();
-                    IncrementBoxPerAreaCount(FinishedBoxesInAreas, areaCode);
-                    PrintBoxDict(FinishedBoxesInAreas);
+                    IncrementBoxPerAreaCount(_finishedBoxesInAreas, areaCode);
+                    PrintBoxDict(_finishedBoxesInAreas);
                     PrintLinesFinishedPerHour(_runner.StartTime, TimeKeeper.CurrentDateTime, totalFinishedOrders);
                     ordersFinishedPerHour.ForEach(x =>
                         Console.Write("[ " + x.Item1 + " - " + (x.Item1 + 1) + " : " + x.Item2 + " ] "));
@@ -126,7 +137,22 @@ namespace SolarSystem.Backend.Classes
                     {
                         areaLines.Add(area, new List<Tuple<DateTime, int>> { new Tuple<DateTime, int>(TimeKeeper.CurrentDateTime, orderBox.LineIsPickedStatuses.Keys.Count()) });
                     }
+
+                    IncrementBoxPerAreaCount(_finishedBoxesInAreas, areaCode);
+
                 };
+        }
+
+        private void PrintFullStatus()
+        {
+            Console.Clear();
+            PrintBoxDict(_finishedBoxesInAreas);
+            PrintLinesFinishedPerHour(_runner.StartTime, TimeKeeper.CurrentDateTime, _totalFinishedOrders);
+            Console.WriteLine("Lines between " + TimeKeeper.CurrentDateTime.Hour + " - " +
+                              (TimeKeeper.CurrentDateTime.Hour + 1) + ": " + _finishedOrdersPerHour +
+                              " lines");
+            _ordersFinishedPerHour.ForEach(x =>
+                Console.Write("[ " + x.Item1 + " - " + (x.Item1 + 1) + " : " + x.Item2 + " ] "));           
         }
 
         private static void IncrementBoxPerAreaCount(IDictionary<AreaCode, int> dict, AreaCode areaCode)
@@ -151,6 +177,12 @@ namespace SolarSystem.Backend.Classes
         private static void PrintStatus(string status)
         {
             Console.WriteLine($"{TimeKeeper.CurrentDateTime} :: {status}");
+        }
+
+        private void PrintSimulationFinished()
+        {
+            PrintFullStatus();
+            Console.WriteLine("\nSimulation Finished!");
         }
     }
 }

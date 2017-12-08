@@ -1,20 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using SolarSystem.Backend.Interfaces;
 
-namespace SolarSystem.Backend.Classes
+namespace SolarSystem.Backend.Classes.Simulation
 {
     public class Area
     {
         public event Action<OrderBox, AreaCode> OnOrderBoxInAreaFinished;
         public event Action<OrderBox, AreaCode> OnOrderBoxReceivedAtAreaEvent;
-        
-        public AreaCode AreaCode { get; set; }
-        public List<Article> AvailableWares { get; set; }
-        public Station[] Stations { get; }
-        public ShelfSpace ShelfSpace { get; }
-        public Storage Storage { get; }
+
+        AreaCode AreaCode { get; set; }
+        private Station[] Stations { get; }
+        private Storage Storage { get; }
         private static readonly Random Rand = new Random();
         
         public bool AreaIsFull => Stations.All(s => s.StationIsFull);
@@ -30,8 +27,7 @@ namespace SolarSystem.Backend.Classes
                 new Station(areaCode + "+S:A", 7, 5, AreaCode), 
                 new Station(areaCode + "+S:B", 7, 5, AreaCode), 
                 new Station(areaCode + "+S:C", 7, 5, AreaCode), 
-                new Station(areaCode + "+S:D", 7, 5, AreaCode), 
-                new Station(areaCode + "+S:E", 7, 5, AreaCode) 
+               
             };
             
             // Subscribe to each Station order complete event
@@ -68,7 +64,7 @@ namespace SolarSystem.Backend.Classes
 
         }
 
-        public void StationOrderCompleted(OrderBox orderBox)
+        private void StationOrderCompleted(OrderBox orderBox)
         {
             OnOrderBoxInAreaFinished?.Invoke(orderBox, AreaCode);
         }

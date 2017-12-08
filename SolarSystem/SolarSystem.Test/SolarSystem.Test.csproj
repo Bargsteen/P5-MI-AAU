@@ -79,8 +79,6 @@
   <ItemGroup>
     <Compile Include="AreaStation\StationTests.cs" />
     <Compile Include="Classes\MainLoopTests.cs" />
-    <Compile Include="Simulation\OrderBoxPickerTests.cs" />
-    <Compile Include="Simulation\SimulationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

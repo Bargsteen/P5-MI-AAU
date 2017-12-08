@@ -1,4 +1,4 @@
-﻿namespace SolarSystem.Backend.Classes
+﻿namespace SolarSystem.Backend.Classes.Simulation
 {
     public enum StationResult
     {
@@ -31,8 +31,8 @@
 
     public enum SchedulerType
     {
-        FIFO,
-        MI1,
-        MI2
+        Fifo,
+        Mi1,
+        Mi2
     }
 }
