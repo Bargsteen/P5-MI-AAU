@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 
@@ -12,10 +13,6 @@ namespace SolarSystem.Backend.Classes.Data
 {
     public static class DataSaving
     {
-        private static bool firstIteration = true;
-        private static double average;
-        private static double sumOfSquaresOfDifferences;
-        private static double sd;
         public static Dictionary<Area, double> areaStandartDeviation = new Dictionary<Area, double>();
         public static List<DataSavingOrder> orders = new List<DataSavingOrder>();
 
@@ -24,51 +21,16 @@ namespace SolarSystem.Backend.Classes.Data
             FindLongestOrderTime();
             FindSmallestOrderTime();
             FindAverageOrderCompletionTime();
+            FindStandartDeviation();
         }
 
         //Method for saving data to datafiles. This method will also calculate standart deviation based on input and previous input
-        private static void SaveDatato(Dictionary<Area, List<Tuple<DateTime, int>>> _linesInArea)
-        {
-            foreach (var _a in _linesInArea.Keys)
-            {
-                //using (StreamWriter dataWriter = new StreamWriter(@"Data/" + _a.Key.ToString() + ".xml"))
-                using (StreamWriter dataWriter = new StreamWriter("Data/" + _a + ".xml", firstIteration))
-                {
-                    _linesInArea[_a].ForEach(x => dataWriter.WriteLine(x.Item1 + ", " + x.Item2));
-                    dataWriter.Close();
-                }
-
-                using (StreamWriter dataWriter = new StreamWriter("Data/StandartDeviation" + _a + ".txt", firstIteration))
-                {
-                    average = 0;
-                    sumOfSquaresOfDifferences = 0;
-                    if (!areaStandartDeviation.ContainsKey(_a))
-                    {
-                        average = _linesInArea[_a].Average(v => v.Item2);
-                        sumOfSquaresOfDifferences = _linesInArea[_a].Select(val => (val.Item2 - average) * (val.Item2 - average)).Sum();
-                        sd = Math.Sqrt(sumOfSquaresOfDifferences / _linesInArea[_a].Count());
-                        areaStandartDeviation[_a] = sd;
-                    }
-                    else
-                    {
-                        average = _linesInArea[_a].Average(v => v.Item2);
-                        sumOfSquaresOfDifferences = _linesInArea[_a].Select(val => (val.Item2 - average) * (val.Item2 - average)).Sum();
-                        sd = Math.Sqrt(sumOfSquaresOfDifferences / _linesInArea[_a].Count());
-                        areaStandartDeviation[_a] = ((areaStandartDeviation[_a] + sd) / 2);
-                    }
-
-                    dataWriter.WriteLine("This is the sd: " + areaStandartDeviation[_a]);
-                    dataWriter.Close();
-                }
-            }
-            firstIteration = false;
-        }
-
         private static void FindLongestOrderTime()
         {
             using(StreamWriter writer = new StreamWriter(@"SimulationStatistics.txt", true))
             {
-                writer.WriteLine(orders.Max(o => o.deltaFinishedTime));
+                writer.WriteLine("Largest completion time for an order: " + orders.Max(o => o.deltaFinishedTime));
+                writer.Close();
             }            
         }
 
@@ -76,16 +38,42 @@ namespace SolarSystem.Backend.Classes.Data
         {
             using (StreamWriter writer = new StreamWriter(@"SimulationStatistics.txt", true))
             {
-                writer.WriteLine(orders.Min(o => o.deltaFinishedTime));
+                writer.WriteLine("Smallest completion time for an order: " + orders.Min(o => o.deltaFinishedTime));
+                writer.Close();
             }
+
+
         }
 
         private static void FindAverageOrderCompletionTime()
         {
             using (StreamWriter writer = new StreamWriter(@"SimulationStatistics.txt", true))
             {               
-                writer.WriteLine(orders.Average(o => o.deltaFinishedTime.TotalMinutes));
+                writer.WriteLine("Average order completion time: " + orders.Average(o => o.deltaFinishedTime.TotalMinutes));
+                writer.Close();
             }
+        }
+
+        private static void FindStandartDeviation()
+        {
+            double average;
+            double sumOfSquaresOfDifference;
+            double sd;
+
+            average = orders.Average(v => v.deltaFinishedTime.TotalMinutes);
+            sumOfSquaresOfDifference = orders.Select(val => (val.deltaFinishedTime.TotalMinutes - average) * (val.deltaFinishedTime.TotalMinutes - average)).Sum();
+            sd = Math.Sqrt(sumOfSquaresOfDifference / orders.Count());
+
+            using (StreamWriter writer = new StreamWriter(@"SimulationStatistics.txt", true))
+            {
+                writer.WriteLine("Standart deviation for orders over time: " + sd);
+                writer.Close();
+            }
+        }
+
+        public static void FindTimeOverLines()
+        {
+
         }
     }
 }
