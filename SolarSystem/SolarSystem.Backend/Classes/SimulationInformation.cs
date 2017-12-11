@@ -25,7 +25,8 @@ namespace SolarSystem.Backend.Classes
 
         public double[] GetState()
         {
-            return AreaInformation.Values.ToArray();
+            var values = AreaInformation.Values.ToArray();
+            return values;
         }
     }  
 }  

@@ -16,8 +16,8 @@ namespace SolarSystem
             
             const int simSpeed = 200000;
             const double randomNewOrderChance = 0.1;
-            const OrderGenerationConfiguration orderGenerationConfiguration = OrderGenerationConfiguration.FromFile;
-            const SchedulerType schedulerType = SchedulerType.Fifo;
+            const OrderGenerationConfiguration orderGenerationConfiguration = OrderGenerationConfiguration.Random;
+            const SchedulerType schedulerType = SchedulerType.Mi2;
             const int daysToSimulate = 1;
             DateTime simulationStartTime = new DateTime(2017, 10, 2, 8, 0, 0); //02/10/2017
             DateTime schedulerStartTime = simulationStartTime.AddHours(4);

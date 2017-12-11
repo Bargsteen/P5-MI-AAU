@@ -7,13 +7,13 @@ namespace SolarSystem.Backend.Classes.Schedulers
 {
     public abstract class Scheduler
     {
-        private double TimerStartMinutes { get; }
-        private int PoolTimer { get; set; }
+        protected double TimerStartMinutes { get; }
+        protected int PoolTimer { get; set; }
 
         protected SimulationInformation SimulationInformation { get; }
         
         // Order pool from costumers
-        private List<Order> InitialOrderPool { get; }
+        protected List<Order> InitialOrderPool { get; }
         
         // The pool that is actively being moved to Handler
         protected List<Order> ActualOrderPool { get; }
@@ -64,7 +64,7 @@ namespace SolarSystem.Backend.Classes.Schedulers
             // Else => Return
         } 
         
-        private void MoveInitialToActualPool()
+        protected virtual void MoveInitialToActualPool()
         {
             // If the time has passed, and there is something to move => move.
             if (TimerStartMinutes <= PoolTimer++)
