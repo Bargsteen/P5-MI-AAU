@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SolarSystem.Backend.Classes.Simulation;
 
-namespace SolarSystem
+namespace SolarSystem.Backend.Classes.Data
 {
     public class DataSavingLine
     {

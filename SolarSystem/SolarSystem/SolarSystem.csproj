@@ -80,9 +80,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConsoleStatusPrinter.cs" />
-    <Compile Include="DataSaving.cs" />
-    <Compile Include="DataSavingLine.cs" />
-    <Compile Include="DataSavingOrder.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
