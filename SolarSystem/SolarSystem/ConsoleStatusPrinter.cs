@@ -38,18 +38,12 @@ namespace SolarSystem
 
         DateTime currentHour;
         Dictionary<Area, List<Tuple<DateTime, int>>> areaLines = new Dictionary<Area, List<Tuple<DateTime, int>>>();
-        Dictionary<Area, double> areaStandartDeviation = new Dictionary<Area, double>();
-        private bool firstIteration = true;
-        private double average;
-        private double sumOfSquaresOfDifferences;
-        private double sd;
 
             //runner.Handler.OnOrderBoxFinished += o => PrintStatus($"Handler: Orderbox Finished {o} -- TimeSpend = {o.TimeInSystem}");
 
         public void StartPrinting()
         {
             Console.WriteLine("Starting simulation!");
-
 
             _runner.Handler.OnOrderBoxFinished += orderBox =>
             {
@@ -62,50 +56,13 @@ namespace SolarSystem
             {
                 if (index++ > 60)
                     if (TimeKeeper.CurrentDateTime.Hour == currentHour.Hour + 1 || TimeKeeper.CurrentDateTime.Hour == 0)
-
                     {
                         PrintFullStatus();
                         
                         _ordersFinishedPerHour.Add(Tuple.Create(_currentHour.Hour, _finishedOrdersPerHour));
 
-
                         currentHour = TimeKeeper.CurrentDateTime;
                         _finishedOrdersPerHour = 0;
-
-                        foreach (var _a in areaLines.Keys)
-                        {
-                            //using (StreamWriter dataWriter = new StreamWriter(@"Data/" + _a.Key.ToString() + ".xml"))
-                            using (StreamWriter dataWriter = new StreamWriter("Data/" + _a + ".xml", firstIteration))
-                            {
-                                areaLines[_a].ForEach(x => dataWriter.WriteLine(x.Item1 + ", " + x.Item2));
-                                dataWriter.Close();
-                            }
-
-                            using (StreamWriter dataWriter = new StreamWriter("Data/StandartDeviation" + _a + ".txt", firstIteration))
-                            {
-                                average = 0;
-                                sumOfSquaresOfDifferences = 0;
-                                if (!areaStandartDeviation.ContainsKey(_a))
-                                {
-                                    average = areaLines[_a].Average(v => v.Item2);
-                                    sumOfSquaresOfDifferences = areaLines[_a].Select(val => (val.Item2 - average) * (val.Item2 - average)).Sum();
-                                    sd = Math.Sqrt(sumOfSquaresOfDifferences / areaLines[_a].Count());
-                                    areaStandartDeviation[_a] = sd;
-                                }
-                                else
-                                {
-                                    average = areaLines[_a].Average(v => v.Item2);
-                                    sumOfSquaresOfDifferences = areaLines[_a].Select(val => (val.Item2 - average) * (val.Item2 - average)).Sum();
-                                    sd = Math.Sqrt(sumOfSquaresOfDifferences / areaLines[_a].Count());
-                                    areaStandartDeviation[_a] = ((areaStandartDeviation[_a] + sd) / 2);
-                                }
-
-                                dataWriter.WriteLine("This is the sd: " + areaStandartDeviation[_a]);
-                                dataWriter.Close();
-                            }
-                        }
-                        areaLines.Clear();
-                        firstIteration = false;
                     }
             };
 
