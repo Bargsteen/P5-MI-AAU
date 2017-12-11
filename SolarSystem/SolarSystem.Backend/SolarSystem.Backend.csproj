@@ -111,12 +111,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="SolarSystem.Backend.csproj">
-      <Project>{49e2719a-446d-428c-bd27-2a6555f38bab}</Project>
-      <Name>SolarSystem.Backend</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Accord.3.8.0\build\Accord.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
