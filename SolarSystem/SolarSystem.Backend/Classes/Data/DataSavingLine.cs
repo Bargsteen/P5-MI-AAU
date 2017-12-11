@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SolarSystem.Backend.Classes.Simulation;
 
-namespace SolarSystem
+namespace SolarSystem.Data
 {
     public class DataSavingLine
     {
@@ -14,8 +14,8 @@ namespace SolarSystem
             _line = line;
         }
 
-        Line _line;
-        DateTime plannedPickingTime;
-        DateTime actualPickingTime;
+        public Line _line;
+        public DateTime plannedPickingTime;
+        public DateTime actualPickingTime;
     }
 }

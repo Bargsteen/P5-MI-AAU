@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using SolarSystem.Backend.Classes.Simulation;
 using System.IO;
 
-namespace SolarSystem
+namespace SolarSystem.Data
 {
     public class DataSavingOrder
     {
