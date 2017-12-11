@@ -17,7 +17,7 @@ namespace SolarSystem
 
         public Order _order { get; }
         public List<DataSavingLine> lines { get; }
-        public DateTime finishedOrders { get; }
+        public DateTime finishedOrderTime { get; set; }
 
         
     }

@@ -11,13 +11,12 @@ namespace SolarSystem
 {
     public static class DataSaving
     {
-
         private static bool firstIteration = true;
         private static double average;
         private static double sumOfSquaresOfDifferences;
         private static double sd;
         public static Dictionary<Area, double> areaStandartDeviation = new Dictionary<Area, double>();
-        public static List<DataSavingOrder> orders;
+        public static List<DataSavingOrder> orders = new List<DataSavingOrder>();
 
 
         //Method for saving data to datafiles. This method will also calculate standart deviation based on input and previous input
