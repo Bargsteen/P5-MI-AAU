@@ -10,8 +10,9 @@ namespace SolarSystem.Backend.Classes.Simulation
 
         public static List<string> LinesFromScrape = new List<string>();
         public static List<string> LinesFinished = new List<string>();
-
-        private static StreamWriter file = new StreamWriter(@"C:\output.csv");
+        
+        private static StreamWriter file = new StreamWriter(Directory.GetParent(Directory.GetParent(Directory.GetParent(Environment.CurrentDirectory).ToString())
+        .ToString()) + "/SolarSystem.Backend/SolarData/Output.csv");
         public static void WriteLineToFile()
         {
             foreach (string s in LinesFromScrape)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace SolarSystem.Backend.Classes.Simulation
@@ -26,6 +27,8 @@ namespace SolarSystem.Backend.Classes.Simulation
 
         private int _sendOrderCount = 0;
 
+        List<string> sentlines = new List<string>();
+
         private readonly List<PickingAndErp.Order> _scrapedOrders;
 
         public OrderGenerator(List<Article> articleList, double orderChance, List<PickingAndErp.Order> scrapedOrders, OrderGenerationConfiguration conf)
@@ -45,7 +48,19 @@ namespace SolarSystem.Backend.Classes.Simulation
         public void Start()
         {
             TimeKeeper.Tick += MaybeSendOrder;
+            //TimeKeeper.SimulationFinished += WriteOrdersOut;
+
         }
+
+        //public void WriteOrdersOut()
+        //{
+        //    StreamWriter file = new StreamWriter("C:/New folder/Odfawdwadutput2.csv");
+        //    foreach(string s in sentlines)
+        //    {
+        //        file.WriteLine(s);
+        //    }
+        //}
+
 
         public void MaybeSendOrder()
         {
@@ -62,6 +77,7 @@ namespace SolarSystem.Backend.Classes.Simulation
                         order = _scrapedOrders[0].ToSimOrder();
                         order.Areas = ConstructAreasVisited(order);
                         CostumerSendsOrderEvent?.Invoke(order);
+                        sentlines.Add(order.OrderId.ToString());
                         _scrapedOrders.RemoveAt(0);
                         _sendOrderCount = 0;
                     }

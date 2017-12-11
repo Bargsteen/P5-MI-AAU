@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using Accord.Math;
 
 namespace SolarSystem.Backend.Classes.Simulation
 {
-    public class Order
+    public class Order : IEnumerable<Line>
     {
         public int OrderId { get; }
         public DateTime OrderTime { get;}
@@ -17,9 +19,19 @@ namespace SolarSystem.Backend.Classes.Simulation
             Lines = lines ?? throw new ArgumentNullException(nameof(lines));
         }
 
+        public IEnumerator<Line> GetEnumerator()
+        {
+            return Lines.GetEnumerator();
+        }
+
         public override string ToString()
         {
             return $"{OrderId}";
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
    

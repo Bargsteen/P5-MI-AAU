@@ -70,6 +70,7 @@
   <ItemGroup>
     <Compile Include="Classes\SchedulerOLD.cs" />
     <Compile Include="Classes\Schedulers\FifoScheduler.cs" />
+    <Compile Include="Classes\Schedulers\LSTScheduer.cs" />
     <Compile Include="Classes\Schedulers\Mi2Scheduler.cs" />
     <Compile Include="Classes\Schedulers\MiScheduler.cs" />
     <Compile Include="Classes\Schedulers\RealismScheduler.cs" />

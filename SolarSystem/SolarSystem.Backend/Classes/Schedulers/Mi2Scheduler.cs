@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Accord.Math;
 using SolarSystem.Backend.Classes.Simulation;
 
@@ -23,7 +22,7 @@ namespace SolarSystem.Backend.Classes.Schedulers
             // Initialize replay memory to capacity N
             ReplayMemory = new List<Memory>(N);
             // Initialize a set of weights, theta, to 0
-            Weights = new Sparse<double>(Enumerable.Range(0, WeightCount).ToArray(), Enumerable.Repeat(Random.NextDouble(), WeightCount).ToArray());
+            Weights = new Sparse<double>(WeightCount);
             
             // Sentinel waiting action. Must be checked for later 
             var waitOrder = new Order(0, DateTime.MinValue, new List<Line>()); 
@@ -34,28 +33,20 @@ namespace SolarSystem.Backend.Classes.Schedulers
 
         protected override Order ChooseNextOrder()
         {
-            int actionCount = Actions.Count;
-
-
-            int bestActionIndex = int.MinValue;
-            double bestActionValue = double.MinValue;
+            // HMM
+           /* Matrix.Dot(Actions.ToArray(), Weights.ToDense());
+                
+               
             
-            for (int i = 0; i < actionCount; i++)
-            {
-                var action = Actions[i];
-                var valueForAction = action.Dot(Weights);
-                if (valueForAction > bestActionValue)
-                {
-                    bestActionValue = valueForAction;
-                    bestActionIndex = i;
-                }
-            }
-
-            return ActualOrderPool[bestActionIndex];
-
-            // Get Reward
-            // Store transition
-            // Sample mini batch and learn with gradient descent
+            
+            int actionCount = Actions.Count;
+            
+            double currentlyBestQ = Double.MinValue;
+            int currentlyBestIndex = 0;
+            for(int i = 0; i < Actions.)
+            
+            var indexOfBestOrder = Actions.IndexOf(bestOrder);*/
+            return new Order(0, DateTime.MinValue, new List<Line>()); 
         }
 
         private double CalculateQ(Sparse<double> stateAndAction, Sparse<double> weights)
