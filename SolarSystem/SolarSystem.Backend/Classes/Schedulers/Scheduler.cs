@@ -21,6 +21,8 @@ namespace SolarSystem.Backend.Classes.Schedulers
         private OrderGenerator OrderGenerator { get; }
         private Handler Handler { get; set; }
 
+        public bool UsePoolTime = true;
+
         protected Scheduler(OrderGenerator orderGenerator, Handler handler, double poolMoverTime)
         {
             OrderGenerator = orderGenerator;
@@ -36,7 +38,7 @@ namespace SolarSystem.Backend.Classes.Schedulers
             
         }
 
-        public void Start()
+        public virtual void Start()
         {
             TimeKeeper.Tick += TickLoop;
         }
@@ -67,11 +69,12 @@ namespace SolarSystem.Backend.Classes.Schedulers
         private void MoveInitialToActualPool()
         {
             // If the time has passed, and there is something to move => move.
-            if (TimerStartMinutes <= PoolTimer++)
+            if (UsePoolTime == false || TimerStartMinutes <= PoolTimer++)
             {
                 ActualOrderPool.AddRange(InitialOrderPool);
                 InitialOrderPool.Clear();
                 
+
                 // Reset timer
                 PoolTimer = 0;
             }

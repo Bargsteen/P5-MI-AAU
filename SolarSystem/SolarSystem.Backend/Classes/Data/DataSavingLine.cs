@@ -14,8 +14,5 @@ namespace SolarSystem.Backend.Classes.Data
             Line = line;
         }
 
-        public Line Line;
-        DateTime plannedPickingTime;
-        DateTime actualPickingTime;
-    }
+        public Line Line;    }
 }

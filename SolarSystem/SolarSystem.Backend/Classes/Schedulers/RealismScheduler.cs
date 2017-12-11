@@ -10,6 +10,12 @@ namespace SolarSystem.Backend.Classes.Schedulers
             return ActualOrderPool.OrderBy(o => o.OrderTime).First();
         }
 
+        public override void Start()
+        {
+            base.Start();
+            UsePoolTime = true;
+        }
+
         public RealismScheduler(OrderGenerator orderGenerator, Handler handler, double timerStartMinutes) : base(orderGenerator, handler, timerStartMinutes)
         {
 
