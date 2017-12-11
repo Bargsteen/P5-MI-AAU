@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace SolarSystem.Backend.Classes.Data
+namespace SolarSystem
 {
     public static class DataSaving
     {
