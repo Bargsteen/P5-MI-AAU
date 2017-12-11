@@ -9,19 +9,19 @@ using System.Threading.Tasks;
 
 namespace SolarSystem
 {
-    class DataSaving
+    public static class DataSaving
     {
-        public DataSaving()
-        { }
-        private bool firstIteration = true;
-        private double average;
-        private double sumOfSquaresOfDifferences;
-        private double sd;
-        private Dictionary<Area, double> areaStandartDeviation = new Dictionary<Area, double>();
+
+        private static bool firstIteration = true;
+        private static double average;
+        private static double sumOfSquaresOfDifferences;
+        private static double sd;
+        public static Dictionary<Area, double> areaStandartDeviation = new Dictionary<Area, double>();
+        public static List<DataSavingOrder> orders;
 
 
         //Method for saving data to datafiles. This method will also calculate standart deviation based on input and previous input
-        public void SaveData(Dictionary<Area, List<Tuple<DateTime, int>>> _linesInArea)
+        public static void SaveData(Dictionary<Area, List<Tuple<DateTime, int>>> _linesInArea)
         {
             foreach (var _a in _linesInArea.Keys)
             {
