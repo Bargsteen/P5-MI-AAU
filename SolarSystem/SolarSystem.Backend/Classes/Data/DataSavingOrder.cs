@@ -18,7 +18,7 @@ namespace SolarSystem.Backend.Classes.Data
         public Order Order { get; set; }
         public List<DataSavingLine> lines { get; }
         public TimeSpan deltaFinishedTime;
-        public DateTime finishedOrderTime { get { return finishedOrderTime; } set { deltaFinishedTime = value -Order.OrderTime; } }
+        public DateTime finishedOrderTime { get { return finishedOrderTime; } set { deltaFinishedTime = value - Order.OrderTime;} }
 
         
     }

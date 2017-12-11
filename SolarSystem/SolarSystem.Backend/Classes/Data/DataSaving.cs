@@ -18,6 +18,11 @@ namespace SolarSystem.Backend.Classes.Data
 
         public static void SaveData()
         {
+            using (StreamWriter writer = new StreamWriter(@"SimulationStatistics.txt", true))
+            {
+                writer.WriteLine("Amount in orders: " + orders.Count());
+                writer.Close();
+            }
             FindLongestOrderTime();
             FindSmallestOrderTime();
             FindAverageOrderCompletionTime();
