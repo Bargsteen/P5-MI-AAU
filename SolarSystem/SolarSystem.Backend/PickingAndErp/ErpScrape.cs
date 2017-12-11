@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using SolarSystem;
+using SolarSystem.Backend.Classes.Data;
 
 /*
  * Make ErpScrape object.
@@ -111,7 +114,7 @@ namespace SolarSystem.Backend.PickingAndErp
                     // Reset buffer and counter
                     buffer.Clear();
                     counter = 0;
-
+                    
                     // skip 6 lines to get to articlenumber.
                     line = stream.ReadLine();
                     line = stream.ReadLine();
@@ -152,6 +155,11 @@ namespace SolarSystem.Backend.PickingAndErp
                     orderList.Add(order);
                 }
 
+            }
+
+            foreach (Order order in orderList)
+            {
+                DataSaving.orders.Find(o => o.Order.OrderId == order.OrderNumber).Order.OrderTime = order.OrderTime;
             }
 
             return orderList;

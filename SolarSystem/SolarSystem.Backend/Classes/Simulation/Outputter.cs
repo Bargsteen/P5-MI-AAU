@@ -40,19 +40,7 @@ namespace SolarSystem.Backend.Classes.Simulation
                         file.WriteLine(output);
                     }   
                 }
-
             }
-
-
-
-
-
-
-            //if (LinesFromScrape.Find(s => LinesFinished.Find(f => f.Split(';')[0] == s.Split(';')[0] && f.Split(';')[1] == s.Split(';')[1]).Any()).Any())
-            //LinesFromScrape.ForEach(s => Console.WriteLine(s + LinesFinished.Single(f => f.Split(';')[0] == s.Split(';')[0] && f.Split(';')[1] == s.Split(';')[1]).Split(';')[2] ));
-
-
-        
         }
     }
 }

@@ -11,11 +11,17 @@ namespace SolarSystem.Backend.Classes.Data
     {
         public DataSavingLine(Line line)
         {
-            _line = line;
+            Line = line;
         }
 
+<<<<<<< HEAD
         public Line _line;
         public DateTime plannedPickingTime;
         //public DateTime actualPickingTime;
+=======
+        public Line Line;
+        DateTime plannedPickingTime;
+        DateTime actualPickingTime;
+>>>>>>> 76de74826069b4282715aa4af2757804dd98c720
     }
 }

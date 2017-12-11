@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using SolarSystem.Backend.Classes;
+using SolarSystem.Backend.Classes.Data;
 using SolarSystem.Backend.Classes.Simulation;
 
 namespace SolarSystem.Backend.PickingAndErp
@@ -96,6 +97,7 @@ namespace SolarSystem.Backend.PickingAndErp
             {
                 for(int i = 0; i < order.LineList.Count; i++)
                 {
+                    DataSaving.orders.Add(new DataSavingOrder(order.ToSimOrder()));
                     Outputter.LinesFromScrape.Add(order.OrderNumber + ";" + order.LineList[i].Article.Id + ";" + order.LineList[i].Timestamp.Hour + ":" + order.LineList[i].Timestamp.Minute + ":" + order.LineList[i].Timestamp.Second);
                 }
             }
