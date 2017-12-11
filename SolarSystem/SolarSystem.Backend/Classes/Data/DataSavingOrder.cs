@@ -12,10 +12,10 @@ namespace SolarSystem.Backend.Classes.Data
     {
         public DataSavingOrder(Order order)
         {
-            _order = order;
+            Order = order;
         }
 
-        public Order _order { get; }
+        public Order Order { get; set; }
         public List<DataSavingLine> lines { get; }
         public DateTime finishedOrderTime { get; set; }
 

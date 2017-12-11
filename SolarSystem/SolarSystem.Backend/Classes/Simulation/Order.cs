@@ -8,7 +8,7 @@ namespace SolarSystem.Backend.Classes.Simulation
     public class Order : IEnumerable<Line>
     {
         public int OrderId { get; }
-        public DateTime OrderTime { get;}
+        public DateTime OrderTime { get; set; }
         public List<Line> Lines { get;}
         public Dictionary<AreaCode, bool> Areas { get; set; }
 
