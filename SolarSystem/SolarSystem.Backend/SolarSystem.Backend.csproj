@@ -68,6 +68,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\Data\DataSaving.cs" />
+    <Compile Include="Classes\Data\DataSavingLine.cs" />
+    <Compile Include="Classes\Data\DataSavingOrder.cs" />
     <Compile Include="Classes\SchedulerOLD.cs" />
     <Compile Include="Classes\Schedulers\FifoScheduler.cs" />
     <Compile Include="Classes\Schedulers\LSTScheduer.cs" />

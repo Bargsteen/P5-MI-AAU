@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
+
 namespace SolarSystem.Backend.Classes.Data
 {
     public static class DataSaving
@@ -18,9 +19,15 @@ namespace SolarSystem.Backend.Classes.Data
         public static Dictionary<Area, double> areaStandartDeviation = new Dictionary<Area, double>();
         public static List<DataSavingOrder> orders = new List<DataSavingOrder>();
 
+        public static void SaveData()
+        {
+            FindLongestOrderTime();
+            FindSmallestOrderTime();
+            FindAverageOrderCompletionTime();
+        }
 
         //Method for saving data to datafiles. This method will also calculate standart deviation based on input and previous input
-        public static void SaveData(Dictionary<Area, List<Tuple<DateTime, int>>> _linesInArea)
+        private static void SaveDatato(Dictionary<Area, List<Tuple<DateTime, int>>> _linesInArea)
         {
             foreach (var _a in _linesInArea.Keys)
             {
@@ -55,6 +62,30 @@ namespace SolarSystem.Backend.Classes.Data
                 }
             }
             firstIteration = false;
+        }
+
+        private static void FindLongestOrderTime()
+        {
+            using(StreamWriter writer = new StreamWriter(@"SimulationStatistics.txt", true))
+            {
+                writer.WriteLine(orders.Max(o => o.deltaFinishedTime));
+            }            
+        }
+
+        private static void FindSmallestOrderTime()
+        {
+            using (StreamWriter writer = new StreamWriter(@"SimulationStatistics.txt", true))
+            {
+                writer.WriteLine(orders.Min(o => o.deltaFinishedTime));
+            }
+        }
+
+        private static void FindAverageOrderCompletionTime()
+        {
+            using (StreamWriter writer = new StreamWriter(@"SimulationStatistics.txt", true))
+            {               
+                writer.WriteLine(orders.Average(o => o.deltaFinishedTime.TotalMinutes));
+            }
         }
     }
 }
