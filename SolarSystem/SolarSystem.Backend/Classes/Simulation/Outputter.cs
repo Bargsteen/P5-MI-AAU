@@ -22,22 +22,25 @@ namespace SolarSystem.Backend.Classes.Simulation
                     if (s.Split(';')[0] == lineFinished.Split(';')[0])
                     {
                         string output = s;
-                        output += ";" + lineFinished.Split(';')[2];
+                        output += ";" + lineFinished.Split(';')[1];
 
                         DateTime PlannedFinishTime = new DateTime(1,
                             1,
                             1,
-                            int.Parse(s.Split(';')[2].Split(':')[0]),
-                            int.Parse(s.Split(';')[2].Split(':')[1]),
-                            int.Parse(s.Split(';')[2].Split(':')[2]));
+                            int.Parse(s.Split(';')[1].Split(':')[0]),
+                            int.Parse(s.Split(';')[1].Split(':')[1]),
+                            int.Parse(s.Split(';')[1].Split(':')[2]));
                         DateTime ActualFinishTime = new DateTime(1,
                             1,
                             1,
-                            int.Parse(lineFinished.Split(';')[2].Split(':')[0]),
-                            int.Parse(lineFinished.Split(';')[2].Split(':')[1]),
-                            int.Parse(lineFinished.Split(';')[2].Split(':')[2]));
+                            int.Parse(lineFinished.Split(';')[1].Split(':')[0]),
+                            int.Parse(lineFinished.Split(';')[1].Split(':')[1]),
+                            int.Parse(lineFinished.Split(';')[1].Split(':')[2]));
 
                         TimeSpan DeltaTime = PlannedFinishTime - ActualFinishTime;
+
+                        //if(DeltaTime.Minutes > 5)
+                        //    throw new Exception();
 
                         output += ";" + TimeSpan.FromMinutes(Math.Abs(DeltaTime.TotalMinutes));
 

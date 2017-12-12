@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using SolarSystem.Backend.Classes.Simulation;
 
 namespace SolarSystem.Backend.Classes.Schedulers
@@ -17,6 +18,17 @@ namespace SolarSystem.Backend.Classes.Schedulers
             {
                 var slow = 3;
             }
+
+
+            if (Math.Abs((TimeKeeper.CurrentDateTime - ord.OrderTime).TotalSeconds) > 3)
+            {
+                throw new Exception();
+            }
+
+            return ord;
+
+
+
             return ord;
         }
 

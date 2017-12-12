@@ -45,6 +45,11 @@ namespace SolarSystem
                 _totalFinishedOrders += orderBox.LineIsPickedStatuses.Keys.Count;
                 _finishedOrdersPerHour += orderBox.LineIsPickedStatuses.Keys.Count;
 
+                Outputter.LinesFinished.Add(orderBox.Order.OrderId + ";" +
+                    TimeKeeper.CurrentDateTime.Hour + ":" + 
+                    TimeKeeper.CurrentDateTime.Minute + ":" + 
+                    TimeKeeper.CurrentDateTime.Second);
+
                 DataSaving.orders.Where(o => o.Order.OrderId == orderBox.Order.OrderId)
                     .Select(o => o.finishedOrderTime = TimeKeeper.CurrentDateTime);
             };
