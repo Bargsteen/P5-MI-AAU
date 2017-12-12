@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using SolarSystem.Backend.Classes;
-using SolarSystem.Backend.Classes.Data;
 using SolarSystem.Backend.Classes.Simulation;
 
 namespace SolarSystem.Backend.PickingAndErp

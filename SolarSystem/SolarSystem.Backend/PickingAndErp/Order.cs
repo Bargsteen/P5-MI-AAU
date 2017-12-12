@@ -42,7 +42,7 @@ namespace SolarSystem.Backend.PickingAndErp
                 simlinelist.Add(line.ToSimLine());
             }
 
-            return new Classes.Simulation.Order(this.OrderNumber, this.OrderTime, simlinelist);
+            return new Classes.Simulation.Order(OrderNumber, OrderTime, simlinelist);
 
         }
         

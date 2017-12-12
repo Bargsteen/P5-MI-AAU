@@ -16,9 +16,6 @@ namespace SolarSystem.Backend
         public readonly Handler Handler;
         public readonly OrderGenerator OrderGenerator;
         
-        public readonly MiScheduler MiScheduler;
-        public readonly SimulationInformation SimulationInformation;
-
         public readonly DateTime StartTime;
         private readonly DateTime _schedulerStartTime;
 
@@ -46,20 +43,22 @@ namespace SolarSystem.Backend
             erpscrape.Orders.Sort((x,y) => x.OrderTime.CompareTo(y.OrderTime));
 
 
-            //for (int i = 0; i < orders.Count; i++)
-            //{
-            //    Order order = orders[i];
+            /*for (int i = 0; i < orders.Count; i++)
+            {
+                Order order = orders[i];
 
-            //    try
-            //    {
-            //        order.OrderTime = erpscrape.Orders.Find(x => x.OrderNumber == order.OrderNumber).OrderTime;
-            //    }
-            //    catch (NullReferenceException)
-            //    {
-            //        orders.Remove(order);
-            //        i--;
-            //    }
-            //}
+                try
+                {
+                    order.OrderTime = erpscrape.Orders.Find(x => x.OrderNumber == order.OrderNumber).OrderTime;
+                }
+                catch (NullReferenceException)
+                {
+                    orders.Remove(order);
+                    i--;
+                }
+            }*/
+            
+            
            
 
             List<Article> articleList = orders
@@ -69,18 +68,21 @@ namespace SolarSystem.Backend
                 .ToList();
 
             Handler = new Handler(); 
+            
+            SimulationInformation simInfo = new SimulationInformation(Handler, schedulerStartTime);
+            
             OrderGenerator = new OrderGenerator(articleList, orderChance, orders, orderGenerationConfiguration);
             
             switch (schedulerType)
             {
                 case SchedulerType.Fifo:
-                    _scheduler = new FifoScheduler(OrderGenerator, Handler, 4);
+                    _scheduler = new FifoScheduler(OrderGenerator, Handler, 0);
                     break;
                 case SchedulerType.Mi1:
                     throw new NotImplementedException("MI1 is not implemented yet..");
                     break;
                 case SchedulerType.Mi2:
-                    throw new NotImplementedException("MI2 is not implemented yet..");
+                    _scheduler = new Mi2Scheduler(OrderGenerator, Handler, 4, articleList, simInfo);
                     break;
                 case SchedulerType.LST:
                     _scheduler = new LSTScheduer(OrderGenerator, Handler, 4);
