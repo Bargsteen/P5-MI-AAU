@@ -42,6 +42,9 @@ namespace SolarSystem.Backend.Classes.Simulation
                         //if (Math.Abs(DeltaTime.TotalMinutes) > 60)
                         //    throw new Exception();
 
+                        if(output.Split(';')[0] == "155857")
+                            throw new Exception();
+
                         output += ";" + TimeSpan.FromMinutes(DeltaTime.TotalMinutes);
 
                         file.WriteLine(output);

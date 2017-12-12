@@ -157,10 +157,10 @@ namespace SolarSystem.Backend.PickingAndErp
 
             }
 
-            foreach (Order order in orderList)
-            {
-                DataSaving.orders.Find(o => o.Order.OrderId == order.OrderNumber).Order.OrderTime = order.OrderTime;
-            }
+            //foreach (Order order in orderList)
+            //{
+            //    DataSaving.orders.Find(o => o.Order.OrderId == order.OrderNumber).Order.OrderTime = order.OrderTime;
+            //}
 
             return orderList;
 
