@@ -7,12 +7,10 @@ using SolarSystem.Backend.Classes.Schedulers;
 using SolarSystem.Backend.Classes.Simulation;
 using SolarSystem.Backend.PickingAndErp;
 using Article = SolarSystem.Backend.Classes.Simulation.Article;
-using Order = SolarSystem.Backend.PickingAndErp.Order;
-using SolarSystem.Backend.Classes.Schedulers;
 
 namespace SolarSystem.Backend
 {
-    
+
     public class Runner
     {
         public readonly Handler Handler;
@@ -48,20 +46,20 @@ namespace SolarSystem.Backend
             erpscrape.Orders.Sort((x,y) => x.OrderTime.CompareTo(y.OrderTime));
 
 
-            for (int i = 0; i < orders.Count; i++)
-            {
-                Order order = orders[i];
+            //for (int i = 0; i < orders.Count; i++)
+            //{
+            //    Order order = orders[i];
 
-                try
-                {
-                    order.OrderTime = erpscrape.Orders.Find(x => x.OrderNumber == order.OrderNumber).OrderTime;
-                }
-                catch (NullReferenceException)
-                {
-                    orders.Remove(order);
-                    i--;
-                }
-            }
+            //    try
+            //    {
+            //        order.OrderTime = erpscrape.Orders.Find(x => x.OrderNumber == order.OrderNumber).OrderTime;
+            //    }
+            //    catch (NullReferenceException)
+            //    {
+            //        orders.Remove(order);
+            //        i--;
+            //    }
+            //}
            
 
             List<Article> articleList = orders
@@ -86,6 +84,9 @@ namespace SolarSystem.Backend
                     break;
                 case SchedulerType.LST:
                     _scheduler = new LSTScheduer(OrderGenerator, Handler, 4);
+                    break;
+                case SchedulerType.Real:
+                    _scheduler = new RealismScheduler(OrderGenerator, Handler, 0);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(schedulerType), schedulerType, null);

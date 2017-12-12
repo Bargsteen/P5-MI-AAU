@@ -62,7 +62,7 @@ namespace SolarSystem.Backend.PickingAndErp
                         var articleNumber = long.Parse(lineElements[1]);
                         var areaCode = AreaIntToCode(int.Parse(lineElements[10]));
                         var stationNumber = int.Parse(lineElements[11]);
-                        var timeStampForPicking = DateTime.Parse(lineElements[8]);
+                        var timeStampForPicking = new DateTime(2017, 10, 2, 0, 0, 0) + TimeSpan.Parse(lineElements[8]);
                         var lineQuantity = int.Parse(lineElements[15].Replace(".", ""));
                         var materialName = lineElements[4];
 
@@ -89,7 +89,7 @@ namespace SolarSystem.Backend.PickingAndErp
             foreach (var kvp in ordersGathered)
             {
                 Order order = new Order(kvp.Key, kvp.Value);
-                order.OrderTime = DateTime.Now;
+                order.OrderTime = order.LineList.OrderBy(l => l.Timestamp).First().Timestamp;
                 OrderList.Add(order);
             }
 

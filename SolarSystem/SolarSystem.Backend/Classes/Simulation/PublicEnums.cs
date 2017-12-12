@@ -34,6 +34,7 @@
         Fifo,
         Mi1,
         Mi2,
-        LST
+        LST,
+        Real
     }
 }
