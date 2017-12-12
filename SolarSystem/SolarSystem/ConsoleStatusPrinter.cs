@@ -117,6 +117,7 @@ namespace SolarSystem
         {
             PrintFullStatus();
             Console.WriteLine("\nSimulation Finished!");
+            DataSaving.SaveData();
         }
     }
 }
