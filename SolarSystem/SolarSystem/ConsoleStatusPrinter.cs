@@ -50,8 +50,7 @@ namespace SolarSystem
                     TimeKeeper.CurrentDateTime.Minute + ":" + 
                     TimeKeeper.CurrentDateTime.Second);
 
-                DataSaving.orders.Where(o => o.Order.OrderId == orderBox.Order.OrderId)
-                    .Select(o => o.finishedOrderTime = TimeKeeper.CurrentDateTime);
+                DataSaving.orders.First(o => o.Order.OrderId == orderBox.Order.OrderId).FinishedOrderTime = TimeKeeper.CurrentDateTime;
             };
 
             var index = 0;

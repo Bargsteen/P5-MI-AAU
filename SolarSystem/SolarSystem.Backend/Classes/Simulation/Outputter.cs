@@ -39,10 +39,10 @@ namespace SolarSystem.Backend.Classes.Simulation
 
                         TimeSpan DeltaTime = PlannedFinishTime - ActualFinishTime;
 
-                        //if(DeltaTime.Minutes > 5)
+                        //if (Math.Abs(DeltaTime.TotalMinutes) > 60)
                         //    throw new Exception();
 
-                        output += ";" + TimeSpan.FromMinutes(Math.Abs(DeltaTime.TotalMinutes));
+                        output += ";" + TimeSpan.FromMinutes(DeltaTime.TotalMinutes);
 
                         file.WriteLine(output);
                     }   
