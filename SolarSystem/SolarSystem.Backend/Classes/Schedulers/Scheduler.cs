@@ -44,6 +44,8 @@ namespace SolarSystem.Backend.Classes.Schedulers
 
         private void TickLoop()
         {
+            RunFirstInTickLoop();
+            
             // Move OrderPool
             MoveInitialToActualPool();
             
@@ -63,8 +65,13 @@ namespace SolarSystem.Backend.Classes.Schedulers
             }
             
             // Else => Return
-        } 
-        
+        }
+
+        protected virtual void RunFirstInTickLoop()
+        {
+            // Do nothing
+        }
+
         protected virtual void MoveInitialToActualPool()
         {
             // If the time has passed, and there is something to move => move.

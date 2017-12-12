@@ -34,7 +34,7 @@ namespace SolarSystem.Backend.Classes
 
         public double[] GetState()
         {
-            var values = AreaInformation.Values.ToArray();
+            var values = AreaInformation.Values.Concat(new[] {(double)Handler.MainLoop.BoxesInMainLoop}).ToArray();
             return values;
         }
         
@@ -50,7 +50,7 @@ namespace SolarSystem.Backend.Classes
             return Activate(error);
         }
 
-        private double CalcSquaredError(double min, double max, double actual)
+        private static double CalcSquaredError(double min, double max, double actual)
         {
             if (actual >= max)
             {

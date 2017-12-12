@@ -3,18 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using Accord.Math;
+using Accord.Statistics;
 using SolarSystem.Backend.Classes.Simulation;
 
 namespace SolarSystem.Backend.Classes.Schedulers
 {
-    public class Mi2Scheduler : Scheduler
+    public class Mi6Scheduler : Scheduler
     {
-        private const int N = 100;
+        private const int ReplayMemorySize = 100;
+        private const int BatchSize = 5;
+        private const double DiscountFactor = 0.3;
         private readonly int WeightCount;
 
         private readonly List<Article> _articles;
 
-        private List<Memory> ReplayMemory { get; set; }
+        private Queue<Memory> ReplayMemory { get; set; }
         private double[] Weights { get; set; }
 
         private readonly Dictionary<int, ActionData> _actionDataDict;
@@ -23,12 +26,12 @@ namespace SolarSystem.Backend.Classes.Schedulers
 
         private static Random Random { get; } = new Random();
         
-        public Mi2Scheduler(OrderGenerator orderGenerator, Handler handler, double poolMoverTime, List<Article> articles, SimulationInformation simInfo) : base(orderGenerator, handler, poolMoverTime)
+        public Mi6Scheduler(OrderGenerator orderGenerator, Handler handler, double poolMoverTime, List<Article> articles, SimulationInformation simInfo) : base(orderGenerator, handler, poolMoverTime)
         {
             _simInfo = simInfo;
             WeightCount = articles.Count + _simInfo.GetState().Length;
-            // Initialize replay memory to capacity N
-            ReplayMemory = new List<Memory>();
+            // Initialize replay memory to capacity ReplayMemorySize
+            ReplayMemory = new Queue<Memory>();
             // Initialize a set of weights, theta, to 0
             Weights = Enumerable.Repeat(Random.NextDouble(), WeightCount).ToArray();
             
@@ -42,7 +45,7 @@ namespace SolarSystem.Backend.Classes.Schedulers
             
             _actionDataDict = new Dictionary<int, ActionData>
             {
-                {waitOrder.OrderId, new ActionData(waitOrder, actionVector, CalculateActionValue(actionVector) ) }
+                {waitOrder.OrderId, new ActionData(waitOrder, actionVector, CalculateActionValue(actionVector, _simInfo.GetState()) ) }
             };
                 
             OnOrderActuallySent += RemoveActionFromListIfActuallySent;
@@ -53,18 +56,61 @@ namespace SolarSystem.Backend.Classes.Schedulers
         {
             ActionData bestAction = _actionDataDict.OrderByDescending(kvp => kvp.Value.ActionValue).First().Value;
 
-                  
-
-            
             // Get Reward
             var reward = _simInfo.GetReward();
-            // Store transition
             
+            
+            // Keep size ReplayMemorySize in ReplayMemory
+            if (ReplayMemory.Count == ReplayMemorySize)
+            {
+                ReplayMemory.Dequeue();
+            }
+            
+            // Store transition
             var newMemory = new Memory(_simInfo.GetState(), bestAction.ActionVector, reward);
-            ReplayMemory.Add(newMemory);
+            ReplayMemory.Enqueue(newMemory);
             
             // Sample mini batch and learn with gradient descent
+            Learn();
+            
             return bestAction.Order;
+        }
+
+        protected override void RunFirstInTickLoop()
+        {
+            UpdateStateForLastAction();
+        }
+
+        private void Learn()
+        {
+            C5.HashSet<int> randomBatchIndexes = new C5.HashSet<int>();
+            var replayMemorySize = ReplayMemory.Count;
+            
+            while (randomBatchIndexes.Count <= BatchSize && randomBatchIndexes.Count<= replayMemorySize)
+            {
+                randomBatchIndexes.Add(Random.Next(0, replayMemorySize));
+            }
+            
+            // Sample mini-batch
+            var randomBatch = randomBatchIndexes.Select(i => ReplayMemory.ElementAt(i));
+
+            foreach (var memory in randomBatch)
+            {
+                var yk = memory.Reward + DiscountFactor * _actionDataDict
+                             .OrderByDescending(kvp => kvp.Value.ActionValue).First().Value.ActionValue;
+                
+            }
+            
+        }
+
+        private void UpdateStateForLastAction()
+        {
+            if (!ReplayMemory.Any()) return;
+            
+            var oldMemory = ReplayMemory.Last();
+            var updatedMemory = oldMemory;
+            updatedMemory.NextState = _simInfo.GetState();
+            ReplayMemory.Replace(oldMemory, updatedMemory);
         }
 
 
@@ -81,7 +127,7 @@ namespace SolarSystem.Backend.Classes.Schedulers
                 // Reset timer
                 PoolTimer = 0;
             }
-            // Else return.
+            // Else return
         }
 
         private void CalculateAndAddActionData(List<Order> initialOrderPool)
@@ -98,10 +144,10 @@ namespace SolarSystem.Backend.Classes.Schedulers
             _actionDataDict.Remove(action.OrderId);
         }
 
-        private double CalculateActionValue(double[] actionVector)
+        private double CalculateActionValue(double[] actionVector, double[] stateVector)
         {
             var fullVector = actionVector.ToList();
-            fullVector.AddRange(_simInfo.GetState());
+            fullVector.AddRange(stateVector);
             
             return fullVector.Zip(Weights, (a, w) => a * w).Sum();
         }
