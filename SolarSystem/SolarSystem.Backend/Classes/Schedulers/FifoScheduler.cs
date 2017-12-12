@@ -12,16 +12,7 @@ namespace SolarSystem.Backend.Classes.Schedulers
 
         protected override Order ChooseNextOrder()
         {
-            var ord = ActualOrderPool.OrderBy(o => o.OrderTime).First();
-            if (ord.OrderId == 150350)
-            {
-                var b = 2;
-            }
-            if (ord.OrderId == 150402)
-            {
-                var slow = 3;
-            }
-            return ord;
+            return ActualOrderPool.OrderBy(o => o.OrderTime).First();
         }
     }
 }
