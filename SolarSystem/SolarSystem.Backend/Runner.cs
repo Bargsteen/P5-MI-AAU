@@ -81,8 +81,8 @@ namespace SolarSystem.Backend
                 case SchedulerType.Mi1:
                     throw new NotImplementedException("MI1 is not implemented yet..");
                     break;
-                case SchedulerType.Mi2:
-                    _scheduler = new Mi2Scheduler(OrderGenerator, Handler, 4, articleList, simInfo);
+                case SchedulerType.Mi6:
+                    _scheduler = new Mi6Scheduler(OrderGenerator, Handler, 4, articleList, simInfo);
                     break;
                 case SchedulerType.LST:
                     _scheduler = new LSTScheduer(OrderGenerator, Handler, 4);
