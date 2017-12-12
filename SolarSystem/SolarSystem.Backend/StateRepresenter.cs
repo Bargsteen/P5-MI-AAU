@@ -7,7 +7,7 @@ namespace SolarSystem.Backend
 {
     public static class StateRepresenter
     {
-        public static Sparse<double> MakeOrderRepresentation(Order order, List<Article> articles)
+        public static double[] MakeOrderRepresentation(Order order, List<Article> articles)
         {
             int articleCount = articles.Count;
             // Create vector for return
@@ -25,7 +25,7 @@ namespace SolarSystem.Backend
                 }
                 // Otherwise leave the 0 in place
             }
-            return Sparse.FromDense(orderVector);
+            return orderVector;
         }
 
         public static Sparse<double> MakeFullRepresentation(Order order, List<Article> articles,

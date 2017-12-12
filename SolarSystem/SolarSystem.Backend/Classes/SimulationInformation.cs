@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic; 
+﻿using System;
+using System.Collections.Generic; 
 using System.Linq;
+using Accord.Statistics.Kernels;
 using SolarSystem.Backend.Classes.Simulation;
 
 namespace SolarSystem.Backend.Classes  
@@ -7,11 +9,18 @@ namespace SolarSystem.Backend.Classes
     public class SimulationInformation  
     {  
         private Handler Handler { get; }  
-        public readonly Dictionary<AreaCode, double> AreaInformation;  
+        public readonly Dictionary<AreaCode, double> AreaInformation;
+
+        private int _totalLinesFinished = 0;
+        private readonly DateTime _schedulerStartTime;
   
-        public SimulationInformation(Handler handler)  
+        public SimulationInformation(Handler handler, DateTime schedulerStartTime)  
         {  
-            Handler = handler;  
+            Handler = handler;
+            
+            _schedulerStartTime = schedulerStartTime;
+
+            handler.OnOrderBoxFinished += box => _totalLinesFinished += box.LineIsPickedStatuses.Keys.Count;
   
             AreaInformation = Handler.Areas.ToDictionary(a => a.Key, x => 0.0);  
   
@@ -27,6 +36,36 @@ namespace SolarSystem.Backend.Classes
         {
             var values = AreaInformation.Values.ToArray();
             return values;
+        }
+        
+        public double GetReward()
+        {          
+            // Get running time since started packing
+            var timeSinceStartedPacking = TimeKeeper.CurrentDateTime - _schedulerStartTime;
+            // Calculate average lines per hour
+            var avgLinesPerHour = (_totalLinesFinished / timeSinceStartedPacking.TotalSeconds) * 3600;
+            // Calc reward based on squared errors above or below 2600 or 2300 lines/houe
+            var error = CalcSquaredError(2300, 2600, avgLinesPerHour);
+            // Pass to activation function
+            return Activate(error);
+        }
+
+        private double CalcSquaredError(double min, double max, double actual)
+        {
+            if (actual >= max)
+            {
+                return Math.Pow(actual - max, 2);
+            }
+            if (actual <= min)
+            {
+                return Math.Pow(actual - min, 2);
+            }
+            return 0;
+        }
+
+        private static double Activate(double value)
+        {
+            return value / (1 + Math.Abs(value));
         }
     }  
 }  

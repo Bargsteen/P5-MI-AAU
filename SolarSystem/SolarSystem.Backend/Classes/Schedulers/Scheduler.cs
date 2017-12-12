@@ -10,7 +10,7 @@ namespace SolarSystem.Backend.Classes.Schedulers
         protected double TimerStartMinutes { get; }
         protected int PoolTimer { get; set; }
 
-        protected SimulationInformation SimulationInformation { get; }
+        protected event Action<Order> OnOrderActuallySent;
         
         // Order pool from costumers
         protected List<Order> InitialOrderPool { get; }
@@ -25,7 +25,6 @@ namespace SolarSystem.Backend.Classes.Schedulers
         {
             OrderGenerator = orderGenerator;
             Handler = handler;
-            SimulationInformation = new SimulationInformation(Handler);
             InitialOrderPool = new List<Order>();
             ActualOrderPool = new List<Order>();;
 
@@ -87,7 +86,10 @@ namespace SolarSystem.Backend.Classes.Schedulers
             if (action.OrderId != 0 && !Handler.HandlerIsFull)
             {
                 // True => Send
-                Handler.ReceiveOrder(action);  
+                Handler.ReceiveOrder(action);
+                
+                // Used for letting deriving schedulers know whether it was actually sent
+                OnOrderActuallySent?.Invoke(action);
                 
                 // Return action is valid => True
                 return true;

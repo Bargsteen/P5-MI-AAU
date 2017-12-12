@@ -48,13 +48,14 @@ namespace SolarSystem
             var index = 0;
             TimeKeeper.Tick += () =>
             {
+                
+                
                 if (index++ > 60)
+                    
                     if (TimeKeeper.CurrentDateTime.Hour == _currentHour.Hour + 1)
                     {
-                        PrintFullStatus();
-                        
                         _ordersFinishedPerHour.Add(Tuple.Create(_currentHour.Hour, _finishedOrdersPerHour));
-
+                        PrintFullStatus();
                         _currentHour = TimeKeeper.CurrentDateTime;
                         _finishedOrdersPerHour = 0;
                     }
