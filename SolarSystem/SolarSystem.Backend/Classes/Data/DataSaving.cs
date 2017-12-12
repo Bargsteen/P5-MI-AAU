@@ -18,11 +18,6 @@ namespace SolarSystem.Backend.Classes.Data
 
         public static void SaveData()
         {
-            using (StreamWriter writer = new StreamWriter(@"SimulationStatistics.txt", true))
-            {
-                writer.WriteLine("Amount in orders: " + orders.Count());
-                writer.Close();
-            }
             FindLongestOrderTime();
             FindSmallestOrderTime();
             FindAverageOrderCompletionTime();
@@ -32,9 +27,9 @@ namespace SolarSystem.Backend.Classes.Data
         //Method for saving data to datafiles. This method will also calculate standart deviation based on input and previous input
         private static void FindLongestOrderTime()
         {
-            using(StreamWriter writer = new StreamWriter(@"SimulationStatistics.txt", true))
+            using(StreamWriter writer = new StreamWriter(@"SimulationStatistics.txt", false))
             {
-                writer.WriteLine("Largest completion time for an order: " + orders.Max(o => o.deltaFinishedTime));
+                writer.WriteLine("Largest completion time for an order: " + orders.Max(o => o.DeltaFinishedTime));
                 writer.Close();
             }            
         }
@@ -43,7 +38,7 @@ namespace SolarSystem.Backend.Classes.Data
         {
             using (StreamWriter writer = new StreamWriter(@"SimulationStatistics.txt", true))
             {
-                writer.WriteLine("Smallest completion time for an order: " + orders.Min(o => o.deltaFinishedTime));
+                writer.WriteLine("Smallest completion time for an order: " + orders.Min(o => o.DeltaFinishedTime));
                 writer.Close();
             }
 
@@ -54,7 +49,7 @@ namespace SolarSystem.Backend.Classes.Data
         {
             using (StreamWriter writer = new StreamWriter(@"SimulationStatistics.txt", true))
             {               
-                writer.WriteLine("Average order completion time: " + orders.Average(o => o.deltaFinishedTime.TotalMinutes));
+                writer.WriteLine("Average order completion time: " + orders.Average(o => o.DeltaFinishedTime.TotalMinutes) + " Minutter");
                 writer.Close();
             }
         }
@@ -65,8 +60,8 @@ namespace SolarSystem.Backend.Classes.Data
             double sumOfSquaresOfDifference;
             double sd;
 
-            average = orders.Average(v => v.deltaFinishedTime.TotalMinutes);
-            sumOfSquaresOfDifference = orders.Select(val => (val.deltaFinishedTime.TotalMinutes - average) * (val.deltaFinishedTime.TotalMinutes - average)).Sum();
+            average = orders.Average(v => v.DeltaFinishedTime.TotalMinutes);
+            sumOfSquaresOfDifference = orders.Select(val => (val.DeltaFinishedTime.TotalMinutes - average) * (val.DeltaFinishedTime.TotalMinutes - average)).Sum();
             sd = Math.Sqrt(sumOfSquaresOfDifference / orders.Count());
 
             using (StreamWriter writer = new StreamWriter(@"SimulationStatistics.txt", true))

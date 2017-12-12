@@ -45,8 +45,7 @@ namespace SolarSystem
                 _totalFinishedOrders += orderBox.LineIsPickedStatuses.Keys.Count;
                 _finishedOrdersPerHour += orderBox.LineIsPickedStatuses.Keys.Count;
 
-                DataSaving.orders.Where(o => o.Order.OrderId == orderBox.Order.OrderId)
-                    .Select(o => o.finishedOrderTime = TimeKeeper.CurrentDateTime);
+                DataSaving.orders.First(o => o.Order.OrderId == orderBox.Order.OrderId).FinishedOrderTime = TimeKeeper.CurrentDateTime;
             };
 
             var index = 0;
@@ -113,6 +112,7 @@ namespace SolarSystem
         {
             PrintFullStatus();
             Console.WriteLine("\nSimulation Finished!");
+            DataSaving.SaveData();
         }
     }
 }
