@@ -9,8 +9,8 @@ namespace SolarSystem.Backend.Classes.Schedulers
         protected override Order ChooseNextOrder()
         {
             var ord = ActualOrderPool.OrderBy(o => o.OrderTime).First();
-            
-            if (ord.OrderId == 150350)
+
+            /*if (Math.Abs((TimeKeeper.CurrentDateTime - ord.OrderTime).TotalSeconds) > 3)
             {
                 var b = 2;
             }
