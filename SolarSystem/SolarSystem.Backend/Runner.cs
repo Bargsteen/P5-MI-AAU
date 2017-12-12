@@ -7,20 +7,15 @@ using SolarSystem.Backend.Classes.Schedulers;
 using SolarSystem.Backend.Classes.Simulation;
 using SolarSystem.Backend.PickingAndErp;
 using Article = SolarSystem.Backend.Classes.Simulation.Article;
-using Order = SolarSystem.Backend.PickingAndErp.Order;
-using SolarSystem.Backend.Classes.Schedulers;
 
 namespace SolarSystem.Backend
 {
-    
+
     public class Runner
     {
         public readonly Handler Handler;
         public readonly OrderGenerator OrderGenerator;
         
-        public readonly MiScheduler MiScheduler;
-        public readonly SimulationInformation SimulationInformation;
-
         public readonly DateTime StartTime;
         private readonly DateTime _schedulerStartTime;
 
@@ -48,7 +43,7 @@ namespace SolarSystem.Backend
             erpscrape.Orders.Sort((x,y) => x.OrderTime.CompareTo(y.OrderTime));
 
 
-            for (int i = 0; i < orders.Count; i++)
+            /*for (int i = 0; i < orders.Count; i++)
             {
                 Order order = orders[i];
 
@@ -61,7 +56,9 @@ namespace SolarSystem.Backend
                     orders.Remove(order);
                     i--;
                 }
-            }
+            }*/
+            
+            
            
 
             List<Article> articleList = orders
@@ -71,21 +68,27 @@ namespace SolarSystem.Backend
                 .ToList();
 
             Handler = new Handler(); 
+            
+            SimulationInformation simInfo = new SimulationInformation(Handler, schedulerStartTime);
+            
             OrderGenerator = new OrderGenerator(articleList, orderChance, orders, orderGenerationConfiguration);
             
             switch (schedulerType)
             {
                 case SchedulerType.Fifo:
-                    _scheduler = new FifoScheduler(OrderGenerator, Handler, 4);
+                    _scheduler = new FifoScheduler(OrderGenerator, Handler, 0);
                     break;
                 case SchedulerType.Mi1:
                     throw new NotImplementedException("MI1 is not implemented yet..");
                     break;
                 case SchedulerType.Mi2:
-                    throw new NotImplementedException("MI2 is not implemented yet..");
+                    _scheduler = new Mi2Scheduler(OrderGenerator, Handler, 4, articleList, simInfo);
                     break;
                 case SchedulerType.LST:
                     _scheduler = new LSTScheduer(OrderGenerator, Handler, 4);
+                    break;
+                case SchedulerType.Real:
+                    _scheduler = new RealismScheduler(OrderGenerator, Handler, 0);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(schedulerType), schedulerType, null);

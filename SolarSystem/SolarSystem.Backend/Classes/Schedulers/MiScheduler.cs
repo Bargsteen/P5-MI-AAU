@@ -10,7 +10,7 @@ namespace SolarSystem.Backend.Classes.Schedulers
     { 
         private readonly double[] _weights;
 
-        private readonly Dictionary<Order, Sparse<double>> _actions;
+        private readonly Dictionary<Order, double[]> _actions;
 
         private SimulationInformation SimulationInformation { get; }
         private readonly Handler _handler;
@@ -21,15 +21,14 @@ namespace SolarSystem.Backend.Classes.Schedulers
         private double[] _simulationState; 
  
         private const int AvgLinesHour = 1400; 
-        private int _avgLinesActual = 0; 
+        private int _avgLinesActual; 
         private int _avgLinesLeft; 
-        private int _lastHourSinceSent = 0; 
+        private int _lastHourSinceSent; 
         
-        public MiScheduler(int simFeatureCount, Article[] articles, SimulationInformation simulationInformation, OrderGenerator orderGenerator, Handler handler)
+        public MiScheduler(int simFeatureCount, Article[] articles, SimulationInformation simulationInformation, 
+            OrderGenerator orderGenerator, Handler handler)
         {
             _handler = handler;
-            SimulationInformation = new SimulationInformation(_handler); 
-
             
             _simulationState = new double[simFeatureCount]; 
             _articles = articles; 
@@ -44,7 +43,7 @@ namespace SolarSystem.Backend.Classes.Schedulers
             } 
              
             _weights = Enumerable.Repeat(1d, _articles.Length + simFeatureCount).ToArray(); 
-            _actions = new Dictionary<Order, Sparse<double>>(); 
+            _actions = new Dictionary<Order, double[]>(); 
  
             // Sentinel waiting action. Must be checked for later 
             var waitOrder = new Order(0, DateTime.Now, new List<Line>()); 
@@ -87,7 +86,7 @@ namespace SolarSystem.Backend.Classes.Schedulers
             foreach (var action in _actions)
             {
                 // Convert to dense vector representing the article counts for each order
-                double[] denseActionDoubles = action.Value.ToDense();
+                double[] denseActionDoubles = action.Value;
                 
                 // Merge with simulation state vector
                 var fullStateVector = new List<double>();

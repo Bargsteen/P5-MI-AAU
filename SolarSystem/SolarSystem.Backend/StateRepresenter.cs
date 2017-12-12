@@ -7,11 +7,11 @@ namespace SolarSystem.Backend
 {
     public static class StateRepresenter
     {
-        public static Sparse<double> MakeOrderRepresentation(Order order, List<Article> articles)
+        public static double[] MakeOrderRepresentation(Order order, List<Article> articles)
         {
             int articleCount = articles.Count;
             // Create vector for return
-            double[] orderVector = new double[articleCount];
+            double[] orderVector = Enumerable.Repeat(0d, articleCount).ToArray();
             
             // Get unique order lines with the quantities of duplicates summed
             List<Line> uniqueLines = SumLinesInOrder(order);
@@ -23,21 +23,17 @@ namespace SolarSystem.Backend
                 {
                     orderVector[i] = uniqueLines.First(l => Equals(l.Article, articles[i])).Quantity;
                 }
-                else
-                {
-                    // otherwise add 0 in the vector
-                    orderVector[i] = 0;
-                }
+                // Otherwise leave the 0 in place
             }
-            return Sparse.FromDense(orderVector, false);
+            return orderVector;
         }
 
         public static Sparse<double> MakeFullRepresentation(Order order, List<Article> articles,
-            Sparse<double> stateRepresentation)
+            double[] stateRepresentation)
         {
             int articleCount = articles.Count;
             // Create vector for return
-            List<double> orderVector = new List<double>(articleCount + stateRepresentation.Length);
+            double[] orderVector = Enumerable.Repeat(0d, articleCount).ToArray();
             
             // Get unique order lines with the quantities of duplicates summed
             List<Line> uniqueLines = SumLinesInOrder(order);
@@ -49,14 +45,15 @@ namespace SolarSystem.Backend
                 {
                     orderVector[i] = uniqueLines.First(l => Equals(l.Article, articles[i])).Quantity;
                 }
-                else
-                {
-                    // otherwise add 0 in the vector
-                    orderVector[i] = 0;
-                }
+                // otherwise just keep the 0 in the position
             }
-            orderVector.AddRange(stateRepresentation);
-            return Sparse.FromDense(orderVector.ToArray(), false);
+            
+            //orderVector.AddRange(stateRepresentation);
+            var fullVector = new List<double>();
+            fullVector.AddRange(orderVector);
+            fullVector.AddRange(stateRepresentation);
+            
+            return Sparse.FromDense(fullVector.ToArray(), false);
         }
 
         public static double[] MakeSimulationRepresentation(Dictionary<string, double> simStats)

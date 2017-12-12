@@ -7,13 +7,13 @@ namespace SolarSystem.Backend.Classes.Schedulers
 {
     public abstract class Scheduler
     {
-        private double TimerStartMinutes { get; }
-        private int PoolTimer { get; set; }
+        protected double TimerStartMinutes { get; }
+        protected int PoolTimer { get; set; }
 
-        protected SimulationInformation SimulationInformation { get; }
+        protected event Action<Order> OnOrderActuallySent;
         
         // Order pool from costumers
-        private List<Order> InitialOrderPool { get; }
+        protected List<Order> InitialOrderPool { get; }
         
         // The pool that is actively being moved to Handler
         protected List<Order> ActualOrderPool { get; }
@@ -27,7 +27,6 @@ namespace SolarSystem.Backend.Classes.Schedulers
         {
             OrderGenerator = orderGenerator;
             Handler = handler;
-            SimulationInformation = new SimulationInformation(Handler);
             InitialOrderPool = new List<Order>();
             ActualOrderPool = new List<Order>();;
 
@@ -66,7 +65,7 @@ namespace SolarSystem.Backend.Classes.Schedulers
             // Else => Return
         } 
         
-        private void MoveInitialToActualPool()
+        protected virtual void MoveInitialToActualPool()
         {
             // If the time has passed, and there is something to move => move.
             if (UsePoolTime == false || TimerStartMinutes <= PoolTimer++)
@@ -90,7 +89,10 @@ namespace SolarSystem.Backend.Classes.Schedulers
             if (action.OrderId != 0 && !Handler.HandlerIsFull)
             {
                 // True => Send
-                Handler.ReceiveOrder(action);  
+                Handler.ReceiveOrder(action);
+                
+                // Used for letting deriving schedulers know whether it was actually sent
+                OnOrderActuallySent?.Invoke(action);
                 
                 // Return action is valid => True
                 return true;

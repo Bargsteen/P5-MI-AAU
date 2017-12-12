@@ -16,13 +16,13 @@ namespace SolarSystem
 
             TimeKeeper.SimulationFinished += Outputter.WriteLineToFile;
 
-            const int simSpeed = 200000;
+            const int simSpeed = 5000;
             const double randomNewOrderChance = 0.1;
             const OrderGenerationConfiguration orderGenerationConfiguration = OrderGenerationConfiguration.FromFile;
-            const SchedulerType schedulerType = SchedulerType.Fifo;
+            const SchedulerType schedulerType = SchedulerType.Real;
             const int daysToSimulate = 1;
-            DateTime simulationStartTime = new DateTime(2017, 10, 2, 8, 0, 0); //02/10/2017
-            DateTime schedulerStartTime = simulationStartTime.AddHours(4);
+            DateTime simulationStartTime = new DateTime(2017, 10, 2, 6, 0, 0); //02/10/2017
+            DateTime schedulerStartTime = simulationStartTime.AddHours(0);
             
             var runner = new Runner(filePath, simSpeed, randomNewOrderChance, orderGenerationConfiguration, 
                 schedulerType, daysToSimulate, simulationStartTime, schedulerStartTime);

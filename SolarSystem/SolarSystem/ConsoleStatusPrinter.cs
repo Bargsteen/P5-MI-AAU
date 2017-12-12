@@ -52,13 +52,12 @@ namespace SolarSystem
             TimeKeeper.Tick += () =>
             {
 
-
-                if (index++ > 60)
-                    PrintFullStatus();
+                
                 if (TimeKeeper.CurrentDateTime.Hour == _currentHour.Hour + 1)
                 {
                     _ordersFinishedPerHour.Add(Tuple.Create(_currentHour.Hour, _finishedOrdersPerHour));
 
+                    PrintFullStatus();
                     _currentHour = TimeKeeper.CurrentDateTime;
                     _finishedOrdersPerHour = 0;
                 }
@@ -74,7 +73,7 @@ namespace SolarSystem
 
         private void PrintFullStatus()
         {
-            //Console.Clear();
+            Console.Clear();
             PrintBoxDict(_finishedBoxesInAreas);
             PrintLinesFinishedPerHour(_runner.StartTime, TimeKeeper.CurrentDateTime, _totalFinishedOrders);
             Console.WriteLine("Lines between " + TimeKeeper.CurrentDateTime.Hour + " - " +

@@ -23,19 +23,23 @@ namespace SolarSystem.Backend.Classes.Simulation
                     {
                         string output = s;
                         output += ";" + lineFinished.Split(';')[2];
-                        output += ";" + (new DateTime(1,
-                                               1,
-                                               1,
-                                               int.Parse(s.Split(';')[2].Split(':')[0]),
-                                               int.Parse(s.Split(';')[2].Split(':')[0]),
-                                               int.Parse(s.Split(';')[2].Split(':')[0]))
-                                               -
-                                        new DateTime(1,
-                                               1,
-                                               1,
-                                               int.Parse(lineFinished.Split(';')[2].Split(':')[0]),
-                                               int.Parse(s.Split(';')[2].Split(':')[0]),
-                                               int.Parse(s.Split(';')[2].Split(':')[0])));
+
+                        DateTime PlannedFinishTime = new DateTime(1,
+                            1,
+                            1,
+                            int.Parse(s.Split(';')[2].Split(':')[0]),
+                            int.Parse(s.Split(';')[2].Split(':')[1]),
+                            int.Parse(s.Split(';')[2].Split(':')[2]));
+                        DateTime ActualFinishTime = new DateTime(1,
+                            1,
+                            1,
+                            int.Parse(lineFinished.Split(';')[2].Split(':')[0]),
+                            int.Parse(lineFinished.Split(';')[2].Split(':')[1]),
+                            int.Parse(lineFinished.Split(';')[2].Split(':')[2]));
+
+                        TimeSpan DeltaTime = PlannedFinishTime - ActualFinishTime;
+
+                        output += ";" + TimeSpan.FromMinutes(Math.Abs(DeltaTime.TotalMinutes));
 
                         file.WriteLine(output);
                     }   
