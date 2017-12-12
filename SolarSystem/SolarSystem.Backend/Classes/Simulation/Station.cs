@@ -187,7 +187,6 @@ namespace SolarSystem.Backend.Classes.Simulation
             {
                 // Evict orderBox
 
-                Outputter.LinesFinished.Add(orderBox.Order.OrderId + ";" + orderBox.Order.Lines.Last().Article.Id + ";" + TimeKeeper.CurrentDateTime.Hour + ":" + TimeKeeper.CurrentDateTime.Minute + ":" + TimeKeeper.CurrentDateTime.Second);
                 EvictOrderBox(orderBox);
             }
             
