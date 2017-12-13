@@ -32,15 +32,9 @@ namespace SolarSystem.Backend.Classes.Schedulers
             return ord;
         }
 
-        public override void Start()
+        public RealismScheduler(OrderGenerator orderGenerator, Handler handler, double poolMoverTime) : base(
+            orderGenerator, handler, poolMoverTime)
         {
-            base.Start();
-            UsePoolTime = true;
-        }
-
-        public RealismScheduler(OrderGenerator orderGenerator, Handler handler, double timerStartMinutes) : base(orderGenerator, handler, timerStartMinutes)
-        {
-
         }
     }
 }

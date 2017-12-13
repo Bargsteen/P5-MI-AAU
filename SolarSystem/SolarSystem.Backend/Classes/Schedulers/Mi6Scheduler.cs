@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
-using Accord.Math;
-using Accord.Statistics;
 using SolarSystem.Backend.Classes.Simulation;
 
 namespace SolarSystem.Backend.Classes.Schedulers
@@ -11,8 +9,9 @@ namespace SolarSystem.Backend.Classes.Schedulers
     public class Mi6Scheduler : Scheduler
     {
         private const int ReplayMemorySize = 100;
-        private const int BatchSize = 5;
+        private const int BatchSize = 1;
         private const double DiscountFactor = 0.3;
+        private const double LearningRate = 0.01;
         private readonly int WeightCount;
 
         private readonly List<Article> _articles;
@@ -70,7 +69,7 @@ namespace SolarSystem.Backend.Classes.Schedulers
             var newMemory = new Memory(_simInfo.GetState(), bestAction.ActionVector, reward);
             ReplayMemory.Enqueue(newMemory);
             
-            // Sample mini batch and learn with gradient descent
+            
             Learn();
             
             return bestAction.Order;
@@ -96,21 +95,31 @@ namespace SolarSystem.Backend.Classes.Schedulers
 
             foreach (var memory in randomBatch)
             {
-                var yk = memory.Reward + DiscountFactor * _actionDataDict
-                             .OrderByDescending(kvp => kvp.Value.ActionValue).First().Value.ActionValue;
                 
+                var bestQ = double.MinValue;
+                foreach (var action in _actionDataDict.Values)
+                {
+                    var actionValue = CalculateActionValue(action.ActionVector, memory.NextState);
+                    if (actionValue > bestQ)
+                    {
+                        bestQ = actionValue;
+                    }
+                }
+                
+                var yk = memory.Reward + DiscountFactor * bestQ;
+                var error = Math.Pow(yk - memory.Reward, 2);
+
+                for (int i = 0; i < WeightCount; i++)
+                {
+                    Weights[i] = Weights[i] + LearningRate * error;
+                }
             }
-            
         }
 
         private void UpdateStateForLastAction()
         {
             if (!ReplayMemory.Any()) return;
-            
-            var oldMemory = ReplayMemory.Last();
-            var updatedMemory = oldMemory;
-            updatedMemory.NextState = _simInfo.GetState();
-            ReplayMemory.Replace(oldMemory, updatedMemory);
+            ReplayMemory.Last().NextState = _simInfo.GetState();
         }
 
 
@@ -132,10 +141,11 @@ namespace SolarSystem.Backend.Classes.Schedulers
 
         private void CalculateAndAddActionData(List<Order> initialOrderPool)
         {
+            var stateVector = _simInfo.GetState();
             foreach (var order in initialOrderPool)
             {
                 var actionVector = StateRepresenter.MakeOrderRepresentation(order, _articles);
-                _actionDataDict.Add(order.OrderId, new ActionData(order, actionVector, CalculateActionValue(actionVector)));
+                _actionDataDict.Add(order.OrderId, new ActionData(order, actionVector, CalculateActionValue(actionVector, stateVector)));
             }
         }
 
@@ -153,9 +163,9 @@ namespace SolarSystem.Backend.Classes.Schedulers
         }
     }
 
-    internal struct Memory
+    internal class Memory
     {
-        public Memory(double[] state, double[] actionVector, double reward) : this()
+        public Memory(double[] state, double[] actionVector, double reward)
         {
             State = state ?? throw new ArgumentNullException(nameof(state));
             ActionVector = actionVector ?? throw new ArgumentNullException(nameof(actionVector));
