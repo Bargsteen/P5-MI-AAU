@@ -13,8 +13,8 @@ namespace SolarSystem.Backend.Classes.Data
 {
     public static class DataSaving
     {
-        public static Dictionary<Area, double> areaStandartDeviation = new Dictionary<Area, double>();
-        public static List<DataSavingOrder> orders = new List<DataSavingOrder>();
+        public static Dictionary<Area, double> AreaStandartDeviation = new Dictionary<Area, double>();
+        public static List<DataSavingOrder> Orders = new List<DataSavingOrder>();
 
         public static void SaveData()
         {
@@ -29,7 +29,7 @@ namespace SolarSystem.Backend.Classes.Data
         {
             using(StreamWriter writer = new StreamWriter(@"SimulationStatistics.txt", false))
             {
-                writer.WriteLine("Largest completion time for an order: " + orders.Max(o => o.DeltaFinishedTime));
+                writer.WriteLine("Largest completion time for an order: " + Math.Abs(Orders.Max(o => o.DeltaFinishedTime).Minutes) + " minutes " + Math.Abs(Orders.Max(o => o.DeltaFinishedTime).Seconds) + " seconds");
                 writer.Close();
             }            
         }
@@ -38,18 +38,21 @@ namespace SolarSystem.Backend.Classes.Data
         {
             using (StreamWriter writer = new StreamWriter(@"SimulationStatistics.txt", true))
             {
-                writer.WriteLine("Smallest completion time for an order: " + orders.Min(o => o.DeltaFinishedTime));
+                //bugged, fix
+                if (Math.Abs(Orders.Min(o => o.DeltaFinishedTime).Milliseconds) == 0)
+                {
+                    writer.WriteLine(Orders.Find(x => x.DeltaFinishedTime.Milliseconds == 0).Order.OrderId + "\n\n");
+                }
+                writer.WriteLine("Smallest completion time for an order: " + Math.Abs(Orders.Min(o => o.DeltaFinishedTime).Minutes) + " minutes " + Math.Abs(Orders.Min(o => o.DeltaFinishedTime).Seconds) + " seconds " + Math.Abs(Orders.Min(o => o.DeltaFinishedTime).Milliseconds));
                 writer.Close();
             }
-
-
         }
 
         private static void FindAverageOrderCompletionTime()
         {
             using (StreamWriter writer = new StreamWriter(@"SimulationStatistics.txt", true))
             {               
-                writer.WriteLine("Average order completion time: " + orders.Average(o => o.DeltaFinishedTime.TotalMinutes) + " Minutter");
+                writer.WriteLine("Average order completion time: " + Math.Abs(Orders.Average(o => o.DeltaFinishedTime.TotalMinutes)) + " Minutter");
                 writer.Close();
             }
         }
@@ -60,20 +63,15 @@ namespace SolarSystem.Backend.Classes.Data
             double sumOfSquaresOfDifference;
             double sd;
 
-            average = orders.Average(v => v.DeltaFinishedTime.TotalMinutes);
-            sumOfSquaresOfDifference = orders.Select(val => (val.DeltaFinishedTime.TotalMinutes - average) * (val.DeltaFinishedTime.TotalMinutes - average)).Sum();
-            sd = Math.Sqrt(sumOfSquaresOfDifference / orders.Count());
+            average = Orders.Average(v => v.DeltaFinishedTime.TotalMinutes);
+            sumOfSquaresOfDifference = Orders.Select(val => (val.DeltaFinishedTime.TotalMinutes - average) * (val.DeltaFinishedTime.TotalMinutes - average)).Sum();
+            sd = Math.Abs(Math.Sqrt(sumOfSquaresOfDifference / Orders.Count));
 
             using (StreamWriter writer = new StreamWriter(@"SimulationStatistics.txt", true))
             {
                 writer.WriteLine("Standart deviation for orders over time: " + sd);
                 writer.Close();
             }
-        }
-
-        public static void FindTimeOverLines()
-        {
-
         }
     }
 }
