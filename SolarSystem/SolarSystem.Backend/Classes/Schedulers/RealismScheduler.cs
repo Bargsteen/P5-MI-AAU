@@ -10,7 +10,7 @@ namespace SolarSystem.Backend.Classes.Schedulers
         {
             var ord = ActualOrderPool.OrderBy(o => o.OrderTime).First();
 
-            /*if (Math.Abs((TimeKeeper.CurrentDateTime - ord.OrderTime).TotalSeconds) > 3)
+            if (Math.Abs((TimeKeeper.CurrentDateTime - ord.OrderTime).TotalSeconds) > 3)
             {
                 var b = 2;
             }

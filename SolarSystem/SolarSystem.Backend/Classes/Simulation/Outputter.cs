@@ -39,11 +39,9 @@ namespace SolarSystem.Backend.Classes.Simulation
 
                         TimeSpan DeltaTime = PlannedFinishTime - ActualFinishTime;
 
-                        //if (Math.Abs(DeltaTime.TotalMinutes) > 60)
+                        //if (lineFinished.Split(';')[0] == "150350")
                         //    throw new Exception();
 
-                        if(output.Split(';')[0] == "155857")
-                            throw new Exception();
 
                         output += ";" + TimeSpan.FromMinutes(DeltaTime.TotalMinutes);
 

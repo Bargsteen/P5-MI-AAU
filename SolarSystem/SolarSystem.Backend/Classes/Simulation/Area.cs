@@ -26,8 +26,10 @@ namespace SolarSystem.Backend.Classes.Simulation
             {
                 new Station(areaCode + "+S:A", 7, 5, AreaCode), 
                 new Station(areaCode + "+S:B", 7, 5, AreaCode), 
-                new Station(areaCode + "+S:C", 7, 5, AreaCode), 
-               
+                new Station(areaCode + "+S:C", 7, 5, AreaCode),
+                new Station(areaCode + "+S:D", 7, 5, AreaCode),
+                new Station(areaCode + "+S:E", 7, 5, AreaCode),
+
             };
             
             // Subscribe to each Station order complete event
