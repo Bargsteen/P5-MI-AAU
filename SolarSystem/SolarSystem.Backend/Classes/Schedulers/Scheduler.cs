@@ -55,12 +55,17 @@ namespace SolarSystem.Backend.Classes.Schedulers
                 var action = ChooseNextOrder();
 
                 // Send action to handler
+
+
                 var actionSuccess = SendActionToHandler(action);
                 
                 // If success => Remove
                 if (actionSuccess)
                 {
                     ActualOrderPool.Remove(action);
+                    int a;
+                    if (action.OrderId == 150350)
+                        a = 2;
                 }
             }
             

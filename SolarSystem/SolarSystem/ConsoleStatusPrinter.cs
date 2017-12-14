@@ -54,7 +54,6 @@ namespace SolarSystem
             TimeKeeper.Tick += () =>
             {
                 
-                
                 if (TimeKeeper.CurrentDateTime.Hour == _currentHour.Hour + 1)
                 {
                     PrintFullStatus();

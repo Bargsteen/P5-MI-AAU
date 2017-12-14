@@ -33,7 +33,7 @@ namespace SolarSystem
             
             const SchedulerType schedulerType = SchedulerType.Real;
             const int hoursToSimulate = 16;
-            const int runsToDo = 2;
+            const int runsToDo = 1;
             DateTime simulationStartTime = new DateTime(2017, 10, 2, 6, 0, 0); //02/10/2017
             DateTime schedulerStartTime = simulationStartTime.AddHours(0);
             
