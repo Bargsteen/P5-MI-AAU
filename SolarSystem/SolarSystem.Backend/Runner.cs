@@ -66,7 +66,7 @@ namespace SolarSystem.Backend
                 case SchedulerType.Mi6:
                     _scheduler = new Mi6Scheduler(OrderGenerator, Handler, SimulationConfiguration.GetSchedulerPoolMoveTime(), articleList, simInfo);
                     break;
-                case SchedulerType.Lst:
+                case SchedulerType.LST:
                     _scheduler = new LstScheduer(OrderGenerator, Handler, SimulationConfiguration.GetSchedulerPoolMoveTime());
                     break;
                 case SchedulerType.Real:
