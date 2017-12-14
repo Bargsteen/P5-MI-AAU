@@ -1,0 +1,7 @@
+Largest completion time for an order: 174.866666666667 minutes 52 seconds
+Smallest ordernumber: 150350
+
+
+Smallest completion time for an order: 0 minutes 0 seconds 0
+Average order completion time: 5.30165784165406 minutes
+Standard deviation for orders over time: 7.53355205072713

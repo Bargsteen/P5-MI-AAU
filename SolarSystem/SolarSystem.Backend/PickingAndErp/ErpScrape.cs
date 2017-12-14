@@ -9,20 +9,20 @@ using SolarSystem.Backend.Classes.Data;
  * Make ErpScrape object.
  * Use ScrapeErp(filepath)
  * Use SaveToFile()
- * Load from file with LoadListFromFile() : List<Order>
+ * Load from file with LoadListFromFile() : List<PickingOrder>
  */
 
 namespace SolarSystem.Backend.PickingAndErp
 {
     public class ErpScrape
     {
-        public List<Order> Orders { get; private set; }
+        public List<PickingOrder> Orders { get; private set; }
 
 
 
         public ErpScrape()
         {
-            Orders = new List<Order>();
+            Orders = new List<PickingOrder>();
         }
 
         public void SaveToFile()
@@ -46,9 +46,9 @@ namespace SolarSystem.Backend.PickingAndErp
             }
         }
 
-        public List<Order> LoadListFromFile()
+        public List<PickingOrder> LoadListFromFile()
         {
-            List<Order> orders;
+            List<PickingOrder> orders;
 
             string path = AppDomain.CurrentDomain.BaseDirectory + "SaveFiles/";
             string fileName = "Erp.dat";
@@ -56,7 +56,7 @@ namespace SolarSystem.Backend.PickingAndErp
             using (Stream stream = File.Open(path + fileName, FileMode.Open))
             {
                 var formatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-                orders = (List<Order>)formatter.Deserialize(stream);
+                orders = (List<PickingOrder>)formatter.Deserialize(stream);
             }
 
             return orders;
@@ -75,9 +75,9 @@ namespace SolarSystem.Backend.PickingAndErp
             }
         }
 
-        private List<Order> _scraperERPToOrderList(StreamReader stream)
+        private List<PickingOrder> _scraperERPToOrderList(StreamReader stream)
         {
-            List<Order> orderList = new List<Order>();
+            List<PickingOrder> orderList = new List<PickingOrder>();
             List<Line> lineList = new List<Line>();
 
             // Retrive orders.
@@ -141,7 +141,7 @@ namespace SolarSystem.Backend.PickingAndErp
                         //_lineList.Add(new Line(new Article(_articleNumber, _areaNumber), _quantity, _date));
 
 
-                        // Skip 4 times to see if there is any more lines for this order
+                        // Skip 4 times to see if there is any more lines for this pickingOrder
                         line = stream.ReadLine();
                         line = stream.ReadLine();
                         line = stream.ReadLine();
@@ -149,17 +149,17 @@ namespace SolarSystem.Backend.PickingAndErp
 
                     }
 
-                    // Order done. Add to list
-                    Order order = new Order(orderNumber, lineList);
-                    order.OrderTime = date;
-                    orderList.Add(order);
+                    // PickingOrder done. Add to list
+                    PickingOrder pickingOrder = new PickingOrder(orderNumber, lineList);
+                    pickingOrder.OrderTime = date;
+                    orderList.Add(pickingOrder);
                 }
 
             }
 
-            //foreach (Order order in orderList)
+            //foreach (PickingOrder order in orderList)
             //{
-            //    DataSaving.orders.Find(o => o.Order.OrderId == order.OrderNumber).Order.OrderTime = order.OrderTime;
+            //    DataSaver.orders.Find(o => o.PickingOrder.OrderId == order.OrderNumber).PickingOrder.OrderTime = order.OrderTime;
             //}
 
             return orderList;

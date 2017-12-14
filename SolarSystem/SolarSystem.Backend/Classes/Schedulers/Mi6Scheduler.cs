@@ -12,7 +12,7 @@ namespace SolarSystem.Backend.Classes.Schedulers
         private const int BatchSize = 1;
         private const double DiscountFactor = 0.3;
         private const double LearningRate = 0.01;
-        private readonly int WeightCount;
+        private readonly int _weightCount;
 
         private readonly List<Article> _articles;
 
@@ -28,11 +28,11 @@ namespace SolarSystem.Backend.Classes.Schedulers
         public Mi6Scheduler(OrderGenerator orderGenerator, Handler handler, double poolMoverTime, List<Article> articles, SimulationInformation simInfo) : base(orderGenerator, handler, poolMoverTime)
         {
             _simInfo = simInfo;
-            WeightCount = articles.Count + _simInfo.GetState().Length;
+            _weightCount = articles.Count + _simInfo.GetState().Length;
             // Initialize replay memory to capacity ReplayMemorySize
             ReplayMemory = new Queue<Memory>();
             // Initialize a set of weights, theta, to 0
-            Weights = Enumerable.Repeat(Random.NextDouble(), WeightCount).ToArray();
+            Weights = Enumerable.Repeat(Random.NextDouble(), _weightCount).ToArray();
             
             // Sentinel waiting action. Must be checked for later 
             var waitOrder = new Order(0, DateTime.MinValue, new List<Line>()); 
@@ -109,7 +109,7 @@ namespace SolarSystem.Backend.Classes.Schedulers
                 var yk = memory.Reward + DiscountFactor * bestQ;
                 var error = Math.Pow(yk - memory.Reward, 2);
 
-                for (int i = 0; i < WeightCount; i++)
+                for (int i = 0; i < _weightCount; i++)
                 {
                     Weights[i] = Weights[i] + LearningRate * error;
                 }
@@ -201,9 +201,9 @@ On move to actual pool:
         create the actionVector
         combine actionVector and simState to fullVector
         calculate actionValue by dotting fullVector with weights
-        add (Order.Id : order, actionVector, actionValue) to orderDict
+        add (PickingOrder.Id : order, actionVector, actionValue) to orderDict
 
-On Choose next Order:
+On Choose next PickingOrder:
     Choose best action from orderDict and try to send
 
 On actually sent:

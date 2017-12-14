@@ -14,20 +14,6 @@ namespace SolarSystem.Backend.Classes.Schedulers
             {
                 var b = 2;
             }
-            if (ord.OrderId == 150402)
-            {
-                var slow = 3;
-            }
-
-
-            if (Math.Abs((TimeKeeper.CurrentDateTime - ord.OrderTime).TotalSeconds) > 3)
-            {
-                throw new Exception();
-            }
-
-            return ord;
-
-
 
             return ord;
         }

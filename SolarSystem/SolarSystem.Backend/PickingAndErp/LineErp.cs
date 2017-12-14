@@ -6,20 +6,20 @@ namespace SolarSystem.Backend.PickingAndErp
     {
         public Classes.Simulation.Article Article { get;  }
         public int Quantity { get; private set; }
-        public DateTime Timestamp { get; private set; }
+        public DateTime OutTimeStamp { get; private set; }
         
         public Line(Classes.Simulation.Article article, int quantity, DateTime timeStamp)
         {
             Article = article;
             Quantity = quantity;
-            Timestamp = timeStamp;
+            OutTimeStamp = timeStamp;
         }
 
         
 
         public override string ToString()
         {
-            return "\n\tTime: " + Timestamp + "\n\t" + Article + "\tQuantity:" + Quantity + "\n";
+            return "\n\tTime: " + OutTimeStamp + "\n\t" + Article + "\tQuantity:" + Quantity + "\n";
         }
 
         public Classes.Simulation.Line ToSimLine()

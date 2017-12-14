@@ -34,7 +34,7 @@
         Fifo,
         Mi1,
         Mi6,
-        LST,
+        Lst,
         Real
     }
 }

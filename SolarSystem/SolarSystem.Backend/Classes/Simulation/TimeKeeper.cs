@@ -13,14 +13,16 @@ namespace SolarSystem.Backend.Classes.Simulation
 
         public static event Action SimulationFinished;
 
-        public static void StartTicking(double ticksPerSecond, DateTime startDateTime, int daysToSimulate)
+        public static void StartTicking(double ticksPerSecond, DateTime startDateTime, int hoursToSimulate)
         {
             CurrentDateTime = startDateTime;
             
             // Calculate time to wait between each tick
-            int waitingTime = (int)(1000 / ticksPerSecond);  
+            int waitingTime = (int)(1000 / ticksPerSecond);
+
+            var finishDateTime = startDateTime.AddHours(hoursToSimulate);
                        
-            while (CurrentDateTime < startDateTime.AddDays(daysToSimulate))
+            while (CurrentDateTime <= finishDateTime )
             {
                 // Wait and invoke
                 Thread.Sleep(waitingTime);

@@ -12,7 +12,7 @@ namespace SolarSystem.Backend.Classes.Schedulers
 
         protected event Action<Order> OnOrderActuallySent;
         
-        // Order pool from costumers
+        // PickingOrder pool from costumers
         protected List<Order> InitialOrderPool { get; }
         
         // The pool that is actively being moved to Handler

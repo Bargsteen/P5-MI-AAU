@@ -27,11 +27,11 @@ namespace SolarSystem.Backend.Classes.Simulation
 
         private int _sendOrderCount = 0;
 
-        List<string> sentlines = new List<string>();
+        List<string> _sentlines = new List<string>();
 
-        private readonly List<PickingAndErp.Order> _scrapedOrders;
+        private readonly List<PickingAndErp.PickingOrder> _scrapedOrders;
 
-        public OrderGenerator(List<Article> articleList, double orderChance, List<PickingAndErp.Order> scrapedOrders, OrderGenerationConfiguration conf)
+        public OrderGenerator(List<Article> articleList, double orderChance, List<PickingAndErp.PickingOrder> scrapedOrders, OrderGenerationConfiguration conf)
         {
 
             ArticleList = articleList ?? throw new ArgumentNullException(nameof(articleList));
@@ -77,7 +77,7 @@ namespace SolarSystem.Backend.Classes.Simulation
                         order = _scrapedOrders[0].ToSimOrder();
                         order.Areas = ConstructAreasVisited(order);
                         CostumerSendsOrderEvent?.Invoke(order);
-                        sentlines.Add(order.OrderId.ToString());
+                        _sentlines.Add(order.OrderId.ToString());
                         _scrapedOrders.RemoveAt(0);
                         _sendOrderCount = 0;
                     }

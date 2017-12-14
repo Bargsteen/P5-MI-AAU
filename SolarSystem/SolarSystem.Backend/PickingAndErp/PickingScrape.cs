@@ -12,12 +12,12 @@ namespace SolarSystem.Backend.PickingAndErp
         public PickingScrape(string path)
         {
             _path = path;
-            OrderList = new List<Order>();
+            OrderList = new List<PickingOrder>();
         }
 
         private readonly string _path;
 
-        public readonly List<Order> OrderList;
+        public readonly List<PickingOrder> OrderList;
 
         private AreaCode AreaIntToCode(int areaInt)
         {
@@ -80,23 +80,18 @@ namespace SolarSystem.Backend.PickingAndErp
                 {
                     Console.WriteLine($"ERROR : {e}");
                 }
-                
-                
                
             }
 
             foreach (var kvp in ordersGathered)
             {
-                Order order = new Order(kvp.Key, kvp.Value);
-                order.OrderTime = order.LineList.OrderBy(l => l.Timestamp).First().Timestamp;
-                OrderList.Add(order);
+                PickingOrder pickingOrder = new PickingOrder(kvp.Key, kvp.Value);
+                pickingOrder.OrderTime = pickingOrder.LineList.OrderBy(l => l.OutTimeStamp).First().OutTimeStamp;
+                OrderList.Add(pickingOrder);
             }
-
-            foreach (Order order in OrderList)
-            {
-                    DataSaving.Orders.Add(new DataSavingOrder(order.ToSimOrder()));
-                    Outputter.LinesFromScrape.Add(order.OrderNumber + ";" + order.OrderTime.Hour + ":" + order.OrderTime.Minute + ":" + order.OrderTime.Second);
-            }
+            
+            
+           
         }
 
     }

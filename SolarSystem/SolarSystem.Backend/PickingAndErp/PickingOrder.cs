@@ -3,19 +3,19 @@ using System.Collections.Generic;
 
 namespace SolarSystem.Backend.PickingAndErp
 {
-    public class Order
+    public class PickingOrder
     {
         public List<Line> LineList { get; private set; }
         public int OrderNumber { get; private set; }
         public DateTime OrderTime { get; set; }
 
-        public Order(int orderNumber, List<Line> lineList)
+        public PickingOrder(int orderNumber, List<Line> lineList)
         {
             OrderNumber = orderNumber;
             LineList = lineList;
         }
 
-        public Order(int orderNumber, Line line)
+        public PickingOrder(int orderNumber, Line line)
         {
             OrderNumber = orderNumber;
             LineList.Add(line);

@@ -2,16 +2,29 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 
 namespace SolarSystem.Backend.Classes.Simulation
 {
-    public static class Outputter
+    public class Outputter
     {
 
+
+        public Outputter(Runner runner)
+        {
+            runner.Handler.OnOrderBoxFinished += orderBox => 
+                LinesFinished.Add(orderBox.Order.OrderId + ";" +
+                                            TimeKeeper.CurrentDateTime.Hour + ":" + 
+                                            TimeKeeper.CurrentDateTime.Minute + ":" + 
+                                            TimeKeeper.CurrentDateTime.Second);
+            TimeKeeper.SimulationFinished += WriteLineToFile;
+        }
+        
+        
         public static List<string> LinesFromScrape = new List<string>();
         public static List<string> LinesFinished = new List<string>();
         
-        private static StreamWriter file = new StreamWriter(Directory.GetParent(Directory.GetParent(Directory.GetParent(Environment.CurrentDirectory).ToString())
+        private static StreamWriter _file = new StreamWriter(Directory.GetParent(Directory.GetParent(Directory.GetParent(Environment.CurrentDirectory).ToString())
         .ToString()) + "/SolarSystem.Backend/SolarData/Output.csv");
         public static void WriteLineToFile()
         {
@@ -24,28 +37,28 @@ namespace SolarSystem.Backend.Classes.Simulation
                         string output = s;
                         output += ";" + lineFinished.Split(';')[1];
 
-                        DateTime PlannedFinishTime = new DateTime(1,
+                        DateTime plannedFinishTime = new DateTime(1,
                             1,
                             1,
                             int.Parse(s.Split(';')[1].Split(':')[0]),
                             int.Parse(s.Split(';')[1].Split(':')[1]),
                             int.Parse(s.Split(';')[1].Split(':')[2]));
-                        DateTime ActualFinishTime = new DateTime(1,
+                        DateTime actualFinishTime = new DateTime(1,
                             1,
                             1,
                             int.Parse(lineFinished.Split(';')[1].Split(':')[0]),
                             int.Parse(lineFinished.Split(';')[1].Split(':')[1]),
                             int.Parse(lineFinished.Split(';')[1].Split(':')[2]));
 
-                        TimeSpan DeltaTime = PlannedFinishTime - ActualFinishTime;
+                        TimeSpan deltaTime = plannedFinishTime - actualFinishTime;
 
                         //if (lineFinished.Split(';')[0] == "150350")
                         //    throw new Exception();
 
 
-                        output += ";" + TimeSpan.FromMinutes(DeltaTime.TotalMinutes);
+                        output += ";" + TimeSpan.FromMinutes(deltaTime.TotalMinutes);
 
-                        file.WriteLine(output);
+                        _file.WriteLine(output);
                     }   
                 }
             }

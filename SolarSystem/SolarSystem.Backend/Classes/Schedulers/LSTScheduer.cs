@@ -11,9 +11,9 @@ using SolarSystem.Backend.Classes.Simulation;
 
 namespace SolarSystem.Backend.Classes.Schedulers
 {
-    public class LSTScheduer : Scheduler
+    public class LstScheduer : Scheduler
     {
-        public LSTScheduer(OrderGenerator orderGenerator, Handler handler, double poolMoverTime) : base(orderGenerator, handler, poolMoverTime)
+        public LstScheduer(OrderGenerator orderGenerator, Handler handler, double poolMoverTime) : base(orderGenerator, handler, poolMoverTime)
         {
         }
 
@@ -26,7 +26,7 @@ namespace SolarSystem.Backend.Classes.Schedulers
             var maxQuantity = 0;
             foreach (Order order in ActualOrderPool)
             {
-                foreach (Line line in order)
+                foreach (Line line in order.Lines)
                 {
                     if (line.Quantity > maxQuantity)
                     {
