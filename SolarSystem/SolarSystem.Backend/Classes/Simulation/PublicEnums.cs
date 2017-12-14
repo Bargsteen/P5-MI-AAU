@@ -34,7 +34,20 @@
         Fifo,
         Mi1,
         Mi6,
-        Lst,
-        Real
+        LST,
+        Real,
+        Regression
+    }
+
+    public enum RandomSeedType
+    {
+        Fixed,
+        Random
+    }
+
+    public enum SimulationState
+    {
+        Real,
+        Experimental
     }
 }

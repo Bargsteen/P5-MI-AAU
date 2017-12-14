@@ -10,17 +10,17 @@ namespace SolarSystem.Backend.Classes.Simulation
         public event Action<Order> CostumerSendsOrderEvent;
 
         private readonly OrderGenerationConfiguration _currentOrderGenerationConfiguration;
-
+        private List<int> _usedOrderNumbers = new List<int>();
 
         private List<Article> ArticleList { get; }
-        private static readonly Random Rand = new Random();
+        private static readonly Random Rand = SimulationConfiguration.SeedType == RandomSeedType.Random ? new Random() : new Random(SimulationConfiguration.GetRandomSeedValue());
         private double OrderChance { get; }
 
-        private const int MinAmountOfLines = 1;
-        private const int MaxAmountOfLines = 8;
+        private static readonly int MinAmountOfLines = SimulationConfiguration.GetMinLineCountOG();
+        private static readonly int MaxAmountOfLines = SimulationConfiguration.GetMaxLineCountOG();
 
-        private const int MinArticleQuantity = 1;
-        private const int MaxArticleQuantity = 5;
+        private static readonly int MinArticleQuantity = SimulationConfiguration.GetMinArticleQuanitityOG();
+        private static readonly int MaxArticleQuantity = SimulationConfiguration.GetMaxArticleQuantityOG();
 
         private const int MinOrderNumberId = 10000000;
         private const int MaxOrderNumberId = 999999999;
@@ -111,9 +111,14 @@ namespace SolarSystem.Backend.Classes.Simulation
             var generatedLines = chosenArticles.Select(GenerateLine).ToList();
 
             // Construct AreasVisited for areas.
-            Order order = new Order(Rand.Next(MinOrderNumberId, MaxOrderNumberId), TimeKeeper.CurrentDateTime, generatedLines);
+            int orderID;
+            do
+            {
+                orderID = Rand.Next(MinOrderNumberId, MaxOrderNumberId);
+            } while (_usedOrderNumbers.Contains(orderID));
+            _usedOrderNumbers.Add(orderID);
+            Order order = new Order(orderID, TimeKeeper.CurrentDateTime, generatedLines);
             order.Areas = ConstructAreasVisited(order);
-
             return order;
         }
 

@@ -78,7 +78,7 @@ namespace SolarSystem.Backend.Classes.Schedulers
         private int EstimateOrderPackingTime(Order order)
         {
             // MainLoop time
-            var totalTimeOnMainLoop = order.Areas.Count * GlobalConstants.TimeInMainLoop;
+            var totalTimeOnMainLoop = order.Areas.Count * SimulationConfiguration.GetTimeInMainLoop();
             // Per area time
             var timePerArea = order.Areas.ToDictionary(k => k.Key, v => 0);
             order.Lines.ForEach(l => timePerArea[l.Article.AreaCode] += EstimateTimeBasedOnQuantity(l.Quantity));
@@ -89,11 +89,11 @@ namespace SolarSystem.Backend.Classes.Schedulers
 
         private int EstimateTimeBasedOnQuantity(int quantity)
         {
-            if (quantity < GlobalConstants.LineCountDifferentiation)
+            if (quantity < SimulationConfiguration.GetLineCountDifferentiation())
             {
-                return Math.Max(1, (int) (quantity * GlobalConstants.TimePerArticlePick));
+                return Math.Max(1, (int) (quantity * SimulationConfiguration.GetTimePerArticlePick()));
             }
-            return (int) (quantity * GlobalConstants.TimePerArticlePick * GlobalConstants.LargeLineQuantityMultiplier);
+            return (int) (quantity * SimulationConfiguration.GetTimePerArticlePick() * SimulationConfiguration.GetLargeLineQuantityMultiplier());
         }
 
         private double AreaFill(int areaCount)
