@@ -43,7 +43,7 @@ namespace SolarSystem.Backend.Classes.Simulation
             {
                 throw new AccessViolationException("Handler received order when it is full!");
             }
-            // Convert Order to OrderBox
+            // Convert PickingOrder to OrderBox
             OrderBox orderBox = new OrderBox(order);
             // Choose area to send to
             var nextArea = ChooseNextArea(orderBox);

@@ -17,9 +17,12 @@ namespace SolarSystem
 
         private readonly Runner _runner;
 
-        public ConsoleStatusPrinter(Runner runner)
+        private readonly Statistics _stats;
+
+        public ConsoleStatusPrinter(Runner runner, Statistics stats)
         {
             _runner = runner;
+            _stats = stats;
 
             _currentHour = _runner.StartTime;
             _ordersFinishedPerHour = new List<Tuple<int, int>>();
@@ -45,24 +48,17 @@ namespace SolarSystem
                 _totalFinishedOrders += orderBox.LineIsPickedStatuses.Keys.Count;
                 _finishedOrdersPerHour += orderBox.LineIsPickedStatuses.Keys.Count;
 
-                Outputter.LinesFinished.Add(orderBox.Order.OrderId + ";" +
-                    TimeKeeper.CurrentDateTime.Hour + ":" + 
-                    TimeKeeper.CurrentDateTime.Minute + ":" + 
-                    TimeKeeper.CurrentDateTime.Second);
-
-                DataSaving.Orders.First(o => o.Order.OrderId == orderBox.Order.OrderId).FinishedOrderTime = TimeKeeper.CurrentDateTime;
             };
 
             var index = 0;
             TimeKeeper.Tick += () =>
             {
-
                 
+                PrintFullStatus();
                 if (TimeKeeper.CurrentDateTime.Hour == _currentHour.Hour + 1)
                 {
+                    
                     _ordersFinishedPerHour.Add(Tuple.Create(_currentHour.Hour, _finishedOrdersPerHour));
-
-                    PrintFullStatus();
                     _currentHour = TimeKeeper.CurrentDateTime;
                     _finishedOrdersPerHour = 0;
                 }
@@ -116,7 +112,13 @@ namespace SolarSystem
         {
             PrintFullStatus();
             Console.WriteLine("\nSimulation Finished!");
-            DataSaving.SaveData();
+            
+            Console.WriteLine($"SOLAR :: Average Minutes Per Area: {_stats.CalcAverageTimePerAreaSolar()}");
+            Console.WriteLine($"OURS :: Average Minutes Per Area: {_stats.GetFinalAverageTimePerAreaOurs()}");
+            Console.WriteLine($"OURS :: Slowest Ord: {_stats.GetSlowestOrderTime()}");
+            Console.WriteLine($"OURS :: Avg line Count: {_stats.GetAverageLinesPerOrderSim()}");
+            Console.WriteLine($"OURS :: Avg quantity per line: {_stats.GetAverageQuantityPerLineSim()}");
+            
         }
     }
 }

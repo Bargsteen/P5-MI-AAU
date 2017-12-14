@@ -9,7 +9,7 @@ namespace SolarSystem.Backend.Classes
     public class SimulationInformation  
     {  
         private Handler Handler { get; }  
-        public readonly Dictionary<AreaCode, double> AreaInformation;
+        public static Dictionary<AreaCode, double> AreaInformation;
 
         private int _totalLinesFinished = 0;
         private readonly DateTime _schedulerStartTime;

@@ -5,13 +5,13 @@ using SolarSystem.Backend.Classes.Simulation;
 
 namespace SolarSystem.Backend.Classes
 {
-    public class SchedulerOLD
+    public class SchedulerOld
     {
         private double TimerStartMinutes { get; }
         private int PoolTimer { get; set; }
         private static readonly Random Rand = new Random();
         
-        // Order pool from costumers
+        // PickingOrder pool from costumers
         private List<Order> InitialOrderPool { get; }
         
         // The pool that is actively being moved to Handler
@@ -20,7 +20,7 @@ namespace SolarSystem.Backend.Classes
         private OrderGenerator OrderGenerator { get; }
         public Handler Handler { get; set; }
         
-        public SchedulerOLD(OrderGenerator orderGenerator, Handler handler, double timerStartMinutes)
+        public SchedulerOld(OrderGenerator orderGenerator, Handler handler, double timerStartMinutes)
         {
             OrderGenerator = orderGenerator;
             Handler = handler;

@@ -60,7 +60,11 @@ namespace SolarSystem.Backend.Classes.Simulation
         //Listening on stations for orders that are done
         public void ReceiveOrderBox(OrderBox orderBox)
         {   
+            // Set time in the orders log
+            orderBox.Order.AreaTimeInOutLog[AreaCode] = new TimeInOut(TimeKeeper.CurrentDateTime);
+            
             OnOrderBoxReceivedAtAreaEvent?.Invoke(orderBox, AreaCode);
+            
             //call DistributeOrder with input as parameter
             DistributeOrder(orderBox);
 
@@ -68,6 +72,9 @@ namespace SolarSystem.Backend.Classes.Simulation
 
         private void StationOrderCompleted(OrderBox orderBox)
         {
+            // log time out
+            orderBox.Order.AreaTimeInOutLog[AreaCode].OutTime = TimeKeeper.CurrentDateTime;
+            
             OnOrderBoxInAreaFinished?.Invoke(orderBox, AreaCode);
         }
 

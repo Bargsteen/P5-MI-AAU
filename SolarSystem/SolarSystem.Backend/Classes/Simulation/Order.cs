@@ -5,23 +5,25 @@ using Accord.Math;
 
 namespace SolarSystem.Backend.Classes.Simulation
 {
-    public class Order : IEnumerable<Line>
+    public class Order
     {
         public int OrderId { get; }
         public DateTime OrderTime { get; set; }
         public List<Line> Lines { get;}
         public Dictionary<AreaCode, bool> Areas { get; set; }
+        public Dictionary<AreaCode, TimeInOut> AreaTimeInOutLog { get; set; }
+        
+        public DateTime StartPackingTime { get; set; }
+        public int EstimatedPackingTimeInSeconds { get; set; }
+        public Dictionary<AreaCode, double> EstimatedAreaFill;
 
         public Order(int orderId, DateTime orderTime, List<Line> lines)
         {
             OrderId = orderId;
             OrderTime = orderTime;
             Lines = lines ?? throw new ArgumentNullException(nameof(lines));
-        }
-
-        public IEnumerator<Line> GetEnumerator()
-        {
-            return Lines.GetEnumerator();
+            AreaTimeInOutLog = new Dictionary<AreaCode, TimeInOut>();
+            EstimatedAreaFill = new Dictionary<AreaCode, double>();
         }
 
         public override string ToString()
@@ -29,10 +31,17 @@ namespace SolarSystem.Backend.Classes.Simulation
             return $"{OrderId}";
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
     }
-   
+
+    public class TimeInOut
+    {
+        public TimeInOut(DateTime inTime)
+        {
+            InTime = inTime;
+        }
+
+        public DateTime InTime { get; set; }
+        public DateTime OutTime { get; set; }
+    }
+    
 }

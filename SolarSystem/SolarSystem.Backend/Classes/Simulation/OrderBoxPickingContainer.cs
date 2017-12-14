@@ -1,4 +1,5 @@
 ﻿using System;
+using Accord.Math;
 
 namespace SolarSystem.Backend.Classes.Simulation
 {
@@ -52,14 +53,11 @@ namespace SolarSystem.Backend.Classes.Simulation
 
         private int CalcPickingTime(int amount)
         {
-            if (amount < 100)
+            if (amount < GlobalConstants.LineCountDifferentiation)
             {
                 return Math.Max(1, (int) (amount * GlobalConstants.TimePerArticlePick));
             }
-            else
-            {
-                return (int) (amount * GlobalConstants.TimePerArticlePick * 0.0001);
-            }
+            return (int) (amount * GlobalConstants.TimePerArticlePick * GlobalConstants.LargeLineQuantityMultiplier);
         }
     }
 }

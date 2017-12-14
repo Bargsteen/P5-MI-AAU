@@ -44,7 +44,7 @@ namespace SolarSystem.Backend.Classes.Simulation
 
         private int EstimateTimeInSeconds(AreaCode area)
         {
-            return 10;
+            return GlobalConstants.TimeInMainLoop;
         }
 
         public void _CheckAndSend()
