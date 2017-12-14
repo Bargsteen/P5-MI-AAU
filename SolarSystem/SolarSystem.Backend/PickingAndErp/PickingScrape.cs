@@ -89,9 +89,12 @@ namespace SolarSystem.Backend.PickingAndErp
                 pickingOrder.OrderTime = pickingOrder.LineList.OrderBy(l => l.OutTimeStamp).First().OutTimeStamp;
                 OrderList.Add(pickingOrder);
             }
-            
-            
-           
+
+            foreach (Order order in OrderList)
+            {
+                    DataSaving.Orders.Add(new DataSavingOrder(order.ToSimOrder()));
+                    Outputter.LinesFromScrape.Add(order.OrderNumber + ";" + order.OrderTime.Hour + ":" + order.OrderTime.Minute + ":" + order.OrderTime.Second);
+            }
         }
 
     }

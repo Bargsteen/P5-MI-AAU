@@ -33,11 +33,12 @@ namespace SolarSystem
             
             const SchedulerType schedulerType = SchedulerType.Real;
             const int hoursToSimulate = 16;
+            const int runsToDo = 2;
             DateTime simulationStartTime = new DateTime(2017, 10, 2, 6, 0, 0); //02/10/2017
             DateTime schedulerStartTime = simulationStartTime.AddHours(0);
             
             var runner = new Runner(filePath, simSpeed, randomNewOrderChance, orderGenerationConfiguration, 
-                schedulerType, hoursToSimulate, simulationStartTime, schedulerStartTime, orders);
+                schedulerType, hoursToSimulate, simulationStartTime, schedulerStartTime, orders, runsToDo);
             
             
             var outPutter = new Outputter(runner);

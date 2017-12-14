@@ -73,11 +73,13 @@
     <Compile Include="Classes\Data\DataSavingOrder.cs" />
     <Compile Include="Classes\Data\Outputter.cs" />
     <Compile Include="Classes\SchedulerOLD.cs" />
+    <Compile Include="Classes\Schedulers\EstimatorScheduler.cs" />
     <Compile Include="Classes\Schedulers\FifoScheduler.cs" />
     <Compile Include="Classes\Schedulers\LSTScheduer.cs" />
     <Compile Include="Classes\Schedulers\Mi6Scheduler.cs" />
     <Compile Include="Classes\Schedulers\MiScheduler.cs" />
     <Compile Include="Classes\Schedulers\RealismScheduler.cs" />
+    <Compile Include="Classes\Schedulers\RegressionScheduler.cs" />
     <Compile Include="Classes\Schedulers\Scheduler.cs" />
     <Compile Include="Classes\SimulationInformation.cs" />
     <Compile Include="Classes\Simulation\Area.cs" />

@@ -12,6 +12,10 @@ namespace SolarSystem.Backend.Classes.Simulation
         public List<Line> Lines { get;}
         public Dictionary<AreaCode, bool> Areas { get; set; }
         public Dictionary<AreaCode, TimeInOut> AreaTimeInOutLog { get; set; }
+        
+        public DateTime StartPackingTime { get; set; }
+        public int EstimatedPackingTimeInSeconds { get; set; }
+        public Dictionary<AreaCode, double> EstimatedAreaFill;
 
         public Order(int orderId, DateTime orderTime, List<Line> lines)
         {
@@ -19,6 +23,7 @@ namespace SolarSystem.Backend.Classes.Simulation
             OrderTime = orderTime;
             Lines = lines ?? throw new ArgumentNullException(nameof(lines));
             AreaTimeInOutLog = new Dictionary<AreaCode, TimeInOut>();
+            EstimatedAreaFill = new Dictionary<AreaCode, double>();
         }
 
         public override string ToString()

@@ -34,8 +34,9 @@
         Fifo,
         Mi1,
         Mi6,
-        Lst,
-        Real
+        LST,
+        Real,
+        Regression
     }
 
     public enum RandomSeedType

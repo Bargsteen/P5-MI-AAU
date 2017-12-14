@@ -13,7 +13,7 @@ namespace SolarSystem.Backend.Classes.Simulation
 
         public static event Action SimulationFinished;
 
-        public static void StartTicking(double ticksPerSecond, DateTime startDateTime, int hoursToSimulate)
+        public static void StartTicking(double ticksPerSecond, DateTime startDateTime, int hoursToSimulate, int runsToDo)
         {
             CurrentDateTime = startDateTime;
             
@@ -21,9 +21,21 @@ namespace SolarSystem.Backend.Classes.Simulation
             int waitingTime = (int)(1000 / ticksPerSecond);
 
             var finishDateTime = startDateTime.AddHours(hoursToSimulate);
+
+            var reRunCount = 0;
                        
-            while (CurrentDateTime <= finishDateTime )
+            while (reRunCount < runsToDo)
             {
+                if (CurrentDateTime >= finishDateTime)
+                {
+                    reRunCount++;
+                    if (reRunCount == runsToDo)
+                    {
+                        break;
+                    }
+                    CurrentDateTime = startDateTime;
+                }
+                
                 // Wait and invoke
                 Thread.Sleep(waitingTime);
                 Tick?.Invoke();
