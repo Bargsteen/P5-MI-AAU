@@ -8,7 +8,7 @@ namespace SolarSystem.Backend.Classes.Schedulers
     class EstimatorScheduler : Scheduler
     {
         private const int secondsLookAhead = 20000;
-        private Dictionary<AreaCode, double>[] AreaFillInfo;
+        private readonly Queue<Dictionary<AreaCode, double>> AreaFillInfo;
            
         public EstimatorScheduler(OrderGenerator orderGenerator, Handler handler, double poolMoverTime) : base(orderGenerator, handler, poolMoverTime)
         {
@@ -21,7 +21,13 @@ namespace SolarSystem.Backend.Classes.Schedulers
                 {AreaCode.Area28, 0},
                 {AreaCode.Area29, 0}
             };
-            AreaFillInfo = Enumerable.Repeat(zeroAreaFillDict, secondsLookAhead).ToArray();
+            AreaFillInfo = new Queue<Dictionary<AreaCode, double>>();
+            var zeroDicts = Enumerable.Repeat(zeroAreaFillDict, secondsLookAhead);
+            
+            foreach (var zeroDict in zeroDicts)
+            {
+                AreaFillInfo.Enqueue(zeroDict);
+            }
 
         }
 
@@ -42,6 +48,31 @@ namespace SolarSystem.Backend.Classes.Schedulers
             order.EstimatedAreaFill = fillPerArea;
             // Update global areafillmatrix for the next est. time steps
             
+            
+        }
+
+        private void UpdateAreaFillInfo(Order order)
+        {
+            var startTime = order.StartPackingTime;
+            var estimatedEndTime = startTime.AddSeconds(order.EstimatedPackingTimeInSeconds);
+            var timeSpent = TimeKeeper.CurrentDateTime - startTime;
+            var stepsToUpdate = (estimatedEndTime - (startTime.AddSeconds(timeSpent.TotalSeconds))).TotalSeconds;
+
+            var stepsUpdated = 0;
+            
+            foreach (var stepInfo in AreaFillInfo)
+            {
+                if (stepsUpdated >= stepsToUpdate) break;
+
+                foreach (var kvp in stepInfo)
+                {
+                    if (order.EstimatedAreaFill.ContainsKey(kvp.Key))
+                    {
+                        stepInfo[kvp.Key] = stepInfo[kvp.Key] + order.EstimatedAreaFill[kvp.Key];
+                    }
+                }
+                
+            }
         }
 
         private int EstimateOrderPackingTime(Order order)

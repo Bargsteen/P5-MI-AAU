@@ -49,10 +49,6 @@ namespace SolarSystem
             var consoleStatusPrinter = new ConsoleStatusPrinter(runner, stats);
             consoleStatusPrinter.StartPrinting();
             
-           
-            
-            
-            
         }
 
         private static void SaveData(List<PickingOrder> orderList)

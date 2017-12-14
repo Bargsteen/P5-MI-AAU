@@ -10,11 +10,10 @@ namespace SolarSystem.Backend.Classes.Schedulers
         {
             var ord = ActualOrderPool.OrderBy(o => o.OrderTime).First();
 
-            if (Math.Abs((TimeKeeper.CurrentDateTime - ord.OrderTime).TotalSeconds) > 3)
+            if (ord.OrderId == 150350)
             {
-                var b = 2;
+                var b = "lol";
             }
-
             return ord;
         }
 
