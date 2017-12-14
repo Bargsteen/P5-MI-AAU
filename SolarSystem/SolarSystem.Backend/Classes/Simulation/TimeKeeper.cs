@@ -13,6 +13,8 @@ namespace SolarSystem.Backend.Classes.Simulation
 
         public static event Action SimulationFinished;
 
+        public static event Action AllRunsFinished;
+
         public static void StartTicking(double ticksPerSecond, DateTime startDateTime, int hoursToSimulate, int runsToDo)
         {
             CurrentDateTime = startDateTime;
@@ -33,6 +35,9 @@ namespace SolarSystem.Backend.Classes.Simulation
                     {
                         break;
                     }
+                    
+                    SimulationFinished?.Invoke();
+                    
                     CurrentDateTime = startDateTime;
                 }
                 
@@ -44,7 +49,8 @@ namespace SolarSystem.Backend.Classes.Simulation
                 CurrentDateTime = CurrentDateTime.AddSeconds(1);
             }
             
-            SimulationFinished?.Invoke();
+            AllRunsFinished?.Invoke();
+            
             
         }
     }

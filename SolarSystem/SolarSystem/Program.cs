@@ -29,7 +29,7 @@ namespace SolarSystem
             
             const int simSpeed = 5000;
             const double randomNewOrderChance = 0.1;
-            const OrderGenerationConfiguration orderGenerationConfiguration = OrderGenerationConfiguration.Random;
+            const OrderGenerationConfiguration orderGenerationConfiguration = OrderGenerationConfiguration.FromFile;
             
             const SchedulerType schedulerType = SchedulerType.Real;
             const int hoursToSimulate = 16;
