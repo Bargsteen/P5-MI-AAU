@@ -36,12 +36,10 @@ namespace SolarSystem
                 schedulerType, hoursToSimulate, simulationStartTime, schedulerStartTime, orders);
             
             
-            /*** CLEAN UP FUCKING SPAGHETTI ***/
             var outPutter = new Outputter(runner);
             //var dataSaver = new DataSaver(runner);
             //SaveData(pickNScrape.OrderList);
-            
-            /*** CLEAN UP FUCKING SPAGHETTI **/
+
            
             Statistics stats = new Statistics(orders2, runner);
             
