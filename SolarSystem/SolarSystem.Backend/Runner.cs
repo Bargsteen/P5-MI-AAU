@@ -23,13 +23,15 @@ namespace SolarSystem.Backend
         private readonly Scheduler _scheduler;
 
         private readonly int _hoursToSimulate;
+
+        private readonly int _runsToDo;
         
         public Runner(string filePath, double simulationSpeed, double orderChance, 
             OrderGenerationConfiguration orderGenerationConfiguration, SchedulerType schedulerType, 
-            int hoursToSimulate, DateTime startTime, DateTime schedulerStartTime, List<PickingOrder> orderList)
+            int hoursToSimulate, DateTime startTime, DateTime schedulerStartTime, List<PickingOrder> orderList, int runsToDo)
         {
             
-
+    
             _simulationSpeed = simulationSpeed;
             _hoursToSimulate = hoursToSimulate;
             StartTime = startTime;
@@ -37,6 +39,7 @@ namespace SolarSystem.Backend
             var orders = orderList;
             var erpscrape = new ErpScrape();
             erpscrape.ScrapeErp(filePath + "ErpTask_trace.log");
+            _runsToDo = runsToDo;
 
             erpscrape.Orders.Sort((x,y) => x.OrderTime.CompareTo(y.OrderTime));
 
@@ -78,7 +81,7 @@ namespace SolarSystem.Backend
         public void Start()
         {
             // Start Ticking
-            var t = new Thread(() => TimeKeeper.StartTicking(_simulationSpeed, StartTime, _hoursToSimulate));
+            var t = new Thread(() => TimeKeeper.StartTicking(_simulationSpeed, StartTime, _hoursToSimulate, _runsToDo));
             t.Start();
 
             TimeKeeper.Tick += MaybeStartScheduler;
