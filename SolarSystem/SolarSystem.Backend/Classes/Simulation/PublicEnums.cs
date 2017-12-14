@@ -37,4 +37,16 @@
         Lst,
         Real
     }
+
+    public enum RandomSeedType
+    {
+        Fixed,
+        Random
+    }
+
+    public enum SimulationState
+    {
+        Real,
+        Experimental
+    }
 }

@@ -101,7 +101,7 @@ namespace SolarSystem
             averageTimePerAreaOurs += averageTimePerArea;
         }
         
-        public double GetFinalAverageTimePerAreaOurs()
+        public double GetFinalAverageTimePerAreaSim()
         {
             return averageTimePerAreaOurs / finishedOrderCount;
         }
@@ -119,6 +119,35 @@ namespace SolarSystem
         public double GetAverageQuantityPerLineSim()
         {
             return totalLineQuantity / totalLineCount;
+        }
+
+        public double GetAverageQuantityPerLineSolar()
+        {
+            var totalQuantity = 0;
+            var totalLines = 0;
+            
+            foreach (var pickingOrder in orderList)
+            {
+                foreach (var line in pickingOrder.LineList)
+                {
+                    totalQuantity += line.Quantity;
+                    totalLines++;
+                }
+            }
+
+            return totalQuantity / totalLines;
+        }
+
+        public double GetAverageLinesPerOrderSolar()
+        {
+            var totalLines = 0;
+
+            foreach (var pickingOrder in orderList)
+            {
+                totalLines += pickingOrder.LineList.Count;
+            }
+
+            return totalLines / orderList.Count;
         }
     }
 }

@@ -13,14 +13,14 @@ namespace SolarSystem.Backend.Classes.Simulation
 
 
         private List<Article> ArticleList { get; }
-        private static readonly Random Rand = new Random();
+        private static readonly Random Rand = SimulationConfiguration.SeedType == RandomSeedType.Random ? new Random() : new Random(SimulationConfiguration.GetRandomSeedValue());
         private double OrderChance { get; }
 
-        private const int MinAmountOfLines = 1;
-        private const int MaxAmountOfLines = 8;
+        private static readonly int MinAmountOfLines = SimulationConfiguration.GetMinLineCountOG();
+        private static readonly int MaxAmountOfLines = SimulationConfiguration.GetMaxLineCountOG();
 
-        private const int MinArticleQuantity = 1;
-        private const int MaxArticleQuantity = 5;
+        private static readonly int MinArticleQuantity = SimulationConfiguration.GetMinArticleQuanitityOG();
+        private static readonly int MaxArticleQuantity = SimulationConfiguration.GetMaxArticleQuantityOG();
 
         private const int MinOrderNumberId = 10000000;
         private const int MaxOrderNumberId = 999999999;

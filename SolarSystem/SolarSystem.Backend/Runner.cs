@@ -55,16 +55,16 @@ namespace SolarSystem.Backend
             switch (schedulerType)
             {
                 case SchedulerType.Fifo:
-                    _scheduler = new FifoScheduler(OrderGenerator, Handler, 0);
+                    _scheduler = new FifoScheduler(OrderGenerator, Handler, SimulationConfiguration.GetSchedulerPoolMoveTime());
                     break;
                 case SchedulerType.Mi1:
                     throw new NotImplementedException("MI1 is not implemented yet..");
                     break;
                 case SchedulerType.Mi6:
-                    _scheduler = new Mi6Scheduler(OrderGenerator, Handler, 4, articleList, simInfo);
+                    _scheduler = new Mi6Scheduler(OrderGenerator, Handler, SimulationConfiguration.GetSchedulerPoolMoveTime(), articleList, simInfo);
                     break;
                 case SchedulerType.Lst:
-                    _scheduler = new LstScheduer(OrderGenerator, Handler, 4);
+                    _scheduler = new LstScheduer(OrderGenerator, Handler, SimulationConfiguration.GetSchedulerPoolMoveTime());
                     break;
                 case SchedulerType.Real:
                     _scheduler = new RealismScheduler(OrderGenerator, Handler, 0);

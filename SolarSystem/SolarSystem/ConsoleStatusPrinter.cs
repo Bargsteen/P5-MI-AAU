@@ -54,10 +54,10 @@ namespace SolarSystem
             TimeKeeper.Tick += () =>
             {
                 
-                PrintFullStatus();
+                
                 if (TimeKeeper.CurrentDateTime.Hour == _currentHour.Hour + 1)
                 {
-                    
+                    PrintFullStatus();
                     _ordersFinishedPerHour.Add(Tuple.Create(_currentHour.Hour, _finishedOrdersPerHour));
                     _currentHour = TimeKeeper.CurrentDateTime;
                     _finishedOrdersPerHour = 0;
@@ -114,9 +114,11 @@ namespace SolarSystem
             Console.WriteLine("\nSimulation Finished!");
             
             Console.WriteLine($"SOLAR :: Average Minutes Per Area: {_stats.CalcAverageTimePerAreaSolar()}");
-            Console.WriteLine($"OURS :: Average Minutes Per Area: {_stats.GetFinalAverageTimePerAreaOurs()}");
+            Console.WriteLine($"OURS :: Average Minutes Per Area: {_stats.GetFinalAverageTimePerAreaSim()}");
             Console.WriteLine($"OURS :: Slowest Ord: {_stats.GetSlowestOrderTime()}");
+            Console.WriteLine($"Solar :: Avg line Count: {_stats.GetAverageLinesPerOrderSolar()}");
             Console.WriteLine($"OURS :: Avg line Count: {_stats.GetAverageLinesPerOrderSim()}");
+            Console.WriteLine($"SOLAR :: Avg quantity per line: {_stats.GetAverageQuantityPerLineSolar()}");
             Console.WriteLine($"OURS :: Avg quantity per line: {_stats.GetAverageQuantityPerLineSim()}");
             
         }

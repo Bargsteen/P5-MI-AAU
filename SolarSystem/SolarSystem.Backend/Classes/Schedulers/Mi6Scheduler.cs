@@ -23,7 +23,7 @@ namespace SolarSystem.Backend.Classes.Schedulers
 
         private readonly SimulationInformation _simInfo;
 
-        private static Random Random { get; } = new Random();
+        private static Random Random { get; } = SimulationConfiguration.SeedType == RandomSeedType.Random ? new Random() : new Random(SimulationConfiguration.SimulationState == SimulationState.Experimental ? ExperimentalConstants.RandomSeedValue : RealConstants.RandomSeedValue);
         
         public Mi6Scheduler(OrderGenerator orderGenerator, Handler handler, double poolMoverTime, List<Article> articles, SimulationInformation simInfo) : base(orderGenerator, handler, poolMoverTime)
         {

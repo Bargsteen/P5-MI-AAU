@@ -53,11 +53,11 @@ namespace SolarSystem.Backend.Classes.Simulation
 
         private int CalcPickingTime(int amount)
         {
-            if (amount < GlobalConstants.LineCountDifferentiation)
+            if (amount < SimulationConfiguration.GetLineCountDifferentiation())
             {
-                return Math.Max(1, (int) (amount * GlobalConstants.TimePerArticlePick));
+                return Math.Max(1, (int) (amount * SimulationConfiguration.GetTimePerArticlePick()));
             }
-            return (int) (amount * GlobalConstants.TimePerArticlePick * GlobalConstants.LargeLineQuantityMultiplier);
+            return (int) (amount * SimulationConfiguration.GetTimePerArticlePick() * SimulationConfiguration.GetLargeLineQuantityMultiplier());
         }
     }
 }
