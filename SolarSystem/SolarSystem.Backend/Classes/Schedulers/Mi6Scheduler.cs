@@ -135,7 +135,7 @@ namespace SolarSystem.Backend.Classes.Schedulers
             foreach (var order in initialOrderPool)
             {
                 var actionVector = StateRepresenter.MakeOrderRepresentation(order, _articles);
-                _actionDataDict.Add(order.OrderId, new ActionData(order, actionVector, CalculateActionValue(actionVector)));
+                //_actionDataDict.Add(order.OrderId, new ActionData(order, actionVector, CalculateActionValue(actionVector)));
             }
         }
 

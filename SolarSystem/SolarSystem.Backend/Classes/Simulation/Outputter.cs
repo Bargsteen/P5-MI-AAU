@@ -43,7 +43,7 @@ namespace SolarSystem.Backend.Classes.Simulation
                         //    throw new Exception();
 
 
-                        output += ";" + TimeSpan.FromMinutes(DeltaTime.TotalMinutes);
+                        output += ";" + TimeSpan.FromMinutes(Math.Abs(DeltaTime.TotalMinutes));
 
                         file.WriteLine(output);
                     }   

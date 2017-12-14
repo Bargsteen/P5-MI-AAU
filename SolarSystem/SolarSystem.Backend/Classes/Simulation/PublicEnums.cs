@@ -35,6 +35,7 @@
         Mi1,
         Mi6,
         LST,
-        Real
+        Real,
+        Regression
     }
 }

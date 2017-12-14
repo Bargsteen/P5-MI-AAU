@@ -81,15 +81,18 @@ namespace SolarSystem.Backend
                 case SchedulerType.Mi1:
                     throw new NotImplementedException("MI1 is not implemented yet..");
                     break;
-                case SchedulerType.Mi6:
-                    _scheduler = new Mi6Scheduler(OrderGenerator, Handler, 4, articleList, simInfo);
-                    break;
+                //case SchedulerType.Mi6:
+                //    _scheduler = new Mi6Scheduler(OrderGenerator, Handler, 4, articleList, simInfo);
+                //    break;
                 case SchedulerType.LST:
                     _scheduler = new LSTScheduer(OrderGenerator, Handler, 4);
                     break;
                 case SchedulerType.Real:
                     _scheduler = new RealismScheduler(OrderGenerator, Handler, 0);
                     break;
+                case SchedulerType.Regression:
+                    _scheduler = new RegressionScheduler(OrderGenerator, Handler, 4);
+                break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(schedulerType), schedulerType, null);
             }
