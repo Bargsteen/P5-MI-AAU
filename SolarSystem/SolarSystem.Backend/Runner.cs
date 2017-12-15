@@ -73,7 +73,7 @@ namespace SolarSystem.Backend
                     _scheduler = new RealismScheduler(OrderGenerator, Handler, 0);
                     break;
                 case SchedulerType.Regression:
-                    _scheduler = new RegressionScheduler(OrderGenerator, Handler, 4);
+                    _scheduler = new RegressionScheduler(OrderGenerator, Handler, 4, simInfo);
                 break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(schedulerType), schedulerType, null);
