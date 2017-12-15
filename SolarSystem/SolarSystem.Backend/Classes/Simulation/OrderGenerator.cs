@@ -48,6 +48,8 @@ namespace SolarSystem.Backend.Classes.Simulation
             fromFileOrderCount = _scrapedOrders.Count;
 
             _currentOrderGenerationConfiguration = conf;
+
+            TimeKeeper.SimulationFinished += ResetOrderSentCount;
         }
 
         public void Start()
@@ -56,6 +58,10 @@ namespace SolarSystem.Backend.Classes.Simulation
 
         }
 
+        private void ResetOrderSentCount()
+        {
+            fromFileOrderSentCount = 0;
+        }
 
         public void MaybeSendOrder()
         {
@@ -65,12 +71,10 @@ namespace SolarSystem.Backend.Classes.Simulation
             switch (_currentOrderGenerationConfiguration)
             {
                 case OrderGenerationConfiguration.FromFile:
-
-                    int nextOrderIndex = fromFileOrderSentCount % fromFileOrderCount;
                     
-                    if (_scrapedOrders[nextOrderIndex].OrderTime.CompareTo(TimeKeeper.CurrentDateTime) < 0)
+                    if (fromFileOrderSentCount < fromFileOrderCount && _scrapedOrders[fromFileOrderSentCount].OrderTime.CompareTo(TimeKeeper.CurrentDateTime) < 0)
                     {
-                        order = _scrapedOrders[nextOrderIndex].ToSimOrder();
+                        order = _scrapedOrders[fromFileOrderSentCount].ToSimOrder();
                         order.Areas = ConstructAreasVisited(order);
                         CostumerSendsOrderEvent?.Invoke(order);
                         //_sentlines.Add(order.OrderId.ToString());

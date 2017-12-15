@@ -32,12 +32,6 @@ namespace SolarSystem.Backend.Classes.Schedulers
 
             _handler = handler;
 
-        }
-
-
-        public override void Start()
-        {
-            base.Start();
             float _sumOfAllErrors = 0;
             sentOrders = new Dictionary<int, Tuple<float, float>>();
 
@@ -49,16 +43,16 @@ namespace SolarSystem.Backend.Classes.Schedulers
                 sentOrders[box.Order.OrderId] = new Tuple<float, float>(sentOrders[box.Order.OrderId].Item1, (float)(TimeKeeper.CurrentDateTime - box.Order.OrderTime).TotalMinutes);
 
                 float error = sentOrders[box.Order.OrderId].Item2 - sentOrders[box.Order.OrderId].Item1;
-                Console.WriteLine($"Our guess: {sentOrders[box.Order.OrderId].Item1:000.000}, Actual time: {sentOrders[box.Order.OrderId].Item2:000.000}," +
-                                  $" Delta: {error:000.000}");
+                //Console.WriteLine($"Our guess: {sentOrders[box.Order.OrderId].Item1:000.000}, Actual time: {sentOrders[box.Order.OrderId].Item2:000.000}," +
+                //                  $" Delta: {error:000.000}");
                 _sumOfAllErrors += error;
-                TPRPropertyWeigths[(TPRProps) rng.Next(0,3)] += error * _learningRate;
+                TPRPropertyWeigths[(TPRProps)rng.Next(0, 3)] += error * _learningRate;
             };
 
 
             //Fetch the weights from last run, stored in the Weights.txt file
             TPRPropertyWeigths = UpdateWeightsFromFile();
-            
+
             TimeKeeper.SimulationFinished += delegate
             {
                 SaveToLogFile(TPRPropertyWeigths, _sumOfAllErrors);
@@ -68,7 +62,10 @@ namespace SolarSystem.Backend.Classes.Schedulers
                 Console.ReadKey();
 
             };
+
         }
+
+        
 
 
 
@@ -144,7 +141,14 @@ namespace SolarSystem.Backend.Classes.Schedulers
         
         protected override Order ChooseNextOrder()
         {
-            sentOrders.Add(ActualOrderPool.OrderBy(o => o.OrderTime).First().OrderId, new Tuple<float, float>(GuessTimeForOrder(ActualOrderPool.OrderBy(o => o.OrderTime).First()), 0));
+            if(sentOrders.Count == 5287)
+                throw new Exception();
+            int chosenOrder = ActualOrderPool.OrderBy(o => o.OrderTime).First().OrderId;
+            int a;
+            if (chosenOrder == 150350 || ActualOrderPool.Any(o => o.OrderId == 150350))
+                a = 2;
+            sentOrders.Add(chosenOrder, 
+                new Tuple<float, float>(GuessTimeForOrder(ActualOrderPool.OrderBy(o => o.OrderTime).First()), 0));
             return ActualOrderPool.OrderBy(o => o.OrderTime).First();
         }
     }
