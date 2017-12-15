@@ -13,7 +13,7 @@ namespace SolarSystem
         public static void Main(string[] args)
         {
             SimulationConfiguration.SeedType = RandomSeedType.Fixed;
-            SimulationConfiguration.SimulationState = SimulationState.Experimental;
+            SimulationConfiguration.SimulationState = SimulationState.Real;
             
             var filePath =
                 Directory.GetParent(Directory.GetParent(Directory.GetParent(Environment.CurrentDirectory).ToString())
@@ -26,11 +26,11 @@ namespace SolarSystem
             var orders2 = new List<PickingOrder>();
             orders2.AddRange(orders);
             
-            const int simSpeed = 5000;
+            const int simSpeed = 10000;
             const double randomNewOrderChance = 0.1;
             const OrderGenerationConfiguration orderGenerationConfiguration = OrderGenerationConfiguration.FromFile;
             
-            const SchedulerType schedulerType = SchedulerType.Estimator;
+            const SchedulerType schedulerType = SchedulerType.Regression;
             const int hoursToSimulate = 16;
             const int runsToDo = 1;
             DateTime simulationStartTime = new DateTime(2017, 10, 2, 6, 0, 0); //02/10/2017
