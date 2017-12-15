@@ -48,8 +48,9 @@ namespace SolarSystem.Backend.Classes.Simulation
                 // Increment CurrentDateTime, so it always shows a current time of the day.
                 CurrentDateTime = CurrentDateTime.AddSeconds(1);
             }
-
+            
             SimulationFinished?.Invoke();
+            
             AllRunsFinished?.Invoke();
             
             

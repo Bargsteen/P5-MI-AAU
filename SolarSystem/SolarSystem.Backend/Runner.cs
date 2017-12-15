@@ -75,6 +75,9 @@ namespace SolarSystem.Backend
                 case SchedulerType.Regression:
                     _scheduler = new RegressionScheduler(OrderGenerator, Handler, 4, simInfo);
                 break;
+                case SchedulerType.Estimator:
+                    _scheduler = new EstimatorScheduler(OrderGenerator, Handler, SimulationConfiguration.GetSchedulerPoolMoveTime());
+                break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(schedulerType), schedulerType, null);
             }

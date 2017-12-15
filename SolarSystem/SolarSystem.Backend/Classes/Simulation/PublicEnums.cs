@@ -36,7 +36,8 @@
         Mi6,
         LST,
         Real,
-        Regression
+        Regression,
+        Estimator
     }
 
     public enum RandomSeedType

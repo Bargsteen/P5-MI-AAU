@@ -1,6 +1,4 @@
-﻿using System.Runtime.Remoting.Messaging;
-
-namespace SolarSystem.Backend.Classes.Simulation
+﻿namespace SolarSystem.Backend.Classes.Simulation
 {
     
 

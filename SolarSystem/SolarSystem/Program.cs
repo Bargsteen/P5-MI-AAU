@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using SolarSystem.Backend;
-using SolarSystem.Backend.Classes;
 using System.IO;
 using SolarSystem.Backend.Classes.Data;
 using SolarSystem.Backend.Classes.Simulation;
@@ -31,7 +30,7 @@ namespace SolarSystem
             const double randomNewOrderChance = 0.1;
             const OrderGenerationConfiguration orderGenerationConfiguration = OrderGenerationConfiguration.FromFile;
             
-            const SchedulerType schedulerType = SchedulerType.Real;
+            const SchedulerType schedulerType = SchedulerType.Estimator;
             const int hoursToSimulate = 16;
             const int runsToDo = 1;
             DateTime simulationStartTime = new DateTime(2017, 10, 2, 6, 0, 0); //02/10/2017
@@ -41,7 +40,7 @@ namespace SolarSystem
                 schedulerType, hoursToSimulate, simulationStartTime, schedulerStartTime, orders, runsToDo);
             
             
-            var outPutter = new Outputter(runner);
+            //var outPutter = new Outputter(runner);
             //var dataSaver = new DataSaver(runner);
             //SaveData(pickNScrape.OrderList);
             

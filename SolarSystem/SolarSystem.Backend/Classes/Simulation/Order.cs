@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using Accord.Math;
 
 namespace SolarSystem.Backend.Classes.Simulation
 {
@@ -15,7 +13,7 @@ namespace SolarSystem.Backend.Classes.Simulation
         
         public DateTime StartPackingTime { get; set; }
         public int EstimatedPackingTimeInSeconds { get; set; }
-        public Dictionary<AreaCode, double> EstimatedAreaFill;
+        public Dictionary<AreaCode, decimal> EstimatedAreaFill;
 
         public Order(int orderId, DateTime orderTime, List<Line> lines)
         {
@@ -23,7 +21,7 @@ namespace SolarSystem.Backend.Classes.Simulation
             OrderTime = orderTime;
             Lines = lines ?? throw new ArgumentNullException(nameof(lines));
             AreaTimeInOutLog = new Dictionary<AreaCode, TimeInOut>();
-            EstimatedAreaFill = new Dictionary<AreaCode, double>();
+            EstimatedAreaFill = new Dictionary<AreaCode, decimal>();
         }
 
         public override string ToString()

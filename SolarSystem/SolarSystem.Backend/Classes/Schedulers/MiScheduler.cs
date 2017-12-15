@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Accord.Math;
 using SolarSystem.Backend.Classes.Simulation;
 
 namespace SolarSystem.Backend.Classes.Schedulers
