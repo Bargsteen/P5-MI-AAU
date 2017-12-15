@@ -31,7 +31,7 @@ namespace SolarSystem
             const double randomNewOrderChance = 0.1;
             const OrderGenerationConfiguration orderGenerationConfiguration = OrderGenerationConfiguration.Random;
             
-            const SchedulerType schedulerType = SchedulerType.Real;
+            const SchedulerType schedulerType = SchedulerType.Estimator;
             const int hoursToSimulate = 16;
             const int runsToDo = 2;
             DateTime simulationStartTime = new DateTime(2017, 10, 2, 6, 0, 0); //02/10/2017
