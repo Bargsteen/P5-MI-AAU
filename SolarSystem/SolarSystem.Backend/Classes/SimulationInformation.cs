@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic; 
 using System.Linq;
-using Accord.Statistics.Kernels;
 using SolarSystem.Backend.Classes.Simulation;
 
 namespace SolarSystem.Backend.Classes  

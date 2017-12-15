@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using SolarSystem.Backend.Classes.Simulation;
 
 namespace SolarSystem.Backend.Classes.Schedulers

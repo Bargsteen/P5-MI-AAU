@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.Design;
 using System.Linq;
-using System.Threading;
-using Accord;
 using ConsoleTables;
 using SolarSystem.Backend.Classes.Simulation;
 
@@ -12,7 +9,7 @@ namespace SolarSystem.Backend.Classes.Schedulers
     class EstimatorScheduler : Scheduler
     {
         private const int secondsLookAhead = 20000;
-        private Queue<Dictionary<AreaCode, double>> AreaFillInfo;
+        private Queue<Dictionary<AreaCode, decimal>> AreaFillInfo;
 
         public EstimatorScheduler(OrderGenerator orderGenerator, Handler handler, double poolMoverTime) : base(
             orderGenerator, handler, poolMoverTime)
@@ -20,17 +17,17 @@ namespace SolarSystem.Backend.Classes.Schedulers
             OnOrderActuallySent += MakeOrderFill;
             TimeKeeper.Tick += EnAndDequeueOnTick;
 
-            OnOrderActuallySent += OrderBox => PrintXTimeStepsOfMatrix(5);
+            //OnOrderActuallySent += OrderBox => PrintXTimeStepsOfMatrix(1);
             
             foreach (var areasKey in handler.Areas.Keys)
             {
                 handler.Areas[areasKey].OnOrderBoxInAreaFinished += UpdateOnOrderFinishedAtArea;
             }
             
-            AreaFillInfo = new Queue<Dictionary<AreaCode, double>>();
+            AreaFillInfo = new Queue<Dictionary<AreaCode, decimal>>();
             for (int i = 0; i < secondsLookAhead; i++)
             {
-                var zeroDicts = new Dictionary<AreaCode, double>
+                var zeroDicts = new Dictionary<AreaCode, decimal>
                 {
                     {AreaCode.Area21, 0},
                     {AreaCode.Area25, 0},
@@ -48,7 +45,7 @@ namespace SolarSystem.Backend.Classes.Schedulers
         {
             AreaFillInfo.Dequeue();
             
-            AreaFillInfo.Enqueue(new Dictionary<AreaCode, double>
+            AreaFillInfo.Enqueue(new Dictionary<AreaCode, decimal>
             {
                 {AreaCode.Area21, 0},
                 {AreaCode.Area25, 0},
@@ -79,7 +76,7 @@ namespace SolarSystem.Backend.Classes.Schedulers
             // Get the new fill
             var newFill = order.EstimatedAreaFill.ToDictionary(k => k.Key, v => v.Value);
             
-            double areaFillValue = AreaFill(order.Areas.Count(a => !a.Value));
+            decimal areaFillValue = AreaFill(order.Areas.Count(a => !a.Value));
             
             
             
@@ -109,16 +106,16 @@ namespace SolarSystem.Backend.Classes.Schedulers
             UpdateAreaFillInfo(applyOrder);
         }
 
-        private Dictionary<AreaCode, double> CalcValuesForOrder(Order order)
+        private Dictionary<AreaCode, decimal> CalcValuesForOrder(Order order)
         {
-            var fillInfoDict = new Dictionary<AreaCode, double>();
+            var fillInfoDict = new Dictionary<AreaCode, decimal>();
             fillInfoDict.Add(AreaCode.Area21, 0);
             fillInfoDict.Add(AreaCode.Area25, 0);
             fillInfoDict.Add(AreaCode.Area27, 0);
             fillInfoDict.Add(AreaCode.Area28, 0);
             fillInfoDict.Add(AreaCode.Area29, 0);
 
-            double areaFillValue = AreaFill(order.Areas.Count(a => !a.Value));
+            decimal areaFillValue = AreaFill(order.Areas.Count(a => !a.Value));
             
             int count = 0;
             foreach (var area in order.Areas)
@@ -195,11 +192,11 @@ namespace SolarSystem.Backend.Classes.Schedulers
             return (int) (quantity * SimulationConfiguration.GetTimePerArticlePick() * SimulationConfiguration.GetLargeLineQuantityMultiplier());
         }
 
-        private double AreaFill(int areaCount)
+        private decimal AreaFill(int areaCount)
         {
             // Return normalized fill
             if (areaCount == 0) return 0;
-            return 1d / areaCount;
+            return 1m / areaCount;
         }
 
         public void PrintXTimeStepsOfMatrix(int timeStepsToRun)
@@ -210,10 +207,17 @@ namespace SolarSystem.Backend.Classes.Schedulers
             ConsoleTable table = new ConsoleTable("Time", "Area 21", "Area 25", "Area 27", "Area 28", "Area 29");
             foreach (var kvp in AreaFillInfo)
             {
-                var row = new List<double>{timeStepsUsed};
+                var row = new List<decimal>{timeStepsUsed};
                 row.AddRange(kvp.Values);
 
-                table.AddRow(row[0], row[1], row[2], row[3], row[4], row[5]);
+                if (row.Any(d => d < 0))
+                {
+                    var b = 2;
+                }
+
+                var fRow = row.Select(x => $"{x:N2}").ToArray();
+                
+                table.AddRow(fRow[0], fRow[1], fRow[2], fRow[3], fRow[4], fRow[5]);
                 
                 if (timeStepsUsed++ >= timeStepsToRun)
                 {

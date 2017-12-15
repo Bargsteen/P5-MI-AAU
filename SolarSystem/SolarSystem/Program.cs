@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using SolarSystem.Backend;
-using SolarSystem.Backend.Classes;
 using System.IO;
 using SolarSystem.Backend.Classes.Data;
 using SolarSystem.Backend.Classes.Simulation;
@@ -41,7 +40,7 @@ namespace SolarSystem
                 schedulerType, hoursToSimulate, simulationStartTime, schedulerStartTime, orders, runsToDo);
             
             
-            var outPutter = new Outputter(runner);
+            //var outPutter = new Outputter(runner);
             //var dataSaver = new DataSaver(runner);
             //SaveData(pickNScrape.OrderList);
             

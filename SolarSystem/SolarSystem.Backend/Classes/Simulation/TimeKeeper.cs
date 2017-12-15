@@ -49,6 +49,8 @@ namespace SolarSystem.Backend.Classes.Simulation
                 CurrentDateTime = CurrentDateTime.AddSeconds(1);
             }
             
+            SimulationFinished?.Invoke();
+            
             AllRunsFinished?.Invoke();
             
             
