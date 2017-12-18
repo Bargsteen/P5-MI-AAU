@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using SolarSystem.Backend.Classes.Simulation;
 using System.IO;
+using Accord.Statistics.Kernels;
 
 namespace SolarSystem.Backend.Classes.Schedulers
 {
@@ -32,7 +33,7 @@ namespace SolarSystem.Backend.Classes.Schedulers
         private SimulationInformation _simInfo;
         private List<Tuple<double, double>> _tprProperties;
         private Dictionary<TPRProps, double> TPRPropertyWeigths;
-        private double _learningRate = 0.00001f;
+        private double _learningRate = 0.0001f;
         private Dictionary<int, Tuple<double, double>> sentOrders;
         private double Bias = 5;
         int[] timings = new int[3];
@@ -79,7 +80,7 @@ namespace SolarSystem.Backend.Classes.Schedulers
 
                     Console.WriteLine($"Our guess: {sentOrders[box.Order.OrderId].Item1:000.000}, Actual time: {sentOrders[box.Order.OrderId].Item2:000.000}," +
                                       $" Delta: {error:000.000}");
-                    TPRPropertyWeigths[(TPRProps)rng.Next(0, 3)] += error * _learningRate;
+                   // TPRPropertyWeigths[(TPRProps)rng.Next(0, 3)] += error * _learningRate;
                     SaveToLogFile(TPRPropertyWeigths, _sumOfAllErrors / count);
                     printCounter = 0;
                 }
@@ -117,30 +118,33 @@ namespace SolarSystem.Backend.Classes.Schedulers
         void Learn(double error, Order order)
         {
             double sumOfAllWeights = TPRPropertyWeigths.Values.Sum();
-            double sumOfAllResults = 0;
+            //double sumOfAllResults = 0;
 
-            sumOfAllResults += TPRPropertyWeigths[TPRProps.AreasToVisit] * order.Areas.Count;
-            sumOfAllResults += TPRPropertyWeigths[TPRProps.DifferentLines] * order.Lines.Count;
-            sumOfAllResults += TPRPropertyWeigths[TPRProps.QuantityPerLine] * order.Lines.Sum(l => l.Quantity);
-            sumOfAllResults += TPRPropertyWeigths[TPRProps.Fill] * FillResult(order);
-            sumOfAllResults += TPRPropertyWeigths[TPRProps.Bias] * Bias;
-
-
-
-            TPRPropertyWeigths[TPRProps.AreasToVisit] += ((TPRPropertyWeigths[TPRProps.AreasToVisit] * order.Areas.Count) / sumOfAllResults) * error * _learningRate;
-            TPRPropertyWeigths[TPRProps.DifferentLines] += ((TPRPropertyWeigths[TPRProps.DifferentLines] * order.Lines.Count) / sumOfAllResults) * error * _learningRate;
-            TPRPropertyWeigths[TPRProps.QuantityPerLine]  += ((TPRPropertyWeigths[TPRProps.QuantityPerLine] * order.Lines.Sum(l => l.Quantity)) / sumOfAllResults) * error * _learningRate;
-            TPRPropertyWeigths[TPRProps.Fill] += ((TPRPropertyWeigths[TPRProps.Fill] * FillResult(order)) / sumOfAllResults) * error * _learningRate;
-            TPRPropertyWeigths[TPRProps.Bias] += ((TPRPropertyWeigths[TPRProps.Bias] * Bias) / sumOfAllResults) * error * _learningRate;
+            //sumOfAllResults += TPRPropertyWeigths[TPRProps.AreasToVisit] * order.Areas.Count;
+            //sumOfAllResults += TPRPropertyWeigths[TPRProps.DifferentLines] * order.Lines.Count;
+            //sumOfAllResults += TPRPropertyWeigths[TPRProps.QuantityPerLine] * order.Lines.Sum(l => l.Quantity);
+            //sumOfAllResults += TPRPropertyWeigths[TPRProps.Fill] * FillResult(order);
+            //sumOfAllResults += TPRPropertyWeigths[TPRProps.Bias] * Bias;
 
 
+            double[] input = new double[5];
+            input[(int)TPRProps.AreasToVisit] = order.Areas.Count * TPRPropertyWeigths[TPRProps.AreasToVisit];
+            input[(int)TPRProps.Bias] = Bias * TPRPropertyWeigths[TPRProps.Bias];
+            input[(int)TPRProps.DifferentLines] = order.Lines.Count * TPRPropertyWeigths[TPRProps.DifferentLines];
+            input[(int)TPRProps.QuantityPerLine] = order.Lines.Sum(o => o.Quantity) * TPRPropertyWeigths[TPRProps.QuantityPerLine];
+            input[(int)TPRProps.Fill] = ReLU(FillResult(order) * TPRPropertyWeigths[TPRProps.Fill]);
 
-            //for (int i = 0; i < TPRPropertyWeigths.Count; i++)
-            //{
-            //    TPRPropertyWeigths[(TPRProps)i] +=
-            //        ((TPRPropertyWeigths[(TPRProps)i] * 100) / sumOfAllWeights) * error * _learningRate;
-            //}
 
+            double[] output = new double[5];
+            output = Softmax(input);
+
+
+            TPRPropertyWeigths[TPRProps.AreasToVisit] += output[(int)TPRProps.AreasToVisit] * TPRPropertyWeigths[TPRProps.AreasToVisit] * error * _learningRate;
+            TPRPropertyWeigths[TPRProps.DifferentLines] += output[(int)TPRProps.DifferentLines] * TPRPropertyWeigths[TPRProps.DifferentLines] * error * _learningRate;
+            TPRPropertyWeigths[TPRProps.QuantityPerLine]  += output[(int)TPRProps.QuantityPerLine] * TPRPropertyWeigths[TPRProps.QuantityPerLine] * error * _learningRate;
+            TPRPropertyWeigths[TPRProps.Fill] += output[(int)TPRProps.Fill] * TPRPropertyWeigths[TPRProps.Fill] * error * _learningRate;
+            TPRPropertyWeigths[TPRProps.Bias] += output[(int)TPRProps.Bias] * TPRPropertyWeigths[TPRProps.Bias] * error * _learningRate;
+   
 
         }
 
@@ -219,36 +223,55 @@ namespace SolarSystem.Backend.Classes.Schedulers
 
         double GuessTimeForOrder(Order order)
         {
-            /*return (float)order.Areas.Count / _handler.Areas.Count * TPRPropertyWeigths[TPRProps.AreasToVisit] +
-                    (float)order.Lines.Distinct().Count() / _maxAmountOfLines * TPRPropertyWeigths[TPRProps.DifferentLines] +
-                    (float)order.Lines.Sum(l => l.Quantity) / _MaxQuantityPerLine * TPRPropertyWeigths[TPRProps.QuantityPerLine];
-                    */
 
-           // return Bias * TPRPropertyWeigths[TPRProps.Bias] + FillResult(order) * TPRPropertyWeigths[TPRProps.Fill];
-
-            return Bias * TPRPropertyWeigths[TPRProps.Bias] + order.Lines.Count * TPRPropertyWeigths[TPRProps.DifferentLines] +
-                   order.Lines.Sum(o => o.Quantity) * TPRPropertyWeigths[TPRProps.QuantityPerLine] + FillResult(order) * TPRPropertyWeigths[TPRProps.Fill];
+            double[] input = new double[5];
+            input[(int)TPRProps.Bias] = Bias * TPRPropertyWeigths[TPRProps.Bias];
+            input[(int)TPRProps.DifferentLines] = order.Lines.Count * TPRPropertyWeigths[TPRProps.DifferentLines];
+            input[(int)TPRProps.QuantityPerLine] = order.Lines.Sum(o => o.Quantity) * TPRPropertyWeigths[TPRProps.QuantityPerLine];
+            input[(int)TPRProps.Fill] = ReLU(FillResult(order) * TPRPropertyWeigths[TPRProps.Fill]);
 
 
-            //for hver area vi skal i, hvor meget plads er der ?
+            double[] output = new double[5];
+            output = Softmax(input);
 
-            /*
-             * AreaFill [25,   20,   10,   17,   19]
-             * Lines    [3 ,   10,   0 ,   3,    1 ]
-             * Quantity [15,   10,   0 ,   20,   5 ]
-             * product  [1125, 2000 ,0,    1020, 95] 
-             * Weight   [2.5,  2.5,  2.5,  2.5, 2.5]
-             * R        [2812, 5000, 0,   2550, 237]
-             * b * w0 + Lines * w1 + Quantity * w2 + R * w3
-            */
+            output[(int)TPRProps.Bias] *= TPRPropertyWeigths[TPRProps.Bias];
+            output[(int)TPRProps.DifferentLines] *= TPRPropertyWeigths[TPRProps.DifferentLines];
+            output[(int)TPRProps.QuantityPerLine] *= TPRPropertyWeigths[TPRProps.QuantityPerLine];
+            output[(int)TPRProps.Fill] *= TPRPropertyWeigths[TPRProps.Fill];
 
 
-
+            return output.Sum();
 
         }
 
+        private static double[] Softmax(double[] oSums)
+        {
+            // does all output nodes at once so scale doesn't have to be re-computed each time
+            // 1. determine max output sum
+            double max = oSums[0];
+            for (int i = 0; i < oSums.Length; ++i)
+                if (oSums[i] > max) max = oSums[i];
 
-        double FillResult(Order order)
+            // 2. determine scaling factor -- sum of exp(each val - max)
+            double scale = 0.0;
+            for (int i = 0; i < oSums.Length; ++i)
+                scale += Math.Exp(oSums[i] - max);
+
+            double[] result = new double[oSums.Length];
+            for (int i = 0; i < oSums.Length; ++i)
+                result[i] = Math.Exp(oSums[i] - max) / scale;
+
+            return result; // now scaled so that xi sum to 1.0
+        }
+
+
+        public double ReLU(double x)
+        {
+            return x< 0 ? 0:x;
+        }
+
+
+    double FillResult(Order order)
         {
             double[] _fillresult = new double [5];
             for (int i = 0; i < _simInfo.GetState().Length-1; i++)
