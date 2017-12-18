@@ -5,8 +5,8 @@ namespace SolarSystem.Backend.PickingAndErp
     public class Line
     {
         public Classes.Simulation.Article Article { get;  }
-        public int Quantity { get; private set; }
-        public DateTime OutTimeStamp { get; private set; }
+        public int Quantity { get; }
+        public DateTime OutTimeStamp { get; }
         
         public Line(Classes.Simulation.Article article, int quantity, DateTime timeStamp)
         {

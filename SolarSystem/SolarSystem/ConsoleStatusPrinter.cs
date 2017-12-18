@@ -8,23 +8,31 @@ namespace SolarSystem
 {
     public class ConsoleStatusPrinter
     {
+        private int _totalFinishedLines;
+        private int _finishedLinesPerHour;
         private int _totalFinishedOrders;
-        private int _finishedOrdersPerHour;
         private DateTime _currentHour;
-        private readonly List<Tuple<int, int>> _ordersFinishedPerHour;
+        private readonly List<Tuple<int, int>> _linesFinishedPerHour;
         private readonly Dictionary<AreaCode, int> _finishedBoxesInAreas;
 
         private readonly Runner _runner;
 
         private readonly Statistics _stats;
+        private readonly DateTime _schedulerStartTime;
+        private readonly SchedulerType _schedulerType;
+        private readonly OrderGenerationConfiguration _orderGenerationConfiguration;
 
-        public ConsoleStatusPrinter(Runner runner, Statistics stats)
+        public ConsoleStatusPrinter(Runner runner, Statistics stats, DateTime schedulerStartTime, 
+            SchedulerType schedulerType, OrderGenerationConfiguration orderGenerationConfiguration)
         {
+            _schedulerType = schedulerType;
+            _orderGenerationConfiguration = orderGenerationConfiguration;
             _runner = runner;
             _stats = stats;
+            _schedulerStartTime = schedulerStartTime;
 
             _currentHour = _runner.StartTime;
-            _ordersFinishedPerHour = new List<Tuple<int, int>>();
+            _linesFinishedPerHour = new List<Tuple<int, int>>();
 
             TimeKeeper.SimulationFinished += PrintSimulationFinished;
 
@@ -44,8 +52,9 @@ namespace SolarSystem
 
             _runner.Handler.OnOrderBoxFinished += orderBox =>
             {
-                _totalFinishedOrders += orderBox.LineIsPickedStatuses.Keys.Count;
-                _finishedOrdersPerHour += orderBox.LineIsPickedStatuses.Keys.Count;
+                _totalFinishedLines += orderBox.LineIsPickedStatuses.Keys.Count;
+                _finishedLinesPerHour += orderBox.LineIsPickedStatuses.Keys.Count;
+                _totalFinishedOrders += 1;
 
             };
 
@@ -56,9 +65,9 @@ namespace SolarSystem
                 if (TimeKeeper.CurrentDateTime.Hour == _currentHour.Hour + 1)
                 {
                     PrintFullStatus();
-                    _ordersFinishedPerHour.Add(Tuple.Create(_currentHour.Hour, _finishedOrdersPerHour));
+                    _linesFinishedPerHour.Add(Tuple.Create(_currentHour.Hour, _finishedLinesPerHour));
                     _currentHour = TimeKeeper.CurrentDateTime;
-                    _finishedOrdersPerHour = 0;
+                    _finishedLinesPerHour = 0;
                 }
             };
 
@@ -73,12 +82,14 @@ namespace SolarSystem
         private void PrintFullStatus()
         {
             Console.Clear();
+            Console.WriteLine($"Scheduler: {_schedulerType} || OrderGeneration: {_orderGenerationConfiguration}");
             PrintBoxDict(_finishedBoxesInAreas);
-            PrintLinesFinishedPerHour(_runner.StartTime, TimeKeeper.CurrentDateTime, _totalFinishedOrders);
+            PrintLinesFinishedPerHour(_schedulerStartTime, TimeKeeper.CurrentDateTime, _totalFinishedLines);
+            Console.WriteLine($"Total finished orders: {_totalFinishedOrders}");
             Console.WriteLine("Lines between " + TimeKeeper.CurrentDateTime.Hour + " - " +
-                              (TimeKeeper.CurrentDateTime.Hour + 1) + ": " + _finishedOrdersPerHour +
+                              (TimeKeeper.CurrentDateTime.Hour + 1) + ": " + _finishedLinesPerHour +
                               " lines");
-            _ordersFinishedPerHour.ForEach(x =>
+            _linesFinishedPerHour.ForEach(x =>
                 Console.Write("[ " + x.Item1 + " - " + (x.Item1 + 1) + " : " + x.Item2 + " ] "));
         }
 
@@ -87,17 +98,26 @@ namespace SolarSystem
             dict[areaCode]++;
         }
 
+        private void PrintLinesPerHourForStatistics()
+        {
+            _linesFinishedPerHour.ForEach( x => Console.WriteLine($"{x.Item2}"));
+            Console.WriteLine();
+        }
+
         private static void PrintBoxDict(Dictionary<AreaCode, int> dict)
         {
             var str = dict.Aggregate("", (current, kvp) => current + $"[{kvp.Key}: {kvp.Value}] ");
             PrintStatus(str);
         }
 
-        private static void PrintLinesFinishedPerHour(DateTime startTime, DateTime currentTime,
+        private void PrintLinesFinishedPerHour(DateTime startTime, DateTime currentTime,
             int totalFinishedLines)
         {
-            var timeSpent = currentTime - startTime;
-            var linesPerHour = totalFinishedLines / timeSpent.TotalHours;
+            var hoursWithFinishedOrders = _linesFinishedPerHour.Count(x => x.Item2 != 0);
+
+
+            double hoursSpent = hoursWithFinishedOrders;
+            double linesPerHour = totalFinishedLines / hoursSpent;
             Console.WriteLine($"Total lines: {totalFinishedLines}\nLines per hour: {linesPerHour}");
         }
 
@@ -110,6 +130,7 @@ namespace SolarSystem
         {
             PrintFullStatus();
             Console.WriteLine("\nSimulation Finished!");
+            PrintLinesPerHourForStatistics();
             
             Console.WriteLine($"SOLAR :: Average Minutes Per Area: {_stats.CalcAverageTimePerAreaSolar()}");
             Console.WriteLine($"OURS :: Average Minutes Per Area: {_stats.GetFinalAverageTimePerAreaSim()}");

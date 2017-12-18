@@ -15,8 +15,8 @@ namespace SolarSystem.Backend.Classes.Schedulers
 
         private readonly List<Article> _articles;
 
-        private Queue<Memory> ReplayMemory { get; set; }
-        private double[] Weights { get; set; }
+        private Queue<Memory> ReplayMemory { get; }
+        private double[] Weights { get; }
 
         private readonly Dictionary<int, ActionData> _actionDataDict;
 

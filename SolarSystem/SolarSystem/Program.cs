@@ -12,8 +12,12 @@ namespace SolarSystem
     {
         public static void Main(string[] args)
         {
-            SimulationConfiguration.SeedType = RandomSeedType.Fixed;
-            SimulationConfiguration.SimulationState = SimulationState.Experimental;
+
+            RandomSeedType ChosenSeedType = RandomSeedType.Fixed;
+            SimulationState ChosenSimulationState = SimulationState.Real;
+            
+            SimulationConfiguration.SeedType = ChosenSeedType;
+            SimulationConfiguration.SimulationState = ChosenSimulationState;
             
             var filePath =
                 Directory.GetParent(Directory.GetParent(Directory.GetParent(Environment.CurrentDirectory).ToString())
@@ -28,28 +32,28 @@ namespace SolarSystem
             
             const int simSpeed = 5000;
             const double randomNewOrderChance = 0.1;
-            const OrderGenerationConfiguration orderGenerationConfiguration = OrderGenerationConfiguration.FromFile;
+            const OrderGenerationConfiguration orderGenerationConfiguration = OrderGenerationConfiguration.Random;
             
             const SchedulerType schedulerType = SchedulerType.Estimator;
-            const int hoursToSimulate = 16;
+            const bool useOrderTime = false; // Should be false if using Scheduler.Real
+            const int hoursToSimulate = 17;
             const int runsToDo = 1;
             DateTime simulationStartTime = new DateTime(2017, 10, 2, 6, 0, 0); //02/10/2017
-            DateTime schedulerStartTime = simulationStartTime.AddHours(0);
+            DateTime schedulerStartTime = simulationStartTime.AddHours(4);
+            
             
             var runner = new Runner(filePath, simSpeed, randomNewOrderChance, orderGenerationConfiguration, 
-                schedulerType, hoursToSimulate, simulationStartTime, schedulerStartTime, orders, runsToDo);
+                schedulerType, hoursToSimulate, simulationStartTime, schedulerStartTime, orders, runsToDo, useOrderTime);
             
-            
-            //var outPutter = new Outputter(runner);
-            //var dataSaver = new DataSaver(runner);
-            //SaveData(pickNScrape.OrderList);
-            
+            // var outPutter = new Outputter(runner);
+            // var dataSaver = new DataSaver(runner);
+            // SaveData(pickNScrape.OrderList);
            
             Statistics stats = new Statistics(orders2, runner);
             
             runner.Start();
             
-            var consoleStatusPrinter = new ConsoleStatusPrinter(runner, stats);
+            var consoleStatusPrinter = new ConsoleStatusPrinter(runner, stats, schedulerStartTime, schedulerType, orderGenerationConfiguration);
             consoleStatusPrinter.StartPrinting();
             
         }

@@ -28,7 +28,7 @@ namespace SolarSystem.Backend
         
         public Runner(string filePath, double simulationSpeed, double orderChance, 
             OrderGenerationConfiguration orderGenerationConfiguration, SchedulerType schedulerType, 
-            int hoursToSimulate, DateTime startTime, DateTime schedulerStartTime, List<PickingOrder> orderList, int runsToDo)
+            int hoursToSimulate, DateTime startTime, DateTime schedulerStartTime, List<PickingOrder> orderList, int runsToDo, bool useOrderTime)
         {
             
     
@@ -42,6 +42,7 @@ namespace SolarSystem.Backend
             _runsToDo = runsToDo;
 
             erpscrape.Orders.Sort((x,y) => x.OrderTime.CompareTo(y.OrderTime));
+            orders.Sort((x,y) => x.OrderTime.CompareTo(y.OrderTime));
 
             List<Article> articleList = orders
                 .SelectMany(o => o.LineList)
@@ -49,11 +50,26 @@ namespace SolarSystem.Backend
                 .Select(line => line.Article)
                 .ToList();
 
+            //var ordersIntersect = erpscrape.Orders.Where(o => orders.Any(e => e.OrderNumber == o.OrderNumber)).Distinct().OrderBy(o => o.OrderNumber).ToList();
+
+            var ordersOrderedAndPicked =
+                orders.Where(o => erpscrape.Orders.Any(e => e.OrderNumber == o.OrderNumber)).Distinct().ToList();
+
+            if (useOrderTime)
+            {
+                // Update orders to use the time when they were ordered rather than picked.
+                if (schedulerType == SchedulerType.Real)
+                {
+                    throw new ArgumentException("The real scheduler should only be used with userOrderTime = false. As it depends on the picking time.");
+                }
+                ordersOrderedAndPicked.ForEach(o => o.OrderTime = erpscrape.Orders.First(e => e.OrderNumber == o.OrderNumber).OrderTime);
+            }
+            
             Handler = new Handler(); 
             
             SimulationInformation simInfo = new SimulationInformation(Handler, schedulerStartTime);
             
-            OrderGenerator = new OrderGenerator(articleList, orderChance, orders, orderGenerationConfiguration);
+            OrderGenerator = new OrderGenerator(articleList, orderChance, ordersOrderedAndPicked, orderGenerationConfiguration);
             
             switch (schedulerType)
             {

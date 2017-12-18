@@ -19,7 +19,7 @@ namespace SolarSystem.Backend.Classes.Schedulers
         protected List<Order> ActualOrderPool { get; }
 
         private OrderGenerator OrderGenerator { get; }
-        private Handler Handler { get; set; }
+        private Handler Handler { get; }
 
         public bool UsePoolTime = true;
 
@@ -82,6 +82,9 @@ namespace SolarSystem.Backend.Classes.Schedulers
             // If the time has passed, and there is something to move => move.
             if (UsePoolTime == false || TimerStartMinutes <= PoolTimer++)
             {
+                
+                DoWhenMoveInitialToActualPool();
+                
                 ActualOrderPool.AddRange(InitialOrderPool);
                 InitialOrderPool.Clear();
                 
@@ -91,6 +94,11 @@ namespace SolarSystem.Backend.Classes.Schedulers
             }
             
             // Else return.
+        }
+
+        protected virtual void DoWhenMoveInitialToActualPool()
+        {
+            //
         }
 
         protected abstract Order ChooseNextOrder();

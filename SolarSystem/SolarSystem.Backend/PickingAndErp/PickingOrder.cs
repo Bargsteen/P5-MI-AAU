@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using SolarSystem.Backend.Classes.Simulation;
 
 namespace SolarSystem.Backend.PickingAndErp
 {
     public class PickingOrder
     {
-        public List<Line> LineList { get; private set; }
-        public int OrderNumber { get; private set; }
+        public List<Line> LineList { get; }
+        public int OrderNumber { get; }
         public DateTime OrderTime { get; set; }
 
         public PickingOrder(int orderNumber, List<Line> lineList)
@@ -14,15 +15,7 @@ namespace SolarSystem.Backend.PickingAndErp
             OrderNumber = orderNumber;
             LineList = lineList;
         }
-
-        public PickingOrder(int orderNumber, Line line)
-        {
-            OrderNumber = orderNumber;
-            LineList.Add(line);
-        }
         
-
-
         public override string ToString()
         {
             string returnString = "";
@@ -33,7 +26,26 @@ namespace SolarSystem.Backend.PickingAndErp
             return "OrderNumber: " + OrderNumber + returnString;
         }
 
-        public Classes.Simulation.Order ToSimOrder()
+        public override bool Equals(object obj)
+        {
+            if (obj is PickingOrder pickingOrder)
+            {
+                return Equals(pickingOrder);
+            }
+            return false;
+        }
+
+        protected bool Equals(PickingOrder other)
+        {
+            return OrderNumber == other.OrderNumber;
+        }
+
+        public override int GetHashCode()
+        {
+            return OrderNumber;
+        }
+
+        public Order ToSimOrder()
         {
             List<Classes.Simulation.Line> simlinelist = new List<Classes.Simulation.Line>();
 
@@ -41,10 +53,7 @@ namespace SolarSystem.Backend.PickingAndErp
             {
                 simlinelist.Add(line.ToSimLine());
             }
-
-            return new Classes.Simulation.Order(OrderNumber, OrderTime, simlinelist);
-
+            return new Order(OrderNumber, OrderTime, simlinelist);
         }
-        
     }
 }

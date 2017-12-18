@@ -14,6 +14,8 @@ namespace SolarSystem.Backend.Classes.Simulation
         public DateTime StartPackingTime { get; set; }
         public int EstimatedPackingTimeInSeconds { get; set; }
         public Dictionary<AreaCode, decimal> EstimatedAreaFill;
+        
+        public double OrderFitness { get; set; }
 
         public Order(int orderId, DateTime orderTime, List<Line> lines)
         {

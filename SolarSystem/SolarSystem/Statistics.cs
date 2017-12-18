@@ -71,7 +71,7 @@ namespace SolarSystem
             var summedAverage = 0d;
             foreach (var order in orderList)
             {
-                var orderedLines = order.LineList.OrderBy(l => l.OutTimeStamp);
+                var orderedLines = order.LineList.OrderBy(l => l.OutTimeStamp).ToList();
                 var firstLineFinished = orderedLines.First();
                 var lastLineFinished = orderedLines.Last();
 

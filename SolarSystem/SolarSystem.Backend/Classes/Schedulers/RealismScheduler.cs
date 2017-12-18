@@ -11,7 +11,7 @@ namespace SolarSystem.Backend.Classes.Schedulers
 
             if (ord.OrderId == 150350)
             {
-                var b = "lol";
+                var b = "test";
             }
             return ord;
         }
