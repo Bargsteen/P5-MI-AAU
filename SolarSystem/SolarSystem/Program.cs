@@ -32,7 +32,7 @@ namespace SolarSystem
             
             const int simSpeed = 5000;
             const double randomNewOrderChance = 0.1;
-            const OrderGenerationConfiguration orderGenerationConfiguration = OrderGenerationConfiguration.Random;
+            const OrderGenerationConfiguration orderGenerationConfiguration = OrderGenerationConfiguration.FromFile;
             
             const SchedulerType schedulerType = SchedulerType.Estimator;
             const bool useOrderTime = false; // Should be false if using Scheduler.Real
@@ -48,6 +48,8 @@ namespace SolarSystem
             // var outPutter = new Outputter(runner);
             // var dataSaver = new DataSaver(runner);
             // SaveData(pickNScrape.OrderList);
+            
+            BargsteenData bd = new BargsteenData(runner.Handler);
            
             Statistics stats = new Statistics(orders2, runner);
             
