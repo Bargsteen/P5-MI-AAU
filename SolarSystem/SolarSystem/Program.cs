@@ -13,7 +13,7 @@ namespace SolarSystem
         public static void Main(string[] args)
         {
             SimulationConfiguration.SeedType = RandomSeedType.Fixed;
-            SimulationConfiguration.SimulationState = SimulationState.Real;
+            SimulationConfiguration.SimulationState = SimulationState.Experimental;
             
             var filePath =
                 Directory.GetParent(Directory.GetParent(Directory.GetParent(Environment.CurrentDirectory).ToString())
