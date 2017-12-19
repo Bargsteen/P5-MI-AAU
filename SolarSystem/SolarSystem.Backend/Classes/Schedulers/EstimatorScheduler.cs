@@ -10,13 +10,16 @@ namespace SolarSystem.Backend.Classes.Schedulers
     {
         private const int secondsLookAhead = 20000;
         private Queue<Dictionary<AreaCode, decimal>> AreaFillInfo;
-        private RegressionScheduler ordertimeEstimator;
+        private SimulationInformation simInfo;
+        private OrdertimeEstimator orderTimeEstimator;
 
-        public EstimatorScheduler(OrderGenerator orderGenerator, Handler handler, double poolMoverTime) : base(
+        public EstimatorScheduler(OrderGenerator orderGenerator, Handler handler, double poolMoverTime, SimulationInformation siminfo) : base(
             orderGenerator, handler, poolMoverTime)
         {
             OnOrderActuallySent += MakeOrderFill;
             TimeKeeper.Tick += EnAndDequeueOnTick;
+            simInfo = siminfo;
+            orderTimeEstimator = new OrdertimeEstimator(siminfo);
 
             //OnOrderActuallySent += OrderBox => PrintXTimeStepsOfMatrix(1);
             
@@ -231,7 +234,7 @@ namespace SolarSystem.Backend.Classes.Schedulers
         private int EstimateOrderPackingTime(Order order)
         {
             // Guess the ordertime from the learned Machine Algorithm
-            return (int)ordertimeEstimator.GuessTimeForOrder(order);
+            return (int)orderTimeEstimator.GuessTimeForOrder(order);
         }
 
         private decimal AreaFill(int areaCount)

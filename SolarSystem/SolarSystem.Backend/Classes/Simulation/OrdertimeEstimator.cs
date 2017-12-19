@@ -36,10 +36,12 @@ namespace SolarSystem.Backend.Classes.Simulation
         private double Bias = 5;
 
 
-        public OrdertimeEstimator()
+        public OrdertimeEstimator(SimulationInformation simInfo)
         {
             //Fetch the weights from last run, stored in the Weights.txt file
             TPRPropertyWeigths = UpdateWeightsFromFile();
+            _simInfo = simInfo;
+            
         }
 
         
@@ -66,6 +68,9 @@ namespace SolarSystem.Backend.Classes.Simulation
 
         public double GuessTimeForOrder(Order order)
         {
+
+            if (order.OrderId == 0)
+                return 0;
             return Bias * TPRPropertyWeigths[TPRProps.Bias] + order.Lines.Count * TPRPropertyWeigths[TPRProps.DifferentLines] +
                    order.Lines.Sum(o => o.Quantity) * TPRPropertyWeigths[TPRProps.QuantityPerLine] + FillResult(order) * TPRPropertyWeigths[TPRProps.Fill];
         }

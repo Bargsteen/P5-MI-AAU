@@ -38,21 +38,12 @@ namespace SolarSystem.Backend.Classes.Schedulers
         private double Bias = 5;
         int[] timings = new int[3];
 
-        
-        private static StreamWriter graphFile = new StreamWriter(Directory.GetParent(Directory.GetParent(Directory.GetParent(Environment.CurrentDirectory).ToString())
-                                           .ToString()) + "/SolarSystem.Backend/SolarData/Graph.csv");
-
-
-
         public RegressionScheduler(OrderGenerator orderGenerator, Handler handler, double poolMoverTime, SimulationInformation simInfo) : base(orderGenerator, handler, poolMoverTime)
         {
             _handler = handler;
             _simInfo = simInfo;
             double _sumOfAllErrors = 0;
             sentOrders = new Dictionary<int, Tuple<double, double>>();
-
-            graphFile.AutoFlush = true;
-            Random rng = new Random();
 
             double averageError = 0;
             int count = 0;
@@ -80,7 +71,6 @@ namespace SolarSystem.Backend.Classes.Schedulers
 
                     Console.WriteLine($"Our guess: {sentOrders[box.Order.OrderId].Item1:000.000}, Actual time: {sentOrders[box.Order.OrderId].Item2:000.000}," +
                                       $" Delta: {error:000.000}");
-                   // TPRPropertyWeigths[(TPRProps)rng.Next(0, 3)] += error * _learningRate;
                     SaveToLogFile(TPRPropertyWeigths, _sumOfAllErrors / count);
                     printCounter = 0;
                 }
