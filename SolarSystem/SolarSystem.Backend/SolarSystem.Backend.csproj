@@ -109,6 +109,7 @@
     <Compile Include="Classes\Simulation\OrderboxProgressContainer.cs" />
     <Compile Include="Classes\Simulation\OrderGenerator.cs" />
     <Compile Include="Classes\Simulation\OrderHandler.cs" />
+    <Compile Include="Classes\Simulation\OrdertimeEstimator.cs" />
     <Compile Include="Classes\Simulation\PublicEnums.cs" />
     <Compile Include="Classes\Simulation\ShelfBox.cs" />
     <Compile Include="Classes\Simulation\SimulationConfiguration.cs" />
