@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using SolarSystem.Backend.Classes;
-using SolarSystem.Backend.Classes.Schedulers;
-using SolarSystem.Backend.Classes.Simulation;
-using SolarSystem.Backend.PickingAndErp;
-using Article = SolarSystem.Backend.Classes.Simulation.Article;
+using SolarSystem.Backend.Extraction;
+using SolarSystem.Backend.Solution.Schedulers;
+using SolarSystem.Backend.Solution.Simulation;
+using SolarSystem.Backend.Solution.Simulation.Orders;
+using SolarSystem.Backend.Solution.Simulation.Warehouse;
+using Article = SolarSystem.Backend.Solution.Simulation.Orders.Article;
 
 namespace SolarSystem.Backend
 {
@@ -32,14 +33,12 @@ namespace SolarSystem.Backend
             OrderGenerationConfiguration orderGenerationConfiguration, SchedulerType schedulerType, 
             int hoursToSimulate, DateTime startTime, DateTime schedulerStartTime, List<PickingOrder> orderList, int runsToDo)
         {
-            
-    
             _simulationSpeed = simulationSpeed;
             _hoursToSimulate = hoursToSimulate;
             StartTime = startTime;
             _schedulerStartTime = schedulerStartTime;
             var orders = orderList;
-            var erpscrape = new ErpScrape();
+            var erpscrape = new ErpExtraction();
             erpscrape.ScrapeErp(filePath + "ErpTask_trace.log");
             _runsToDo = runsToDo;
 
@@ -83,7 +82,7 @@ namespace SolarSystem.Backend
                 case SchedulerType.Mi6:
                     _scheduler = new Mi6Scheduler(OrderGenerator, Handler, SimulationConfiguration.GetSchedulerPoolMoveTime(), articleList, simInfo);
                     break;
-                case SchedulerType.LST:
+                case SchedulerType.Lst:
                     _scheduler = new LstScheduer(OrderGenerator, Handler, SimulationConfiguration.GetSchedulerPoolMoveTime());
                     break;
                 case SchedulerType.Real:
