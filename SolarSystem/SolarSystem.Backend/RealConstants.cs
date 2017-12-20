@@ -2,15 +2,15 @@
 {
     public static class RealConstants
     {
-        public static readonly double TimePerArticlePick = 3;
-        public static readonly int SchedulerPoolMoveTime = 15;
-        public static readonly int LineCountDifferentiation = 100;
-        public static readonly double LargeLineQuantityMultiplier = 0.0001;
-        public static readonly int TimeInMainLoop = 14;
-        public static readonly int MinArticleQuantityOG = 5;
-        public static readonly int MaxArticleQuantityOG = 28;
-        public static readonly int MinLineCountOG = 1;
-        public static readonly int MaxLineCountOG = 6;
-        public static readonly int RandomSeedValue = 10;
+        public const double TimePerArticlePick = 3;
+        public const int SchedulerPoolMoveTime = 15;
+        public const int LineCountDifferentiation = 100;
+        public const double LargeLineQuantityMultiplier = 0.0001;
+        public const int TimeInMainLoop = 14;
+        public const int MinArticleQuantityOg = 5;
+        public const int MaxArticleQuantityOg = 28;
+        public const int MinLineCountOg = 1;
+        public const int MaxLineCountOg = 6;
+        public const int RandomSeedValue = 10;
     }
 }
