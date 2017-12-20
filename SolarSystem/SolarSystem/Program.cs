@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using SolarSystem.Backend;
 using System.IO;
-using SolarSystem.Backend.Extraction;
-using SolarSystem.Backend.Solution.Data;
-using SolarSystem.Backend.Solution.Simulation;
-using SolarSystem.PrintAndSave;
+using SolarSystem.Backend.Classes.Data;
+using SolarSystem.Backend.Classes.Simulation;
+using SolarSystem.Backend.PickingAndErp;
 
 namespace SolarSystem
 {
@@ -14,22 +13,22 @@ namespace SolarSystem
         public static void Main(string[] args)
         {
 
-            RandomSeedType chosenSeedType = RandomSeedType.Fixed;
-            SimulationState chosenSimulationState = SimulationState.Real;
+            RandomSeedType ChosenSeedType = RandomSeedType.Fixed;
+            SimulationState ChosenSimulationState = SimulationState.Real;
             
-            SimulationConfiguration.SeedType = chosenSeedType;
-            SimulationConfiguration.SimulationState = chosenSimulationState;
+            SimulationConfiguration.SeedType = ChosenSeedType;
+            SimulationConfiguration.SimulationState = ChosenSimulationState;
             
             var filePath =
                 Directory.GetParent(Directory.GetParent(Directory.GetParent(Environment.CurrentDirectory).ToString())
                     .ToString()) + "/SolarSystem.Backend/SolarData/";
             
-            var pickNScrape = new PickingExtraction(filePath + "Picking 02-10-2017.csv");
+            var pickNScrape = new PickingScrape(filePath + "Picking 02-10-2017.csv");
             pickNScrape.GetOrdersFromPicking();
 
             var orders = pickNScrape.OrderList;
-            var ordersCopy = new List<PickingOrder>();
-            ordersCopy.AddRange(orders);
+            var orders2 = new List<PickingOrder>();
+            orders2.AddRange(orders);
             
             const int simSpeed = 10000;
             const double randomNewOrderChance = 0.1;
@@ -51,7 +50,7 @@ namespace SolarSystem
             
             SaveOrderData sod = new SaveOrderData(runner.Handler);
            
-            Statistics stats = new Statistics(ordersCopy, runner);
+            Statistics stats = new Statistics(orders2, runner);
             
             runner.Start();
             

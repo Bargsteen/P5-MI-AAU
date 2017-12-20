@@ -2,15 +2,16 @@
 {
     public static class ExperimentalConstants
     {
-        public const double TimePerArticlePick = 1;
-        public const int SchedulerPoolMoveTime = 5;
-        public const int LineCountDifferentiation = 50;
-        public const double LargeLineQuantityMultiplier = 0.0001;
-        public const int TimeInMainLoop = 5;
-        public const int MinArticleQuantityOg = 4;
-        public const int MaxArticleQuantityOg = 30;
-        public const int MinLineCountOg = 1;
-        public const int MaxLineCountOg = 6;
-        public const int RandomSeedValue = 10;
+        public static readonly double TimePerArticlePick = 1;
+        public static readonly int SchedulerPoolMoveTime = 5;
+        public static readonly int LineCountDifferentiation = 50;
+        public static readonly double LargeLineQuantityMultiplier = 0.0001;
+        public static readonly int TimeInMainLoop = 5;
+        public static readonly int MinArticleQuantityOG = 4;
+        public static readonly int MaxArticleQuantityOG = 30;
+        public static readonly int MinLineCountOG = 1;
+        public static readonly int MaxLineCountOG = 6;
+        public static readonly int RandomSeedValue = 10;
+
     }
 }

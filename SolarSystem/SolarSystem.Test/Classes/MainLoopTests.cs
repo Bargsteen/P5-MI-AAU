@@ -1,6 +1,5 @@
 ﻿using Ploeh.AutoFixture;
-using SolarSystem.Backend.Solution.Simulation.OrderBoxProcessing;
-using SolarSystem.Backend.Solution.Simulation.Warehouse;
+using SolarSystem.Backend.Classes.Simulation;
 using Xunit;
 
 namespace SolarSystem.Test.Classes
