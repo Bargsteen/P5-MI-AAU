@@ -30,7 +30,7 @@ namespace SolarSystem
             var orders2 = new List<PickingOrder>();
             orders2.AddRange(orders);
             
-            const int simSpeed = 5000;
+            const int simSpeed = 10000;
             const double randomNewOrderChance = 0.1;
             const OrderGenerationConfiguration orderGenerationConfiguration = OrderGenerationConfiguration.FromFile;
             

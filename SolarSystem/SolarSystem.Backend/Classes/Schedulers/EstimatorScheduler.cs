@@ -11,12 +11,16 @@ namespace SolarSystem.Backend.Classes.Schedulers
         private const int secondsLookAhead = 20000;
         private const int maxOrdersPerArea = 25;
         private Queue<Dictionary<AreaCode, decimal>> AreaFillInfo;
+        private SimulationInformation simInfo;
+        private OrdertimeEstimator orderTimeEstimator;
 
-        public EstimatorScheduler(OrderGenerator orderGenerator, Handler handler, double poolMoverTime) : base(
+        public EstimatorScheduler(OrderGenerator orderGenerator, Handler handler, double poolMoverTime, SimulationInformation siminfo) : base(
             orderGenerator, handler, poolMoverTime)
         {
             OnOrderActuallySent += MakeOrderFill;
             TimeKeeper.Tick += EnAndDequeueOnTick;
+            simInfo = siminfo;
+            orderTimeEstimator = new OrdertimeEstimator(siminfo);
 
             //OnOrderActuallySent += OrderBox => PrintXTimeStepsOfMatrix(1);
             
@@ -230,24 +234,8 @@ namespace SolarSystem.Backend.Classes.Schedulers
 
         private int EstimateOrderPackingTime(Order order)
         {
-            if (order.OrderId == 0) return 0; // For the wait-order
-            // MainLoop time
-            var totalTimeOnMainLoop = order.Areas.Count * SimulationConfiguration.GetTimeInMainLoop();
-            // Per area time
-            var timePerArea = order.Areas.ToDictionary(k => k.Key, v => 0);
-            order.Lines.ForEach(l => timePerArea[l.Article.AreaCode] += EstimateTimeBasedOnQuantity(l.Quantity));
-            
-            // total time
-            return totalTimeOnMainLoop + timePerArea.Sum(kvp => kvp.Value);
-        }
-
-        private int EstimateTimeBasedOnQuantity(int quantity)
-        {
-            if (quantity < SimulationConfiguration.GetLineCountDifferentiation())
-            {
-                return Math.Max(1, (int) (quantity * SimulationConfiguration.GetTimePerArticlePick()));
-            }
-            return (int) (quantity * SimulationConfiguration.GetTimePerArticlePick() * SimulationConfiguration.GetLargeLineQuantityMultiplier());
+            // Guess the ordertime from the learned Machine Algorithm
+            return (int)orderTimeEstimator.GuessTimeForOrder(order);
         }
 
         private decimal AreaFill(int areaCount)

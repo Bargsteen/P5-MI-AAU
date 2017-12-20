@@ -63,9 +63,6 @@ namespace SolarSystem.Backend.Classes.Schedulers
                 if (actionSuccess)
                 {
                     ActualOrderPool.Remove(action);
-                    int a;
-                    if (action.OrderId == 150350)
-                        a = 2;
                 }
             }
             
