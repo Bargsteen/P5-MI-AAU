@@ -1,11 +1,5 @@
 ﻿namespace SolarSystem.Backend.Classes.Simulation.ConstantsAndEnums
 {
-    public enum StationResult
-    {
-        FullError,
-        Success
-    }
-    
     public enum BoxResult
     {
         NotInOrder,
@@ -19,8 +13,7 @@
         Area25,
         Area27,
         Area28,
-        Area29,
-        Pq
+        Area29
     }
     
     public enum OrderGenerationConfiguration
@@ -34,7 +27,7 @@
         Fifo,
         Mi1,
         Mi6,
-        LST,
+        Lst,
         Real,
         Regression,
         Estimator

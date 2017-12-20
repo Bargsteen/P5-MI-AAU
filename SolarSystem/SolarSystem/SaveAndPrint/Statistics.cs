@@ -10,19 +10,17 @@ namespace SolarSystem.SaveAndPrint
 {
     public class Statistics
     {
-        private List<PickingOrder> orderList;
-        private double averageTimePerAreaOurs { get; set; }
-        private int finishedOrderCount;
-        private long totalLineCount = 0;
-        private long totalLineQuantity = 0;
-        
-        public double AverageQuantityPerLine;
+        private List<PickingOrder> _orderList;
+        private double AverageTimePerAreaOurs { get; set; }
+        private int _finishedOrderCount;
+        private long _totalLineCount;
+        private long _totalLineQuantity;
 
-        private Order SlowestOrder;
+        private Order _slowestOrder;
 
         public Statistics(List<PickingOrder> orderList, Runner runner)
         {
-            this.orderList = orderList ?? throw new ArgumentNullException(nameof(orderList));
+            _orderList = orderList ?? throw new ArgumentNullException(nameof(orderList));
             runner.Handler.OnOrderBoxFinished += OnEachOrderBoxFinished;
         }
 
@@ -37,21 +35,21 @@ namespace SolarSystem.SaveAndPrint
 
         private void AddToTotalLineCount(Order order)
         {
-            totalLineCount += order.Lines.Count;
+            _totalLineCount += order.Lines.Count;
         }
 
         private void AddToTotalLineQuantity(Order order)
         {
-            totalLineQuantity += order.Lines.Select(l => l.Quantity).Sum();
+            _totalLineQuantity += order.Lines.Select(l => l.Quantity).Sum();
         }
 
         private void KeepTrackOfSlowestOrder(Order order)
         {
             var timeSpentForOrder = GetTotalTimeForOrderInMinutes(order);
 
-            if (SlowestOrder == null || GetTotalTimeForOrderInMinutes(SlowestOrder) <= timeSpentForOrder)
+            if (_slowestOrder == null || GetTotalTimeForOrderInMinutes(_slowestOrder) <= timeSpentForOrder)
             {
-                SlowestOrder = order;
+                _slowestOrder = order;
             }
         }
 
@@ -70,7 +68,7 @@ namespace SolarSystem.SaveAndPrint
         public double CalcAverageTimePerAreaSolar()
         {
             var summedAverage = 0d;
-            foreach (var order in orderList)
+            foreach (var order in _orderList)
             {
                 var orderedLines = order.LineList.OrderBy(l => l.OutTimeStamp).ToList();
                 var firstLineFinished = orderedLines.First();
@@ -84,12 +82,12 @@ namespace SolarSystem.SaveAndPrint
                 summedAverage += average;
             }
 
-            return summedAverage / orderList.Count;
+            return summedAverage / _orderList.Count;
         }
 
         private void AddAverageTimePerAreaToSum(Order finishedOrder)
         {
-            finishedOrderCount++;
+            _finishedOrderCount++;
             
             var orderedAreas = finishedOrder.AreaTimeInOutLog.Values.OrderBy(t => t.OutTime).ToList();
             var firstAreaFinished = orderedAreas.First();
@@ -99,27 +97,27 @@ namespace SolarSystem.SaveAndPrint
 
             var averageTimePerArea = orderedAreas.Count >= 2 ? timeSpent.TotalMinutes / (orderedAreas.Count() - 1) : 0;
             
-            averageTimePerAreaOurs += averageTimePerArea;
+            AverageTimePerAreaOurs += averageTimePerArea;
         }
         
         public double GetFinalAverageTimePerAreaSim()
         {
-            return averageTimePerAreaOurs / finishedOrderCount;
+            return AverageTimePerAreaOurs / _finishedOrderCount;
         }
 
         public double GetSlowestOrderTime()
         {
-            return GetTotalTimeForOrderInMinutes(SlowestOrder);
+            return GetTotalTimeForOrderInMinutes(_slowestOrder);
         }
 
         public double GetAverageLinesPerOrderSim()
         {
-            return totalLineCount / finishedOrderCount;
+            return _totalLineCount / _finishedOrderCount;
         }
 
         public double GetAverageQuantityPerLineSim()
         {
-            return totalLineQuantity / totalLineCount;
+            return _totalLineQuantity / _totalLineCount;
         }
 
         public double GetAverageQuantityPerLineSolar()
@@ -127,7 +125,7 @@ namespace SolarSystem.SaveAndPrint
             var totalQuantity = 0;
             var totalLines = 0;
             
-            foreach (var pickingOrder in orderList)
+            foreach (var pickingOrder in _orderList)
             {
                 foreach (var line in pickingOrder.LineList)
                 {
@@ -143,12 +141,12 @@ namespace SolarSystem.SaveAndPrint
         {
             var totalLines = 0;
 
-            foreach (var pickingOrder in orderList)
+            foreach (var pickingOrder in _orderList)
             {
                 totalLines += pickingOrder.LineList.Count;
             }
 
-            return totalLines / orderList.Count;
+            return totalLines / _orderList.Count;
         }
     }
 }

@@ -11,17 +11,9 @@ using SolarSystem.Backend.Classes.Simulation.WareHouse;
 
 namespace SolarSystem.Backend.Classes.Schedulers
 {
-
-    //Find ud af hvorfor gennemsnit er lavt, men per ordre er høj
-    //Skriv den hurtigste og langsomste ordre ud, fordi vi vil se hvad der sænker den
-    //Udksriv hvor mange der var 0-1 min, 1-5min osv
-    //
-
-
-
     class RegressionScheduler : Scheduler
     {
-        enum TPRProps
+        enum TprProps
         {
             AreasToVisit,
             DifferentLines,
@@ -33,21 +25,21 @@ namespace SolarSystem.Backend.Classes.Schedulers
 
         private readonly Handler _handler;
         private int _maxAmountOfLines = 60;
-        private int _MaxQuantityPerLine = 900;
+        private int _maxQuantityPerLine = 900;
         private readonly SimulationInformation _simInfo;
         private List<Tuple<double, double>> _tprProperties;
-        private Dictionary<TPRProps, double> TPRPropertyWeigths;
+        private Dictionary<TprProps, double> _tprPropertyWeigths;
         private readonly double _learningRate = 0.0001f;
-        private readonly Dictionary<int, Tuple<double, double>> sentOrders;
-        private readonly double Bias = 5;
-        readonly int[] timings = new int[3];
+        private readonly Dictionary<int, Tuple<double, double>> _sentOrders;
+        private readonly double _bias = 5;
+        readonly int[] _timings = new int[3];
 
         public RegressionScheduler(OrderGenerator orderGenerator, Handler handler, double poolMoverTime, SimulationInformation simInfo) : base(orderGenerator, handler, poolMoverTime)
         {
             _handler = handler;
             _simInfo = simInfo;
-            double _sumOfAllErrors = 0;
-            sentOrders = new Dictionary<int, Tuple<double, double>>();
+            double sumOfAllErrors = 0;
+            _sentOrders = new Dictionary<int, Tuple<double, double>>();
 
             double averageError = 0;
             int count = 0;
@@ -55,17 +47,17 @@ namespace SolarSystem.Backend.Classes.Schedulers
 
             _handler.OnOrderBoxFinished += delegate (OrderBox box)
             {
-                sentOrders[box.Order.OrderId] = new Tuple<double, double>(sentOrders[box.Order.OrderId].Item1, (double)(TimeKeeper.CurrentDateTime - box.Order.OrderTime).TotalSeconds);
-                double error = sentOrders[box.Order.OrderId].Item2 - sentOrders[box.Order.OrderId].Item1;
+                _sentOrders[box.Order.OrderId] = new Tuple<double, double>(_sentOrders[box.Order.OrderId].Item1, (double)(TimeKeeper.CurrentDateTime - box.Order.OrderTime).TotalSeconds);
+                double error = _sentOrders[box.Order.OrderId].Item2 - _sentOrders[box.Order.OrderId].Item1;
                 count++;
                 averageError += error;
 
                 if (Math.Abs(error) < 1)
-                    timings[0]++;
+                    _timings[0]++;
                 else if (Math.Abs(error) < 3)
-                    timings[1]++;
+                    _timings[1]++;
                 else
-                    timings[2]++;
+                    _timings[2]++;
 
 
                 Learn(error, box.Order);
@@ -73,36 +65,36 @@ namespace SolarSystem.Backend.Classes.Schedulers
                 if (printCounter++ > 100)
                 {
 
-                    Console.WriteLine($"Our guess: {sentOrders[box.Order.OrderId].Item1:000.000}, Actual time: {sentOrders[box.Order.OrderId].Item2:000.000}," +
+                    Console.WriteLine($"Our guess: {_sentOrders[box.Order.OrderId].Item1:000.000}, Actual time: {_sentOrders[box.Order.OrderId].Item2:000.000}," +
                                       $" Delta: {error:000.000}");
-                    SaveToLogFile(TPRPropertyWeigths, _sumOfAllErrors / count);
+                    SaveToLogFile(_tprPropertyWeigths, sumOfAllErrors / count);
                     printCounter = 0;
                 }
 
-                _sumOfAllErrors += Math.Abs(error);
+                sumOfAllErrors += Math.Abs(error);
             };
 
 
             //Fetch the weights from last run, stored in the Weights.txt file
-            TPRPropertyWeigths = UpdateWeightsFromFile();
+            _tprPropertyWeigths = UpdateWeightsFromFile();
 
             TimeKeeper.SimulationFinished += delegate
             {
-                SaveToLogFile(TPRPropertyWeigths, _sumOfAllErrors / count);
-                PrintWeightsToConsole(TPRPropertyWeigths, _sumOfAllErrors);
-                SaveWeightsToFile(TPRPropertyWeigths);
+                SaveToLogFile(_tprPropertyWeigths, sumOfAllErrors / count);
+                PrintWeightsToConsole(_tprPropertyWeigths, sumOfAllErrors);
+                SaveWeightsToFile(_tprPropertyWeigths);
 
                 
                 //Console.ReadKey();
 
                 // create new process
-                System.Diagnostics.Process NewInstance = new System.Diagnostics.Process();
+                System.Diagnostics.Process newInstance = new System.Diagnostics.Process();
                 // link it to the application
-                NewInstance.StartInfo.FileName = System.Threading.Thread.GetDomain().BaseDirectory + System.Threading.Thread.GetDomain().FriendlyName;
+                newInstance.StartInfo.FileName = System.Threading.Thread.GetDomain().BaseDirectory + System.Threading.Thread.GetDomain().FriendlyName;
                 // start new instance
-                NewInstance.Start();
+                newInstance.Start();
                 // quit current instance
-                System.Environment.Exit(0);
+                Environment.Exit(0);
 
             };
 
@@ -111,7 +103,7 @@ namespace SolarSystem.Backend.Classes.Schedulers
 
         void Learn(double error, Order order)
         {
-            double sumOfAllWeights = TPRPropertyWeigths.Values.Sum();
+            double sumOfAllWeights = _tprPropertyWeigths.Values.Sum();
             //double sumOfAllResults = 0;
 
             //sumOfAllResults += TPRPropertyWeigths[TPRProps.AreasToVisit] * order.Areas.Count;
@@ -122,28 +114,28 @@ namespace SolarSystem.Backend.Classes.Schedulers
 
 
             double[] input = new double[5];
-            input[(int)TPRProps.AreasToVisit] = order.Areas.Count * TPRPropertyWeigths[TPRProps.AreasToVisit];
-            input[(int)TPRProps.Bias] = Bias * TPRPropertyWeigths[TPRProps.Bias];
-            input[(int)TPRProps.DifferentLines] = order.Lines.Count * TPRPropertyWeigths[TPRProps.DifferentLines];
-            input[(int)TPRProps.QuantityPerLine] = order.Lines.Sum(o => o.Quantity) * TPRPropertyWeigths[TPRProps.QuantityPerLine];
-            input[(int)TPRProps.Fill] = ReLU(FillResult(order) * TPRPropertyWeigths[TPRProps.Fill]);
+            input[(int)TprProps.AreasToVisit] = order.Areas.Count * _tprPropertyWeigths[TprProps.AreasToVisit];
+            input[(int)TprProps.Bias] = _bias * _tprPropertyWeigths[TprProps.Bias];
+            input[(int)TprProps.DifferentLines] = order.Lines.Count * _tprPropertyWeigths[TprProps.DifferentLines];
+            input[(int)TprProps.QuantityPerLine] = order.Lines.Sum(o => o.Quantity) * _tprPropertyWeigths[TprProps.QuantityPerLine];
+            input[(int)TprProps.Fill] = ReLu(FillResult(order) * _tprPropertyWeigths[TprProps.Fill]);
 
 
             double[] output = new double[5];
             output = Softmax(input);
 
 
-            TPRPropertyWeigths[TPRProps.AreasToVisit] += output[(int)TPRProps.AreasToVisit] * TPRPropertyWeigths[TPRProps.AreasToVisit] * error * _learningRate;
-            TPRPropertyWeigths[TPRProps.DifferentLines] += output[(int)TPRProps.DifferentLines] * TPRPropertyWeigths[TPRProps.DifferentLines] * error * _learningRate;
-            TPRPropertyWeigths[TPRProps.QuantityPerLine]  += output[(int)TPRProps.QuantityPerLine] * TPRPropertyWeigths[TPRProps.QuantityPerLine] * error * _learningRate;
-            TPRPropertyWeigths[TPRProps.Fill] += output[(int)TPRProps.Fill] * TPRPropertyWeigths[TPRProps.Fill] * error * _learningRate;
-            TPRPropertyWeigths[TPRProps.Bias] += output[(int)TPRProps.Bias] * TPRPropertyWeigths[TPRProps.Bias] * error * _learningRate;
+            _tprPropertyWeigths[TprProps.AreasToVisit] += output[(int)TprProps.AreasToVisit] * _tprPropertyWeigths[TprProps.AreasToVisit] * error * _learningRate;
+            _tprPropertyWeigths[TprProps.DifferentLines] += output[(int)TprProps.DifferentLines] * _tprPropertyWeigths[TprProps.DifferentLines] * error * _learningRate;
+            _tprPropertyWeigths[TprProps.QuantityPerLine]  += output[(int)TprProps.QuantityPerLine] * _tprPropertyWeigths[TprProps.QuantityPerLine] * error * _learningRate;
+            _tprPropertyWeigths[TprProps.Fill] += output[(int)TprProps.Fill] * _tprPropertyWeigths[TprProps.Fill] * error * _learningRate;
+            _tprPropertyWeigths[TprProps.Bias] += output[(int)TprProps.Bias] * _tprPropertyWeigths[TprProps.Bias] * error * _learningRate;
    
 
         }
 
 
-        void SaveToLogFile(Dictionary<TPRProps, double> weights, double ErrorValue)
+        void SaveToLogFile(Dictionary<TprProps, double> weights, double errorValue)
         {
 
             using (StreamWriter sw = File.AppendText(Directory.GetParent(Directory
@@ -151,42 +143,42 @@ namespace SolarSystem.Backend.Classes.Schedulers
                                                              .GetParent(Environment.CurrentDirectory).ToString())
                                                          .ToString()) + "/SolarSystem.Backend/SolarData/Log.csv"))
             {
-                sw.WriteLine(weights[TPRProps.AreasToVisit] + ";" +
-                             weights[TPRProps.DifferentLines] + ";" +
-                             weights[TPRProps.QuantityPerLine] + ";" +
-                             weights[TPRProps.Fill] + ";" +
-                             weights[TPRProps.Bias] + ";" +
-                             ErrorValue + ";" +
-                             timings[0] + ";" +
-                             timings[1] + ";" +
-                             timings[2]);
+                sw.WriteLine(weights[TprProps.AreasToVisit] + ";" +
+                             weights[TprProps.DifferentLines] + ";" +
+                             weights[TprProps.QuantityPerLine] + ";" +
+                             weights[TprProps.Fill] + ";" +
+                             weights[TprProps.Bias] + ";" +
+                             errorValue + ";" +
+                             _timings[0] + ";" +
+                             _timings[1] + ";" +
+                             _timings[2]);
             }
         }
 
 
-        void PrintWeightsToConsole(Dictionary<TPRProps, double> weights, double sumOfAllErrors)
+        void PrintWeightsToConsole(Dictionary<TprProps, double> weights, double sumOfAllErrors)
         {
-            Console.WriteLine($"AreasToVisit: {weights[TPRProps.AreasToVisit]}\r\n" +
-                              $"DifferentLines: {weights[TPRProps.DifferentLines]}\r\n" +
-                              $"Quantity: {weights[TPRProps.QuantityPerLine]}\r\n" +
-                              $"Fill: {weights[TPRProps.Fill]}/r/n" +
-                              $"Bias: {TPRProps.Bias} /r/n" +
+            Console.WriteLine($"AreasToVisit: {weights[TprProps.AreasToVisit]}\r\n" +
+                              $"DifferentLines: {weights[TprProps.DifferentLines]}\r\n" +
+                              $"Quantity: {weights[TprProps.QuantityPerLine]}\r\n" +
+                              $"Fill: {weights[TprProps.Fill]}/r/n" +
+                              $"Bias: {TprProps.Bias} /r/n" +
                               $"Sum Of Total Errors: {sumOfAllErrors}\r\n" +
                               "---------------------------------------------------------------------------\r\n");
 
         }
 
-        void SaveWeightsToFile(Dictionary<TPRProps, double> weights)
+        void SaveWeightsToFile(Dictionary<TprProps, double> weights)
         {
             StreamWriter weightsFileWriter = new StreamWriter(Directory.GetParent(Directory.GetParent(Directory.GetParent(Environment.CurrentDirectory).ToString())
                                                                   .ToString()) + "/SolarSystem.Backend/SolarData/Weights.txt");
 
 
-            weightsFileWriter.WriteLine($"{weights[TPRProps.AreasToVisit]};" +
-                                        $"{weights[TPRProps.DifferentLines]};" +
-                                        $"{weights[TPRProps.QuantityPerLine]};" +
-                                        $"{weights[TPRProps.Fill]};" +
-                                        $"{weights[TPRProps.Bias]}");
+            weightsFileWriter.WriteLine($"{weights[TprProps.AreasToVisit]};" +
+                                        $"{weights[TprProps.DifferentLines]};" +
+                                        $"{weights[TprProps.QuantityPerLine]};" +
+                                        $"{weights[TprProps.Fill]};" +
+                                        $"{weights[TprProps.Bias]}");
 
 
             weightsFileWriter.Close();
@@ -196,7 +188,7 @@ namespace SolarSystem.Backend.Classes.Schedulers
 
 
 
-        Dictionary<TPRProps, double> UpdateWeightsFromFile()
+        Dictionary<TprProps, double> UpdateWeightsFromFile()
         {
 
             StreamReader weightsFileReader = new StreamReader(Directory.GetParent(Directory.GetParent(Directory.GetParent(Environment.CurrentDirectory).ToString())
@@ -204,13 +196,13 @@ namespace SolarSystem.Backend.Classes.Schedulers
 
             string weightLine = weightsFileReader.ReadLine();
             weightsFileReader.Close();
-            TPRPropertyWeigths = new Dictionary<TPRProps, double>();
-            TPRPropertyWeigths.Add(TPRProps.AreasToVisit, double.Parse(weightLine.Split(';')[0]));
-            TPRPropertyWeigths.Add(TPRProps.DifferentLines, double.Parse(weightLine.Split(';')[1]));
-            TPRPropertyWeigths.Add(TPRProps.QuantityPerLine, double.Parse(weightLine.Split(';')[2]));
-            TPRPropertyWeigths.Add(TPRProps.Fill, double.Parse(weightLine.Split(';')[3]));
-            TPRPropertyWeigths.Add(TPRProps.Bias, double.Parse(weightLine.Split(';')[4]));
-            return TPRPropertyWeigths;
+            _tprPropertyWeigths = new Dictionary<TprProps, double>();
+            _tprPropertyWeigths.Add(TprProps.AreasToVisit, double.Parse(weightLine.Split(';')[0]));
+            _tprPropertyWeigths.Add(TprProps.DifferentLines, double.Parse(weightLine.Split(';')[1]));
+            _tprPropertyWeigths.Add(TprProps.QuantityPerLine, double.Parse(weightLine.Split(';')[2]));
+            _tprPropertyWeigths.Add(TprProps.Fill, double.Parse(weightLine.Split(';')[3]));
+            _tprPropertyWeigths.Add(TprProps.Bias, double.Parse(weightLine.Split(';')[4]));
+            return _tprPropertyWeigths;
         }
 
         
@@ -219,19 +211,19 @@ namespace SolarSystem.Backend.Classes.Schedulers
         {
 
             double[] input = new double[5];
-            input[(int)TPRProps.Bias] = Bias * TPRPropertyWeigths[TPRProps.Bias];
-            input[(int)TPRProps.DifferentLines] = order.Lines.Count * TPRPropertyWeigths[TPRProps.DifferentLines];
-            input[(int)TPRProps.QuantityPerLine] = order.Lines.Sum(o => o.Quantity) * TPRPropertyWeigths[TPRProps.QuantityPerLine];
-            input[(int)TPRProps.Fill] = ReLU(FillResult(order) * TPRPropertyWeigths[TPRProps.Fill]);
+            input[(int)TprProps.Bias] = _bias * _tprPropertyWeigths[TprProps.Bias];
+            input[(int)TprProps.DifferentLines] = order.Lines.Count * _tprPropertyWeigths[TprProps.DifferentLines];
+            input[(int)TprProps.QuantityPerLine] = order.Lines.Sum(o => o.Quantity) * _tprPropertyWeigths[TprProps.QuantityPerLine];
+            input[(int)TprProps.Fill] = ReLu(FillResult(order) * _tprPropertyWeigths[TprProps.Fill]);
 
 
             double[] output = new double[5];
             output = Softmax(input);
 
-            output[(int)TPRProps.Bias] *= TPRPropertyWeigths[TPRProps.Bias];
-            output[(int)TPRProps.DifferentLines] *= TPRPropertyWeigths[TPRProps.DifferentLines];
-            output[(int)TPRProps.QuantityPerLine] *= TPRPropertyWeigths[TPRProps.QuantityPerLine];
-            output[(int)TPRProps.Fill] *= TPRPropertyWeigths[TPRProps.Fill];
+            output[(int)TprProps.Bias] *= _tprPropertyWeigths[TprProps.Bias];
+            output[(int)TprProps.DifferentLines] *= _tprPropertyWeigths[TprProps.DifferentLines];
+            output[(int)TprProps.QuantityPerLine] *= _tprPropertyWeigths[TprProps.QuantityPerLine];
+            output[(int)TprProps.Fill] *= _tprPropertyWeigths[TprProps.Fill];
 
 
             return output.Sum();
@@ -259,7 +251,7 @@ namespace SolarSystem.Backend.Classes.Schedulers
         }
 
 
-        public double ReLU(double x)
+        public double ReLu(double x)
         {
             return x< 0 ? 0:x;
         }
@@ -267,15 +259,15 @@ namespace SolarSystem.Backend.Classes.Schedulers
 
     double FillResult(Order order)
         {
-            double[] _fillresult = new double [5];
+            double[] fillresult = new double [5];
             for (int i = 0; i < _simInfo.GetState().Length-1; i++)
             {
-                _fillresult[i] = _simInfo.GetState()[i] *
+                fillresult[i] = _simInfo.GetState()[i] *
                     order.Lines.Where(l => l.Article.AreaCode == ((AreaCode) i)).Count()/* *
                     order.Lines.Where(l => l.Article.AreaCode == ((AreaCode) i)).Sum(Q => Q.Quantity)*/;
             }
 
-            return _fillresult.Sum();
+            return fillresult.Sum();
         }
 
 
@@ -285,7 +277,7 @@ namespace SolarSystem.Backend.Classes.Schedulers
         {
             int chosenOrder = ActualOrderPool.OrderBy(o => o.OrderTime).First().OrderId;
            
-            sentOrders.Add(chosenOrder, 
+            _sentOrders.Add(chosenOrder, 
                 new Tuple<double, double>(GuessTimeForOrder(ActualOrderPool.OrderBy(o => o.OrderTime).First()), 0));
             return ActualOrderPool.OrderBy(o => o.OrderTime).First();
         }

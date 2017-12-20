@@ -2,11 +2,11 @@
 {
     public abstract class Box
     {
-        public int Id;
+        protected int Id;
 
         private static int _nextId = 1;
-        
-        public Box()
+
+        protected Box()
         {
             Id = _nextId++;
         }

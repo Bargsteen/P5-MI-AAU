@@ -28,7 +28,7 @@ namespace SolarSystem.Backend.Classes.Simulation.WareHouse
 
         public bool StationIsFull => OrderBoxes.Capacity == OrderBoxes.Count;
 
-        private OrderBoxPickingContainer _orderBoxBeingPacked = null;
+        private OrderBoxPickingContainer _orderBoxBeingPacked;
 
         private readonly Storage _storage;
 

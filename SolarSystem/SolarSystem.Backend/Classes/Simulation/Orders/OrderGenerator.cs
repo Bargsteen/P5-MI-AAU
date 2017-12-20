@@ -16,19 +16,19 @@ namespace SolarSystem.Backend.Classes.Simulation.Orders
         private static readonly Random Rand = SimulationConfiguration.SeedType == RandomSeedType.Random ? new Random() : new Random(SimulationConfiguration.GetRandomSeedValue());
         private double OrderChance { get; }
 
-        private static readonly int MinAmountOfLines = SimulationConfiguration.GetMinLineCountOG();
-        private static readonly int MaxAmountOfLines = SimulationConfiguration.GetMaxLineCountOG();
+        private static readonly int MinAmountOfLines = SimulationConfiguration.GetMinLineCountOg();
+        private static readonly int MaxAmountOfLines = SimulationConfiguration.GetMaxLineCountOg();
 
-        private static readonly int MinArticleQuantity = SimulationConfiguration.GetMinArticleQuanitityOG();
-        private static readonly int MaxArticleQuantity = SimulationConfiguration.GetMaxArticleQuantityOG();
+        private static readonly int MinArticleQuantity = SimulationConfiguration.GetMinArticleQuanitityOg();
+        private static readonly int MaxArticleQuantity = SimulationConfiguration.GetMaxArticleQuantityOg();
 
         private const int MinOrderNumberId = 10000000;
         private const int MaxOrderNumberId = 999999999;
 
         //private int _sendOrderCount = 0;
 
-        private int fromFileOrderSentCount = 0;
-        private readonly int fromFileOrderCount;
+        private int _fromFileOrderSentCount;
+        private readonly int _fromFileOrderCount;
 
         List<string> _sentlines = new List<string>();
 
@@ -45,7 +45,7 @@ namespace SolarSystem.Backend.Classes.Simulation.Orders
 
             _scrapedOrders.Sort((x, y) => x.OrderTime.CompareTo(y.OrderTime));
 
-            fromFileOrderCount = _scrapedOrders.Count;
+            _fromFileOrderCount = _scrapedOrders.Count;
 
             _currentOrderGenerationConfiguration = conf;
 
@@ -60,7 +60,7 @@ namespace SolarSystem.Backend.Classes.Simulation.Orders
 
         private void ResetOrderSentCount()
         {
-            fromFileOrderSentCount = 0;
+            _fromFileOrderSentCount = 0;
         }
 
         public void MaybeSendOrder()
@@ -72,16 +72,16 @@ namespace SolarSystem.Backend.Classes.Simulation.Orders
             {
                 case OrderGenerationConfiguration.FromFile:
                     
-                    if (fromFileOrderSentCount < fromFileOrderCount && _scrapedOrders[fromFileOrderSentCount].OrderTime.CompareTo(TimeKeeper.CurrentDateTime) < 0)
+                    if (_fromFileOrderSentCount < _fromFileOrderCount && _scrapedOrders[_fromFileOrderSentCount].OrderTime.CompareTo(TimeKeeper.CurrentDateTime) < 0)
                     {
-                        order = _scrapedOrders[fromFileOrderSentCount].ToSimOrder();
+                        order = _scrapedOrders[_fromFileOrderSentCount].ToSimOrder();
                         order.Areas = ConstructAreasVisited(order);
                         CostumerSendsOrderEvent?.Invoke(order);
                         //_sentlines.Add(order.OrderId.ToString());
                         //_scrapedOrders.RemoveAt(0);
                         //_sendOrderCount = 0;
                         
-                        fromFileOrderSentCount++;
+                        _fromFileOrderSentCount++;
                     }
                     
                     break;
@@ -115,14 +115,14 @@ namespace SolarSystem.Backend.Classes.Simulation.Orders
             var generatedLines = chosenArticles.Select(GenerateLine).ToList();
 
             // Construct AreasVisited for areas.
-            int orderID;
+            int orderId;
             do
             {
-                orderID = Rand.Next(MinOrderNumberId, MaxOrderNumberId);
-            } while (_usedOrderNumbers.Contains(orderID));
+                orderId = Rand.Next(MinOrderNumberId, MaxOrderNumberId);
+            } while (_usedOrderNumbers.Contains(orderId));
             
-            _usedOrderNumbers.Add(orderID);
-            Order order = new Order(orderID, TimeKeeper.CurrentDateTime, generatedLines);
+            _usedOrderNumbers.Add(orderId);
+            Order order = new Order(orderId, TimeKeeper.CurrentDateTime, generatedLines);
             order.Areas = ConstructAreasVisited(order);
             return order;
         }

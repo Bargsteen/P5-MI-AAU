@@ -11,7 +11,7 @@ namespace SolarSystem.Backend.Classes.Simulation
         private Handler Handler { get; }  
         public static Dictionary<AreaCode, double> AreaInformation;
 
-        private int _totalLinesFinished = 0;
+        private int _totalLinesFinished;
         private readonly DateTime _schedulerStartTime;
   
         public SimulationInformation(Handler handler, DateTime schedulerStartTime)  

@@ -55,11 +55,8 @@ namespace SolarSystem.Backend.Classes.Simulation
                 .Select(line => line.Article)
                 .ToList();
 
-            //var ordersIntersect = erpscrape.Orders.Where(o => orders.Any(e => e.OrderNumber == o.OrderNumber)).Distinct().OrderBy(o => o.OrderNumber).ToList();
-
             var ordersOrderedAndPicked =
                 orders.Where(o => erpscrape.Orders.Any(e => e.OrderNumber == o.OrderNumber)).Distinct().ToList();
-
 
             if (schedulerType != SchedulerType.Real)
             {
@@ -86,7 +83,7 @@ namespace SolarSystem.Backend.Classes.Simulation
                 case SchedulerType.Mi6:
                     _scheduler = new Mi6Scheduler(OrderGenerator, Handler, SimulationConfiguration.GetSchedulerPoolMoveTime(), articleList, simInfo);
                     break;
-                case SchedulerType.LST:
+                case SchedulerType.Lst:
                     _scheduler = new LstScheduer(OrderGenerator, Handler, SimulationConfiguration.GetSchedulerPoolMoveTime());
                     break;
                 case SchedulerType.Real:

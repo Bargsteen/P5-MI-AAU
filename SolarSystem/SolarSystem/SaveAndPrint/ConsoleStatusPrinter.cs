@@ -18,7 +18,6 @@ namespace SolarSystem.SaveAndPrint
         private readonly Runner _runner;
 
         private readonly Statistics _stats;
-        private readonly DateTime _schedulerStartTime;
         private readonly SchedulerType _schedulerType;
         private readonly OrderGenerationConfiguration _orderGenerationConfiguration;
 
@@ -29,7 +28,6 @@ namespace SolarSystem.SaveAndPrint
             _orderGenerationConfiguration = orderGenerationConfiguration;
             _runner = runner;
             _stats = stats;
-            _schedulerStartTime = schedulerStartTime;
 
             _currentHour = _runner.StartTime;
             _linesFinishedPerHour = new List<Tuple<int, int>>();

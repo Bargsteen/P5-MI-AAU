@@ -12,7 +12,7 @@ namespace SolarSystem.Backend.Classes.Schedulers.Estimator
 
     class OrderTimeEstimator
     {
-        enum TPRProps
+        enum TprProps
         {
             AreasToVisit,
             DifferentLines,
@@ -24,19 +24,19 @@ namespace SolarSystem.Backend.Classes.Schedulers.Estimator
 
         private Handler _handler;
         private int _maxAmountOfLines = 60;
-        private int _MaxQuantityPerLine = 900;
+        private int _maxQuantityPerLine = 900;
         private SimulationInformation _simInfo;
         private List<Tuple<double, double>> _tprProperties;
-        private Dictionary<TPRProps, double> TPRPropertyWeigths;
+        private Dictionary<TprProps, double> _tprPropertyWeigths;
         private double _learningRate = 0.00001f;
-        private Dictionary<int, Tuple<double, double>> sentOrders;
-        private double Bias = 5;
+        private Dictionary<int, Tuple<double, double>> _sentOrders;
+        private double _bias = 5;
 
 
         public OrderTimeEstimator(SimulationInformation simInfo)
         {
             //Fetch the weights from last run, stored in the Weights.txt file
-            TPRPropertyWeigths = UpdateWeightsFromFile();
+            _tprPropertyWeigths = UpdateWeightsFromFile();
             _simInfo = simInfo;
             
         }
@@ -44,7 +44,7 @@ namespace SolarSystem.Backend.Classes.Schedulers.Estimator
         
 
 
-        Dictionary<TPRProps, double> UpdateWeightsFromFile()
+        Dictionary<TprProps, double> UpdateWeightsFromFile()
         {
 
             StreamReader weightsFileReader = new StreamReader(Directory.GetParent(Directory.GetParent(Directory.GetParent(Environment.CurrentDirectory).ToString())
@@ -52,13 +52,13 @@ namespace SolarSystem.Backend.Classes.Schedulers.Estimator
 
             string weightLine = weightsFileReader.ReadLine();
             weightsFileReader.Close();
-            TPRPropertyWeigths = new Dictionary<TPRProps, double>();
-            TPRPropertyWeigths.Add(TPRProps.AreasToVisit, double.Parse(weightLine.Split(';')[0]));
-            TPRPropertyWeigths.Add(TPRProps.DifferentLines, double.Parse(weightLine.Split(';')[1]));
-            TPRPropertyWeigths.Add(TPRProps.QuantityPerLine, double.Parse(weightLine.Split(';')[2]));
-            TPRPropertyWeigths.Add(TPRProps.Fill, double.Parse(weightLine.Split(';')[3]));
-            TPRPropertyWeigths.Add(TPRProps.Bias, double.Parse(weightLine.Split(';')[4]));
-            return TPRPropertyWeigths;
+            _tprPropertyWeigths = new Dictionary<TprProps, double>();
+            _tprPropertyWeigths.Add(TprProps.AreasToVisit, double.Parse(weightLine.Split(';')[0]));
+            _tprPropertyWeigths.Add(TprProps.DifferentLines, double.Parse(weightLine.Split(';')[1]));
+            _tprPropertyWeigths.Add(TprProps.QuantityPerLine, double.Parse(weightLine.Split(';')[2]));
+            _tprPropertyWeigths.Add(TprProps.Fill, double.Parse(weightLine.Split(';')[3]));
+            _tprPropertyWeigths.Add(TprProps.Bias, double.Parse(weightLine.Split(';')[4]));
+            return _tprPropertyWeigths;
         }
 
 
@@ -68,21 +68,21 @@ namespace SolarSystem.Backend.Classes.Schedulers.Estimator
 
             if (order.OrderId == 0)
                 return 0;
-            return Bias * TPRPropertyWeigths[TPRProps.Bias] + order.Lines.Count * TPRPropertyWeigths[TPRProps.DifferentLines] +
-                   order.Lines.Sum(o => o.Quantity) * TPRPropertyWeigths[TPRProps.QuantityPerLine] + FillResult(order) * TPRPropertyWeigths[TPRProps.Fill];
+            return _bias * _tprPropertyWeigths[TprProps.Bias] + order.Lines.Count * _tprPropertyWeigths[TprProps.DifferentLines] +
+                   order.Lines.Sum(o => o.Quantity) * _tprPropertyWeigths[TprProps.QuantityPerLine] + FillResult(order) * _tprPropertyWeigths[TprProps.Fill];
         }
 
 
         double FillResult(Order order)
         {
-            double[] _fillresult = new double[5];
+            double[] fillresult = new double[5];
             for (int i = 0; i < _simInfo.GetState().Length - 1; i++)
             {
-                _fillresult[i] = _simInfo.GetState()[i] *
+                fillresult[i] = _simInfo.GetState()[i] *
                                  order.Lines.Count(l => l.Article.AreaCode == ((AreaCode)i));
             }
 
-            return _fillresult.Sum();
+            return fillresult.Sum();
         }
     }
 }

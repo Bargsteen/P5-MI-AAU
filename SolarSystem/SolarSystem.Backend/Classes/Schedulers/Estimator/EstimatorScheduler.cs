@@ -12,19 +12,19 @@ namespace SolarSystem.Backend.Classes.Schedulers.Estimator
 {
     class EstimatorScheduler : Scheduler
     {
-        private const int secondsLookAhead = 20000;
-        private const int maxOrdersPerArea = 25;
-        private readonly Queue<Dictionary<AreaCode, decimal>> AreaFillInfo;
-        private SimulationInformation simInfo;
-        private readonly OrderTimeEstimator orderTimeEstimator;
+        private const int SecondsLookAhead = 20000;
+        private const int MaxOrdersPerArea = 25;
+        private readonly Queue<Dictionary<AreaCode, decimal>> _areaFillInfo;
+        private SimulationInformation _simInfo;
+        private readonly OrderTimeEstimator _orderTimeEstimator;
 
         public EstimatorScheduler(OrderGenerator orderGenerator, Handler handler, double poolMoverTime, SimulationInformation siminfo) : base(
             orderGenerator, handler, poolMoverTime)
         {
             OnOrderActuallySent += MakeOrderFill;
             TimeKeeper.Tick += EnAndDequeueOnTick;
-            simInfo = siminfo;
-            orderTimeEstimator = new OrderTimeEstimator(siminfo);
+            _simInfo = siminfo;
+            _orderTimeEstimator = new OrderTimeEstimator(siminfo);
 
             //OnOrderActuallySent += OrderBox => PrintXTimeStepsOfMatrix(1);
             
@@ -37,8 +37,8 @@ namespace SolarSystem.Backend.Classes.Schedulers.Estimator
             SetOrderFill(waitOrder);
             ActualOrderPool.Add(waitOrder);
             
-            AreaFillInfo = new Queue<Dictionary<AreaCode, decimal>>();
-            for (int i = 0; i < secondsLookAhead; i++)
+            _areaFillInfo = new Queue<Dictionary<AreaCode, decimal>>();
+            for (int i = 0; i < SecondsLookAhead; i++)
             {
                 var zeroDicts = new Dictionary<AreaCode, decimal>
                 {
@@ -49,7 +49,7 @@ namespace SolarSystem.Backend.Classes.Schedulers.Estimator
                     {AreaCode.Area29, 0}
                 };
 
-                AreaFillInfo.Enqueue(zeroDicts);
+                _areaFillInfo.Enqueue(zeroDicts);
             }
 
         }
@@ -61,9 +61,9 @@ namespace SolarSystem.Backend.Classes.Schedulers.Estimator
 
         private void EnAndDequeueOnTick()
         {
-            AreaFillInfo.Dequeue();
+            _areaFillInfo.Dequeue();
             
-            AreaFillInfo.Enqueue(new Dictionary<AreaCode, decimal>
+            _areaFillInfo.Enqueue(new Dictionary<AreaCode, decimal>
             {
                 {AreaCode.Area21, 0},
                 {AreaCode.Area25, 0},
@@ -121,7 +121,7 @@ namespace SolarSystem.Backend.Classes.Schedulers.Estimator
             Order applyOrder = order;
             applyOrder.EstimatedAreaFill = applyFill;
             
-            UpdateAreaFillInfo(AreaFillInfo, applyOrder);
+            UpdateAreaFillInfo(_areaFillInfo, applyOrder);
         }
 
         private Dictionary<AreaCode, decimal> CalcValuesForOrder(Order order)
@@ -150,7 +150,7 @@ namespace SolarSystem.Backend.Classes.Schedulers.Estimator
         {
             var lookAheadCount = 0;
             var summedFitness = 0d;
-            foreach (var areaFill in AreaFillInfo)
+            foreach (var areaFill in _areaFillInfo)
             {
                 foreach (var key in areaFill.Keys)
                 {
@@ -171,11 +171,11 @@ namespace SolarSystem.Backend.Classes.Schedulers.Estimator
 
         private double CalcErrorForOrderFitness(double val)
         {
-            if (val <= maxOrdersPerArea)
+            if (val <= MaxOrdersPerArea)
             {
-                return MapXFromTo(val, 0, maxOrdersPerArea, 0, 1);
+                return MapXFromTo(val, 0, MaxOrdersPerArea, 0, 1);
             }
-            return MapXFromTo(val, maxOrdersPerArea, 40, 0, -10);
+            return MapXFromTo(val, MaxOrdersPerArea, 40, 0, -10);
         }
 
         private double MapXFromTo(double x, double fromLower, double fromUpper, double toLower, double toUpper)
@@ -189,7 +189,7 @@ namespace SolarSystem.Backend.Classes.Schedulers.Estimator
             SetOrderFill(order);
 
             // Push to matrix
-            UpdateAreaFillInfo(AreaFillInfo, order);
+            UpdateAreaFillInfo(_areaFillInfo, order);
         }
 
         private void SetOrderFill(Order order)
@@ -239,7 +239,7 @@ namespace SolarSystem.Backend.Classes.Schedulers.Estimator
         private int EstimateOrderPackingTime(Order order)
         {
             // Guess the ordertime from the learned Machine Algorithm
-            return (int)orderTimeEstimator.GuessTimeForOrder(order);
+            return (int)_orderTimeEstimator.GuessTimeForOrder(order);
         }
 
         private decimal AreaFill(int areaCount)
@@ -255,7 +255,7 @@ namespace SolarSystem.Backend.Classes.Schedulers.Estimator
             int timeStepsUsed = 0;
 
             ConsoleTable table = new ConsoleTable("Time", "Area 21", "Area 25", "Area 27", "Area 28", "Area 29");
-            foreach (var kvp in AreaFillInfo)
+            foreach (var kvp in _areaFillInfo)
             {
                 var row = new List<decimal>{timeStepsUsed};
                 row.AddRange(kvp.Values);

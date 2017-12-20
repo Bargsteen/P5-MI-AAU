@@ -53,37 +53,37 @@
             return RealConstants.TimeInMainLoop;
         }
         
-        public static int GetMinArticleQuanitityOG(){
+        public static int GetMinArticleQuanitityOg(){
             if (SimulationState == SimulationState.Experimental)
             {
-                return ExperimentalConstants.MinArticleQuantityOG;
+                return ExperimentalConstants.MinArticleQuantityOg;
             }
 
             return RealConstants.MinArticleQuantityOg;
         }
         
-        public static int GetMaxArticleQuantityOG(){
+        public static int GetMaxArticleQuantityOg(){
             if (SimulationState == SimulationState.Experimental)
             {
-                return ExperimentalConstants.MaxArticleQuantityOG;
+                return ExperimentalConstants.MaxArticleQuantityOg;
             }
 
             return RealConstants.MaxArticleQuantityOg;
         }
         
-        public static int GetMinLineCountOG(){
+        public static int GetMinLineCountOg(){
             if (SimulationState == SimulationState.Experimental)
             {
-                return ExperimentalConstants.MinLineCountOG;
+                return ExperimentalConstants.MinLineCountOg;
             }
 
             return RealConstants.MinLineCountOg;
         }
         
-        public static int GetMaxLineCountOG(){
+        public static int GetMaxLineCountOg(){
             if (SimulationState == SimulationState.Experimental)
             {
-                return ExperimentalConstants.MaxLineCountOG;
+                return ExperimentalConstants.MaxLineCountOg;
             }
 
             return RealConstants.MaxLineCountOg;

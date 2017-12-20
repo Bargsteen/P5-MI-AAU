@@ -10,7 +10,7 @@ namespace SolarSystem.SaveAndPrint
     public class DataSaver
     {
 
-        public static Dictionary<Area, double> AreaStandartDeviation = new Dictionary<Area, double>();
+        public static Dictionary<Area, double> AreaStandardDeviation = new Dictionary<Area, double>();
         public static List<DataSavingOrder> Orders = new List<DataSavingOrder>();
         
         static readonly string FilePath = Directory.GetParent(Directory.GetParent(Directory.GetParent(Environment.CurrentDirectory).ToString())

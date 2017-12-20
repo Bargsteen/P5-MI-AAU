@@ -24,7 +24,7 @@ namespace SolarSystem.Backend.PickingAndErp
 
         public Classes.Simulation.Orders.Line ToSimLine()
         {
-            return new Classes.Simulation.Orders.Line(this.Article, this.Quantity);
+            return new Classes.Simulation.Orders.Line(Article, Quantity);
            
         }
     }
