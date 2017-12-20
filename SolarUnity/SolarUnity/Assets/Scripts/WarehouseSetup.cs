@@ -9,7 +9,8 @@ using Ploeh.AutoFixture;
 using SolarSystem;
 using SolarSystem.Backend;
 using SolarSystem.Backend.Classes;
-using Area = SolarSystem.Backend.Classes.Area;
+using SolarSystem.Backend.Classes.Simulation;
+using UnityEngine.Experimental.UIElements;
 
 public class WarehouseSetup : MonoBehaviour
 {
@@ -49,58 +50,39 @@ public class WarehouseSetup : MonoBehaviour
     public GameObject Stationtemplate;
     public GameObject ShelfBoxtemplate;
     public GameObject OrderBoxtemplate;
+    private Runner runner;
 
-    private ConveyorBelt Belt;
-    // Use this for initialization
-
-
+    public AreaCode CurrentArea;
 
     void Start ()
     {
-        Belt = GetComponent<ConveyorBelt>();
-        Runner runner = GetComponent<WarehouseManager>().runner;
+        GetComponent<WarehouseManager>().ManagerReady += delegate { 
+            runner = GetComponent<WarehouseManager>().runner;
 
-        DontDestroyOnLoad(this);
-	    Camera cam = Camera.main;
-	    height = 2f * cam.orthographicSize;
-	    width = height * cam.aspect;
-
-
-        Camera.main.pixelRect = new Rect(0, 0, 800, 800);
-        Constants c = this.GetComponent<Constants>();
-        // c.Setup();
+            DontDestroyOnLoad(this);
+	        Camera cam = Camera.main;
+	        height = 2f * cam.orthographicSize;
+	        width = height * cam.aspect;
 
 
-        Debug.Log((Camera.main.transform.position));
-
-        Areas = DrawBoxes (runner.Handler.Areas.Values.ToList(), Camera.main.transform.position, BoxTypes.Area, Areatemplate);
-
-        foreach (GameObject GO in GameObject.FindGameObjectsWithTag("Area"))
-        {
-            Vector3 stop;
-            switch (GO.GetComponent<AreaComponent>().areaCode)
-            {
-                case AreaCode.Area21:
-                    stop = new Vector3(GO.transform.position.x, GO.transform.position.y, GO.transform.position.z);
-                    Belt.Stops.Add(AreaCode.Area21, stop);
-                break;
-
-                case AreaCode.Area25:
-                    stop = new Vector3(GO.transform.position.x, GO.transform.position.y, GO.transform.position.z);
-                    Belt.Stops.Add(AreaCode.Area25, stop);
-                    break;
-
-                case AreaCode.Area27:
-                    stop = new Vector3(GO.transform.position.x, GO.transform.position.y, GO.transform.position.z);
-                    Belt.Stops.Add(AreaCode.Area27, stop);
-                    break;
-                    
-
-            }
-        }
+            Camera.main.pixelRect = new Rect(0, 0, 800, 800);
+            Constants c = this.GetComponent<Constants>();
+            // c.Setup();
 
 
-	}
+            Debug.Log((Camera.main.transform.position));
+            Areas = DrawBoxes (runner.Handler.Areas.Values.ToList(), Camera.main.transform.position, BoxTypes.Area, Areatemplate);
+        };
+
+
+    }
+
+
+
+    void Update()
+    {
+        Debug.Log(TimeKeeper.CurrentDateTime);
+    }
 
 
     public List<GameObject> DrawBoxes<T>(List<T> boxes, Vector3 Origin, BoxTypes type, GameObject template, GameObject parent = null)
@@ -172,24 +154,27 @@ public class WarehouseSetup : MonoBehaviour
 
                 case BoxTypes.Station:
                     StationComponent stationComponent = box.GetComponent<StationComponent>();
-                    box.transform.GetChild(0).GetComponent<TextMesh>().text = (boxes[i] as Station).Name;
-                    stationComponent.orderBoxes = (boxes[i] as Station).OrderBoxes.ToList();
+                    box.transform.GetChild(0).GetComponent<TextMesh>().text = (boxes[i] as Station).Name.Split('+')[1];
+                    stationComponent.Orderboxes = (boxes[i] as Station).OrderBoxes.ToList();
                     stationComponent.GO = box;
                     stationComponent.areaCode = parent.GetComponent<AreaComponent>().areaCode;
                     stationComponent.stationNumber = i;
                     stationComponent.WhManager = GetComponent<WarehouseManager>();
-                    stationComponent.OBPContainer = (boxes[i] as Station).OBPContainer;
+                    stationComponent.Orderboxes = (boxes[i] as Station).OrderBoxes.ToList();
                     box.tag = "Station";
                     break;
 
                 case BoxTypes.Shelfbox:
-                    box.transform.GetChild(0).GetComponent<TextMesh>().text = (boxes[i] as ShelfBox).Id;
+                    box.transform.GetChild(0).GetComponent<TextMesh>().text = (boxes[i] as ShelfBox).Id.ToString();
                     box.tag = "ShelfBox";
                     break;
 
 
                 case BoxTypes.Orderbox:
-                    box.transform.GetChild(0).GetComponent<TextMesh>().text = (boxes[i] as OrderBoxProgress).OrderBox.Order.OrderId.ToString();
+                    box.transform.GetChild(0).GetComponent<TextMesh>().text = (boxes[i] as OrderBox).Order.OrderId.ToString();
+                    box.transform.GetChild(2).GetComponent<TextMesh>().text = (boxes[i] as OrderBox).LineIsPickedStatuses.Select(kvp => kvp.Key).Count(l => l.Article.AreaCode == CurrentArea).ToString();
+                    box.transform.GetChild(4).GetComponent<TextMesh>().text =
+                        (boxes[i] as OrderBox).LinesNotPickedIn(CurrentArea).Count.ToString();
                     box.tag = "OrderBox";
                     break;
             }

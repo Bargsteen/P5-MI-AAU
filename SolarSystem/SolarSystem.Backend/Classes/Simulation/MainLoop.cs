@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SolarSystem.Backend.Classes.Simulation
 {
@@ -8,9 +9,8 @@ namespace SolarSystem.Backend.Classes.Simulation
     {
         public event Action<OrderBox, AreaCode> OnOrderBoxInMainLoopFinished;
         private readonly Dictionary<AreaCode, OrderboxProgressContainer> _areaQueues;
+        public int BoxesInMainLoop => _areaQueues.Values.SelectMany(opc => opc.ToList()).Count();
 
-        public int BoxesInMainLoop => _areaQueues.Count;
-        
         public MainLoop()
         {
             _areaQueues = new Dictionary<AreaCode, OrderboxProgressContainer>();

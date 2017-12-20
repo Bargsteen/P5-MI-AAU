@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using SolarSystem.Backend.Classes;
 using UnityEngine;
 using System.Linq;
+using SolarSystem.Backend.Classes.Simulation;
 
 public class StationComponent : MonoBehaviour, IDrawable {
 
-    public List<OrderBox> orderBoxes = new List<OrderBox>();
     public WarehouseManager WhManager;
     public AreaCode areaCode;
     public int stationNumber;
     private int _boxState = 0;
     public GameObject GO;
-    public OrderboxProgressContainer OBPContainer;
+    public List<OrderBox> Orderboxes;
     public bool IsActive;
 
 
@@ -33,18 +33,17 @@ public class StationComponent : MonoBehaviour, IDrawable {
 
     void Start()
     {
-        WhManager.runner.Handler.Areas.Values.ToList().Find(x => x.AreaCode == areaCode).Stations.ToList()[stationNumber].OnOrderBoxFinished += delegate
-        {
-            _boxState = -1;
-        };
 
-        WhManager.runner.Handler.Areas.Values.ToList().Find(x => x.AreaCode == areaCode).Stations.ToList()[stationNumber].OnOrderBoxReceivedAtStationEvent += delegate
-        {
-            _boxState = 1;
-            Debug.Log("Area: " + areaCode + " Station: " + stationNumber);
-            Debug.Log(OBPContainer.GetNext().OrderBox.Id);
-            Debug.Log("Done with station : " + stationNumber + "\n\n\n\n");
-        };
+        
+            WhManager.runner.Handler.Areas.Values.ToList().Find(x => x.AreaCode == areaCode).Stations.ToList()[stationNumber].OnOrderBoxFinishedAtStation += delegate
+            {
+                _boxState = -1;
+            };
+
+            WhManager.runner.Handler.Areas.Values.ToList().Find(x => x.AreaCode == areaCode).Stations.ToList()[stationNumber].OnOrderBoxReceivedAtStation += delegate
+            {
+                _boxState = 1;
+            };
     }
 
 
@@ -72,16 +71,17 @@ public class StationComponent : MonoBehaviour, IDrawable {
                 Destroy(GO);
             }
             GameObject.Find("GameManager").GetComponent<WarehouseSetup>().DrawBoxes(
-            OBPContainer.ToList(),
+                Orderboxes,
             transform.position,
             WarehouseSetup.BoxTypes.Orderbox,
             GameObject.Find("GameManager").GetComponent<WarehouseSetup>().OrderBoxtemplate,
             gameObject);
+            GameObject.Find("GameManager").GetComponent<WarehouseSetup>().CurrentArea = areaCode;
         }
 
 
 
-        GO.transform.GetChild(2).GetChild(0).GetComponent<TextMesh>().text = OBPContainer.ToList().Count.ToString();
+        GO.transform.GetChild(2).GetChild(0).GetComponent<TextMesh>().text = Orderboxes.Count.ToString();
     }
 
 
