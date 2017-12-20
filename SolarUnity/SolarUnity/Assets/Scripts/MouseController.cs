@@ -45,7 +45,7 @@ public class MouseController : MonoBehaviour
                         //    WarehouseSetup.BoxTypes.Shelfbox,
                         //    transform.GetComponent<WarehouseSetup>().ShelfBoxtemplate);
 
-                        transform.GetComponent<WarehouseSetup>().DrawBoxes(objectHit.GetComponent<StationComponent>().OBPContainer.ToList(),
+                        transform.GetComponent<WarehouseSetup>().DrawBoxes(objectHit.GetComponent<StationComponent>().Orderboxes,
                             objectHit.transform.position,
                             WarehouseSetup.BoxTypes.Orderbox,
                             transform.GetComponent<WarehouseSetup>().OrderBoxtemplate,
