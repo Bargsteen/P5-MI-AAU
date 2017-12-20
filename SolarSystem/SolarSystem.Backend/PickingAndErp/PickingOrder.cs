@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using SolarSystem.Backend.Classes.Simulation;
+using SolarSystem.Backend.Classes.Simulation.Orders;
 
 namespace SolarSystem.Backend.PickingAndErp
 {
@@ -47,7 +48,7 @@ namespace SolarSystem.Backend.PickingAndErp
 
         public Order ToSimOrder()
         {
-            List<Classes.Simulation.Line> simlinelist = new List<Classes.Simulation.Line>();
+            List<Classes.Simulation.Orders.Line> simlinelist = new List<Classes.Simulation.Orders.Line>();
 
             foreach (Line line in LineList)
             {

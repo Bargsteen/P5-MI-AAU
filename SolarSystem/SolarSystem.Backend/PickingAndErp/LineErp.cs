@@ -4,11 +4,11 @@ namespace SolarSystem.Backend.PickingAndErp
 {
     public class Line
     {
-        public Classes.Simulation.Article Article { get;  }
+        public Classes.Simulation.Orders.Article Article { get;  }
         public int Quantity { get; }
         public DateTime OutTimeStamp { get; }
         
-        public Line(Classes.Simulation.Article article, int quantity, DateTime timeStamp)
+        public Line(Classes.Simulation.Orders.Article article, int quantity, DateTime timeStamp)
         {
             Article = article;
             Quantity = quantity;
@@ -22,9 +22,9 @@ namespace SolarSystem.Backend.PickingAndErp
             return "\n\tTime: " + OutTimeStamp + "\n\t" + Article + "\tQuantity:" + Quantity + "\n";
         }
 
-        public Classes.Simulation.Line ToSimLine()
+        public Classes.Simulation.Orders.Line ToSimLine()
         {
-            return new Classes.Simulation.Line(this.Article, this.Quantity);
+            return new Classes.Simulation.Orders.Line(this.Article, this.Quantity);
            
         }
     }

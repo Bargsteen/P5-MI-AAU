@@ -7,6 +7,8 @@
 using System;
 using System.Collections.Generic;
 using SolarSystem.Backend.Classes.Simulation;
+using SolarSystem.Backend.Classes.Simulation.Orders;
+using SolarSystem.Backend.Classes.Simulation.WareHouse;
 
 namespace SolarSystem.Backend.Classes.Schedulers
 {

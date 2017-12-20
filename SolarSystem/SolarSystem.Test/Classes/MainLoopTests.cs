@@ -1,5 +1,7 @@
 ﻿using Ploeh.AutoFixture;
 using SolarSystem.Backend.Classes.Simulation;
+using SolarSystem.Backend.Classes.Simulation.OrderBoxHandlers;
+using SolarSystem.Backend.Classes.Simulation.WareHouse;
 using Xunit;
 
 namespace SolarSystem.Test.Classes
@@ -11,7 +13,7 @@ namespace SolarSystem.Test.Classes
         {
             // Arrange
             var fixture = new Fixture();
-            var orderBoxProgressContainer = fixture.Create<OrderboxProgressContainer>();
+            var orderBoxProgressContainer = fixture.Create<OrderBoxProgressContainer>();
             var orderBoxProgress = fixture.Build<OrderBoxProgress>().With(o => o.SecondsToSpend, 0).Create();         
             orderBoxProgressContainer.AddOrderBoxProgress(orderBoxProgress);
 

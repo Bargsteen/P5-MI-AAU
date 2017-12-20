@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using SolarSystem.Backend;
 using System.IO;
-using SolarSystem.Backend.Classes.Data;
 using SolarSystem.Backend.Classes.Simulation;
+using SolarSystem.Backend.Classes.Simulation.ConstantsAndEnums;
 using SolarSystem.Backend.PickingAndErp;
+using SolarSystem.SaveAndPrint;
 
 namespace SolarSystem
 {
@@ -23,7 +24,7 @@ namespace SolarSystem
                 Directory.GetParent(Directory.GetParent(Directory.GetParent(Environment.CurrentDirectory).ToString())
                     .ToString()) + "/SolarSystem.Backend/SolarData/";
             
-            var pickNScrape = new PickingScrape(filePath + "Picking 02-10-2017.csv");
+            var pickNScrape = new PickingExtraction(filePath + "Picking 02-10-2017.csv");
             pickNScrape.GetOrdersFromPicking();
 
             var orders = pickNScrape.OrderList;

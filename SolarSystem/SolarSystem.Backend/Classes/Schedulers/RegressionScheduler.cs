@@ -4,6 +4,10 @@ using System.Linq;
 using SolarSystem.Backend.Classes.Simulation;
 using System.IO;
 using Accord.Statistics.Kernels;
+using SolarSystem.Backend.Classes.Simulation.Boxes;
+using SolarSystem.Backend.Classes.Simulation.ConstantsAndEnums;
+using SolarSystem.Backend.Classes.Simulation.Orders;
+using SolarSystem.Backend.Classes.Simulation.WareHouse;
 
 namespace SolarSystem.Backend.Classes.Schedulers
 {
@@ -27,16 +31,16 @@ namespace SolarSystem.Backend.Classes.Schedulers
         }
 
 
-        private Handler _handler;
+        private readonly Handler _handler;
         private int _maxAmountOfLines = 60;
         private int _MaxQuantityPerLine = 900;
-        private SimulationInformation _simInfo;
+        private readonly SimulationInformation _simInfo;
         private List<Tuple<double, double>> _tprProperties;
         private Dictionary<TPRProps, double> TPRPropertyWeigths;
-        private double _learningRate = 0.0001f;
-        private Dictionary<int, Tuple<double, double>> sentOrders;
-        private double Bias = 5;
-        int[] timings = new int[3];
+        private readonly double _learningRate = 0.0001f;
+        private readonly Dictionary<int, Tuple<double, double>> sentOrders;
+        private readonly double Bias = 5;
+        readonly int[] timings = new int[3];
 
         public RegressionScheduler(OrderGenerator orderGenerator, Handler handler, double poolMoverTime, SimulationInformation simInfo) : base(orderGenerator, handler, poolMoverTime)
         {
