@@ -1,4 +1,4 @@
-﻿namespace SolarSystem.Backend.Classes
+﻿namespace SolarSystem.Backend
 {
     public static class RealConstants
     {
@@ -7,10 +7,10 @@
         public static readonly int LineCountDifferentiation = 100;
         public static readonly double LargeLineQuantityMultiplier = 0.0001;
         public static readonly int TimeInMainLoop = 14;
-        public static readonly int MinArticleQuantityOG = 5;
-        public static readonly int MaxArticleQuantityOG = 28;
-        public static readonly int MinLineCountOG = 1;
-        public static readonly int MaxLineCountOG = 6;
+        public static readonly int MinArticleQuantityOg = 5;
+        public static readonly int MaxArticleQuantityOg = 28;
+        public static readonly int MinLineCountOg = 1;
+        public static readonly int MaxLineCountOg = 6;
         public static readonly int RandomSeedValue = 10;
     }
 }

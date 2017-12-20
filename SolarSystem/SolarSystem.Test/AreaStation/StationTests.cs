@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Ploeh.AutoFixture;
-using SolarSystem.Backend.Classes.Simulation;
+using SolarSystem.Backend.Solution.Simulation.Boxes;
+using SolarSystem.Backend.Solution.Simulation.Orders;
+using SolarSystem.Backend.Solution.Simulation.Warehouse;
 using Xunit;
 
 namespace SolarSystem.Test.AreaStation

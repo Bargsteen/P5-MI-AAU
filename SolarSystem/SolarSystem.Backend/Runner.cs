@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using SolarSystem.Backend.Classes;
-using SolarSystem.Backend.Classes.Schedulers;
-using SolarSystem.Backend.Classes.Simulation;
-using SolarSystem.Backend.PickingAndErp;
-using Article = SolarSystem.Backend.Classes.Simulation.Article;
+using SolarSystem.Backend.Extraction;
+using SolarSystem.Backend.Solution.Schedulers;
+using SolarSystem.Backend.Solution.Simulation;
+using SolarSystem.Backend.Solution.Simulation.Orders;
+using SolarSystem.Backend.Solution.Simulation.Warehouse;
+using Article = SolarSystem.Backend.Solution.Simulation.Orders.Article;
 
 namespace SolarSystem.Backend
 {
@@ -24,20 +25,20 @@ namespace SolarSystem.Backend
 
         private readonly int _hoursToSimulate;
 
+        public int OrdersSentIn;
+
         private readonly int _runsToDo;
         
         public Runner(string filePath, double simulationSpeed, double orderChance, 
             OrderGenerationConfiguration orderGenerationConfiguration, SchedulerType schedulerType, 
-            int hoursToSimulate, DateTime startTime, DateTime schedulerStartTime, List<PickingOrder> orderList, int runsToDo, bool useOrderTime)
+            int hoursToSimulate, DateTime startTime, DateTime schedulerStartTime, List<PickingOrder> orderList, int runsToDo)
         {
-            
-    
             _simulationSpeed = simulationSpeed;
             _hoursToSimulate = hoursToSimulate;
             StartTime = startTime;
             _schedulerStartTime = schedulerStartTime;
             var orders = orderList;
-            var erpscrape = new ErpScrape();
+            var erpscrape = new ErpExtraction();
             erpscrape.ScrapeErp(filePath + "ErpTask_trace.log");
             _runsToDo = runsToDo;
 
@@ -55,19 +56,18 @@ namespace SolarSystem.Backend
             var ordersOrderedAndPicked =
                 orders.Where(o => erpscrape.Orders.Any(e => e.OrderNumber == o.OrderNumber)).Distinct().ToList();
 
-            if (useOrderTime)
+
+            if (schedulerType != SchedulerType.Real)
             {
-                // Update orders to use the time when they were ordered rather than picked.
-                if (schedulerType == SchedulerType.Real)
-                {
-                    throw new ArgumentException("The real scheduler should only be used with userOrderTime = false. As it depends on the picking time.");
-                }
                 ordersOrderedAndPicked.ForEach(o => o.OrderTime = erpscrape.Orders.First(e => e.OrderNumber == o.OrderNumber).OrderTime);
             }
+  
             
             Handler = new Handler(); 
             
             SimulationInformation simInfo = new SimulationInformation(Handler, schedulerStartTime);
+
+            OrdersSentIn = ordersOrderedAndPicked.Count;
             
             OrderGenerator = new OrderGenerator(articleList, orderChance, ordersOrderedAndPicked, orderGenerationConfiguration);
             
@@ -82,7 +82,7 @@ namespace SolarSystem.Backend
                 case SchedulerType.Mi6:
                     _scheduler = new Mi6Scheduler(OrderGenerator, Handler, SimulationConfiguration.GetSchedulerPoolMoveTime(), articleList, simInfo);
                     break;
-                case SchedulerType.LST:
+                case SchedulerType.Lst:
                     _scheduler = new LstScheduer(OrderGenerator, Handler, SimulationConfiguration.GetSchedulerPoolMoveTime());
                     break;
                 case SchedulerType.Real:
