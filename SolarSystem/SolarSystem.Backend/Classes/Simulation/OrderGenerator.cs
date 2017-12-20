@@ -119,6 +119,7 @@ namespace SolarSystem.Backend.Classes.Simulation
             {
                 orderID = Rand.Next(MinOrderNumberId, MaxOrderNumberId);
             } while (_usedOrderNumbers.Contains(orderID));
+            
             _usedOrderNumbers.Add(orderID);
             Order order = new Order(orderID, TimeKeeper.CurrentDateTime, generatedLines);
             order.Areas = ConstructAreasVisited(order);

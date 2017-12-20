@@ -128,6 +128,11 @@ namespace SolarSystem
 
         private void PrintSimulationFinished()
         {
+            var ordersSentIn = _runner.OrdersSentIn;
+            var ordersInMainLoop = _runner.Handler.MainLoop.BoxesInMainLoop;
+            var ordersInStations = _runner.Handler.Areas.SelectMany(kvp => kvp.Value.Stations)
+                .Sum(station => station.OrderBoxes.Count);
+            
             PrintFullStatus();
             Console.WriteLine("\nSimulation Finished!");
             PrintLinesPerHourForStatistics();
@@ -139,7 +144,11 @@ namespace SolarSystem
             Console.WriteLine($"OURS :: Avg line Count: {_stats.GetAverageLinesPerOrderSim()}");
             Console.WriteLine($"SOLAR :: Avg quantity per line: {_stats.GetAverageQuantityPerLineSolar()}");
             Console.WriteLine($"OURS :: Avg quantity per line: {_stats.GetAverageQuantityPerLineSim()}");
-            
+
+            Console.WriteLine(
+                $"Orders In : {ordersSentIn} -- Orders Out : {_totalFinishedOrders}\nLeft in system: {ordersInMainLoop + ordersInStations}\n" + 
+                $"Total out + left: {_totalFinishedOrders + ordersInMainLoop + ordersInStations}");
+
         }
     }
 }

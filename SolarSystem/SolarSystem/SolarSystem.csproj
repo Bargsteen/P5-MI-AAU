@@ -79,7 +79,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BargsteenDAta.cs" />
+    <Compile Include="SaveOrderData.cs" />
     <Compile Include="ConsoleStatusPrinter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

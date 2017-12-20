@@ -6,28 +6,28 @@ using System.Linq;
 
 namespace SolarSystem
 {
-    public class BargsteenData
+    public class SaveOrderData
     {
         private List<string> orderInfo;
             
-        public BargsteenData(Handler handler)
+        public SaveOrderData(Handler handler)
         {
             orderInfo = new List<string>();
-            orderInfo.Add("StartPackingTime, EndPackingTime, TotalQuantity");
+            orderInfo.Add("EndPackingTime, StartPackingTime, DeltaTime, TotalQuantity");
             handler.OnOrderBoxFinished += orderBox => AddOrderInfoToList(orderBox.Order);
             TimeKeeper.SimulationFinished += SaveAllInfoToFile;
         }
 
         private void AddOrderInfoToList(Order order)
         {
-            orderInfo.Add($"{order.StartPackingTime}, {TimeKeeper.CurrentDateTime}, {order.Lines.Sum(l => l.Quantity)}");
+            orderInfo.Add($"{To24HourFormat(order.StartPackingTime)}, {To24HourFormat(TimeKeeper.CurrentDateTime)}, {order.Lines.Sum(l => l.Quantity)}");
         }
 
         private void SaveAllInfoToFile()
         {
             var filePath =
                 Directory.GetParent(Directory.GetParent(Directory.GetParent(Environment.CurrentDirectory).ToString())
-                    .ToString()) + "/SolarSystem.Backend/SolarData/BargsteenData.csv";
+                    .ToString()) + "/SolarSystem.Backend/SolarData/SaveOrderData.csv";
             using (StreamWriter writer = new StreamWriter(filePath, true))
             {
                 foreach (var order in orderInfo)
@@ -36,6 +36,11 @@ namespace SolarSystem
                 }
                 writer.Close();
             }
+        }
+
+        private static string To24HourFormat(DateTime dateTime)
+        {
+            return dateTime.ToString("HH:mm:ss");
         }
         
     }

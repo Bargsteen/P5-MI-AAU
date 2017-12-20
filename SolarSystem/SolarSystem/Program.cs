@@ -34,22 +34,21 @@ namespace SolarSystem
             const double randomNewOrderChance = 0.1;
             const OrderGenerationConfiguration orderGenerationConfiguration = OrderGenerationConfiguration.FromFile;
             
-            const SchedulerType schedulerType = SchedulerType.Estimator;
-            const bool useOrderTime = false; // Should be false if using Scheduler.Real
-            const int hoursToSimulate = 17;
+            const SchedulerType schedulerType = SchedulerType.Real;
+            const int hoursToSimulate = 22;
             const int runsToDo = 1;
             DateTime simulationStartTime = new DateTime(2017, 10, 2, 6, 0, 0); //02/10/2017
             DateTime schedulerStartTime = simulationStartTime.AddHours(4);
             
             
             var runner = new Runner(filePath, simSpeed, randomNewOrderChance, orderGenerationConfiguration, 
-                schedulerType, hoursToSimulate, simulationStartTime, schedulerStartTime, orders, runsToDo, useOrderTime);
+                schedulerType, hoursToSimulate, simulationStartTime, schedulerStartTime, orders, runsToDo);
             
             // var outPutter = new Outputter(runner);
             // var dataSaver = new DataSaver(runner);
             // SaveData(pickNScrape.OrderList);
             
-            BargsteenData bd = new BargsteenData(runner.Handler);
+            SaveOrderData sod = new SaveOrderData(runner.Handler);
            
             Statistics stats = new Statistics(orders2, runner);
             

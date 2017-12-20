@@ -9,6 +9,7 @@ namespace SolarSystem.Backend.Classes.Schedulers
     class EstimatorScheduler : Scheduler
     {
         private const int secondsLookAhead = 20000;
+        private const int maxOrdersPerArea = 25;
         private Queue<Dictionary<AreaCode, decimal>> AreaFillInfo;
 
         public EstimatorScheduler(OrderGenerator orderGenerator, Handler handler, double poolMoverTime) : base(
@@ -162,11 +163,11 @@ namespace SolarSystem.Backend.Classes.Schedulers
 
         private double CalcErrorForOrderFitness(double val)
         {
-            if (val <= 15)
+            if (val <= maxOrdersPerArea)
             {
-                return MapXFromTo(val, 0, 15, 0, 1);
+                return MapXFromTo(val, 0, maxOrdersPerArea, 0, 1);
             }
-            return MapXFromTo(val, 15, 40, 0, -10);
+            return MapXFromTo(val, maxOrdersPerArea, 40, 0, -10);
         }
 
         private double MapXFromTo(double x, double fromLower, double fromUpper, double toLower, double toUpper)
